@@ -1,0 +1,27 @@
+[
+  {
+    "Id": 1,
+    "Nome": "Manhã",
+    "Regime": "Parcial"
+  },
+  {
+    "Id": 2,
+    "Nome": "Tarde",
+    "Regime": "Parcial"
+  },
+  {
+    "Id": 3,
+    "Nome": "Noite",
+    "Regime": "Parcial"
+  },
+  {
+    "Id": 4,
+    "Nome": "Integral",
+    "Regime": "Integral"
+  },
+  {
+    "Id": 5,
+    "Nome": "Não Informado",
+    "Regime": "Parcial"
+  }
+]

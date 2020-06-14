@@ -1,0 +1,26 @@
+﻿@import "Styles/vendors/coreui/variables";
+
+.table--header-add {
+    border-radius: 10px;
+    padding: 5px 30px;
+    color: $primary;
+    border: 1px solid $primary;
+    background-color: white;
+    font-weight: 600;
+
+    &:hover {
+        color: white;
+        background-color: $primary;
+        text-decoration: none;
+    }
+}
+
+.input--search {
+    min-width: 25vw;
+}
+
+@media (max-width: 600px) {
+    .table--header {
+        font-size: 6vw;
+    }
+}

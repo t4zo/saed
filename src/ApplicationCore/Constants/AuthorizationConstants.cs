@@ -6,11 +6,11 @@ namespace SAED.ApplicationCore.Constants
     {
         public static class Roles
         {
-            public const string ADMINISTRATOR = "Administrator";
+            public const string ADMINISTRADOR = "ADMINISTRADOR";
 
             public const string APLICADOR = "APLICADOR";
 
-            public static IEnumerable<string> ALL = new List<string> { ADMINISTRATOR, APLICADOR };
+            public static IEnumerable<string> ALL = new List<string> { ADMINISTRADOR, APLICADOR };
         }
 
         public static int DatabaseIdStartValue = 100;

@@ -1,0 +1,17 @@
+[
+  {
+    "Id": 1,
+    "EscolaId": 1,
+    "Nome": "02 DE JULHO"
+  },
+  {
+    "Id": 2,
+    "EscolaId": 1,
+    "Nome": "02 DE JULHO"
+  },
+  {
+    "Id": 3,
+    "EscolaId": 1,
+    "Nome": "15 DE JULHO"
+  }
+]

@@ -1,0 +1,8 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "Styles/vendors/bootstrap/scss/bootstrap";
+
+// If you want to add something do it here
+@import "custom";

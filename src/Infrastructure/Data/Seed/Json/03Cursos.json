@@ -1,0 +1,17 @@
+[
+  {
+    "Id": 1,
+    "Nome": "Educação Infantil",
+    "Sigla": "EI"
+  },
+  {
+    "Id": 2,
+    "Nome": "Ensino Fundamental",
+    "Sigla": "EF"
+  },
+  {
+    "Id": 3,
+    "Nome": "Educação de Jovens e Adultos",
+    "Sigla": "EJA"
+  }
+]

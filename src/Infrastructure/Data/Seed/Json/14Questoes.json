@@ -1,0 +1,68 @@
+[
+  {
+    "Id": 1,
+    "DescritorId": 1,
+    "Item": "P01",
+    "Descricao": "Questao 01 - Descritor 1"
+  },
+  {
+    "Id": 2,
+    "DescritorId": 1,
+    "Item": "P02",
+    "Descricao": "Questao 02 - Descritor 1"
+  },
+  {
+    "Id": 3,
+    "DescritorId": 1,
+    "Item": "P03",
+    "Descricao": "Questao 03 - Descritor 1"
+  },
+  {
+    "Id": 4,
+    "DescritorId": 1,
+    "Item": "P04",
+    "Descricao": "Questao 04 - Descritor 1"
+  },
+  {
+    "Id": 5,
+    "DescritorId": 2,
+    "Item": "P01",
+    "Descricao": "Questao 01 - Descritor 2"
+  },
+  {
+    "Id": 6,
+    "DescritorId": 2,
+    "Item": "P02",
+    "Descricao": "Questao 02 - Descritor 2"
+  },
+  {
+    "Id": 7,
+    "DescritorId": 3,
+    "Item": "P01",
+    "Descricao": "Questao 01 - Descritor 3"
+  },
+  {
+    "Id": 8,
+    "DescritorId": 4,
+    "Item": "P01",
+    "Descricao": "Questao 01 - Descritor 4"
+  },
+  {
+    "Id": 9,
+    "DescritorId": 4,
+    "Item": "P02",
+    "Descricao": "Questao 02 - Descritor 4"
+  },
+  {
+    "Id": 10,
+    "DescritorId": 2,
+    "Item": "P01",
+    "Descricao": "Teste"
+  },
+  {
+    "Id": 11,
+    "DescritorId": 3,
+    "Item": "P02",
+    "Descricao": "Teste2"
+  }
+]

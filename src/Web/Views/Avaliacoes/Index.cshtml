@@ -1,38 +1,96 @@
-﻿@model IEnumerable<SAED.ApplicationCore.Entities.Avaliacao>
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="SAED - Simulado de Avaliação Educacional de Juazeiro-BA">
+    <meta name="author" content="Tácio de Souza Campos">
+    <title>Avaliacões - SAED</title>
 
-@{
-    ViewData["Title"] = "Index";
-}
+    <link rel="icon" href="~/assets/favicon/favicon.ico">
 
-<h1>Index</h1>
+    <!-- Icons-->
+    <link href="~/vendors/coreui/icons/css/free.min.css" rel="stylesheet">
+    <link href="~/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Código</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Codigo)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-controller="Avaliacoes" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+    <!-- Bootstrap Styles -->
+    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- CoreUI Styles -->
+    <link href="~/vendors/coreui/dist/css/coreui.min.css" rel="stylesheet">
+
+    <!-- Pace Progress Styles -->
+    <link href="~/vendors/pace-progress/css/pace.css" rel="stylesheet">
+
+    <!-- Main Styles -->
+    <link href="~/css/home.min.css" rel="stylesheet">
+
+    <link href="@Url.Content("~/css/sign.css")" rel="stylesheet" type="text/css" />
+</head>
+<body class="c-app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center ga">
+
+            <main class="d-flex justify-content-center align-items-center vh-100">
+                <div class="card-group card-container">
+                    <div class="card px-4 py-2">
+                        <section class="card-body">
+                            <form asp-controller="Avaliacoes" asp-action="Entrar" method="post">
+                                <h1 class="card-title text-center">Avaliações</h1>
+                                <hr />
+                                <select name="avaliacaoId" id="selectAvaliacao" class="form-control my-4" asp-items="Model">
+                                    <option disabled selected value=""> -- Selecione a avaliação -- </option>
+                                </select>
+                                <div class="d-flex justify-content-center">
+                                    <a class="btn btn-outline-dark mr-2 w-25 logout">
+                                        <i class="c-sidebar-nav-icon cil-account-logout mr-1"></i>Sair
+                                    </a>
+                                    <button type="submit" class="btn btn-primary btn-confirm w-25" disabled>
+                                        Entrar
+                                    </button>
+                                </div>
+                            </form>
+                            <form class="logout-form"
+                                  asp-area="Identity"
+                                  asp-page="/Account/Logout"
+                                  asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <!-- JQuery -->
+    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- CoreUI and necessary plugins-->
+    <script src="~/vendors/pace-progress/js/pace.min.js"></script>
+    <script src="~/vendors/coreui/dist/js/coreui.bundle.min.js"></script>
+
+    <script>
+        function validadeBtnEntrar() {
+            document.querySelector("#selectAvaliacao")
+                .addEventListener("change", () => {
+                    document.querySelector(".btn-confirm").removeAttribute('disabled');
+                });
         }
-    </tbody>
-</table>
+
+        function logout() {
+            document.querySelector(".logout")
+                .addEventListener("click", () => {
+                    const logoutForm = document.querySelector(".logout-form");
+                    logoutForm.submit();
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            validadeBtnEntrar();
+            logout();
+        });
+    </script>
+</body>
+</html>

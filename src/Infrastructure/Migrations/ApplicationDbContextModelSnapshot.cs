@@ -153,6 +153,47 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Alternativa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Correta")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestaoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestaoId");
+
+                    b.ToTable("Alternativa");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Aluno", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Nascimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Aluno");
+                });
+
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Avaliacao", b =>
                 {
                     b.Property<int>("Id")
@@ -189,6 +230,436 @@ namespace Infrastructure.Migrations
                             Codigo = "2022",
                             Status = 0
                         });
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplina", b =>
+                {
+                    b.Property<int>("DisciplinaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AvaliacaoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DisciplinaId", "AvaliacaoId");
+
+                    b.HasIndex("AvaliacaoId");
+
+                    b.ToTable("AvaliacaoDisciplina");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDistrito", b =>
+                {
+                    b.Property<int>("AvaliacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DistritoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AvaliacaoId", "DistritoId");
+
+                    b.HasIndex("DistritoId");
+
+                    b.ToTable("AvaliacaoDistrito");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Curso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sigla")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Curso");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Descritor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TemaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TemaId");
+
+                    b.ToTable("Descritor");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Disciplina", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sigla")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Disciplina");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Distrito", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Distancia")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Zona")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Distrito");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Escola", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Bairro")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Complemento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DistritoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Endereco")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Inep")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MatrizId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Numero")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Telefone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DistritoId");
+
+                    b.HasIndex("MatrizId");
+
+                    b.ToTable("Escola");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Etapa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Normativa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SegmentoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SegmentoId");
+
+                    b.ToTable("Etapa");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.EtapaDescritor", b =>
+                {
+                    b.Property<int>("EtapaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DescritorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EtapaId", "DescritorId");
+
+                    b.HasIndex("DescritorId");
+
+                    b.ToTable("EtapaDescritor");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Forma", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Forma");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Questao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DescritorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HTML")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Habilitada")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DescritorId");
+
+                    b.ToTable("Questao");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.QuestaoAvaliacao", b =>
+                {
+                    b.Property<int>("AvaliacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestaoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AvaliacaoId", "QuestaoId");
+
+                    b.HasIndex("QuestaoId");
+
+                    b.ToTable("QuestaoAvaliacao");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.RespostaAluno", b =>
+                {
+                    b.Property<int>("AvaliacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlunoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlternativaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AvaliacaoId", "AlunoId", "AlternativaId");
+
+                    b.HasIndex("AlternativaId")
+                        .IsUnique();
+
+                    b.HasIndex("AlunoId");
+
+                    b.ToTable("RespostaAluno");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Sala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EscolaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EscolaId");
+
+                    b.ToTable("Sala");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Segmento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CursoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sigla")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CursoId");
+
+                    b.ToTable("Segmento");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Tema", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DisciplinaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisciplinaId");
+
+                    b.ToTable("Tema");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Turma", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EtapaId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Extinta")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("FormaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QtdAlunos")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TurnoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EtapaId");
+
+                    b.HasIndex("FormaId");
+
+                    b.HasIndex("SalaId");
+
+                    b.HasIndex("TurnoId");
+
+                    b.ToTable("Turma");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.TurmaAluno", b =>
+                {
+                    b.Property<int>("TurmaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlunoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TurmaId", "AlunoId");
+
+                    b.HasIndex("AlunoId");
+
+                    b.ToTable("TurmaAluno");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Turno", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Regime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Turno");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.UsuarioTurmaAvaliacao", b =>
+                {
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TurmaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AvaliacaoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ApplicationUserId", "TurmaId", "AvaliacaoId");
+
+                    b.HasIndex("AvaliacaoId");
+
+                    b.HasIndex("TurmaId");
+
+                    b.ToTable("UsuarioTurmaAvaliacao");
                 });
 
             modelBuilder.Entity("SAED.Infrastructure.Identity.ApplicationUser", b =>
@@ -306,6 +777,220 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Alternativa", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Questao", "Questao")
+                        .WithMany("Alternativas")
+                        .HasForeignKey("QuestaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplina", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                        .WithMany("AvaliacaoDisciplinas")
+                        .HasForeignKey("AvaliacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Disciplina", "Disciplina")
+                        .WithMany("AvaliacaoDisciplinas")
+                        .HasForeignKey("DisciplinaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDistrito", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                        .WithMany("AvaliacaoDistritos")
+                        .HasForeignKey("AvaliacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Distrito", "Distrito")
+                        .WithMany("AvaliacaoDistritos")
+                        .HasForeignKey("DistritoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Descritor", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Tema", "Tema")
+                        .WithMany("Descritores")
+                        .HasForeignKey("TemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Escola", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Distrito", "Distrito")
+                        .WithMany("Escolas")
+                        .HasForeignKey("DistritoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Escola", "Matriz")
+                        .WithMany()
+                        .HasForeignKey("MatrizId");
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Etapa", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Segmento", "Segmento")
+                        .WithMany("Etapas")
+                        .HasForeignKey("SegmentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.EtapaDescritor", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Descritor", "Descritor")
+                        .WithMany("EtapaDescritores")
+                        .HasForeignKey("DescritorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
+                        .WithMany("EtapaDescritores")
+                        .HasForeignKey("EtapaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Questao", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Descritor", "Descritor")
+                        .WithMany("Questoes")
+                        .HasForeignKey("DescritorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.QuestaoAvaliacao", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                        .WithMany("QuestaoAvaliacoes")
+                        .HasForeignKey("AvaliacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Questao", "Questao")
+                        .WithMany("QuestaoAvaliacoes")
+                        .HasForeignKey("QuestaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.RespostaAluno", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Alternativa", "Alternativa")
+                        .WithOne("RespostaAlunos")
+                        .HasForeignKey("SAED.ApplicationCore.Entities.RespostaAluno", "AlternativaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Aluno", "Aluno")
+                        .WithMany("RespostaAlunos")
+                        .HasForeignKey("AlunoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                        .WithMany("RespostaAlunos")
+                        .HasForeignKey("AvaliacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Sala", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Escola", "Escola")
+                        .WithMany("Salas")
+                        .HasForeignKey("EscolaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Segmento", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Curso", "Curso")
+                        .WithMany("Segmentos")
+                        .HasForeignKey("CursoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Tema", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Disciplina", "Disciplina")
+                        .WithMany("Temas")
+                        .HasForeignKey("DisciplinaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.Turma", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
+                        .WithMany("Turmas")
+                        .HasForeignKey("EtapaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Forma", "Forma")
+                        .WithMany("Turmas")
+                        .HasForeignKey("FormaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Sala", "Sala")
+                        .WithMany("Turmas")
+                        .HasForeignKey("SalaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Turno", "Turno")
+                        .WithMany("Turmas")
+                        .HasForeignKey("TurnoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.TurmaAluno", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Aluno", "Aluno")
+                        .WithMany("TurmaAlunos")
+                        .HasForeignKey("AlunoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Turma", "Turma")
+                        .WithMany("TurmaAlunos")
+                        .HasForeignKey("TurmaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.UsuarioTurmaAvaliacao", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                        .WithMany("UsuarioTurmaAvaliacao")
+                        .HasForeignKey("AvaliacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Turma", "Turma")
+                        .WithMany("UsuarioTurmaAvaliacao")
+                        .HasForeignKey("TurmaId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

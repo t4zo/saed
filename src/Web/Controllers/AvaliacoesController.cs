@@ -1,13 +1,18 @@
 ﻿using System.Threading.Tasks;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Specifications;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SAED.Infrastructure.Identity;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using SAED.ApplicationCore.Constants;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SAED.Web.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class AvaliacoesController : Controller
     {
@@ -24,35 +29,33 @@ namespace SAED.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var avaliacoes = await _avalicaoRepository.ListAllAsync();
-            return View(avaliacoes);
+            return View(new SelectList(avaliacoes, "Id", "Codigo"));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Details(int id)
         {
-            var avaliacaoSpec = new AvaliacoesWithSpecification(id);
-
-            var avaliacao = await _avalicaoRepository.FirstOrDefaultAsync(avaliacaoSpec);
-
+            var avaliacao = await _avalicaoRepository.GetByIdAsync(id);
             return View(avaliacao);
+        }
 
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-            //if (user == null)
-            //{
-            //    return NotFound();
-            //}
+        [HttpPost]
+        public async Task<IActionResult> Entrar(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            //var avaliacao = await _avalicaoRepository.GetByIdAsync(id);
 
             //HttpContext.Session.SetString("user", JsonConvert.SerializeObject(user));
             //HttpContext.Session.SetString("avaliacao", JsonConvert.SerializeObject(avaliacao));
 
-            //var roles = await _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
 
-            //if (roles.Contains(AuthorizationConstants.Roles.ADMINISTRATOR))
-            //{
-            //    return Redirect(Url.RouteUrl(new { controller = "dashboard", action = "index", area = "administrador" }));
-            //}
+            if (roles.Contains(AuthorizationConstants.Roles.ADMINISTRADOR))
+            {
+                return Redirect(Url.RouteUrl(new { controller = "Dashboard", action = "Index", area = "Administrador" }));
+            }
 
-            //return Redirect(Url.RouteUrl(new { controller = "alunos", action = "index", area = "exame" }));
+            return Redirect(Url.RouteUrl(new { controller = "Alunos", action = "Index", area = "Exame" }));
         }
     }
 }
