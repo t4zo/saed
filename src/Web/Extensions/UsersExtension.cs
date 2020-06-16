@@ -8,6 +8,7 @@ using SAED.Infrastructure.Identity;
 using SAED.Web.Configurations;
 using System;
 using System.Threading.Tasks;
+using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
 {
@@ -32,6 +33,11 @@ namespace SAED.Web.Extensions
                 {
                     var user = new ApplicationUser { UserName = _user.UserName, Email = _user.Email };
                     var result = await userManager.CreateAsync(user, _user.Password);
+
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddClaimAsync(user, new System.Security.Claims.Claim(CustomClaimTypes.Permission, Permissions.Users.View));
+                    }
 
                     foreach (var role in _user.Roles)
                     {

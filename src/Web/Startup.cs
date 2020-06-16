@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
+using SAED.Web.Authorization;
 using SAED.Web.Extensions;
 using System;
 
@@ -28,6 +30,9 @@ namespace SAED.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             services.AddDbContext<ApplicationDbContext>();
 

@@ -50,7 +50,7 @@ namespace SAED.Web.Controllers
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            if (roles.Contains(AuthorizationConstants.Roles.ADMINISTRADOR))
+            if (roles.Contains(AuthorizationConstants.Roles.SUPERUSER) || roles.Contains(AuthorizationConstants.Roles.ADMINISTRADOR))
             {
                 return Redirect(Url.RouteUrl(new { controller = "Dashboard", action = "Index", area = "Administrador" }));
             }

@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Repositories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Data\Seed\Json\00Avaliacoes.json" />
   </ItemGroup>
 
@@ -28,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
   
 </Project>

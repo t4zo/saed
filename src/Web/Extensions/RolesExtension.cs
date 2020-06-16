@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SAED.Web.Configurations;
 using System;
 using System.Threading.Tasks;
+using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
 {
@@ -31,6 +32,8 @@ namespace SAED.Web.Extensions
                     {
                         await roleManager.CreateAsync(new IdentityRole<int> { Name = role, NormalizedName = role.ToUpper() });
                     }
+
+                    await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).Result, new System.Security.Claims.Claim(CustomClaimTypes.Permission, Permissions.Users.View));
                 }
             }
 
