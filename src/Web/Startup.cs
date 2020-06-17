@@ -14,12 +14,15 @@ using SAED.Infrastructure.Identity;
 using SAED.Web.Authorization;
 using SAED.Web.Extensions;
 using System;
+using Web.Extensions;
 
 namespace SAED.Web
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
+        private const string _defaultCorsPolicyName = "localhost";
 
         public Startup(IConfiguration configuration)
         {
@@ -35,6 +38,8 @@ namespace SAED.Web
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             services.AddDbContext<ApplicationDbContext>();
+
+            services.AddCustomCors(_defaultCorsPolicyName);
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole<int>>()
@@ -93,6 +98,8 @@ namespace SAED.Web
             app.CreateRoles(serviceProvider, Configuration).Wait();
             app.CreateUsers(serviceProvider, Configuration).Wait();
             app.SeedDatabase(serviceProvider).Wait();
+
+            app.UseCors(_defaultCorsPolicyName);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

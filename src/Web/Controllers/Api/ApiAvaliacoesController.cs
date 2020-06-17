@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SAED.Web.Controllers.Api
 {
+    [Route("v1/avaliacoes")]
     public class ApiAvaliacoesController : BaseApiController
     {
         private readonly IAsyncRepository<Avaliacao> _avalicaoRepository;

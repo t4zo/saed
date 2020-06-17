@@ -2,7 +2,7 @@
 
 namespace SAED.Web.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     [ApiController]
     public class BaseApiController : ControllerBase
     { }
