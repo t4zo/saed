@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SAED.ApplicationCore.Interfaces;
+using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Entities
 {
-    public class Distrito : BaseEntity
+    public class Distrito : BaseEntity, IAggregateRoot
     {
         public string Nome { get; set; }
         public string Zona { get; set; }

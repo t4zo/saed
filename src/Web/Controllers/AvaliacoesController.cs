@@ -4,7 +4,6 @@ using SAED.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SAED.Infrastructure.Identity;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using SAED.ApplicationCore.Constants;
 using Microsoft.AspNetCore.Mvc.Rendering;
