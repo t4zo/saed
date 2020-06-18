@@ -4,14 +4,13 @@ using SAED.ApplicationCore.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace SAED.Web.Controllers.Api
+namespace SAED.Web.Areas.Api.Controllers
 {
-    [Route("v1/avaliacoes")]
-    public class ApiAvaliacoesController : BaseApiController
+    public class AvaliacoesController : BaseApiController
     {
         private readonly IAsyncRepository<Avaliacao> _avalicaoRepository;
 
-        public ApiAvaliacoesController(IAsyncRepository<Avaliacao> avalicaoRepository)
+        public AvaliacoesController(IAsyncRepository<Avaliacao> avalicaoRepository)
         {
             _avalicaoRepository = avalicaoRepository;
         }

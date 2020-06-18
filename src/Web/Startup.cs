@@ -113,8 +113,8 @@ namespace SAED.Web
             {
                 endpoints.MapAreaControllerRoute(
                     name: "administrador",
-                    areaName: "administrador",
-                    pattern: "administrador/{controller=Home}/{action=Index}/{id?}"
+                    areaName: "Administrador",
+                    pattern: "{area=Administrador}/{controller=Home}/{action=Index}/{id?}"
                 ).RequireAuthorization();
 
                 endpoints.MapControllerRoute(

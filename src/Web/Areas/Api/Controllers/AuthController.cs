@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SAED.Infrastructure.Identity;
-using SAED.Web.Controllers.Api;
 using System.Threading.Tasks;
 
-namespace Web.Controllers.Api
+namespace SAED.Web.Areas.Api.Controllers
 {
     public class ApiAuthDto
     {
@@ -12,12 +11,11 @@ namespace Web.Controllers.Api
         public string Password { get; set; }
     }
 
-    [Route("v1/auth")]
-    public class ApiAuthController : BaseApiController
+    public class AuthController : BaseApiController
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public ApiAuthController(SignInManager<ApplicationUser> signInManager)
+        public AuthController(SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
         }

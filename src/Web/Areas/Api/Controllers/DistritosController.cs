@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
-using SAED.Web.Controllers.Api;
 using System.Threading.Tasks;
 
-namespace Web.Controllers.Api
+namespace SAED.Web.Areas.Api.Controllers
 {
-    [Route("v1/distritos")]
-    public class ApiDistritosController : BaseApiController
+    public class DistritosController : BaseApiController
     {
         private readonly IAsyncRepository<Distrito> _distritoRepository;
 
-        public ApiDistritosController(IAsyncRepository<Distrito> distritoRepository)
+        public DistritosController(IAsyncRepository<Distrito> distritoRepository)
         {
             _distritoRepository = distritoRepository;
         }
