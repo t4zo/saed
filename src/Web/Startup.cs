@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SAED.ApplicationCore.Interfaces;
+using SAED.ApplicationCore.Services;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Authorization;
@@ -32,6 +32,7 @@ namespace SAED.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IUnityOfWork, UnityOfWorkService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
@@ -83,20 +84,15 @@ namespace SAED.Web
                 app.UseHsts();
             }
 
-            if (Configuration["DOCKER"] == "True")
-            {
-                var context = serviceProvider.GetService<ApplicationDbContext>();
-                context.Database.Migrate();
-            }
+            app.IsInDocker(serviceProvider, Configuration);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.CreateRoles(serviceProvider, Configuration).Wait();
-            app.CreateUsers(serviceProvider, Configuration).Wait();
-            app.SeedDatabase(serviceProvider).Wait();
+            app.CreateRolesAsync(serviceProvider, Configuration).Wait();
+            app.CreateUsersAsync(serviceProvider, Configuration).Wait();
 
             app.UseCors(_defaultCorsPolicyName);
 

@@ -16,12 +16,6 @@ namespace Infrastructure.Data.Config
             //List<Avaliacao> entities = JsonConvert.DeserializeObject<List<Avaliacao>>(json);
 
             //builder.HasData(entities);
-
-            builder.HasData(
-                new Avaliacao { Id = 1, Codigo = "2020", Status = StatusAvaliacao.EmAndamento },
-                new Avaliacao { Id = 2, Codigo = "2021", Status = StatusAvaliacao.ARealizar },
-                new Avaliacao { Id = 3, Codigo = "2022", Status = StatusAvaliacao.ARealizar }
-            );
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SAED.Web.Extensions
 {
     public static class RolesExtension
     {
-        public static async Task<IApplicationBuilder> CreateRoles(
+        public static async Task<IApplicationBuilder> CreateRolesAsync(
             this IApplicationBuilder app,
             IServiceProvider serviceProvider,
             IConfiguration configuration

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SAED.ApplicationCore.Interfaces;
+using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Entities
 {
-   public class Escola : BaseEntity
+   public class Escola : BaseEntity, IAggregateRoot
     {
         public int? Inep { get; set; }
         public int? MatrizId { get; set; }

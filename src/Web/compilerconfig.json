@@ -1,34 +1,34 @@
 ﻿[
   {
-    "outputFile": "wwwroot/vendors/coreui/dist/css/coreui.css",
-    "inputFile": "Styles/vendors/coreui/style.scss"
+    "outputFile": "Web.wwwroot/vendors/coreui/dist/css/coreui.css",
+    "inputFile": "Web.Styles/vendors/coreui/style.scss"
   },
   {
-    "outputFile": "wwwroot/vendors/bootstrap/dist/css/bootstrap.css",
-    "inputFile": "Styles/vendors/bootstrap/style.scss"
+    "outputFile": "Web.wwwroot/vendors/bootstrap/dist/css/bootstrap.css",
+    "inputFile": "Web.Styles/vendors/bootstrap/style.scss"
   },
   {
-    "outputFile": "wwwroot/vendors/pace-progress/css/pace.css",
-    "inputFile": "Styles/vendors/pace-progress/pace.scss"
+    "outputFile": "Web.wwwroot/vendors/pace-progress/css/pace.css",
+    "inputFile": "Web.Styles/vendors/pace-progress/pace.scss"
   },
   {
-    "outputFile": "wwwroot/css/administrador/table/icons.css",
-    "inputFile": "Areas/Administrador/Styles/table/icons.scss"
+    "outputFile": "Web.wwwroot/css/administrador/table/icons.css",
+    "inputFile": "Web.Areas/Administrador/Styles/table/icons.scss"
   },
   {
-    "outputFile": "wwwroot/css/administrador/table/header.css",
-    "inputFile": "Areas/Administrador/Styles/table/header.scss"
+    "outputFile": "Web.wwwroot/css/administrador/table/header.css",
+    "inputFile": "Web.Areas/Administrador/Styles/table/header.scss"
   },
   {
-    "outputFile": "wwwroot/css/exame/aluno.css",
-    "inputFile": "Areas/Exame/Styles/aluno.scss"
+    "outputFile": "Web.wwwroot/css/exame/aluno.css",
+    "inputFile": "Web.Areas/Exame/Styles/aluno.scss"
   },
   {
-    "outputFile": "wwwroot/css/sign.css",
-    "inputFile": "Styles/sign.scss"
+    "outputFile": "Web.wwwroot/css/sign.css",
+    "inputFile": "Web.Styles/sign.scss"
   },
   {
-    "outputFile": "wwwroot/css/home.css",
-    "inputFile": "Styles/home.scss"
+    "outputFile": "Web.wwwroot/css/home.css",
+    "inputFile": "Web.Styles/home.scss"
   }
 ]

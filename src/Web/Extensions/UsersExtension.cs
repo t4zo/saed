@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SAED.ApplicationCore.Constants;
+using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Configurations;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
@@ -14,7 +17,7 @@ namespace SAED.Web.Extensions
 {
     public static class UsersExtension
     {
-        public static async Task<IApplicationBuilder> CreateUsers(
+        public static async Task<IApplicationBuilder> CreateUsersAsync(
             this IApplicationBuilder app,
             IServiceProvider serviceProvider,
             IConfiguration configuration
@@ -43,6 +46,17 @@ namespace SAED.Web.Extensions
                     {
                         await userManager.AddToRoleAsync(user, role);
                     };
+
+                    if(await userManager.IsInRoleAsync(user, AuthorizationConstants.PermissionsAndRoles.APLICADOR))
+                    {
+                        var avaliacoes = await context.Avaliacoes.Where(a => a.Status == StatusAvaliacao.EmAndamento).ToListAsync();
+                        foreach (var avaliacao in avaliacoes)
+                        {
+                            context.Add(new UsuarioTurmaAvaliacao { ApplicationUserId = user.Id, AvaliacaoId = avaliacao.Id, TurmaId = 1 });
+                        }
+
+                        await context.SaveChangesAsync();
+                    }
                 };
             }
 

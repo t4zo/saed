@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 
 namespace SAED.Infrastructure.Data
 {
-    /// <summary>
-    /// "There's some repetition here - couldn't we have some the sync methods call the async?"
-    /// https://blogs.msdn.microsoft.com/pfxteam/2012/04/13/should-i-expose-synchronous-wrappers-for-asynchronous-methods/
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class EfRepository<T> : IAsyncRepository<T> where T : BaseEntity, IAggregateRoot
     {
         protected readonly ApplicationDbContext _context;
@@ -47,21 +42,22 @@ namespace SAED.Infrastructure.Data
         public async Task<T> AddAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync();
 
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public Task UpdateAsync(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+         
+            return Task.FromResult(entity);
         }
 
-        public async Task DeleteAsync(T entity)
+        public Task DeleteAsync(T entity)
         {
             _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+
+            return Task.FromResult(entity);
         }
 
         public async Task<T> FirstAsync(ISpecification<T> spec)

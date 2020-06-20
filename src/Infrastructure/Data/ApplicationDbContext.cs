@@ -25,6 +25,8 @@ namespace SAED.Infrastructure.Data
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            builder.SeedDatabase();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

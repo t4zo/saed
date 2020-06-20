@@ -1,21 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SAED.ApplicationCore.Constants;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
-namespace Web.Areas.Administrador.Controllers
+namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Authorize]
-    [Area("Administrador")]
+    [Area(AuthorizationConstants.Areas.Administrador)]
     public class DashboardController : Controller
     {
         [Authorize(Permissions.Users.View)]
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        [Authorize(Permissions.Users.Test)]
-        public IActionResult Privacy()
         {
             return View();
         }

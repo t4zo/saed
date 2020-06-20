@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Escola>
+
+@{
+    ViewData["Title"] = "Escolas";
+}
+
+<div class="card p-3">
+    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Escolas", Controller = "Escolas", Action = "Escolas" });}
+    <table id="table_id" class="table table-hover mdl-data-table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Distrito)</th>
+                <th>Escola</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Telefone)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Distrito.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
+                    <td class="d-flex flex-wrap">
+                        <a class="action-icon-container mx-lg-2 my-1 my-sm-0" title="Editar" asp-action="Update" asp-route-id="@item.Id"><i class="cil-pencil font-lg"></i></a>
+                        <a class="action-icon-container mx-lg-2 my-1 my-sm-0" title="Remover" asp-action="Delete" asp-route-id="@item.Id"><i class="cil-trash font-lg"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

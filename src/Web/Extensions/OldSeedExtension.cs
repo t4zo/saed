@@ -4,17 +4,18 @@ using SAED.Infrastructure.Data;
 using SAED.ApplicationCore.Entities;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace SAED.Web.Extensions
 {
-    public static class SeedExtension
+    public static class OldSeedExtension
     {
-        public static async Task<IApplicationBuilder> SeedDatabase(
-            this IApplicationBuilder app,
-            IServiceProvider serviceProvider
-            )
-        {
-            var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+        //public static async Task<IApplicationBuilder> SeedDatabaseAsync(
+        //    this IApplicationBuilder app,
+        //    IServiceProvider serviceProvider
+        //    )
+        //{
+            //var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
             //await new AvaliacoesSeed(context).LoadAsync();
 
@@ -46,7 +47,7 @@ namespace SAED.Web.Extensions
             //await new EtapaDescritoresSeed(context).LoadAsync();
             //await new QuestaoAvaliacoesSeed(context).LoadAsync();
 
-            return app;
-        }
+        //    return app;
+        //}
     }
 }

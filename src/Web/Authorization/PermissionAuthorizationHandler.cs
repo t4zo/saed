@@ -29,7 +29,7 @@ namespace SAED.Web.Authorization
             }
 
             // Autoriza se for Superusuário
-            if (await _userManager.IsInRoleAsync(user, Roles.SUPERUSER))
+            if (await _userManager.IsInRoleAsync(user, PermissionsAndRoles.SUPERUSER))
             {
                 context.Succeed(requirement);
                 return;
