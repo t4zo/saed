@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using SAED.ApplicationCore.Entities;
+﻿using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SAED.Infrastructure.Data.Seed
@@ -33,7 +33,7 @@ namespace SAED.Infrastructure.Data.Seed
                 using var reader = new StreamReader(stream, Encoding.UTF8);
 
                 string json = await reader.ReadToEndAsync();
-                List<TEntity> entities = JsonConvert.DeserializeObject<List<TEntity>>(json);
+                List<TEntity> entities = JsonSerializer.Deserialize<List<TEntity>>(json);
 
                 foreach (var entity in entities)
                 {
