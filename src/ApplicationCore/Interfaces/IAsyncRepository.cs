@@ -1,5 +1,5 @@
-﻿using SAED.ApplicationCore.Entities;
-using Ardalis.Specification;
+﻿using Ardalis.Specification;
+using SAED.ApplicationCore.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

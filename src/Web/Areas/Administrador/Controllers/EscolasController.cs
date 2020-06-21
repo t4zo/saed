@@ -118,7 +118,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<ActionResult<Escola>> Delete(int id)
         {
             var escola = await _escolasRepository.GetByIdAsync(id);
-            if(escola == null)
+            if (escola == null)
             {
                 return NotFound();
             }

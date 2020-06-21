@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SAED.Infrastructure.Identity;
-using Microsoft.AspNetCore.Http;
-using SAED.ApplicationCore.Constants;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
+using SAED.ApplicationCore.Constants;
+using SAED.ApplicationCore.Entities;
+using SAED.ApplicationCore.Interfaces;
+using SAED.Infrastructure.Identity;
+using System.Threading.Tasks;
 
 namespace SAED.Web.Controllers
 {

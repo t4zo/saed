@@ -1,6 +1,6 @@
-﻿using SAED.ApplicationCore.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SAED.ApplicationCore.Entities;
 
 namespace SAED.Infrastructure.Config
 {
@@ -21,10 +21,11 @@ namespace SAED.Infrastructure.Config
                 .HasForeignKey(pessoaTurmaAvaliacao => pessoaTurmaAvaliacao.AvaliacaoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasKey(pessoaTurmaAvaliacao => new { 
-                pessoaTurmaAvaliacao.ApplicationUserId, 
-                pessoaTurmaAvaliacao.TurmaId, 
-                pessoaTurmaAvaliacao.AvaliacaoId 
+            builder.HasKey(pessoaTurmaAvaliacao => new
+            {
+                pessoaTurmaAvaliacao.ApplicationUserId,
+                pessoaTurmaAvaliacao.TurmaId,
+                pessoaTurmaAvaliacao.AvaliacaoId
             });
         }
     }

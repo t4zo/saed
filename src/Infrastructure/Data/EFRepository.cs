@@ -49,7 +49,7 @@ namespace SAED.Infrastructure.Data
         public Task UpdateAsync(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-         
+
             return Task.FromResult(entity);
         }
 

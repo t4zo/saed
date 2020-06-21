@@ -15,7 +15,7 @@ namespace SAED.Web.Areas.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index()
         {
             var distritos = await _distritoRepository.ListAllAsync();
 

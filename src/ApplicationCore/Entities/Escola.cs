@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Entities
 {
-   public class Escola : BaseEntity, IAggregateRoot
+    public class Escola : BaseEntity, IAggregateRoot
     {
         public int? Inep { get; set; }
         public int? MatrizId { get; set; }

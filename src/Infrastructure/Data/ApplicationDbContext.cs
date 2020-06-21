@@ -1,10 +1,10 @@
-﻿using SAED.ApplicationCore.Entities;
-using SAED.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using SAED.ApplicationCore.Entities;
+using SAED.Infrastructure.Identity;
+using System.Reflection;
 
 namespace SAED.Infrastructure.Data
 {

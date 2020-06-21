@@ -16,7 +16,7 @@ namespace SAED.ApplicationCore.Entities
 
     public enum StatusAvaliacao
     {
-        ARealizar= 0,
+        ARealizar = 0,
         EmAndamento = 1,
         Finalizada = 2,
     }

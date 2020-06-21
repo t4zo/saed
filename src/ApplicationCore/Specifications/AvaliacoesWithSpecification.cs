@@ -1,5 +1,5 @@
-﻿using SAED.ApplicationCore.Entities;
-using Ardalis.Specification;
+﻿using Ardalis.Specification;
+using SAED.ApplicationCore.Entities;
 
 namespace SAED.ApplicationCore.Specifications
 {

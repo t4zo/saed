@@ -1,5 +1,3 @@
-using System;
-
 namespace SAED.Models
 {
     public class ErrorViewModel

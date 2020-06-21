@@ -4,7 +4,7 @@ using SAED.ApplicationCore.Entities;
 
 namespace Infrastructure.Data.Config
 {
-    class AvaliacaoConfiguration : IEntityTypeConfiguration<Avaliacao>
+    internal class AvaliacaoConfiguration : IEntityTypeConfiguration<Avaliacao>
     {
         public void Configure(EntityTypeBuilder<Avaliacao> builder)
         {

@@ -18,7 +18,7 @@ namespace SAED.Infrastructure.Config
                 .HasOne(disciplinaAvaliacao => disciplinaAvaliacao.Avaliacao)
                 .WithMany(avaliacao => avaliacao.AvaliacaoDisciplinas)
                 .HasForeignKey(disciplinaAvaliacao => disciplinaAvaliacao.AvaliacaoId)
-                .OnDelete(DeleteBehavior.Restrict);            
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasKey(avaliacaoTurma => new { avaliacaoTurma.DisciplinaId, avaliacaoTurma.AvaliacaoId });
         }

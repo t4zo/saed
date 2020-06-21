@@ -9,8 +9,8 @@ namespace SAED.Web.Authorization
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
-        UserManager<ApplicationUser> _userManager;
-        RoleManager<IdentityRole<int>> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
 
         public PermissionAuthorizationHandler(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<int>> roleManager)
         {
