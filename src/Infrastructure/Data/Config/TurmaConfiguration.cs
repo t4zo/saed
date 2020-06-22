@@ -2,31 +2,40 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.ApplicationCore.Entities;
 
-namespace SAED.Infrastructure.Config
+namespace SAED.Infrastructure.Data.Config
 {
     public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
     {
         public void Configure(EntityTypeBuilder<Turma> builder)
         {
-            builder.Property(x => x.Id);
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Nome)
+                .HasMaxLength(32)
+                .IsRequired();
+
+            builder.Property(x => x.QtdAlunos)
+                .IsRequired();
 
             builder.HasOne(turma => turma.Sala)
                 .WithMany(sala => sala.Turmas)
-                .HasForeignKey(turma => turma.SalaId);
+                .HasForeignKey(turma => turma.SalaId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(turma => turma.Etapa)
                 .WithMany(etapa => etapa.Turmas)
-                .HasForeignKey(turma => turma.EtapaId);
+                .HasForeignKey(turma => turma.EtapaId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(turma => turma.Turno)
                 .WithMany(turno => turno.Turmas)
-                .HasForeignKey(turma => turma.TurnoId);
+                .HasForeignKey(turma => turma.TurnoId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(turma => turma.Forma)
                 .WithMany(forma => forma.Turmas)
-                .HasForeignKey(turma => turma.FormaId);
-
-            builder.HasKey(turma => turma.Id);
+                .HasForeignKey(turma => turma.FormaId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

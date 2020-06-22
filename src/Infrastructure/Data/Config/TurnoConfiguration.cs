@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.ApplicationCore.Entities;
 
-namespace SAED.Infrastructure.Config
+namespace SAED.Infrastructure.Data.Config
 {
     public class TurnoConfiguration : IEntityTypeConfiguration<Turno>
     {
         public void Configure(EntityTypeBuilder<Turno> builder)
         {
-            builder.Property(x => x.Id);
+            builder.HasKey(x => x.Id);
 
-            builder.HasKey(turno => turno.Id);
+            builder.Property(x => x.Nome)
+                .HasMaxLength(32)
+                .IsRequired();
         }
     }
 }

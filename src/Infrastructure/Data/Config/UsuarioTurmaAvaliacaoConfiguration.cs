@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.ApplicationCore.Entities;
 
-namespace SAED.Infrastructure.Config
+namespace SAED.Infrastructure.Data.Config
 {
     public class UsuarioTurmaAvaliacaoConfiguration : IEntityTypeConfiguration<UsuarioTurmaAvaliacao>
     {
@@ -13,13 +13,13 @@ namespace SAED.Infrastructure.Config
                 .HasOne(pessoaTurmaAvaliacao => pessoaTurmaAvaliacao.Turma)
                 .WithMany(escola => escola.UsuarioTurmaAvaliacao)
                 .HasForeignKey(pessoaTurmaAvaliacao => pessoaTurmaAvaliacao.TurmaId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(pessoaTurmaAvaliacao => pessoaTurmaAvaliacao.Avaliacao)
                 .WithMany(escola => escola.UsuarioTurmaAvaliacao)
                 .HasForeignKey(pessoaTurmaAvaliacao => pessoaTurmaAvaliacao.AvaliacaoId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasKey(pessoaTurmaAvaliacao => new
             {

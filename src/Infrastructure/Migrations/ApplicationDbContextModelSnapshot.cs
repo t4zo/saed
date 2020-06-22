@@ -164,6 +164,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Descricao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestaoId")
@@ -329,7 +330,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -339,13 +342,13 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Nascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Nascimento = new DateTime(2002, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Nome = "Maria Luz"
                         },
                         new
                         {
                             Id = 2,
-                            Nascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Nascimento = new DateTime(1999, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Nome = "João carlos"
                         });
                 });
@@ -358,6 +361,7 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Codigo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
@@ -444,10 +448,14 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("Sigla")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.HasKey("Id");
 
@@ -482,7 +490,9 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<int>("TemaId")
                         .HasColumnType("int");
@@ -594,10 +604,14 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Sigla")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.HasKey("Id");
 
@@ -636,10 +650,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
 
                     b.Property<string>("Zona")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.HasKey("Id");
 
@@ -726,19 +743,24 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Bairro")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Complemento")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<int>("DistritoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("Endereco")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<int?>("Inep")
                         .HasColumnType("int");
@@ -748,13 +770,15 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<int?>("Numero")
                         .HasColumnType("int");
 
                     b.Property<string>("Telefone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
 
                     b.HasKey("Id");
 
@@ -772,7 +796,7 @@ namespace Infrastructure.Migrations
                             Email = "DOISDEJULHOJUAZEIRO@HOTMAIL.COM",
                             Inep = 29024935,
                             Nome = "02 DE JULHO",
-                            Telefone = "(74) 98844-0798"
+                            Telefone = "74988440798"
                         },
                         new
                         {
@@ -781,7 +805,7 @@ namespace Infrastructure.Migrations
                             Email = "QUINZEDEJULHO2014@OUTLOOK.COM",
                             Inep = 29024994,
                             Nome = "15 DE JULHO",
-                            Telefone = "(74) 3611-3278"
+                            Telefone = "7436113278"
                         },
                         new
                         {
@@ -790,7 +814,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLA25.DEJULHO@OUTLOOK.COM",
                             Inep = 29026130,
                             Nome = "25 DE JULHO",
-                            Telefone = "(74) 8806-8024"
+                            Telefone = "7488068024"
                         },
                         new
                         {
@@ -799,7 +823,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026601,
                             Nome = "AMÉRICO TANURI - JUNCO",
-                            Telefone = "(74) 9881-1198"
+                            Telefone = "7498811198"
                         },
                         new
                         {
@@ -808,7 +832,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026148,
                             Nome = "AMÉRICO TANURI - MANIÇOBA",
-                            Telefone = "(74) 98806-7161"
+                            Telefone = "74988067161"
                         },
                         new
                         {
@@ -817,7 +841,7 @@ namespace Infrastructure.Migrations
                             Email = "EMMSBONFIM@HOTMAIL.COM",
                             Inep = 29025699,
                             Nome = "AMÉRICO TANURY - ABÓBORA",
-                            Telefone = "(74) 3617-9072"
+                            Telefone = "7436179072"
                         },
                         new
                         {
@@ -826,7 +850,7 @@ namespace Infrastructure.Migrations
                             Email = "ANALIABARBOSA.EDU@GMAIL.COM",
                             Inep = 29341256,
                             Nome = "ANÁLIA BARBOSA DE SOUZA",
-                            Telefone = "(74) 9155-2384"
+                            Telefone = "7491552384"
                         },
                         new
                         {
@@ -835,7 +859,7 @@ namespace Infrastructure.Migrations
                             Email = "VALDETEMSF@HOTMAIL.COM",
                             Inep = 29026482,
                             Nome = "ANTONIO FRANCISCO DE OLIVEIRA",
-                            Telefone = "(74) 8815-8634"
+                            Telefone = "7488158634"
                         },
                         new
                         {
@@ -844,7 +868,7 @@ namespace Infrastructure.Migrations
                             Email = "CEAJC1@HOTMAIL.COM",
                             Inep = 29429536,
                             Nome = "ARGEMIRO JOSE DA CRUZ",
-                            Telefone = "(74) 3611-0018"
+                            Telefone = "7436110018"
                         },
                         new
                         {
@@ -853,7 +877,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLA_BOMJESUSBARAUNA@HOTMAIL.COM",
                             Inep = 29026156,
                             Nome = "BOM JESUS - BARAÚNA",
-                            Telefone = "(74) 3618-7055"
+                            Telefone = "7436187055"
                         },
                         new
                         {
@@ -880,7 +904,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLACAICJUA@GMAIL.COM",
                             Inep = 29362415,
                             Nome = "CAIC - MISAEL AGUILAR",
-                            Telefone = "(74) 3611-8041"
+                            Telefone = "7436118041"
                         },
                         new
                         {
@@ -889,7 +913,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLA_CAXANGA@HOTMAIL.COM",
                             Inep = 29024650,
                             Nome = "CAXANGÁ",
-                            Telefone = "(74) 3612-2900"
+                            Telefone = "7436122900"
                         },
                         new
                         {
@@ -898,7 +922,7 @@ namespace Infrastructure.Migrations
                             Email = "EMPMANDACARU@GMAIL.COM",
                             Inep = 29025346,
                             Nome = "CELSO CAVALCANTE DE CARVALHO",
-                            Telefone = "(74) 3617-7211"
+                            Telefone = "7436177211"
                         },
                         new
                         {
@@ -907,7 +931,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLACSU.JUA@GMAIL.COM",
                             Inep = 29024668,
                             Nome = "CENTRO SOCIAL URBANO - CSU",
-                            Telefone = "(74) 3611-2744"
+                            Telefone = "7436112744"
                         },
                         new
                         {
@@ -925,7 +949,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026164,
                             Nome = "CORAÇÃO DE JESUS - SERRA DA MADEIRA",
-                            Telefone = "(74) 9635-7165"
+                            Telefone = "7496357165"
                         },
                         new
                         {
@@ -934,7 +958,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLA_RAIMUNDOCUNHALEITE@HOTMAIL.COM",
                             Inep = 29026890,
                             Nome = "DEPUTADO RAIMUNDO DA CUNHA LEITE",
-                            Telefone = "(74) 3617-5001"
+                            Telefone = "7436175001"
                         },
                         new
                         {
@@ -943,7 +967,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLADJR@GMAIL.COM",
                             Inep = 29378893,
                             Nome = "DOM JOSÉ RODRIGUES",
-                            Telefone = "(74) 8811-0737"
+                            Telefone = "7488110737"
                         },
                         new
                         {
@@ -952,7 +976,7 @@ namespace Infrastructure.Migrations
                             Email = "AMILTONGOMES2016@HOTMAIL.COM",
                             Inep = 29026024,
                             Nome = "DOUTOR EDSON RIBEIRO",
-                            Telefone = "(74) 98813-3633"
+                            Telefone = "74988133633"
                         },
                         new
                         {
@@ -961,7 +985,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLADRJOSEDEARAUJO@HOTMAIL.COM",
                             Inep = 29025478,
                             Nome = "DOUTOR JOSÉ DE ARAÚJO SOUZA",
-                            Telefone = "(74) 3613-0580"
+                            Telefone = "7436130580"
                         },
                         new
                         {
@@ -970,7 +994,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLADURVALBARBOSA@GMAL.COM",
                             Inep = 29026911,
                             Nome = "DURVAL BARBOSA DA CUNHA",
-                            Telefone = "(74) 3617-5004"
+                            Telefone = "7436175004"
                         },
                         new
                         {
@@ -979,7 +1003,7 @@ namespace Infrastructure.Migrations
                             Email = "EMMSBONFIM@HOTMAIL.COM",
                             Inep = 29025664,
                             Nome = "E.M.E.I. ABÓBORA",
-                            Telefone = "(74) 3617-9072"
+                            Telefone = "7436179072"
                         },
                         new
                         {
@@ -997,7 +1021,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29025842,
                             Nome = "E.M.E.I. AMÉLIA BORGES",
-                            Telefone = "(74) 8822-3271"
+                            Telefone = "7488223271"
                         },
                         new
                         {
@@ -1015,7 +1039,7 @@ namespace Infrastructure.Migrations
                             Email = "ROSANGELA.ALMEIDA@HOTMAIL.COM",
                             Inep = 29401220,
                             Nome = "E.M.E.I. ANA MARIA MORGADO CHAVES",
-                            Telefone = "(74) 3612-3354"
+                            Telefone = "7436123354"
                         },
                         new
                         {
@@ -1024,7 +1048,7 @@ namespace Infrastructure.Migrations
                             Email = "CENTROANNAHILDA@GMAIL.COM",
                             Inep = 29402120,
                             Nome = "E.M.E.I. ANNA HILDA LEITE FARIAS",
-                            Telefone = "(74) 3612-4696"
+                            Telefone = "7436124696"
                         },
                         new
                         {
@@ -1033,7 +1057,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29461340,
                             Nome = "E.M.E.I. ANTÔNIO GUILHERMINO",
-                            Telefone = "(74) 98805-4502"
+                            Telefone = "74988054502"
                         },
                         new
                         {
@@ -1051,7 +1075,7 @@ namespace Infrastructure.Migrations
                             Email = "JANE.SILVABARBOSA@HOTMAIL.COM",
                             Inep = 29464064,
                             Nome = "E.M.E.I. ARLINDA ALVES VARJÃO",
-                            Telefone = "(74) 8833-3869"
+                            Telefone = "7488333869"
                         },
                         new
                         {
@@ -1069,7 +1093,7 @@ namespace Infrastructure.Migrations
                             Email = "SANTANABOL14@GMAIL.COM",
                             Inep = 29026423,
                             Nome = "E.M.E.I. BOLIVAR SANTANA",
-                            Telefone = "(74) 8805-4854"
+                            Telefone = "7488054854"
                         },
                         new
                         {
@@ -1078,7 +1102,7 @@ namespace Infrastructure.Migrations
                             Email = "SUENI-SANTOS@YAHOO.COM.BR",
                             Inep = 29402170,
                             Nome = "E.M.E.I. BOM JESUS DOS NAVEGANTES",
-                            Telefone = "(74) 3617-3029"
+                            Telefone = "7436173029"
                         },
                         new
                         {
@@ -1105,7 +1129,7 @@ namespace Infrastructure.Migrations
                             Email = "ROSALILAS_BISPO@HOTMAIL.COM",
                             Inep = 29461189,
                             Nome = "E.M.E.I. EDIVÂNIA SANTOS CARDOSO",
-                            Telefone = "(74) 8851-1345"
+                            Telefone = "7488511345"
                         },
                         new
                         {
@@ -1114,7 +1138,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29402100,
                             Nome = "E.M.E.I. GENTIL DAMÁSIO DO NASCIMENTO",
-                            Telefone = "(74) 3613-3763"
+                            Telefone = "7436133763"
                         },
                         new
                         {
@@ -1150,7 +1174,7 @@ namespace Infrastructure.Migrations
                             Email = "EMEILUANADASILVA@GMAIL.COM",
                             Inep = 29467152,
                             Nome = "E.M.E.I. LUANA DA SILVA NASCIMENTO",
-                            Telefone = "(74) 98130-0440"
+                            Telefone = "74981300440"
                         },
                         new
                         {
@@ -1177,7 +1201,7 @@ namespace Infrastructure.Migrations
                             Email = "TULIOROZARORIZ@GMAIL.COM",
                             Inep = 29469635,
                             Nome = "E.M.E.I. MARIA FERREIRA DE SOUZA",
-                            Telefone = "(74) 3617-6145"
+                            Telefone = "7436176145"
                         },
                         new
                         {
@@ -1186,7 +1210,7 @@ namespace Infrastructure.Migrations
                             Email = "EMEIMARIAHELENA@HOTMAIL.COM.BR",
                             Inep = 29461243,
                             Nome = "E.M.E.I. MARIA HELENA DA SILVA PEREIRA",
-                            Telefone = "(74) 8834-2914"
+                            Telefone = "7488342914"
                         },
                         new
                         {
@@ -1195,7 +1219,7 @@ namespace Infrastructure.Migrations
                             Email = "CLAUDIANA.PROF@GMAIL.COM",
                             Inep = 29461235,
                             Nome = "E.M.E.I. MARIA HOZANA NUNES",
-                            Telefone = "(74) 3612-4696"
+                            Telefone = "7436124696"
                         },
                         new
                         {
@@ -1213,7 +1237,7 @@ namespace Infrastructure.Migrations
                             Email = "TRPAQUINO@HOTMAIL.COM",
                             Inep = 29025338,
                             Nome = "E.M.E.I. MARIA SUELY MEDRADO ARAÚJO",
-                            Telefone = "(74) 8841-9813"
+                            Telefone = "7488419813"
                         },
                         new
                         {
@@ -1231,7 +1255,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29461197,
                             Nome = "E.M.E.I. NÉLIA DE SOUZA COSTA",
-                            Telefone = "(74) 3612-3354"
+                            Telefone = "7436123354"
                         },
                         new
                         {
@@ -1276,7 +1300,7 @@ namespace Infrastructure.Migrations
                             Email = "JOSEFACRISTINAT@GMAIL.COM",
                             Inep = 29469252,
                             Nome = "E.M.E.I. PASTOR MANOEL MARQUES DE SOUZA",
-                            Telefone = "(74) 98813-6212"
+                            Telefone = "74988136212"
                         },
                         new
                         {
@@ -1285,7 +1309,7 @@ namespace Infrastructure.Migrations
                             Email = "MARI_LUCA@MSN.COM",
                             Inep = 29470811,
                             Nome = "E.M.E.I. PREFEITO APRÍGIO DUARTE",
-                            Telefone = "(74) 98832-0498"
+                            Telefone = "74988320498"
                         },
                         new
                         {
@@ -1312,7 +1336,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026261,
                             Nome = "E.M.E.I. PROFª JOANA RAMOS NETA",
-                            Telefone = "(74) 9934-6352"
+                            Telefone = "7499346352"
                         },
                         new
                         {
@@ -1321,7 +1345,7 @@ namespace Infrastructure.Migrations
                             Email = "ALINEDEFATIMA92@GMAIL.COM",
                             Inep = 29027098,
                             Nome = "E.M.E.I. SÃO FRANCISCO DE ASSIS",
-                            Telefone = "(74) 99956-3806"
+                            Telefone = "74999563806"
                         },
                         new
                         {
@@ -1330,7 +1354,7 @@ namespace Infrastructure.Migrations
                             Email = "ANACCN2007@YAHOO.COM.BR",
                             Inep = 29469112,
                             Nome = "E.M.R.T.I. SÃO JOSÉ",
-                            Telefone = "(74) 99952-2470"
+                            Telefone = "74999522470"
                         },
                         new
                         {
@@ -1339,7 +1363,7 @@ namespace Infrastructure.Migrations
                             Email = "LINDY_CPC@HOTMAIL.COM",
                             Inep = 29450004,
                             Nome = "E.M.T.I. PROFª IRACEMA PEREIRA DA PAIXÃO",
-                            Telefone = "(74) 98809-0992"
+                            Telefone = "74988090992"
                         },
                         new
                         {
@@ -1366,7 +1390,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAMUNICIPALELISEUSANTOS@HOTMAIL.COM",
                             Inep = 29026113,
                             Nome = "ELISEU SANTOS",
-                            Telefone = "(74) 8807-8555"
+                            Telefone = "7488078555"
                         },
                         new
                         {
@@ -1384,7 +1408,7 @@ namespace Infrastructure.Migrations
                             Email = "KLERISSON@YAHOO.COM.BR",
                             Inep = 29026202,
                             Nome = "FAMÍLIA UNIDA",
-                            Telefone = "(74) 8836-7939"
+                            Telefone = "7488367939"
                         },
                         new
                         {
@@ -1393,7 +1417,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAPROMENOR@HOTMAIL.COM",
                             Inep = 29025524,
                             Nome = "FUNDAÇÃO JUAZEIRENSE PROMENOR",
-                            Telefone = "(74) 3611-3992"
+                            Telefone = "7436113992"
                         },
                         new
                         {
@@ -1402,7 +1426,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAGRACIOSAXAVIER@GMAIL.COM",
                             Inep = 29025753,
                             Nome = "GRACIOSA XAVIER RAMOS GOMES",
-                            Telefone = "(74) 3618-1029"
+                            Telefone = "7436181029"
                         },
                         new
                         {
@@ -1411,7 +1435,7 @@ namespace Infrastructure.Migrations
                             Email = "PATRICIACARLA01@HOTMAIL.COM",
                             Inep = 29025575,
                             Nome = "HELENA ARAÚJO PINHEIRO",
-                            Telefone = "(74) 3611-1626"
+                            Telefone = "7436111626"
                         },
                         new
                         {
@@ -1438,7 +1462,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29025222,
                             Nome = "JOÃO NEVES DE ALMEIDA",
-                            Telefone = "(74) 98811-1398"
+                            Telefone = "74988111398"
                         },
                         new
                         {
@@ -1465,7 +1489,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAJOSEPADILHA@HOTMAIL.COM",
                             Inep = 29025370,
                             Nome = "JOSÉ PADILHA DE SOUZA",
-                            Telefone = "(74) 3612-0372"
+                            Telefone = "7436120372"
                         },
                         new
                         {
@@ -1474,7 +1498,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAJUDITELCOSTA@HOTMAIL.COM",
                             Inep = 29025176,
                             Nome = "JUDITE LEAL COSTA",
-                            Telefone = "(74) 3611-4939"
+                            Telefone = "7436114939"
                         },
                         new
                         {
@@ -1492,7 +1516,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29025923,
                             Nome = "LINDAURA MARIA DE JESUS",
-                            Telefone = "(74) 3617-2000"
+                            Telefone = "7436172000"
                         },
                         new
                         {
@@ -1501,7 +1525,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLALUDGERO@GMAIL.COM",
                             Inep = 29025184,
                             Nome = "LUDGERO DE SOUZA COSTA",
-                            Telefone = "(74) 3612-1731"
+                            Telefone = "7436121731"
                         },
                         new
                         {
@@ -1519,7 +1543,7 @@ namespace Infrastructure.Migrations
                             Email = "EMMSBONFIM@HOTMAIL.COM",
                             Inep = 29025672,
                             Nome = "MANOEL DE SOUZA BONFIM",
-                            Telefone = "(74) 3617-9072"
+                            Telefone = "7436179072"
                         },
                         new
                         {
@@ -1537,7 +1561,7 @@ namespace Infrastructure.Migrations
                             Email = "JAQUELLINEASSESSORIA27@GMAIL.COM",
                             Inep = 29026296,
                             Nome = "MANOEL LUIZ DA SILVA",
-                            Telefone = "(74) 3613-9057"
+                            Telefone = "7436139057"
                         },
                         new
                         {
@@ -1546,7 +1570,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29341710,
                             Nome = "MANOEL NUNES AMORIM",
-                            Telefone = "(74) 3611-5110"
+                            Telefone = "7436115110"
                         },
                         new
                         {
@@ -1555,7 +1579,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026776,
                             Nome = "MARIA AMÉLIA DE SOUZA OLIVEIRA",
-                            Telefone = "(74) 9104-4270"
+                            Telefone = "7491044270"
                         },
                         new
                         {
@@ -1573,7 +1597,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026660,
                             Nome = "MARIA MONTEIRO BACELAR",
-                            Telefone = "(74) 3618-4001"
+                            Telefone = "7436184001"
                         },
                         new
                         {
@@ -1582,7 +1606,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAMARIANORODRIGUES@YAHOO.COM.BR",
                             Inep = 29025230,
                             Nome = "MARIANO RODRIGUES DE SOUZA",
-                            Telefone = "(74) 3618-3004"
+                            Telefone = "7436183004"
                         },
                         new
                         {
@@ -1591,7 +1615,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026679,
                             Nome = "MIGUEL ÂNGELO DE SOUZA",
-                            Telefone = "(74) 9986-7445"
+                            Telefone = "7499867445"
                         },
                         new
                         {
@@ -1600,7 +1624,7 @@ namespace Infrastructure.Migrations
                             Email = "NOSSASENHORASAOFRANCISCO@GMAIL.COM",
                             Inep = 29026105,
                             Nome = "NOSSA SENHORA DAS GROTAS - BOQUEIRÃO",
-                            Telefone = "(74) 3617-8287"
+                            Telefone = "7436178287"
                         },
                         new
                         {
@@ -1618,7 +1642,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLARAINHA@GMAIL.COM",
                             Inep = 29025958,
                             Nome = "NOSSA SENHORA RAINHA DOS ANJOS",
-                            Telefone = "(74) 9195-7370"
+                            Telefone = "7491957370"
                         },
                         new
                         {
@@ -1627,7 +1651,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLA_OSORIOTELES@HOTMAIL.COM",
                             Inep = 29025869,
                             Nome = "OSORIO TELES DE MENEZES",
-                            Telefone = "(74) 3618-1270"
+                            Telefone = "7436181270"
                         },
                         new
                         {
@@ -1636,7 +1660,7 @@ namespace Infrastructure.Migrations
                             Email = "JAELTON.OLIVEIRA@HOTMAIL.COM",
                             Inep = 29461359,
                             Nome = "PAULO FREIRE",
-                            Telefone = "(74) 9907-7828"
+                            Telefone = "7499077828"
                         },
                         new
                         {
@@ -1645,7 +1669,7 @@ namespace Infrastructure.Migrations
                             Email = "PAULOVI_2511@HOTMAIL.COM",
                             Inep = 29024587,
                             Nome = "PAULO VI",
-                            Telefone = "(74) 3611-5675"
+                            Telefone = "7436115675"
                         },
                         new
                         {
@@ -1762,7 +1786,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAHAYDEE@GMAIL.COM",
                             Inep = 29024960,
                             Nome = "PROFª HAYDÉE FONSECA FALCÃO",
-                            Telefone = "(74) 99985-8835"
+                            Telefone = "74999858835"
                         },
                         new
                         {
@@ -1798,7 +1822,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29024986,
                             Nome = "PROFª MARIA FRANCA PIRES",
-                            Telefone = "(74) 3613-7115"
+                            Telefone = "7436137115"
                         },
                         new
                         {
@@ -1816,7 +1840,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLA_MATILDECOSTA@HOTMAIL.COM",
                             Inep = 29025770,
                             Nome = "PROFª MATILDE COSTA MEDRADO",
-                            Telefone = "(74) 98852-6535"
+                            Telefone = "74988526535"
                         },
                         new
                         {
@@ -1870,7 +1894,7 @@ namespace Infrastructure.Migrations
                             Email = "ALINEDEFATIMA92@GMAIL.COM",
                             Inep = 29027055,
                             Nome = "RAIMUNDO CLEMENTINO DE SOUZA",
-                            Telefone = "(74) 99975-9179"
+                            Telefone = "74999759179"
                         },
                         new
                         {
@@ -1888,7 +1912,7 @@ namespace Infrastructure.Migrations
                             Email = "RURALMASSAROCA@HOTMAIL.COM",
                             Inep = 29341779,
                             Nome = "RURAL DE MASSAROCA - ERUM",
-                            Telefone = "(74) 99443-6003"
+                            Telefone = "74994436003"
                         },
                         new
                         {
@@ -1897,7 +1921,7 @@ namespace Infrastructure.Migrations
                             Email = "NOSSASENHORASAOFRANCISCO@GMAIL.COM",
                             Inep = 29026350,
                             Nome = "SÃO FRANCISCO DE ASSIS - MULUNGÚ",
-                            Telefone = "(74) 3617-8287"
+                            Telefone = "7436178287"
                         },
                         new
                         {
@@ -1906,7 +1930,7 @@ namespace Infrastructure.Migrations
                             Email = "NH2SAOFRANCISCO@GMAIL.COM",
                             Inep = 29025982,
                             Nome = "SÃO FRANCISCO DE ASSIS - NH2",
-                            Telefone = "(74) 3618-9018"
+                            Telefone = "7436189018"
                         },
                         new
                         {
@@ -1942,7 +1966,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29026300,
                             Nome = "SANTA TEREZINHA",
-                            Telefone = "(74) 8811-0653"
+                            Telefone = "7488110653"
                         },
                         new
                         {
@@ -1951,7 +1975,7 @@ namespace Infrastructure.Migrations
                             Email = "",
                             Inep = 29025010,
                             Nome = "SANTO ANTÔNIO",
-                            Telefone = "(74) 3618-7055"
+                            Telefone = "7436187055"
                         },
                         new
                         {
@@ -1960,7 +1984,7 @@ namespace Infrastructure.Migrations
                             Email = "ESCOLAAMADEUSDAMASIO@GMAIL.COM",
                             Inep = 29026520,
                             Nome = "VEREADOR AMADEUS DAMÁSIO",
-                            Telefone = "(74) 3538-1883"
+                            Telefone = "7435381883"
                         });
                 });
 
@@ -1972,10 +1996,12 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
-                    b.Property<string>("Normativa")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Normativa")
+                        .HasColumnType("int");
 
                     b.Property<int>("SegmentoId")
                         .HasColumnType("int");
@@ -1991,132 +2017,154 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             Nome = "Berçário",
+                            Normativa = 1,
                             SegmentoId = 1
                         },
                         new
                         {
                             Id = 2,
                             Nome = "Infantil I",
+                            Normativa = 1,
                             SegmentoId = 1
                         },
                         new
                         {
                             Id = 3,
                             Nome = "Infantil II",
+                            Normativa = 1,
                             SegmentoId = 1
                         },
                         new
                         {
                             Id = 4,
                             Nome = "Infantil III",
+                            Normativa = 1,
                             SegmentoId = 1
                         },
                         new
                         {
                             Id = 5,
                             Nome = "Infantil IV",
+                            Normativa = 1,
                             SegmentoId = 2
                         },
                         new
                         {
                             Id = 6,
                             Nome = "Infantil V",
+                            Normativa = 1,
                             SegmentoId = 2
                         },
                         new
                         {
                             Id = 7,
                             Nome = "1º Ano",
+                            Normativa = 1,
                             SegmentoId = 3
                         },
                         new
                         {
                             Id = 8,
                             Nome = "2º Ano",
+                            Normativa = 1,
                             SegmentoId = 3
                         },
                         new
                         {
                             Id = 9,
                             Nome = "3º Ano",
+                            Normativa = 1,
                             SegmentoId = 3
                         },
                         new
                         {
                             Id = 10,
                             Nome = "4º Ano",
+                            Normativa = 1,
                             SegmentoId = 3
                         },
                         new
                         {
                             Id = 11,
                             Nome = "5º Ano",
+                            Normativa = 1,
                             SegmentoId = 3
                         },
                         new
                         {
                             Id = 12,
                             Nome = "6º Ano",
+                            Normativa = 1,
                             SegmentoId = 4
                         },
                         new
                         {
                             Id = 13,
                             Nome = "7º Ano",
+                            Normativa = 1,
                             SegmentoId = 4
                         },
                         new
                         {
                             Id = 14,
                             Nome = "8º Ano",
+                            Normativa = 1,
                             SegmentoId = 4
                         },
                         new
                         {
                             Id = 15,
                             Nome = "9º Ano",
+                            Normativa = 1,
                             SegmentoId = 4
                         },
                         new
                         {
                             Id = 16,
                             Nome = "Etapa I",
+                            Normativa = 1,
                             SegmentoId = 5
                         },
                         new
                         {
                             Id = 17,
                             Nome = "Etapa II",
+                            Normativa = 1,
                             SegmentoId = 5
                         },
                         new
                         {
                             Id = 18,
                             Nome = "Etapa III",
+                            Normativa = 1,
                             SegmentoId = 5
                         },
                         new
                         {
                             Id = 19,
                             Nome = "Etapa IV",
+                            Normativa = 1,
                             SegmentoId = 6
                         },
                         new
                         {
                             Id = 20,
                             Nome = "Etapa V",
+                            Normativa = 1,
                             SegmentoId = 6
                         },
                         new
                         {
                             Id = 21,
                             Nome = "Se Liga",
+                            Normativa = 1,
                             SegmentoId = 7
                         },
                         new
                         {
                             Id = 22,
                             Nome = "Acelera",
+                            Normativa = 1,
                             SegmentoId = 7
                         });
                 });
@@ -2151,7 +2199,9 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16);
 
                     b.HasKey("Id");
 
@@ -2178,19 +2228,22 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Descricao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DescritorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("HTML")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Habilitada")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Item")
+                    b.Property<string>("Html")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.HasKey("Id");
 
@@ -2373,8 +2426,8 @@ namespace Infrastructure.Migrations
                     b.Property<int>("EscolaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -2387,19 +2440,19 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             EscolaId = 1,
-                            Nome = "02 DE JULHO"
+                            Numero = 1
                         },
                         new
                         {
                             Id = 2,
                             EscolaId = 1,
-                            Nome = "02 DE JULHO"
+                            Numero = 2
                         },
                         new
                         {
                             Id = 3,
                             EscolaId = 1,
-                            Nome = "15 DE JULHO"
+                            Numero = 1
                         });
                 });
 
@@ -2414,10 +2467,14 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("Sigla")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.HasKey("Id");
 
@@ -2488,7 +2545,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -2606,7 +2665,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
 
                     b.Property<int>("QtdAlunos")
                         .HasColumnType("int");
@@ -2678,10 +2739,9 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Regime")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
 
                     b.HasKey("Id");
 
@@ -2691,32 +2751,27 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Nome = "Manhã",
-                            Regime = "Parcial"
+                            Nome = "Manhã"
                         },
                         new
                         {
                             Id = 2,
-                            Nome = "Tarde",
-                            Regime = "Parcial"
+                            Nome = "Tarde"
                         },
                         new
                         {
                             Id = 3,
-                            Nome = "Noite",
-                            Regime = "Parcial"
+                            Nome = "Noite"
                         },
                         new
                         {
                             Id = 4,
-                            Nome = "Integral",
-                            Regime = "Integral"
+                            Nome = "Integral"
                         },
                         new
                         {
                             Id = 5,
-                            Nome = "Não Informado",
-                            Regime = "Parcial"
+                            Nome = "Não Informado"
                         });
                 });
 
@@ -2902,7 +2957,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Tema", "Tema")
                         .WithMany("Descritores")
                         .HasForeignKey("TemaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -2924,7 +2979,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Segmento", "Segmento")
                         .WithMany("Etapas")
                         .HasForeignKey("SegmentoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2933,13 +2988,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Descritor", "Descritor")
                         .WithMany("EtapaDescritores")
                         .HasForeignKey("DescritorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
                         .WithMany("EtapaDescritores")
                         .HasForeignKey("EtapaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -2957,34 +3012,34 @@ namespace Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
                         .WithMany("QuestaoAvaliacoes")
                         .HasForeignKey("AvaliacaoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SAED.ApplicationCore.Entities.Questao", "Questao")
                         .WithMany("QuestaoAvaliacoes")
                         .HasForeignKey("QuestaoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.RespostaAluno", b =>
                 {
                     b.HasOne("SAED.ApplicationCore.Entities.Alternativa", "Alternativa")
-                        .WithOne("RespostaAlunos")
+                        .WithOne("RespostaAluno")
                         .HasForeignKey("SAED.ApplicationCore.Entities.RespostaAluno", "AlternativaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SAED.ApplicationCore.Entities.Aluno", "Aluno")
                         .WithMany("RespostaAlunos")
                         .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
                         .WithMany("RespostaAlunos")
                         .HasForeignKey("AvaliacaoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -3047,13 +3102,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Aluno", "Aluno")
                         .WithMany("TurmaAlunos")
                         .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SAED.ApplicationCore.Entities.Turma", "Turma")
                         .WithMany("TurmaAlunos")
                         .HasForeignKey("TurmaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -3062,13 +3117,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
                         .WithMany("UsuarioTurmaAvaliacao")
                         .HasForeignKey("AvaliacaoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SAED.ApplicationCore.Entities.Turma", "Turma")
                         .WithMany("UsuarioTurmaAvaliacao")
                         .HasForeignKey("TurmaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

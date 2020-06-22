@@ -47,7 +47,7 @@ namespace SAED.Web.Extensions
                         await userManager.AddToRoleAsync(user, role);
                     };
 
-                    if (await userManager.IsInRoleAsync(user, AuthorizationConstants.PermissionsAndRoles.APLICADOR))
+                    if (await userManager.IsInRoleAsync(user, AuthorizationConstants.Roles.Aplicador))
                     {
                         var avaliacoes = await context.Avaliacoes.Where(a => a.Status == StatusAvaliacao.EmAndamento).ToListAsync();
                         foreach (var avaliacao in avaliacoes)

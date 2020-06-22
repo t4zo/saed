@@ -4,15 +4,15 @@ namespace SAED.ApplicationCore.Constants
 {
     public class AuthorizationConstants
     {
-        public static class PermissionsAndRoles
+        public static class Roles
         {
-            public const string SUPERUSER = "SUPERUSER";
+            public const string Superuser = "Superuser";
 
-            public const string ADMINISTRADOR = "ADMINISTRADOR";
+            public const string Administrador = "Administrador";
 
-            public const string APLICADOR = "APLICADOR";
+            public const string Aplicador = "Aplicador";
 
-            public static IEnumerable<string> ALL = new List<string> { ADMINISTRADOR, APLICADOR };
+            public static IEnumerable<string> ALL = new List<string> { Administrador, Aplicador };
         }
 
         public static class Areas
@@ -47,10 +47,13 @@ namespace SAED.ApplicationCore.Constants
             }
         }
 
-        public static int DatabaseIdStartValue = 100;
+        public static class Database
+        {
+            public static int StartValueId = 100;
 
-        public const string REMEMBER = "rmb";
+            public const string DefaultPassword = "123qwe";
+        }
 
-        public const string DEFAULT_PASSWORD = "123qwe";
+        public const string Remember = "rmb";
     }
 }

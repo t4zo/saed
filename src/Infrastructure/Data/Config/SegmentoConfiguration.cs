@@ -2,23 +2,29 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.ApplicationCore.Entities;
 
-namespace SAED.Infrastructure.Config
+namespace SAED.Infrastructure.Data.Config
 {
     public class SegmentoConfiguration : IEntityTypeConfiguration<Segmento>
     {
         public void Configure(EntityTypeBuilder<Segmento> builder)
         {
-            builder.Property(x => x.Id);
+            builder.HasKey(x => x.Id);
 
-            builder.HasMany(segmento => segmento.Etapas)
-                .WithOne(ano => ano.Segmento)
-                .HasForeignKey(ano => ano.SegmentoId);
+            builder.Property(x => x.Nome)
+                .HasMaxLength(256)
+                .IsRequired();
+
+            builder.Property(x => x.Sigla)
+                .HasMaxLength(10)
+                .IsRequired();
+
+            builder.Property(x => x.CursoId)
+                .IsRequired();
 
             builder.HasOne(segmento => segmento.Curso)
                 .WithMany(curso => curso.Segmentos)
-                .HasForeignKey(segmento => segmento.CursoId);
-
-            builder.HasKey(segmento => segmento.Id);
+                .HasForeignKey(segmento => segmento.CursoId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

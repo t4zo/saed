@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.ApplicationCore.Entities;
 
-namespace SAED.Infrastructure.Config
+namespace SAED.Infrastructure.Data.Config
 {
     public class QuestaoAvaliacaoConfiguration : IEntityTypeConfiguration<QuestaoAvaliacao>
     {
@@ -11,12 +11,12 @@ namespace SAED.Infrastructure.Config
             builder.HasOne(questaoAvaliacao => questaoAvaliacao.Avaliacao)
                 .WithMany(questao => questao.QuestaoAvaliacoes)
                 .HasForeignKey(questaoAvaliacao => questaoAvaliacao.AvaliacaoId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(questaoAvaliacao => questaoAvaliacao.Questao)
                 .WithMany(questao => questao.QuestaoAvaliacoes)
                 .HasForeignKey(QuestaoAvaliacao => QuestaoAvaliacao.QuestaoId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasKey(questaoAvaliacao => new { questaoAvaliacao.AvaliacaoId, questaoAvaliacao.QuestaoId });
         }

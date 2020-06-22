@@ -16,6 +16,11 @@ namespace Infrastructure.Data.Config
             //List<Avaliacao> entities = JsonConvert.DeserializeObject<List<Avaliacao>>(json);
 
             //builder.HasData(entities);
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Codigo)
+                .IsRequired();
         }
     }
 }

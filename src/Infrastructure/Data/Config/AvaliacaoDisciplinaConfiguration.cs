@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.ApplicationCore.Entities;
 
-namespace SAED.Infrastructure.Config
+namespace SAED.Infrastructure.Data.Config
 {
     public class AvaliacaoDisciplinaConfiguration : IEntityTypeConfiguration<AvaliacaoDisciplina>
     {

@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
@@ -13,7 +13,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
                     Nascimento = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -68,7 +68,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(nullable: true),
+                    Codigo = table.Column<string>(nullable: false),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -82,8 +82,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
-                    Sigla = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    Sigla = table.Column<string>(maxLength: 8, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,8 +96,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
-                    Sigla = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(maxLength: 128, nullable: false),
+                    Sigla = table.Column<string>(maxLength: 8, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,8 +110,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: false),
-                    Zona = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 32, nullable: false),
+                    Zona = table.Column<string>(maxLength: 8, nullable: false),
                     Distancia = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -125,7 +125,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,8 +138,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
-                    Regime = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(maxLength: 32, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -258,8 +257,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
-                    Sigla = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    Sigla = table.Column<string>(maxLength: 10, nullable: false),
                     CursoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -304,7 +303,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DisciplinaId = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -349,14 +348,14 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Inep = table.Column<int>(nullable: true),
                     MatrizId = table.Column<int>(nullable: true),
-                    Nome = table.Column<string>(nullable: false),
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
                     DistritoId = table.Column<int>(nullable: false),
-                    Endereco = table.Column<string>(nullable: true),
-                    Bairro = table.Column<string>(nullable: true),
+                    Endereco = table.Column<string>(maxLength: 256, nullable: true),
+                    Bairro = table.Column<string>(maxLength: 128, nullable: true),
                     Numero = table.Column<int>(nullable: true),
-                    Complemento = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true)
+                    Complemento = table.Column<string>(maxLength: 128, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
+                    Telefone = table.Column<string>(maxLength: 11, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -381,9 +380,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 64, nullable: false),
                     SegmentoId = table.Column<int>(nullable: false),
-                    Normativa = table.Column<string>(nullable: true)
+                    Normativa = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -393,7 +392,7 @@ namespace Infrastructure.Migrations
                         column: x => x.SegmentoId,
                         principalTable: "Segmento",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -403,7 +402,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TemaId = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -413,7 +412,7 @@ namespace Infrastructure.Migrations
                         column: x => x.TemaId,
                         principalTable: "Tema",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -422,7 +421,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
+                    Numero = table.Column<int>(nullable: false),
                     EscolaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -451,13 +450,13 @@ namespace Infrastructure.Migrations
                         column: x => x.DescritorId,
                         principalTable: "Descritor",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EtapaDescritor_Etapa_EtapaId",
                         column: x => x.EtapaId,
                         principalTable: "Etapa",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -467,9 +466,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DescritorId = table.Column<int>(nullable: false),
-                    Item = table.Column<string>(nullable: true),
-                    Descricao = table.Column<string>(nullable: true),
-                    HTML = table.Column<string>(nullable: true),
+                    Item = table.Column<string>(maxLength: 8, nullable: false),
+                    Descricao = table.Column<string>(nullable: false),
+                    Html = table.Column<string>(nullable: true),
                     Habilitada = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -493,7 +492,7 @@ namespace Infrastructure.Migrations
                     EtapaId = table.Column<int>(nullable: false),
                     TurnoId = table.Column<int>(nullable: false),
                     FormaId = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 32, nullable: false),
                     QtdAlunos = table.Column<int>(nullable: false),
                     Extinta = table.Column<bool>(nullable: false)
                 },
@@ -532,9 +531,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(nullable: true),
-                    QuestaoId = table.Column<int>(nullable: false),
-                    Correta = table.Column<bool>(nullable: false)
+                    Descricao = table.Column<string>(nullable: false),
+                    Correta = table.Column<bool>(nullable: false),
+                    QuestaoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -562,13 +561,13 @@ namespace Infrastructure.Migrations
                         column: x => x.AvaliacaoId,
                         principalTable: "Avaliacoes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_QuestaoAvaliacao_Questao_QuestaoId",
                         column: x => x.QuestaoId,
                         principalTable: "Questao",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -586,13 +585,13 @@ namespace Infrastructure.Migrations
                         column: x => x.AlunoId,
                         principalTable: "Aluno",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TurmaAluno_Turma_TurmaId",
                         column: x => x.TurmaId,
                         principalTable: "Turma",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -611,13 +610,13 @@ namespace Infrastructure.Migrations
                         column: x => x.AvaliacaoId,
                         principalTable: "Avaliacoes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UsuarioTurmaAvaliacao_Turma_TurmaId",
                         column: x => x.TurmaId,
                         principalTable: "Turma",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -636,19 +635,19 @@ namespace Infrastructure.Migrations
                         column: x => x.AlternativaId,
                         principalTable: "Alternativa",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RespostaAluno_Aluno_AlunoId",
                         column: x => x.AlunoId,
                         principalTable: "Aluno",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RespostaAluno_Avaliacoes_AvaliacaoId",
                         column: x => x.AvaliacaoId,
                         principalTable: "Avaliacoes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -656,8 +655,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Nascimento", "Nome" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Maria Luz" },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "João carlos" }
+                    { 1, new DateTime(2002, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Maria Luz" },
+                    { 2, new DateTime(1999, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "João carlos" }
                 });
 
             migrationBuilder.InsertData(
@@ -717,14 +716,14 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Turno",
-                columns: new[] { "Id", "Nome", "Regime" },
+                columns: new[] { "Id", "Nome" },
                 values: new object[,]
                 {
-                    { 4, "Integral", "Integral" },
-                    { 1, "Manhã", "Parcial" },
-                    { 2, "Tarde", "Parcial" },
-                    { 3, "Noite", "Parcial" },
-                    { 5, "Não Informado", "Parcial" }
+                    { 4, "Integral" },
+                    { 1, "Manhã" },
+                    { 2, "Tarde" },
+                    { 3, "Noite" },
+                    { 5, "Não Informado" }
                 });
 
             migrationBuilder.InsertData(
@@ -748,138 +747,138 @@ namespace Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 108, null, null, 1, "ESCOLADINORAH@MSN.COM", null, 29025036, null, "PROFª DINORAH ALBERNAZ MELO DA SILVA", null, "" },
-                    { 5, null, null, 4, "", null, 29026148, null, "AMÉRICO TANURI - MANIÇOBA", null, "(74) 98806-7161" },
-                    { 10, null, null, 4, "ESCOLA_BOMJESUSBARAUNA@HOTMAIL.COM", null, 29026156, null, "BOM JESUS - BARAÚNA", null, "(74) 3618-7055" },
+                    { 5, null, null, 4, "", null, 29026148, null, "AMÉRICO TANURI - MANIÇOBA", null, "74988067161" },
+                    { 10, null, null, 4, "ESCOLA_BOMJESUSBARAUNA@HOTMAIL.COM", null, 29026156, null, "BOM JESUS - BARAÚNA", null, "7436187055" },
                     { 11, null, null, 4, "BOMJESUS_NH01@HOTMAIL.COM", null, 29025907, null, "BOM JESUS - NH1", null, "" },
-                    { 15, null, null, 4, "EMPMANDACARU@GMAIL.COM", null, 29025346, null, "CELSO CAVALCANTE DE CARVALHO", null, "(74) 3617-7211" },
+                    { 15, null, null, 4, "EMPMANDACARU@GMAIL.COM", null, 29025346, null, "CELSO CAVALCANTE DE CARVALHO", null, "7436177211" },
                     { 17, null, null, 4, "", null, 29025974, null, "CORAÇÃO DE JESUS - JUREMA VERMELHA", null, "" },
-                    { 18, null, null, 4, "", null, 29026164, null, "CORAÇÃO DE JESUS - SERRA DA MADEIRA", null, "(74) 9635-7165" },
-                    { 21, null, null, 4, "AMILTONGOMES2016@HOTMAIL.COM", null, 29026024, null, "DOUTOR EDSON RIBEIRO", null, "(74) 98813-3633" },
-                    { 35, null, null, 4, "SUENI-SANTOS@YAHOO.COM.BR", null, 29402170, null, "E.M.E.I. BOM JESUS DOS NAVEGANTES", null, "(74) 3617-3029" },
+                    { 18, null, null, 4, "", null, 29026164, null, "CORAÇÃO DE JESUS - SERRA DA MADEIRA", null, "7496357165" },
+                    { 21, null, null, 4, "AMILTONGOMES2016@HOTMAIL.COM", null, 29026024, null, "DOUTOR EDSON RIBEIRO", null, "74988133633" },
+                    { 35, null, null, 4, "SUENI-SANTOS@YAHOO.COM.BR", null, 29402170, null, "E.M.E.I. BOM JESUS DOS NAVEGANTES", null, "7436173029" },
                     { 45, null, null, 4, "VALDATDB12@GMAIL.COM", null, 29461227, null, "E.M.E.I. MANOEL ALVES DA MOTA", null, "" },
-                    { 61, null, null, 4, "", null, 29026261, null, "E.M.E.I. PROFª JOANA RAMOS NETA", null, "(74) 9934-6352" },
-                    { 63, null, null, 4, "ANACCN2007@YAHOO.COM.BR", null, 29469112, null, "E.M.R.T.I. SÃO JOSÉ", null, "(74) 99952-2470" },
-                    { 67, null, null, 4, "ESCOLAMUNICIPALELISEUSANTOS@HOTMAIL.COM", null, 29026113, null, "ELISEU SANTOS", null, "(74) 8807-8555" },
+                    { 61, null, null, 4, "", null, 29026261, null, "E.M.E.I. PROFª JOANA RAMOS NETA", null, "7499346352" },
+                    { 63, null, null, 4, "ANACCN2007@YAHOO.COM.BR", null, 29469112, null, "E.M.R.T.I. SÃO JOSÉ", null, "74999522470" },
+                    { 67, null, null, 4, "ESCOLAMUNICIPALELISEUSANTOS@HOTMAIL.COM", null, 29026113, null, "ELISEU SANTOS", null, "7488078555" },
                     { 68, null, null, 4, "EURIDICERIBEIROVIANA.QUIPA@HOTMAIL.COM", null, 29026199, null, "EURÍDICE RIBEIRO VIANA", null, "" },
-                    { 69, null, null, 4, "KLERISSON@YAHOO.COM.BR", null, 29026202, null, "FAMÍLIA UNIDA", null, "(74) 8836-7939" },
+                    { 69, null, null, 4, "KLERISSON@YAHOO.COM.BR", null, 29026202, null, "FAMÍLIA UNIDA", null, "7488367939" },
                     { 73, null, null, 4, "AMILTONGOMES2016@HOTMAIL.COM", null, 29025583, null, "JATOBÁ", null, "" },
-                    { 3, null, null, 4, "ESCOLA25.DEJULHO@OUTLOOK.COM", null, 29026130, null, "25 DE JULHO", null, "(74) 8806-8024" },
-                    { 2, null, null, 4, "QUINZEDEJULHO2014@OUTLOOK.COM", null, 29024994, null, "15 DE JULHO", null, "(74) 3611-3278" },
-                    { 117, null, null, 3, "ESCOLA_MATILDECOSTA@HOTMAIL.COM", null, 29025770, null, "PROFª MATILDE COSTA MEDRADO", null, "(74) 98852-6535" },
-                    { 81, null, null, 4, "", null, 29025923, null, "LINDAURA MARIA DE JESUS", null, "(74) 3617-2000" },
+                    { 3, null, null, 4, "ESCOLA25.DEJULHO@OUTLOOK.COM", null, 29026130, null, "25 DE JULHO", null, "7488068024" },
+                    { 2, null, null, 4, "QUINZEDEJULHO2014@OUTLOOK.COM", null, 29024994, null, "15 DE JULHO", null, "7436113278" },
+                    { 117, null, null, 3, "ESCOLA_MATILDECOSTA@HOTMAIL.COM", null, 29025770, null, "PROFª MATILDE COSTA MEDRADO", null, "74988526535" },
+                    { 81, null, null, 4, "", null, 29025923, null, "LINDAURA MARIA DE JESUS", null, "7436172000" },
                     { 114, null, null, 1, "ESCOLAMARIALOURDESDUARTE@HOTMAIL.COM", null, 29024943, null, "PROFª MARIA DE LOURDES DUARTE", null, "" },
-                    { 115, null, null, 1, "", null, 29024986, null, "PROFª MARIA FRANCA PIRES", null, "(74) 3613-7115" },
+                    { 115, null, null, 1, "", null, 29024986, null, "PROFª MARIA FRANCA PIRES", null, "7436137115" },
                     { 116, null, null, 1, "WILZAMIRANDA@HOTMAIL.COM", null, 29362504, null, "PROFª MARIA JOSÉ LIMA DA ROCHA", null, "" },
                     { 119, null, null, 1, "ESCOLATEREZINHA.ETFO@HOTMAIL.COM", null, 29025397, null, "PROFª TEREZINHA FERREIRA DE OLIVEIRA", null, "" },
                     { 120, null, null, 1, "ESCOLACARLOSCOSTA_2012@HOTMAIL.COM", null, 29415160, null, "PROFº CARLOS DA COSTA SILVA", null, "" },
                     { 121, null, null, 1, "MUNICIPALJOSEPEREIRA@BOL.COM.BR", null, 29405106, null, "PROFº JOSÉ PEREIRA DA SILVA", null, "" },
                     { 122, null, null, 1, "LUCYSOARES1@HOTMAIL.COM", null, 29024714, null, "PROFº LUIS CURSINO DA FRANÇA CARDOSO", null, "" },
-                    { 1, null, null, 4, "DOISDEJULHOJUAZEIRO@HOTMAIL.COM", null, 29024935, null, "02 DE JULHO", null, "(74) 98844-0798" },
+                    { 1, null, null, 4, "DOISDEJULHOJUAZEIRO@HOTMAIL.COM", null, 29024935, null, "02 DE JULHO", null, "74988440798" },
                     { 124, null, null, 1, "RAIMUNDOMEDRADOPRIMO@HOTMAIL.COM", null, 29424445, null, "RAIMUNDO MEDRADO PRIMO", null, "" },
-                    { 24, null, null, 2, "EMMSBONFIM@HOTMAIL.COM", null, 29025664, null, "E.M.E.I. ABÓBORA", null, "(74) 3617-9072" },
-                    { 84, null, null, 2, "EMMSBONFIM@HOTMAIL.COM", null, 29025672, null, "MANOEL DE SOUZA BONFIM", null, "(74) 3617-9072" },
-                    { 26, null, null, 3, "", null, 29025842, null, "E.M.E.I. AMÉLIA BORGES", null, "(74) 8822-3271" },
+                    { 24, null, null, 2, "EMMSBONFIM@HOTMAIL.COM", null, 29025664, null, "E.M.E.I. ABÓBORA", null, "7436179072" },
+                    { 84, null, null, 2, "EMMSBONFIM@HOTMAIL.COM", null, 29025672, null, "MANOEL DE SOUZA BONFIM", null, "7436179072" },
+                    { 26, null, null, 3, "", null, 29025842, null, "E.M.E.I. AMÉLIA BORGES", null, "7488223271" },
                     { 54, null, null, 3, "ESCOLA_NSGROTAS@HOTMAIL.COM", null, 29025788, null, "E.M.E.I. NOSSA SENHORA DAS GROTAS - CARNAÍBA", null, "" },
-                    { 71, null, null, 3, "ESCOLAGRACIOSAXAVIER@GMAIL.COM", null, 29025753, null, "GRACIOSA XAVIER RAMOS GOMES", null, "(74) 3618-1029" },
-                    { 96, null, null, 3, "ESCOLA_OSORIOTELES@HOTMAIL.COM", null, 29025869, null, "OSORIO TELES DE MENEZES", null, "(74) 3618-1270" },
+                    { 71, null, null, 3, "ESCOLAGRACIOSAXAVIER@GMAIL.COM", null, 29025753, null, "GRACIOSA XAVIER RAMOS GOMES", null, "7436181029" },
+                    { 96, null, null, 3, "ESCOLA_OSORIOTELES@HOTMAIL.COM", null, 29025869, null, "OSORIO TELES DE MENEZES", null, "7436181270" },
                     { 99, null, null, 3, "ESCOLAGRACIOSAXAVIER@GMAIL.COM", null, 29025834, null, "PEDRO DIAS", null, "" },
-                    { 6, null, null, 2, "EMMSBONFIM@HOTMAIL.COM", null, 29025699, null, "AMÉRICO TANURY - ABÓBORA", null, "(74) 3617-9072" },
-                    { 86, null, null, 4, "JAQUELLINEASSESSORIA27@GMAIL.COM", null, 29026296, null, "MANOEL LUIZ DA SILVA", null, "(74) 3613-9057" },
-                    { 93, null, null, 4, "NOSSASENHORASAOFRANCISCO@GMAIL.COM", null, 29026105, null, "NOSSA SENHORA DAS GROTAS - BOQUEIRÃO", null, "(74) 3617-8287" },
+                    { 6, null, null, 2, "EMMSBONFIM@HOTMAIL.COM", null, 29025699, null, "AMÉRICO TANURY - ABÓBORA", null, "7436179072" },
+                    { 86, null, null, 4, "JAQUELLINEASSESSORIA27@GMAIL.COM", null, 29026296, null, "MANOEL LUIZ DA SILVA", null, "7436139057" },
+                    { 93, null, null, 4, "NOSSASENHORASAOFRANCISCO@GMAIL.COM", null, 29026105, null, "NOSSA SENHORA DAS GROTAS - BOQUEIRÃO", null, "7436178287" },
                     { 113, null, null, 1, "", null, 29024978, null, "PROFª LEOPOLDINA LEAL", null, "" },
                     { 89, null, null, 5, "", null, 29026652, null, "MARIA DO CARMO SÁ NOGUEIRA", null, "" },
-                    { 90, null, null, 5, "", null, 29026660, null, "MARIA MONTEIRO BACELAR", null, "(74) 3618-4001" },
-                    { 92, null, null, 5, "", null, 29026679, null, "MIGUEL ÂNGELO DE SOUZA", null, "(74) 9986-7445" },
-                    { 97, null, null, 5, "JAELTON.OLIVEIRA@HOTMAIL.COM", null, 29461359, null, "PAULO FREIRE", null, "(74) 9907-7828" },
+                    { 90, null, null, 5, "", null, 29026660, null, "MARIA MONTEIRO BACELAR", null, "7436184001" },
+                    { 92, null, null, 5, "", null, 29026679, null, "MIGUEL ÂNGELO DE SOUZA", null, "7499867445" },
+                    { 97, null, null, 5, "JAELTON.OLIVEIRA@HOTMAIL.COM", null, 29461359, null, "PAULO FREIRE", null, "7499077828" },
                     { 105, null, null, 5, "", null, 29026695, null, "PROFª BERNADETE BRAGA", null, "" },
                     { 109, null, null, 5, "", null, 29026709, null, "PROFª EDUALDINA DAMÁSIO", null, "" },
                     { 118, null, null, 5, "", null, 29026725, null, "PROFª OSCARLINA TANURI", null, "" },
-                    { 133, null, null, 5, "ESCOLAAMADEUSDAMASIO@GMAIL.COM", null, 29026520, null, "VEREADOR AMADEUS DAMÁSIO", null, "(74) 3538-1883" },
-                    { 19, null, null, 6, "ESCOLA_RAIMUNDOCUNHALEITE@HOTMAIL.COM", null, 29026890, null, "DEPUTADO RAIMUNDO DA CUNHA LEITE", null, "(74) 3617-5001" },
-                    { 23, null, null, 6, "ESCOLADURVALBARBOSA@GMAL.COM", null, 29026911, null, "DURVAL BARBOSA DA CUNHA", null, "(74) 3617-5004" },
+                    { 133, null, null, 5, "ESCOLAAMADEUSDAMASIO@GMAIL.COM", null, 29026520, null, "VEREADOR AMADEUS DAMÁSIO", null, "7435381883" },
+                    { 19, null, null, 6, "ESCOLA_RAIMUNDOCUNHALEITE@HOTMAIL.COM", null, 29026890, null, "DEPUTADO RAIMUNDO DA CUNHA LEITE", null, "7436175001" },
+                    { 23, null, null, 6, "ESCOLADURVALBARBOSA@GMAL.COM", null, 29026911, null, "DURVAL BARBOSA DA CUNHA", null, "7436175004" },
                     { 103, null, null, 6, "ESCOLAAFC@GMAIL.COM", null, 29026873, null, "PROFª ANTONILA DA FRANÇA CARDOSO", null, "" },
-                    { 46, null, null, 7, "TULIOROZARORIZ@GMAIL.COM", null, 29469635, null, "E.M.E.I. MARIA FERREIRA DE SOUZA", null, "(74) 3617-6145" },
+                    { 46, null, null, 7, "TULIOROZARORIZ@GMAIL.COM", null, 29469635, null, "E.M.E.I. MARIA FERREIRA DE SOUZA", null, "7436176145" },
                     { 104, null, null, 7, "", null, 29026989, null, "PROFª ATANILHA LUZ ARAÚJO", null, "" },
-                    { 125, null, null, 7, "RURALMASSAROCA@HOTMAIL.COM", null, 29341779, null, "RURAL DE MASSAROCA - ERUM", null, "(74) 99443-6003" },
-                    { 62, null, null, 8, "ALINEDEFATIMA92@GMAIL.COM", null, 29027098, null, "E.M.E.I. SÃO FRANCISCO DE ASSIS", null, "(74) 99956-3806" },
-                    { 88, null, null, 5, "", null, 29026776, null, "MARIA AMÉLIA DE SOUZA OLIVEIRA", null, "(74) 9104-4270" },
-                    { 87, null, null, 5, "", null, 29341710, null, "MANOEL NUNES AMORIM", null, "(74) 3611-5110" },
+                    { 125, null, null, 7, "RURALMASSAROCA@HOTMAIL.COM", null, 29341779, null, "RURAL DE MASSAROCA - ERUM", null, "74994436003" },
+                    { 62, null, null, 8, "ALINEDEFATIMA92@GMAIL.COM", null, 29027098, null, "E.M.E.I. SÃO FRANCISCO DE ASSIS", null, "74999563806" },
+                    { 88, null, null, 5, "", null, 29026776, null, "MARIA AMÉLIA DE SOUZA OLIVEIRA", null, "7491044270" },
+                    { 87, null, null, 5, "", null, 29341710, null, "MANOEL NUNES AMORIM", null, "7436115110" },
                     { 80, null, null, 5, "", null, 29026644, null, "LÚCIA CARMEM SOBREIRA", null, "" },
                     { 77, null, null, 5, "", null, 29026636, null, "JOSÉ DE AMORIM", null, "" },
-                    { 95, null, null, 4, "ESCOLARAINHA@GMAIL.COM", null, 29025958, null, "NOSSA SENHORA RAINHA DOS ANJOS", null, "(74) 9195-7370" },
+                    { 95, null, null, 4, "ESCOLARAINHA@GMAIL.COM", null, 29025958, null, "NOSSA SENHORA RAINHA DOS ANJOS", null, "7491957370" },
                     { 100, null, null, 4, "", null, 29026431, null, "PONTAL", null, "" },
                     { 112, null, null, 4, "COLEGIOIRACYNUNES@GMAIL.COM", null, 29341809, null, "PROFª IRACY NUNES DA SILVA", null, "" },
-                    { 126, null, null, 4, "NOSSASENHORASAOFRANCISCO@GMAIL.COM", null, 29026350, null, "SÃO FRANCISCO DE ASSIS - MULUNGÚ", null, "(74) 3617-8287" },
-                    { 127, null, null, 4, "NH2SAOFRANCISCO@GMAIL.COM", null, 29025982, null, "SÃO FRANCISCO DE ASSIS - NH2", null, "(74) 3618-9018" },
+                    { 126, null, null, 4, "NOSSASENHORASAOFRANCISCO@GMAIL.COM", null, 29026350, null, "SÃO FRANCISCO DE ASSIS - MULUNGÚ", null, "7436178287" },
+                    { 127, null, null, 4, "NH2SAOFRANCISCO@GMAIL.COM", null, 29025982, null, "SÃO FRANCISCO DE ASSIS - NH2", null, "7436189018" },
                     { 128, null, null, 4, "", null, 29026377, null, "SÃO JOSÉ", null, "" },
                     { 129, null, null, 4, "", null, 29025931, null, "SÃO SEBASTIÃO", null, "" },
-                    { 91, null, null, 4, "ESCOLAMARIANORODRIGUES@YAHOO.COM.BR", null, 29025230, null, "MARIANO RODRIGUES DE SOUZA", null, "(74) 3618-3004" },
+                    { 91, null, null, 4, "ESCOLAMARIANORODRIGUES@YAHOO.COM.BR", null, 29025230, null, "MARIANO RODRIGUES DE SOUZA", null, "7436183004" },
                     { 130, null, null, 4, "", null, 29026288, null, "SANTA INÊS", null, "" },
-                    { 132, null, null, 4, "", null, 29025010, null, "SANTO ANTÔNIO", null, "(74) 3618-7055" },
-                    { 4, null, null, 5, "", null, 29026601, null, "AMÉRICO TANURI - JUNCO", null, "(74) 9881-1198" },
-                    { 8, null, null, 5, "VALDETEMSF@HOTMAIL.COM", null, 29026482, null, "ANTONIO FRANCISCO DE OLIVEIRA", null, "(74) 8815-8634" },
+                    { 132, null, null, 4, "", null, 29025010, null, "SANTO ANTÔNIO", null, "7436187055" },
+                    { 4, null, null, 5, "", null, 29026601, null, "AMÉRICO TANURI - JUNCO", null, "7498811198" },
+                    { 8, null, null, 5, "VALDETEMSF@HOTMAIL.COM", null, 29026482, null, "ANTONIO FRANCISCO DE OLIVEIRA", null, "7488158634" },
                     { 40, null, null, 5, "SOLANGETIASOL@HOTMAIL.COM", null, 29026628, null, "E.M.E.I. HERBET MOUSE RODRIGUES", null, "" },
                     { 56, null, null, 5, "", null, 29026792, null, "E.M.E.I. PASSAGEM DO SARGENTO", null, "" },
                     { 74, null, null, 5, "", null, 29026741, null, "JOÃO DIAS FERREIRA", null, "" },
-                    { 75, null, null, 5, "", null, 29025222, null, "JOÃO NEVES DE ALMEIDA", null, "(74) 98811-1398" },
-                    { 131, null, null, 4, "", null, 29026300, null, "SANTA TEREZINHA", null, "(74) 8811-0653" },
-                    { 111, null, null, 1, "ESCOLAHAYDEE@GMAIL.COM", null, 29024960, null, "PROFª HAYDÉE FONSECA FALCÃO", null, "(74) 99985-8835" },
-                    { 123, null, null, 8, "ALINEDEFATIMA92@GMAIL.COM", null, 29027055, null, "RAIMUNDO CLEMENTINO DE SOUZA", null, "(74) 99975-9179" },
+                    { 75, null, null, 5, "", null, 29025222, null, "JOÃO NEVES DE ALMEIDA", null, "74988111398" },
+                    { 131, null, null, 4, "", null, 29026300, null, "SANTA TEREZINHA", null, "7488110653" },
+                    { 111, null, null, 1, "ESCOLAHAYDEE@GMAIL.COM", null, 29024960, null, "PROFª HAYDÉE FONSECA FALCÃO", null, "74999858835" },
+                    { 123, null, null, 8, "ALINEDEFATIMA92@GMAIL.COM", null, 29027055, null, "RAIMUNDO CLEMENTINO DE SOUZA", null, "74999759179" },
                     { 66, null, null, 8, "ALINEDEFATIMA92@GMAIL.COM", null, 29341744, null, "ELEOTÉRIO SOARES FONSÊCA", null, "" },
-                    { 43, null, null, 1, "EMEILUANADASILVA@GMAIL.COM", null, 29467152, null, "E.M.E.I. LUANA DA SILVA NASCIMENTO", null, "(74) 98130-0440" },
+                    { 43, null, null, 1, "EMEILUANADASILVA@GMAIL.COM", null, 29467152, null, "E.M.E.I. LUANA DA SILVA NASCIMENTO", null, "74981300440" },
                     { 42, null, null, 1, "", null, 29461367, null, "E.M.E.I. LENI LOPES DE ARAÚJO SANTOS", null, "" },
                     { 41, null, null, 1, "", null, 29402210, null, "E.M.E.I. JANDIRA BORGES", null, "" },
-                    { 39, null, null, 1, "", null, 29402100, null, "E.M.E.I. GENTIL DAMÁSIO DO NASCIMENTO", null, "(74) 3613-3763" },
-                    { 38, null, null, 1, "ROSALILAS_BISPO@HOTMAIL.COM", null, 29461189, null, "E.M.E.I. EDIVÂNIA SANTOS CARDOSO", null, "(74) 8851-1345" },
+                    { 39, null, null, 1, "", null, 29402100, null, "E.M.E.I. GENTIL DAMÁSIO DO NASCIMENTO", null, "7436133763" },
+                    { 38, null, null, 1, "ROSALILAS_BISPO@HOTMAIL.COM", null, 29461189, null, "E.M.E.I. EDIVÂNIA SANTOS CARDOSO", null, "7488511345" },
                     { 37, null, null, 1, "JAMMYS.GUERRA@GMAIL.COM", null, 29402190, null, "E.M.E.I. DILMA CALMON DE OLIVEIRA", null, "" },
                     { 36, null, null, 1, "", null, 29932777, null, "E.M.E.I. CAIC MISAEL AGUILAR", null, "" },
-                    { 34, null, null, 1, "SANTANABOL14@GMAIL.COM", null, 29026423, null, "E.M.E.I. BOLIVAR SANTANA", null, "(74) 8805-4854" },
+                    { 34, null, null, 1, "SANTANABOL14@GMAIL.COM", null, 29026423, null, "E.M.E.I. BOLIVAR SANTANA", null, "7488054854" },
                     { 110, null, null, 1, "ESCOLAGUIOMARLUSTOSA@HOTMAIL.COM", null, 29024838, null, "PROFª GUIOMAR LUSTOSA RODRIGUES", null, "" },
-                    { 32, null, null, 1, "JANE.SILVABARBOSA@HOTMAIL.COM", null, 29464064, null, "E.M.E.I. ARLINDA ALVES VARJÃO", null, "(74) 8833-3869" },
+                    { 32, null, null, 1, "JANE.SILVABARBOSA@HOTMAIL.COM", null, 29464064, null, "E.M.E.I. ARLINDA ALVES VARJÃO", null, "7488333869" },
                     { 31, null, null, 1, "EMAILPRIMAVEAARCENIOJOSE@GMAIL.COM", null, 29429790, null, "E.M.E.I. ARCENIO JOSÉ DA SILVA", null, "" },
                     { 44, null, null, 1, "", null, 29461219, null, "E.M.E.I. LUZINETE DE OLIVEIRA", null, "" },
-                    { 30, null, null, 1, "", null, 29461340, null, "E.M.E.I. ANTÔNIO GUILHERMINO", null, "(74) 98805-4502" },
-                    { 28, null, null, 1, "ROSANGELA.ALMEIDA@HOTMAIL.COM", null, 29401220, null, "E.M.E.I. ANA MARIA MORGADO CHAVES", null, "(74) 3612-3354" },
+                    { 30, null, null, 1, "", null, 29461340, null, "E.M.E.I. ANTÔNIO GUILHERMINO", null, "74988054502" },
+                    { 28, null, null, 1, "ROSANGELA.ALMEIDA@HOTMAIL.COM", null, 29401220, null, "E.M.E.I. ANA MARIA MORGADO CHAVES", null, "7436123354" },
                     { 27, null, null, 1, "", null, 29402140, null, "E.M.E.I. AMÉLIA DUARTE", null, "" },
                     { 25, null, null, 1, "CLEIABARRETO02@OUTLOOK.COM", null, 29461375, null, "E.M.E.I. ADJALVA FERREIRA LIMA", null, "" },
-                    { 22, null, null, 1, "ESCOLADRJOSEDEARAUJO@HOTMAIL.COM", null, 29025478, null, "DOUTOR JOSÉ DE ARAÚJO SOUZA", null, "(74) 3613-0580" },
-                    { 20, null, null, 1, "ESCOLADJR@GMAIL.COM", null, 29378893, null, "DOM JOSÉ RODRIGUES", null, "(74) 8811-0737" },
-                    { 16, null, null, 1, "ESCOLACSU.JUA@GMAIL.COM", null, 29024668, null, "CENTRO SOCIAL URBANO - CSU", null, "(74) 3611-2744" },
-                    { 14, null, null, 1, "ESCOLA_CAXANGA@HOTMAIL.COM", null, 29024650, null, "CAXANGÁ", null, "(74) 3612-2900" },
-                    { 13, null, null, 1, "ESCOLACAICJUA@GMAIL.COM", null, 29362415, null, "CAIC - MISAEL AGUILAR", null, "(74) 3611-8041" },
+                    { 22, null, null, 1, "ESCOLADRJOSEDEARAUJO@HOTMAIL.COM", null, 29025478, null, "DOUTOR JOSÉ DE ARAÚJO SOUZA", null, "7436130580" },
+                    { 20, null, null, 1, "ESCOLADJR@GMAIL.COM", null, 29378893, null, "DOM JOSÉ RODRIGUES", null, "7488110737" },
+                    { 16, null, null, 1, "ESCOLACSU.JUA@GMAIL.COM", null, 29024668, null, "CENTRO SOCIAL URBANO - CSU", null, "7436112744" },
+                    { 14, null, null, 1, "ESCOLA_CAXANGA@HOTMAIL.COM", null, 29024650, null, "CAXANGÁ", null, "7436122900" },
+                    { 13, null, null, 1, "ESCOLACAICJUA@GMAIL.COM", null, 29362415, null, "CAIC - MISAEL AGUILAR", null, "7436118041" },
                     { 12, null, null, 1, "MAZZARELLOROCHA@OUTLOOK.COM", null, 29469120, null, "C.R.A. PROFª MAZZARELLO CAVALCANTI REIS DA ROCHA", null, "" },
-                    { 9, null, null, 1, "CEAJC1@HOTMAIL.COM", null, 29429536, null, "ARGEMIRO JOSE DA CRUZ", null, "(74) 3611-0018" },
-                    { 7, null, null, 1, "ANALIABARBOSA.EDU@GMAIL.COM", null, 29341256, null, "ANÁLIA BARBOSA DE SOUZA", null, "(74) 9155-2384" },
-                    { 29, null, null, 1, "CENTROANNAHILDA@GMAIL.COM", null, 29402120, null, "E.M.E.I. ANNA HILDA LEITE FARIAS", null, "(74) 3612-4696" },
-                    { 47, null, null, 1, "EMEIMARIAHELENA@HOTMAIL.COM.BR", null, 29461243, null, "E.M.E.I. MARIA HELENA DA SILVA PEREIRA", null, "(74) 8834-2914" },
+                    { 9, null, null, 1, "CEAJC1@HOTMAIL.COM", null, 29429536, null, "ARGEMIRO JOSE DA CRUZ", null, "7436110018" },
+                    { 7, null, null, 1, "ANALIABARBOSA.EDU@GMAIL.COM", null, 29341256, null, "ANÁLIA BARBOSA DE SOUZA", null, "7491552384" },
+                    { 29, null, null, 1, "CENTROANNAHILDA@GMAIL.COM", null, 29402120, null, "E.M.E.I. ANNA HILDA LEITE FARIAS", null, "7436124696" },
+                    { 47, null, null, 1, "EMEIMARIAHELENA@HOTMAIL.COM.BR", null, 29461243, null, "E.M.E.I. MARIA HELENA DA SILVA PEREIRA", null, "7488342914" },
                     { 33, null, null, 1, "EMEI.DIRETORIA@GMAIL.COM", null, 29470820, null, "E.M.E.I. BEATRIZ ANGÉLICA MOTA", null, "" },
                     { 49, null, null, 1, "", null, 29461170, null, "E.M.E.I. MARIA JÚLIA RODRIGUES TANURI", null, "" },
                     { 107, null, null, 1, "E.CRENILDESBRANDAO@GMAIL.COM", null, 29024900, null, "PROFª CRENILDES LUIS BRANDÃO", null, "" },
-                    { 48, null, null, 1, "CLAUDIANA.PROF@GMAIL.COM", null, 29461235, null, "E.M.E.I. MARIA HOZANA NUNES", null, "(74) 3612-4696" },
+                    { 48, null, null, 1, "CLAUDIANA.PROF@GMAIL.COM", null, 29461235, null, "E.M.E.I. MARIA HOZANA NUNES", null, "7436124696" },
                     { 102, null, null, 1, "", null, 29401600, null, "PRESIDENTE TANCREDO NEVES", null, "" },
                     { 101, null, null, 1, "", null, 29025362, null, "PREFEITO APRÍGIO DUARTE", null, "" },
-                    { 98, null, null, 1, "PAULOVI_2511@HOTMAIL.COM", null, 29024587, null, "PAULO VI", null, "(74) 3611-5675" },
+                    { 98, null, null, 1, "PAULOVI_2511@HOTMAIL.COM", null, 29024587, null, "PAULO VI", null, "7436115675" },
                     { 94, null, null, 1, "ENSGSEDUC@GMAIL.COM", null, 29025311, null, "NOSSA SENHORA DAS GROTAS-SEDE", null, "" },
                     { 85, null, null, 1, "", null, 29026440, null, "MANOEL GOMES MARTINS", null, "" },
                     { 83, null, null, 1, "", null, 29025206, null, "MANDACARU", null, "" },
-                    { 82, null, null, 1, "ESCOLALUDGERO@GMAIL.COM", null, 29025184, null, "LUDGERO DE SOUZA COSTA", null, "(74) 3612-1731" },
-                    { 79, null, null, 1, "ESCOLAJUDITELCOSTA@HOTMAIL.COM", null, 29025176, null, "JUDITE LEAL COSTA", null, "(74) 3611-4939" },
-                    { 78, null, null, 1, "ESCOLAJOSEPADILHA@HOTMAIL.COM", null, 29025370, null, "JOSÉ PADILHA DE SOUZA", null, "(74) 3612-0372" },
+                    { 82, null, null, 1, "ESCOLALUDGERO@GMAIL.COM", null, 29025184, null, "LUDGERO DE SOUZA COSTA", null, "7436121731" },
+                    { 79, null, null, 1, "ESCOLAJUDITELCOSTA@HOTMAIL.COM", null, 29025176, null, "JUDITE LEAL COSTA", null, "7436114939" },
+                    { 78, null, null, 1, "ESCOLAJOSEPADILHA@HOTMAIL.COM", null, 29025370, null, "JOSÉ PADILHA DE SOUZA", null, "7436120372" },
                     { 76, null, null, 1, "JOCA.DIRETORIA@GMAIL.COM", null, 29025168, null, "JOCA DE SOUZA OLIVEIRA", null, "" },
                     { 106, null, null, 1, "", null, 29024692, null, "PROFª CARMEM COSTA SANTOS", null, "" },
-                    { 70, null, null, 1, "ESCOLAPROMENOR@HOTMAIL.COM", null, 29025524, null, "FUNDAÇÃO JUAZEIRENSE PROMENOR", null, "(74) 3611-3992" },
-                    { 50, null, null, 1, "TRPAQUINO@HOTMAIL.COM", null, 29025338, null, "E.M.E.I. MARIA SUELY MEDRADO ARAÚJO", null, "(74) 8841-9813" },
+                    { 70, null, null, 1, "ESCOLAPROMENOR@HOTMAIL.COM", null, 29025524, null, "FUNDAÇÃO JUAZEIRENSE PROMENOR", null, "7436113992" },
+                    { 50, null, null, 1, "TRPAQUINO@HOTMAIL.COM", null, 29025338, null, "E.M.E.I. MARIA SUELY MEDRADO ARAÚJO", null, "7488419813" },
                     { 51, null, null, 1, "", null, 29402160, null, "E.M.E.I. MARIÁ VIANA TANURI", null, "" },
-                    { 72, null, null, 1, "PATRICIACARLA01@HOTMAIL.COM", null, 29025575, null, "HELENA ARAÚJO PINHEIRO", null, "(74) 3611-1626" },
+                    { 72, null, null, 1, "PATRICIACARLA01@HOTMAIL.COM", null, 29025575, null, "HELENA ARAÚJO PINHEIRO", null, "7436111626" },
                     { 53, null, null, 1, "EMEINAILDE@HOTMAIL.COM", null, 29402150, null, "E.M.E.I. NAILDE DE SOUZA COSTA", null, "" },
                     { 55, null, null, 1, "", null, 29445256, null, "E.M.E.I. NOSSO SENHOR DOS AFLITOS", null, "" },
-                    { 52, null, null, 1, "", null, 29461197, null, "E.M.E.I. NÉLIA DE SOUZA COSTA", null, "(74) 3612-3354" },
-                    { 58, null, null, 1, "MARI_LUCA@MSN.COM", null, 29470811, null, "E.M.E.I. PREFEITO APRÍGIO DUARTE", null, "(74) 98832-0498" },
+                    { 52, null, null, 1, "", null, 29461197, null, "E.M.E.I. NÉLIA DE SOUZA COSTA", null, "7436123354" },
+                    { 58, null, null, 1, "MARI_LUCA@MSN.COM", null, 29470811, null, "E.M.E.I. PREFEITO APRÍGIO DUARTE", null, "74988320498" },
                     { 59, null, null, 1, "EMAILPRIMAVERAARCENIOJOSE@GMAIL.COM", null, 29461251, null, "E.M.E.I. PRIMAVERA", null, "" },
                     { 60, null, null, 1, "EMEIHELOISAHELENA@HOTMAIL.COM", null, 29402110, null, "E.M.E.I. PROFª HELOISA HELENA BENEVIDES FARIAS", null, "" },
-                    { 64, null, null, 1, "LINDY_CPC@HOTMAIL.COM", null, 29450004, null, "E.M.T.I. PROFª IRACEMA PEREIRA DA PAIXÃO", null, "(74) 98809-0992" },
+                    { 64, null, null, 1, "LINDY_CPC@HOTMAIL.COM", null, 29450004, null, "E.M.T.I. PROFª IRACEMA PEREIRA DA PAIXÃO", null, "74988090992" },
                     { 65, null, null, 1, "EDUCANDARIOJOAO23@HOTMAIL.COM", null, 29401610, null, "EDUCANDÁRIO JOÃO XXIII", null, "" },
-                    { 57, null, null, 1, "JOSEFACRISTINAT@GMAIL.COM", null, 29469252, null, "E.M.E.I. PASTOR MANOEL MARQUES DE SOUZA", null, "(74) 98813-6212" }
+                    { 57, null, null, 1, "JOSEFACRISTINAT@GMAIL.COM", null, 29469252, null, "E.M.E.I. PASTOR MANOEL MARQUES DE SOUZA", null, "74988136212" }
                 });
 
             migrationBuilder.InsertData(
@@ -945,38 +944,38 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Nome", "Normativa", "SegmentoId" },
                 values: new object[,]
                 {
-                    { 1, "Berçário", null, 1 },
-                    { 20, "Etapa V", null, 6 },
-                    { 19, "Etapa IV", null, 6 },
-                    { 18, "Etapa III", null, 5 },
-                    { 9, "3º Ano", null, 3 },
-                    { 4, "Infantil III", null, 1 },
-                    { 5, "Infantil IV", null, 2 },
-                    { 6, "Infantil V", null, 2 },
-                    { 7, "1º Ano", null, 3 },
-                    { 8, "2º Ano", null, 3 },
-                    { 17, "Etapa II", null, 5 },
-                    { 10, "4º Ano", null, 3 },
-                    { 11, "5º Ano", null, 3 },
-                    { 12, "6º Ano", null, 4 },
-                    { 13, "7º Ano", null, 4 },
-                    { 14, "8º Ano", null, 4 },
-                    { 15, "9º Ano", null, 4 },
-                    { 21, "Se Liga", null, 7 },
-                    { 22, "Acelera", null, 7 },
-                    { 16, "Etapa I", null, 5 },
-                    { 3, "Infantil II", null, 1 },
-                    { 2, "Infantil I", null, 1 }
+                    { 1, "Berçário", 1, 1 },
+                    { 20, "Etapa V", 1, 6 },
+                    { 19, "Etapa IV", 1, 6 },
+                    { 18, "Etapa III", 1, 5 },
+                    { 9, "3º Ano", 1, 3 },
+                    { 4, "Infantil III", 1, 1 },
+                    { 5, "Infantil IV", 1, 2 },
+                    { 6, "Infantil V", 1, 2 },
+                    { 7, "1º Ano", 1, 3 },
+                    { 8, "2º Ano", 1, 3 },
+                    { 17, "Etapa II", 1, 5 },
+                    { 10, "4º Ano", 1, 3 },
+                    { 11, "5º Ano", 1, 3 },
+                    { 12, "6º Ano", 1, 4 },
+                    { 13, "7º Ano", 1, 4 },
+                    { 14, "8º Ano", 1, 4 },
+                    { 15, "9º Ano", 1, 4 },
+                    { 21, "Se Liga", 1, 7 },
+                    { 22, "Acelera", 1, 7 },
+                    { 16, "Etapa I", 1, 5 },
+                    { 3, "Infantil II", 1, 1 },
+                    { 2, "Infantil I", 1, 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Sala",
-                columns: new[] { "Id", "EscolaId", "Nome" },
+                columns: new[] { "Id", "EscolaId", "Numero" },
                 values: new object[,]
                 {
-                    { 2, 1, "02 DE JULHO" },
-                    { 1, 1, "02 DE JULHO" },
-                    { 3, 1, "15 DE JULHO" }
+                    { 2, 1, 2 },
+                    { 1, 1, 1 },
+                    { 3, 1, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -986,20 +985,20 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Questao",
-                columns: new[] { "Id", "Descricao", "DescritorId", "HTML", "Habilitada", "Item" },
+                columns: new[] { "Id", "Descricao", "DescritorId", "Habilitada", "Html", "Item" },
                 values: new object[,]
                 {
-                    { 1, "Questao 01 - Descritor 1", 1, null, false, "P01" },
-                    { 2, "Questao 02 - Descritor 1", 1, null, false, "P02" },
-                    { 3, "Questao 03 - Descritor 1", 1, null, false, "P03" },
-                    { 4, "Questao 04 - Descritor 1", 1, null, false, "P04" },
-                    { 5, "Questao 01 - Descritor 2", 2, null, false, "P01" },
-                    { 6, "Questao 02 - Descritor 2", 2, null, false, "P02" },
-                    { 10, "Teste", 2, null, false, "P01" },
-                    { 7, "Questao 01 - Descritor 3", 3, null, false, "P01" },
-                    { 11, "Teste2", 3, null, false, "P02" },
-                    { 8, "Questao 01 - Descritor 4", 4, null, false, "P01" },
-                    { 9, "Questao 02 - Descritor 4", 4, null, false, "P02" }
+                    { 1, "Questao 01 - Descritor 1", 1, false, null, "P01" },
+                    { 2, "Questao 02 - Descritor 1", 1, false, null, "P02" },
+                    { 3, "Questao 03 - Descritor 1", 1, false, null, "P03" },
+                    { 4, "Questao 04 - Descritor 1", 1, false, null, "P04" },
+                    { 5, "Questao 01 - Descritor 2", 2, false, null, "P01" },
+                    { 6, "Questao 02 - Descritor 2", 2, false, null, "P02" },
+                    { 10, "Teste", 2, false, null, "P01" },
+                    { 7, "Questao 01 - Descritor 3", 3, false, null, "P01" },
+                    { 11, "Teste2", 3, false, null, "P02" },
+                    { 8, "Questao 01 - Descritor 4", 4, false, null, "P01" },
+                    { 9, "Questao 02 - Descritor 4", 4, false, null, "P02" }
                 });
 
             migrationBuilder.InsertData(

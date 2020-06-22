@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.ApplicationCore.Entities;
 
-namespace SAED.Infrastructure.Config
+namespace SAED.Infrastructure.Data.Config
 {
     public class EtapaDescritorConfiguration : IEntityTypeConfiguration<EtapaDescritor>
     {
@@ -11,27 +11,14 @@ namespace SAED.Infrastructure.Config
             builder.HasOne(anoDescritor => anoDescritor.Etapa)
                 .WithMany(ano => ano.EtapaDescritores)
                 .HasForeignKey(anoDescritor => anoDescritor.EtapaId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(anoDescritor => anoDescritor.Descritor)
                 .WithMany(descritor => descritor.EtapaDescritores)
                 .HasForeignKey(anoDescritor => anoDescritor.DescritorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasKey(anoDescritor => new { anoDescritor.EtapaId, anoDescritor.DescritorId });
-
-            #region Outra forma de mapear m2m
-            //.HasMany<EscolaPessoa>(e => e.Pessoas)
-            //.WithMany(e => e)
-            //.Map(x =>
-            //{
-            //    x.MapLeftKey("Account_Id");
-            //    x.MapRightKey("Product_Id");
-            //    x.ToTable("AccountProducts");
-            //});
-            #endregion
-
-
         }
     }
 }
