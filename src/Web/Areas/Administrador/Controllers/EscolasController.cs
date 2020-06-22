@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ApplicationCore.Specifications;
+using Ardalis.Specification;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
@@ -28,7 +31,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var escolas = await _escolasRepository.ListAllAsync();
+            var specification = new EscolasWithSpecification();
+            //specification.Includes.Append(x => x.Distrito);
+            var escolas = await _escolasRepository.ListAsync(specification);
 
             return View(escolas);
         }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
@@ -47,7 +46,7 @@ namespace SAED.Web.Extensions
                         await userManager.AddToRoleAsync(user, role);
                     };
 
-                    if (await userManager.IsInRoleAsync(user, AuthorizationConstants.Roles.Aplicador))
+                    if (await userManager.IsInRoleAsync(user, Roles.Aplicador))
                     {
                         var avaliacoes = await context.Avaliacoes.Where(a => a.Status == StatusAvaliacao.EmAndamento).ToListAsync();
                         foreach (var avaliacao in avaliacoes)
