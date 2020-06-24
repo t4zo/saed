@@ -1,5 +1,5 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+using Infrastructure.i18n;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SAED.Api.Extensions;
+using SAED.Api.Interfaces;
+using SAED.Api.Services;
 using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Services;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
-using SAED.Web.Authorization;
-using SAED.Web.Extensions;
 using System;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
-namespace SAED.Web
+namespace SAED.Api
 {
     public class Startup
     {
@@ -31,20 +32,24 @@ namespace SAED.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IUnityOfWork, UnityOfWorkService>();
-
-            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
-
-            services.AddDbContext<ApplicationDbContext>();
+            services.AddTransient<IUnityOfWork, UnityOfWorkService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddCustomCors(DefaultCorsPolicyName);
 
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<IdentityRole<int>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>();
 
-            services.Configure<IdentityOptions>(options =>
+            services.AddControllers();
+            services.AddJwtSecurity(Configuration);
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Roles.AllName, policy => policy.RequireRole(Roles.All));
+                options.AddPolicy(Roles.Administrador, policy => policy.RequireRole(Roles.Administrador));
+                options.AddPolicy(Roles.Aplicador, policy => policy.RequireRole(Roles.Aplicador));
+            });
+
+            services.AddIdentityCore<ApplicationUser>(options =>
             {
                 options.Password.RequireDigit = true;
                 options.Password.RequireNonAlphanumeric = false;
@@ -52,20 +57,19 @@ namespace SAED.Web
                 options.Password.RequiredLength = 6;
 
                 options.SignIn.RequireConfirmedEmail = false;
-            });
+            })
+                .AddErrorDescriber<PortugueseIdentityErrorDescriber>()
+                .AddRoles<IdentityRole<int>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddSignInManager();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddRouting(options =>
             {
                 options.LowercaseUrls = true;
             });
-
-            services.AddResponseCompression();
-
-            services.AddAutoMapper(typeof(Startup));
-
-            services.AddControllersWithViews();
-
-            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,13 +78,6 @@ namespace SAED.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
             app.IsInDocker(serviceProvider, Configuration);
@@ -90,37 +87,27 @@ namespace SAED.Web
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.CreateRolesAsync(serviceProvider, Configuration).Wait();
-            app.CreateUsersAsync(serviceProvider, Configuration).Wait();
+            app.CreateRoles(serviceProvider, Configuration).Wait();
+            app.CreateUsers(serviceProvider, Configuration).Wait();
 
             app.UseCors(DefaultCorsPolicyName);
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            // app.UseSwagger();
+            // app.ConfigureSwagger();
+
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapAreaControllerRoute(
-                    name: "administrador",
-                    areaName: "Administrador",
-                    pattern: "{area=Administrador}/{controller=Home}/{action=Index}/{id?}"
-                ).RequireAuthorization();
-
-                endpoints.MapAreaControllerRoute(
-                    name: "api",
-                    areaName: "Api",
-                    pattern: "{area=Api}/{controller=Home}/{action=Index}/{id?}"
-                ).RequireAuthorization();
-
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                endpoints
+                .MapControllers()
+                .RequireAuthorization();
             });
         }
     }

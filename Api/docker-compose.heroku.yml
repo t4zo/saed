@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: 'saed'
+    image: 't4zo/saed:0.0.1'
+    build:
+      context: .
+      dockerfile: heroku.dockerfile
+    environment:
+      DOCKER: 'True'
+      ASPNETCORE_ENVIRONMENT: 'Production'
+    networks:
+      - saed-network
+
+networks:
+  saed-network:
+    driver: bridge

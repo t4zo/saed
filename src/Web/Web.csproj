@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-SAED-2A6D66F1-BFF5-4E8F-8901-1AD6B1ADCB54</UserSecretsId>
+    <!--<Nullable>enable</Nullable>-->
   </PropertyGroup>
 
   <ItemGroup>

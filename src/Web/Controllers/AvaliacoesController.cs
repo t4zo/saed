@@ -16,25 +16,25 @@ namespace SAED.Web.Controllers
     public class AvaliacoesController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IAsyncRepository<Avaliacao> _avalicaoRepository;
+        private readonly IAsyncRepository<Avaliacao> _avaliacaoRepository;
 
         public AvaliacoesController(UserManager<ApplicationUser> userManager, IAsyncRepository<Avaliacao> avalicaoRepository)
         {
             _userManager = userManager;
-            _avalicaoRepository = avalicaoRepository;
+            _avaliacaoRepository = avalicaoRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var avaliacoes = await _avalicaoRepository.ListAllAsync();
+            var avaliacoes = await _avaliacaoRepository.ListAllAsync();
             return View(new SelectList(avaliacoes, "Id", "Codigo"));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Details(int id)
         {
-            var avaliacao = await _avalicaoRepository.GetByIdAsync(id);
+            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
             return View(avaliacao);
         }
 

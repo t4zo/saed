@@ -6,13 +6,15 @@ namespace SAED.ApplicationCore.Constants
     {
         public static class Roles
         {
+            public const string AllName = "All";
+
             public const string Superuser = "Superuser";
 
             public const string Administrador = "Administrador";
 
             public const string Aplicador = "Aplicador";
 
-            public static IEnumerable<string> ALL = new List<string> { Administrador, Aplicador };
+            public static IEnumerable<string> All = new List<string> { Administrador, Aplicador };
         }
 
         public static class Areas
@@ -53,6 +55,8 @@ namespace SAED.ApplicationCore.Constants
 
             public const string DefaultPassword = "123qwe";
         }
+
+        public const string DefaultCorsPolicyName = "localhost";
 
         public const string Remember = "rmb";
     }

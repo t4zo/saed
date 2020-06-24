@@ -14,7 +14,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
-                    Nascimento = table.Column<DateTime>(nullable: false)
+                    Nascimento = table.Column<DateTime>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(3722)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(4120))
                 },
                 constraints: table =>
                 {
@@ -29,7 +31,9 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 331, DateTimeKind.Local).AddTicks(863)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(8073))
                 },
                 constraints: table =>
                 {
@@ -55,7 +59,9 @@ namespace Infrastructure.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(4657)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(5154))
                 },
                 constraints: table =>
                 {
@@ -69,7 +75,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Codigo = table.Column<string>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(4523)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(4904))
                 },
                 constraints: table =>
                 {
@@ -83,7 +91,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
-                    Sigla = table.Column<string>(maxLength: 8, nullable: false)
+                    Sigla = table.Column<string>(maxLength: 8, nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(6948)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(7317))
                 },
                 constraints: table =>
                 {
@@ -97,7 +107,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 128, nullable: false),
-                    Sigla = table.Column<string>(maxLength: 8, nullable: false)
+                    Sigla = table.Column<string>(maxLength: 8, nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(8610)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(8999))
                 },
                 constraints: table =>
                 {
@@ -112,7 +124,9 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 32, nullable: false),
                     Zona = table.Column<string>(maxLength: 8, nullable: false),
-                    Distancia = table.Column<int>(nullable: false)
+                    Distancia = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(9461)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(9827))
                 },
                 constraints: table =>
                 {
@@ -125,7 +139,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(maxLength: 16, nullable: false)
+                    Nome = table.Column<string>(maxLength: 16, nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(3702)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(4074))
                 },
                 constraints: table =>
                 {
@@ -138,7 +154,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(maxLength: 32, nullable: false)
+                    Nome = table.Column<string>(maxLength: 32, nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(2827)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(3221))
                 },
                 constraints: table =>
                 {
@@ -153,7 +171,9 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(8815)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(9320))
                 },
                 constraints: table =>
                 {
@@ -174,7 +194,9 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(9711)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(88))
                 },
                 constraints: table =>
                 {
@@ -191,10 +213,12 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(453)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(811))
                 },
                 constraints: table =>
                 {
@@ -212,7 +236,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false)
+                    RoleId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(1166)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(1476))
                 },
                 constraints: table =>
                 {
@@ -236,9 +262,11 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(1912)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(2231))
                 },
                 constraints: table =>
                 {
@@ -259,7 +287,9 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
                     Sigla = table.Column<string>(maxLength: 10, nullable: false),
-                    CursoId = table.Column<int>(nullable: false)
+                    CursoId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(7895)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(8273))
                 },
                 constraints: table =>
                 {
@@ -277,7 +307,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     AvaliacaoId = table.Column<int>(nullable: false),
-                    DisciplinaId = table.Column<int>(nullable: false)
+                    DisciplinaId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(5296)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(5657))
                 },
                 constraints: table =>
                 {
@@ -303,7 +335,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DisciplinaId = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(maxLength: 256, nullable: false)
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(8742)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(9187))
                 },
                 constraints: table =>
                 {
@@ -321,7 +355,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     AvaliacaoId = table.Column<int>(nullable: false),
-                    DistritoId = table.Column<int>(nullable: false)
+                    DistritoId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(6143)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(6513))
                 },
                 constraints: table =>
                 {
@@ -355,7 +391,9 @@ namespace Infrastructure.Migrations
                     Numero = table.Column<int>(nullable: true),
                     Complemento = table.Column<string>(maxLength: 128, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: false),
-                    Telefone = table.Column<string>(maxLength: 11, nullable: true)
+                    Telefone = table.Column<string>(maxLength: 11, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(709)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(1558))
                 },
                 constraints: table =>
                 {
@@ -382,7 +420,9 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 64, nullable: false),
                     SegmentoId = table.Column<int>(nullable: false),
-                    Normativa = table.Column<int>(nullable: false)
+                    Normativa = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(2028)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(2453))
                 },
                 constraints: table =>
                 {
@@ -402,7 +442,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TemaId = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(maxLength: 256, nullable: false)
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(7808)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(8224))
                 },
                 constraints: table =>
                 {
@@ -422,7 +464,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero = table.Column<int>(nullable: false),
-                    EscolaId = table.Column<int>(nullable: false)
+                    EscolaId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(7009)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(7449))
                 },
                 constraints: table =>
                 {
@@ -440,7 +484,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     EtapaId = table.Column<int>(nullable: false),
-                    DescritorId = table.Column<int>(nullable: false)
+                    DescritorId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(2844)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(3282))
                 },
                 constraints: table =>
                 {
@@ -469,7 +515,9 @@ namespace Infrastructure.Migrations
                     Item = table.Column<string>(maxLength: 8, nullable: false),
                     Descricao = table.Column<string>(nullable: false),
                     Html = table.Column<string>(nullable: true),
-                    Habilitada = table.Column<bool>(nullable: false)
+                    Habilitada = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(4548)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(4940))
                 },
                 constraints: table =>
                 {
@@ -494,7 +542,9 @@ namespace Infrastructure.Migrations
                     FormaId = table.Column<int>(nullable: false),
                     Nome = table.Column<string>(maxLength: 32, nullable: false),
                     QtdAlunos = table.Column<int>(nullable: false),
-                    Extinta = table.Column<bool>(nullable: false)
+                    Extinta = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(609)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(1312))
                 },
                 constraints: table =>
                 {
@@ -533,7 +583,9 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descricao = table.Column<string>(nullable: false),
                     Correta = table.Column<bool>(nullable: false),
-                    QuestaoId = table.Column<int>(nullable: false)
+                    QuestaoId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(2735)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(3304))
                 },
                 constraints: table =>
                 {
@@ -551,7 +603,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     AvaliacaoId = table.Column<int>(nullable: false),
-                    QuestaoId = table.Column<int>(nullable: false)
+                    QuestaoId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(5429)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(5822))
                 },
                 constraints: table =>
                 {
@@ -575,7 +629,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     TurmaId = table.Column<int>(nullable: false),
-                    AlunoId = table.Column<int>(nullable: false)
+                    AlunoId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(1876)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(2368))
                 },
                 constraints: table =>
                 {
@@ -600,7 +656,9 @@ namespace Infrastructure.Migrations
                 {
                     ApplicationUserId = table.Column<int>(nullable: false),
                     TurmaId = table.Column<int>(nullable: false),
-                    AvaliacaoId = table.Column<int>(nullable: false)
+                    AvaliacaoId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(3700)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(4081))
                 },
                 constraints: table =>
                 {
@@ -625,7 +683,9 @@ namespace Infrastructure.Migrations
                 {
                     AvaliacaoId = table.Column<int>(nullable: false),
                     AlunoId = table.Column<int>(nullable: false),
-                    AlternativaId = table.Column<int>(nullable: false)
+                    AlternativaId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(6214)),
+                    UpdatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(6615))
                 },
                 constraints: table =>
                 {

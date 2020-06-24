@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SAED.ApplicationCore.Entities
+﻿namespace SAED.ApplicationCore.Entities
 {
     public class Alternativa : BaseEntity
     {

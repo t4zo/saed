@@ -1,5 +1,4 @@
 ﻿using ApplicationCore.Specifications;
-using Ardalis.Specification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
-using System.Linq;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
