@@ -1,5 +1,6 @@
 using AutoMapper;
 using Infrastructure.i18n;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SAED.Api.Authorization;
 using SAED.Api.Extensions;
 using SAED.Api.Interfaces;
 using SAED.Api.Services;
@@ -35,6 +37,9 @@ namespace SAED.Api
             services.AddTransient<IUnityOfWork, UnityOfWorkService>();
             services.AddTransient<IUserService, UserService>();
 
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            //services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
             services.AddCustomCors(DefaultCorsPolicyName);
 
             services.AddDbContext<ApplicationDbContext>();
@@ -45,6 +50,7 @@ namespace SAED.Api
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(Roles.AllName, policy => policy.RequireRole(Roles.All));
+                options.AddPolicy(Roles.Superuser, policy => policy.RequireRole(Roles.Superuser));
                 options.AddPolicy(Roles.Administrador, policy => policy.RequireRole(Roles.Administrador));
                 options.AddPolicy(Roles.Aplicador, policy => policy.RequireRole(Roles.Aplicador));
             });
@@ -100,7 +106,7 @@ namespace SAED.Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

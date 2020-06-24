@@ -9,6 +9,7 @@ using SAED.Infrastructure.Identity;
 using SAED.Web.Configurations;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
@@ -24,6 +25,7 @@ namespace SAED.Web.Extensions
         {
             var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
             var hasUser = await context.Users.AnyAsync();
 
@@ -38,13 +40,33 @@ namespace SAED.Web.Extensions
 
                     if (result.Succeeded)
                     {
-                        await userManager.AddClaimAsync(user, new System.Security.Claims.Claim(CustomClaimTypes.Permission, Permissions.Users.View));
+                        await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Users.View));
                     }
 
                     foreach (var role in _user.Roles)
                     {
                         await userManager.AddToRoleAsync(user, role);
+
+                        if(role.Equals(Roles.Administrador))
+                        {
+                            IdentityRole<int> _role = await roleManager.FindByNameAsync(role);
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Create));
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Update));
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Delete));
+                        }
+
+                        if (role.Equals(Roles.Aplicador))
+                        {
+                            IdentityRole<int> _role = await roleManager.FindByNameAsync(role);
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
+                            await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
+                        }
                     };
+
+                    await context.SaveChangesAsync();
 
                     if (await userManager.IsInRoleAsync(user, Roles.Aplicador))
                     {

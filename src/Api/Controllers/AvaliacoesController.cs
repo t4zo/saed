@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SAED.Api.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(AuthorizationConstants.Roles.Superuser)]
     [ApiController]
     [Route("v1/[controller]")]
     public class AvaliacoesController : ControllerBase
@@ -22,7 +23,8 @@ namespace SAED.Api.Controllers
             _uow = uow;
         }
 
-        [HttpGet("")]
+        [Authorize(Roles = AuthorizationConstants.Roles.Superuser)]
+        [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Avaliacao>>> GetAll()
         {
             return Ok(await _avaliacaoRepository.ListAllAsync());
@@ -41,7 +43,7 @@ namespace SAED.Api.Controllers
             return Ok(avaliacao);
         }
 
-        [HttpPost("")]
+        [HttpPost]
         public async Task<ActionResult<Avaliacao>> Create(Avaliacao avaliacao)
         {
             await _avaliacaoRepository.AddAsync(avaliacao);

@@ -8,6 +8,7 @@ using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Identity;
 using System.Threading.Tasks;
+using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Controllers
 {
@@ -24,6 +25,7 @@ namespace SAED.Web.Controllers
             _avaliacaoRepository = avalicaoRepository;
         }
 
+        [Authorize(Permissions.Avaliacoes.View)]
         [HttpGet]
         public async Task<IActionResult> Index()
         {

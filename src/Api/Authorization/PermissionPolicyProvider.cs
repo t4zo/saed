@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 
-namespace SAED.Web.Authorization
+namespace SAED.Api.Authorization
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
     {

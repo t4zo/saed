@@ -14,7 +14,7 @@ namespace SAED.ApplicationCore.Constants
 
             public const string Aplicador = "Aplicador";
 
-            public static IEnumerable<string> All = new List<string> { Administrador, Aplicador };
+            public static IEnumerable<string> All = new List<string> { Superuser, Administrador, Aplicador };
         }
 
         public static class Areas
@@ -24,7 +24,7 @@ namespace SAED.ApplicationCore.Constants
 
         public static class CustomClaimTypes
         {
-            public const string Permission = "permission";
+            public const string Permission = "Permission";
         }
 
         public static class Permissions
@@ -33,6 +33,11 @@ namespace SAED.ApplicationCore.Constants
             {
                 public const string View = "Permissions.Users.View";
                 public const string Test = "Permissions.Users.Test";
+            }
+
+            public static class Dashboard
+            {
+                public const string View = "Permissions.Dashboard.View";
             }
 
             public static class Avaliacoes

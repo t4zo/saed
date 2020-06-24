@@ -7,7 +7,6 @@ using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace Api.Controllers
 {
-    //[Authorize(Roles.Administrador)]
     [ApiController]
     [Route("v1/[controller]")]
     [AllowAnonymous]
@@ -20,7 +19,6 @@ namespace Api.Controllers
             _userService = userService;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticationDto model)
         {

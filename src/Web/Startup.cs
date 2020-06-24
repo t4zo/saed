@@ -90,8 +90,8 @@ namespace SAED.Web
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.CreateRolesAsync(serviceProvider, Configuration).Wait();
-            app.CreateUsersAsync(serviceProvider, Configuration).Wait();
+            app.CreateRolesAsync(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.CreateUsersAsync(serviceProvider, Configuration).GetAwaiter().GetResult();
 
             app.UseCors(DefaultCorsPolicyName);
 
