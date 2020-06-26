@@ -39,6 +39,15 @@ namespace SAED.Infrastructure.Data
             builder.SeedDatabase();
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+
+            string connectionString = GetConnectionEnvironmentString();
+
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+
         public override int SaveChanges()
         {
             var entries = ChangeTracker
@@ -56,15 +65,6 @@ namespace SAED.Infrastructure.Data
             }
 
             return base.SaveChanges();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-
-            string connectionString = GetConnectionEnvironmentString();
-
-            optionsBuilder.UseSqlServer(connectionString);
         }
 
         private string GetConnectionEnvironmentString()

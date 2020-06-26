@@ -1,9 +1,8 @@
-﻿using SAED.Api.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAED.Api.Entities.Dto;
+using SAED.Api.Interfaces;
 using System.Threading.Tasks;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace Api.Controllers
 {

@@ -47,7 +47,7 @@ namespace SAED.Web.Extensions
                     {
                         await userManager.AddToRoleAsync(user, role);
 
-                        if(role.Equals(Roles.Administrador))
+                        if (role.Equals(Roles.Administrador))
                         {
                             IdentityRole<int> _role = await roleManager.FindByNameAsync(role);
                             await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
