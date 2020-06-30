@@ -21,6 +21,8 @@ namespace SAED.Infrastructure.Data
         }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
+        public DbSet<Escola> Escolas { get; set; }
+        public DbSet<Disciplina> Disciplinas { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -30,13 +32,16 @@ namespace SAED.Infrastructure.Data
 
             var entities = builder.Model.GetEntityTypes();
 
-            foreach (var entity in entities)
-            {
-                entity.AddProperty("CreatedDate", typeof(DateTime)).SetDefaultValue(DateTime.Now);
-                entity.AddProperty("UpdatedDate", typeof(DateTime)).SetDefaultValue(DateTime.Now);
-            }
+            //if (!entities.First().Model. .GetSeedData().Any())
+            //{
+                foreach (var entity in entities)
+                {
+                    entity.AddProperty("CreatedDate", typeof(DateTime)).SetDefaultValue(DateTime.Now);
+                    entity.AddProperty("UpdatedDate", typeof(DateTime)).SetDefaultValue(DateTime.Now);
+                }
 
-            builder.SeedDatabase();
+                builder.SeedDatabase();
+            //}
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

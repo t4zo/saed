@@ -33,7 +33,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 331, DateTimeKind.Local).AddTicks(863));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 448, DateTimeKind.Local).AddTicks(20));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(256)")
@@ -46,7 +46,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(8073));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(4993));
 
                     b.HasKey("Id");
 
@@ -74,7 +74,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(8815));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(5760));
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -82,7 +82,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(9320));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(6263));
 
                     b.HasKey("Id");
 
@@ -107,12 +107,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 335, DateTimeKind.Local).AddTicks(9711));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(6614));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(88));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(7006));
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -127,15 +127,17 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(453));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(7356));
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -143,7 +145,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(811));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(7694));
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -166,12 +168,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(1166));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(8021));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(1476));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(8321));
 
                     b.HasKey("UserId", "RoleId");
 
@@ -186,20 +188,22 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(1912));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(8687));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(2231));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(8980));
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -222,7 +226,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(2735));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 452, DateTimeKind.Local).AddTicks(9491));
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -234,7 +238,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(3304));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(38));
 
                     b.HasKey("Id");
 
@@ -395,7 +399,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(3722));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(412));
 
                     b.Property<DateTime>("Nascimento")
                         .HasColumnType("datetime2");
@@ -408,7 +412,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(4120));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(777));
 
                     b.HasKey("Id");
 
@@ -443,7 +447,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(4523));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(1150));
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -451,7 +455,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(4904));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(1515));
 
                     b.HasKey("Id");
 
@@ -483,12 +487,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(5296));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(1901));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(5657));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(2236));
 
                     b.HasKey("DisciplinaId", "AvaliacaoId");
 
@@ -525,12 +529,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(6143));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(2660));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(6513));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(2991));
 
                     b.HasKey("AvaliacaoId", "DistritoId");
 
@@ -556,7 +560,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(6948));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(3394));
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -571,7 +575,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(7317));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(3730));
 
                     b.HasKey("Id");
 
@@ -608,7 +612,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(7808));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(4149));
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -621,7 +625,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(8224));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(4532));
 
                     b.HasKey("Id");
 
@@ -732,7 +736,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(8610));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(4878));
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -747,11 +751,11 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(8999));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(5296));
 
                     b.HasKey("Id");
 
-                    b.ToTable("Disciplina");
+                    b.ToTable("Disciplinas");
 
                     b.HasData(
                         new
@@ -784,7 +788,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(9461));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(5628));
 
                     b.Property<int>("Distancia")
                         .HasColumnType("int");
@@ -797,7 +801,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 336, DateTimeKind.Local).AddTicks(9827));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(6017));
 
                     b.Property<string>("Zona")
                         .IsRequired()
@@ -899,7 +903,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(709));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(6893));
 
                     b.Property<int>("DistritoId")
                         .HasColumnType("int");
@@ -934,7 +938,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(1558));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(7627));
 
                     b.HasKey("Id");
 
@@ -942,7 +946,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("MatrizId");
 
-                    b.ToTable("Escola");
+                    b.ToTable("Escolas");
 
                     b.HasData(
                         new
@@ -2154,7 +2158,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(2028));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(8172));
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -2170,7 +2174,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(2453));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(8620));
 
                     b.HasKey("Id");
 
@@ -2346,12 +2350,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(2844));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(9006));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(3282));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 453, DateTimeKind.Local).AddTicks(9445));
 
                     b.HasKey("EtapaId", "DescritorId");
 
@@ -2377,7 +2381,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(3702));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(115));
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -2387,7 +2391,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(4074));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(895));
 
                     b.HasKey("Id");
 
@@ -2416,7 +2420,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(4548));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(1798));
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -2439,7 +2443,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(4940));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(2557));
 
                     b.HasKey("Id");
 
@@ -2549,12 +2553,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(5429));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(3471));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(5822));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(3897));
 
                     b.HasKey("AvaliacaoId", "QuestaoId");
 
@@ -2589,12 +2593,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(6214));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(4365));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(6615));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(4713));
 
                     b.HasKey("AvaliacaoId", "AlunoId", "AlternativaId");
 
@@ -2642,7 +2646,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(7009));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(5158));
 
                     b.Property<int>("EscolaId")
                         .HasColumnType("int");
@@ -2653,7 +2657,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(7449));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(5659));
 
                     b.HasKey("Id");
 
@@ -2692,7 +2696,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(7895));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(6056));
 
                     b.Property<int>("CursoId")
                         .HasColumnType("int");
@@ -2710,7 +2714,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(8273));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(6542));
 
                     b.HasKey("Id");
 
@@ -2780,7 +2784,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(8742));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(6967));
 
                     b.Property<int>("DisciplinaId")
                         .HasColumnType("int");
@@ -2793,7 +2797,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 337, DateTimeKind.Local).AddTicks(9187));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(7313));
 
                     b.HasKey("Id");
 
@@ -2904,7 +2908,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(609));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(7827));
 
                     b.Property<int>("EtapaId")
                         .HasColumnType("int");
@@ -2932,7 +2936,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(1312));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(8293));
 
                     b.HasKey("Id");
 
@@ -2971,12 +2975,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(1876));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(8774));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(2368));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(9313));
 
                     b.HasKey("TurmaId", "AlunoId");
 
@@ -3007,7 +3011,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(2827));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 454, DateTimeKind.Local).AddTicks(9736));
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -3017,7 +3021,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(3221));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 455, DateTimeKind.Local).AddTicks(80));
 
                     b.HasKey("Id");
 
@@ -3065,12 +3069,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(3700));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 455, DateTimeKind.Local).AddTicks(503));
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(4081));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 455, DateTimeKind.Local).AddTicks(834));
 
                     b.HasKey("ApplicationUserId", "TurmaId", "AvaliacaoId");
 
@@ -3098,7 +3102,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(4657));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 455, DateTimeKind.Local).AddTicks(1434));
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -3139,7 +3143,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 23, 19, 6, 49, 338, DateTimeKind.Local).AddTicks(5154));
+                        .HasDefaultValue(new DateTime(2020, 6, 30, 12, 29, 13, 455, DateTimeKind.Local).AddTicks(1870));
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")

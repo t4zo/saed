@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
+    <None Remove="wwwroot\js\**" />
+    <TypeScriptCompile Remove="wwwroot\js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\administrador\table\header.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\administrador\table\icons.css" />
   </ItemGroup>
@@ -16,6 +24,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5" />
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.9.5">
@@ -32,7 +41,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administrador\Styles\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

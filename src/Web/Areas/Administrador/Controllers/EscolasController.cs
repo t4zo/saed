@@ -36,15 +36,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
             return View(escolas);
         }
 
-        [Authorize(Permissions.Escolas.View)]
-        [HttpGet]
-        public async Task<IActionResult> Get(int id)
-        {
-            var escolas = await _escolasRepository.GetByIdAsync(id);
-
-            return View(escolas);
-        }
-
         [Authorize(Permissions.Escolas.Create)]
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -66,17 +57,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+
             ViewBag.DistritoId = new SelectList(await _distritosRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
             ViewBag.MatrizId = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Nome", escola.MatrizId);
             return View(escola);
         }
 
         [Authorize(Permissions.Escolas.Update)]
-        [HttpGet("administrador/escolas/{id}")]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var escola = await _escolasRepository.GetByIdAsync(id);
-            if (escola == null)
+            if (escola is null)
             {
                 return NotFound();
             }
@@ -89,7 +80,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         [Authorize(Permissions.Escolas.Update)]
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Escola escola)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Escola escola)
         {
             if (id != escola.Id)
             {
@@ -114,14 +106,28 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 }
             }
 
-            return NoContent();
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Permissions.Escolas.Delete)]
-        public async Task<ActionResult<Escola>> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var escola = await _escolasRepository.GetByIdAsync(id);
-            if (escola == null)
+            if (escola is null)
+            {
+                return NotFound();
+            }
+
+            return View(escola);
+        }
+
+        [Authorize(Permissions.Escolas.Delete)]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult<Escola>> DeleteConfirmed(int id)
+        {
+            var escola = await _escolasRepository.GetByIdAsync(id);
+            if (escola is null)
             {
                 return NotFound();
             }
@@ -129,7 +135,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             await _escolasRepository.DeleteAsync(escola);
             await _uow.CommitAsync();
 
-            return escola;
+            return RedirectToAction(nameof(Index));
         }
     }
 }

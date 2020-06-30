@@ -24,8 +24,8 @@
     "inputFile": "Web.Areas/Exame/Styles/aluno.scss"
   },
   {
-    "outputFile": "Web.wwwroot/css/sign.css",
-    "inputFile": "Web.Styles/sign.scss"
+    "outputFile": "Web.wwwroot/css/global.css",
+    "inputFile": "Web.Styles/global.scss"
   },
   {
     "outputFile": "Web.wwwroot/css/home.css",

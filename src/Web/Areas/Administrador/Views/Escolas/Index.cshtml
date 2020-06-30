@@ -6,7 +6,7 @@
 
 <div class="card p-3">
     @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Escolas", Controller = "Escolas", Action = "Escolas" });}
-    <table id="table_id" class="table table-hover mdl-data-table">
+    <table id="table_id" class="table table-hover mdl-data-table text-center">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Distrito)</th>
@@ -25,7 +25,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
                     <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
                     <td class="d-flex flex-wrap">
-                        <a class="action-icon-container mx-lg-2 my-1 my-sm-0" title="Editar" asp-action="Update" asp-route-id="@item.Id"><i class="cil-pencil font-lg"></i></a>
+                        <a class="action-icon-container mx-lg-2 my-1 my-sm-0" title="Editar" asp-action="Edit" asp-route-id="@item.Id"><i class="cil-pencil font-lg"></i></a>
                         <a class="action-icon-container mx-lg-2 my-1 my-sm-0" title="Remover" asp-action="Delete" asp-route-id="@item.Id"><i class="cil-trash font-lg"></i></a>
                     </td>
                 </tr>
