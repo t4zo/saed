@@ -216,7 +216,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("QuestaoId");
 
-                    b.ToTable("Alternativa");
+                    b.ToTable("Alternativas");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Aluno", b =>
@@ -365,7 +365,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("TemaId");
 
-                    b.ToTable("Descritor");
+                    b.ToTable("Descritores");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Disciplina", b =>
@@ -424,7 +424,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Distrito");
+                    b.ToTable("Distritos");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Escola", b =>
@@ -597,7 +597,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DescritorId");
 
-                    b.ToTable("Questao");
+                    b.ToTable("Questoes");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.QuestaoAvaliacao", b =>
@@ -732,7 +732,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DisciplinaId");
 
-                    b.ToTable("Tema");
+                    b.ToTable("Temas");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Turma", b =>

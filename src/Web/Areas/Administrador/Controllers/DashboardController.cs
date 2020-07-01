@@ -5,10 +5,10 @@ using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
+    [Authorize(Permissions.Dashboard.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]
     public class DashboardController : Controller
     {
-        [Authorize(Permissions.Dashboard.View)]
         public IActionResult Index()
         {
             return View();

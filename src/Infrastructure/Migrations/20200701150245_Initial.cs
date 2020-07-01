@@ -117,7 +117,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Distrito",
+                name: "Distritos",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -130,7 +130,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Distrito", x => x.Id);
+                    table.PrimaryKey("PK_Distritos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -329,7 +329,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tema",
+                name: "Temas",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -341,9 +341,9 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tema", x => x.Id);
+                    table.PrimaryKey("PK_Temas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tema_Disciplinas_DisciplinaId",
+                        name: "FK_Temas_Disciplinas_DisciplinaId",
                         column: x => x.DisciplinaId,
                         principalTable: "Disciplinas",
                         principalColumn: "Id",
@@ -369,9 +369,9 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AvaliacaoDistrito_Distrito_DistritoId",
+                        name: "FK_AvaliacaoDistrito_Distritos_DistritoId",
                         column: x => x.DistritoId,
-                        principalTable: "Distrito",
+                        principalTable: "Distritos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -399,9 +399,9 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Escolas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Escolas_Distrito_DistritoId",
+                        name: "FK_Escolas_Distritos_DistritoId",
                         column: x => x.DistritoId,
-                        principalTable: "Distrito",
+                        principalTable: "Distritos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -436,7 +436,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Descritor",
+                name: "Descritores",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -448,11 +448,11 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Descritor", x => x.Id);
+                    table.PrimaryKey("PK_Descritores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Descritor_Tema_TemaId",
+                        name: "FK_Descritores_Temas_TemaId",
                         column: x => x.TemaId,
-                        principalTable: "Tema",
+                        principalTable: "Temas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -492,9 +492,9 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_EtapaDescritor", x => new { x.EtapaId, x.DescritorId });
                     table.ForeignKey(
-                        name: "FK_EtapaDescritor_Descritor_DescritorId",
+                        name: "FK_EtapaDescritor_Descritores_DescritorId",
                         column: x => x.DescritorId,
-                        principalTable: "Descritor",
+                        principalTable: "Descritores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -506,7 +506,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Questao",
+                name: "Questoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -521,11 +521,11 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Questao", x => x.Id);
+                    table.PrimaryKey("PK_Questoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questao_Descritor_DescritorId",
+                        name: "FK_Questoes_Descritores_DescritorId",
                         column: x => x.DescritorId,
-                        principalTable: "Descritor",
+                        principalTable: "Descritores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -576,7 +576,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Alternativa",
+                name: "Alternativas",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -589,11 +589,11 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alternativa", x => x.Id);
+                    table.PrimaryKey("PK_Alternativas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Alternativa_Questao_QuestaoId",
+                        name: "FK_Alternativas_Questoes_QuestaoId",
                         column: x => x.QuestaoId,
-                        principalTable: "Questao",
+                        principalTable: "Questoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -617,9 +617,9 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_QuestaoAvaliacao_Questao_QuestaoId",
+                        name: "FK_QuestaoAvaliacao_Questoes_QuestaoId",
                         column: x => x.QuestaoId,
-                        principalTable: "Questao",
+                        principalTable: "Questoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -691,9 +691,9 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_RespostaAluno", x => new { x.AvaliacaoId, x.AlunoId, x.AlternativaId });
                     table.ForeignKey(
-                        name: "FK_RespostaAluno_Alternativa_AlternativaId",
+                        name: "FK_RespostaAluno_Alternativas_AlternativaId",
                         column: x => x.AlternativaId,
-                        principalTable: "Alternativa",
+                        principalTable: "Alternativas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -711,8 +711,8 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alternativa_QuestaoId",
-                table: "Alternativa",
+                name: "IX_Alternativas_QuestaoId",
+                table: "Alternativas",
                 column: "QuestaoId");
 
             migrationBuilder.CreateIndex(
@@ -765,8 +765,8 @@ namespace Infrastructure.Migrations
                 column: "DistritoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Descritor_TemaId",
-                table: "Descritor",
+                name: "IX_Descritores_TemaId",
+                table: "Descritores",
                 column: "TemaId");
 
             migrationBuilder.CreateIndex(
@@ -790,14 +790,14 @@ namespace Infrastructure.Migrations
                 column: "DescritorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questao_DescritorId",
-                table: "Questao",
-                column: "DescritorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_QuestaoAvaliacao_QuestaoId",
                 table: "QuestaoAvaliacao",
                 column: "QuestaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questoes_DescritorId",
+                table: "Questoes",
+                column: "DescritorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RespostaAluno_AlternativaId",
@@ -821,8 +821,8 @@ namespace Infrastructure.Migrations
                 column: "CursoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tema_DisciplinaId",
-                table: "Tema",
+                name: "IX_Temas_DisciplinaId",
+                table: "Temas",
                 column: "DisciplinaId");
 
             migrationBuilder.CreateIndex(
@@ -906,7 +906,7 @@ namespace Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Alternativa");
+                name: "Alternativas");
 
             migrationBuilder.DropTable(
                 name: "Aluno");
@@ -918,7 +918,7 @@ namespace Infrastructure.Migrations
                 name: "Turma");
 
             migrationBuilder.DropTable(
-                name: "Questao");
+                name: "Questoes");
 
             migrationBuilder.DropTable(
                 name: "Etapa");
@@ -933,7 +933,7 @@ namespace Infrastructure.Migrations
                 name: "Turno");
 
             migrationBuilder.DropTable(
-                name: "Descritor");
+                name: "Descritores");
 
             migrationBuilder.DropTable(
                 name: "Segmento");
@@ -942,13 +942,13 @@ namespace Infrastructure.Migrations
                 name: "Escolas");
 
             migrationBuilder.DropTable(
-                name: "Tema");
+                name: "Temas");
 
             migrationBuilder.DropTable(
                 name: "Curso");
 
             migrationBuilder.DropTable(
-                name: "Distrito");
+                name: "Distritos");
 
             migrationBuilder.DropTable(
                 name: "Disciplinas");

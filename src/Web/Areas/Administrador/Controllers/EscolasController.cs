@@ -1,47 +1,36 @@
-﻿using ApplicationCore.Specifications;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
-using System.Threading.Tasks;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using SAED.ApplicationCore.Entities;
+using SAED.Infrastructure.Data;
 
-namespace SAED.Web.Areas.Administrador.Controllers
+namespace Web.Areas.Administrador.Controllers
 {
-    [Area(AuthorizationConstants.Areas.Administrador)]
+    [Area("Administrador")]
     public class EscolasController : Controller
     {
-        private readonly IAsyncRepository<Escola> _escolasRepository;
-        private readonly IAsyncRepository<Distrito> _distritosRepository;
+        private readonly ApplicationDbContext _context;
         private readonly IUnityOfWork _uow;
 
-        public EscolasController(IAsyncRepository<Escola> escolasRepository, IAsyncRepository<Distrito> distritosRepository, IUnityOfWork uow)
+        public EscolasController(ApplicationDbContext context, IUnityOfWork uow)
         {
-            _escolasRepository = escolasRepository;
-            _distritosRepository = distritosRepository;
+            _context = context;
             _uow = uow;
         }
 
-        [Authorize(Permissions.Escolas.View)]
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var specification = new EscolasWithSpecification();
-            //specification.Includes.Append(x => x.Distrito);
-            var escolas = await _escolasRepository.ListAsync(specification);
-
-            return View(escolas);
+            var applicationDbContext = _context.Escolas.Include(e => e.Distrito).Include(e => e.Matriz);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        [Authorize(Permissions.Escolas.Create)]
-        [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            ViewBag.DistritoId = new SelectList(await _distritosRepository.ListAllAsync(), "Id", "Nome");
-            ViewBag.MatrizId = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Nome");
+            ViewData["DistritoId"] = new SelectList(_context.Distritos, "Id", "Nome");
+            ViewData["MatrizId"] = new SelectList(_context.Escolas, "Id", "Email");
             return View();
         }
 
@@ -51,68 +40,71 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _escolasRepository.AddAsync(escola);
-
+                _context.Add(escola);
                 await _uow.CommitAsync();
-
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DistritoId"] = new SelectList(_context.Distritos, "Id", "Nome", escola.DistritoId);
+            ViewData["MatrizId"] = new SelectList(_context.Escolas, "Id", "Email", escola.MatrizId);
 
-            ViewBag.DistritoId = new SelectList(await _distritosRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
-            ViewBag.MatrizId = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Nome", escola.MatrizId);
             return View(escola);
         }
 
-        [Authorize(Permissions.Escolas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var escola = await _escolasRepository.GetByIdAsync(id);
+            var escola = await _context.Escolas.FindAsync(id);
+
             if (escola is null)
             {
                 return NotFound();
             }
-
-            ViewBag.DistritoId = new SelectList(await _distritosRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
-            ViewBag.MatrizId = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Nome", escola.MatrizId);
+            ViewData["DistritoId"] = new SelectList(_context.Distritos, "Id", "Nome", escola.DistritoId);
+            ViewData["MatrizId"] = new SelectList(_context.Escolas, "Id", "Email", escola.MatrizId);
 
             return View(escola);
         }
 
-        [Authorize(Permissions.Escolas.Update)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Escola escola)
         {
             if (id != escola.Id)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            await _escolasRepository.UpdateAsync(escola);
-
-            try
+            if (ModelState.IsValid)
             {
-                await _uow.CommitAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (await _escolasRepository.GetByIdAsync(id) == null)
+                try
                 {
-                    return NotFound();
+                    _context.Update(escola);
+                    await _uow.CommitAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!_context.Escolas.Any(e => e.Id == id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["DistritoId"] = new SelectList(_context.Distritos, "Id", "Nome", escola.DistritoId);
+            ViewData["MatrizId"] = new SelectList(_context.Escolas, "Id", "Email", escola.MatrizId);
+
+            return View(escola);
         }
 
-        [Authorize(Permissions.Escolas.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var escola = await _escolasRepository.GetByIdAsync(id);
+            var escola = await _context.Escolas.Include(e => e.Distrito).Include(e => e.Matriz)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (escola is null)
             {
                 return NotFound();
@@ -121,20 +113,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
             return View(escola);
         }
 
-        [Authorize(Permissions.Escolas.Delete)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult<Escola>> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var escola = await _escolasRepository.GetByIdAsync(id);
-            if (escola is null)
-            {
-                return NotFound();
-            }
+            var escola = await _context.Escolas.FindAsync(id);
+            _context.Escolas.Remove(escola);
 
-            await _escolasRepository.DeleteAsync(escola);
             await _uow.CommitAsync();
-
             return RedirectToAction(nameof(Index));
         }
     }

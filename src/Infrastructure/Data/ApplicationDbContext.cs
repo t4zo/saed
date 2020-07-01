@@ -23,8 +23,13 @@ namespace SAED.Infrastructure.Data
         }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
+        public DbSet<Distrito> Distritos { get; set; }
         public DbSet<Escola> Escolas { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
+        public DbSet<Tema> Temas { get; set; }
+        public DbSet<Descritor> Descritores { get; set; }
+        public DbSet<Questao> Questoes { get; set; }
+        public DbSet<Alternativa> Alternativas { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

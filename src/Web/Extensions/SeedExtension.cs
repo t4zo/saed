@@ -36,7 +36,7 @@ namespace SAED.Web.Extensions
                 new Distrito { Id = 10, Nome = "Mandacaru", Zona = "Rural", Distancia = 10 }
             };
 
-            new EntitySeed<Distrito>(context).Load(distritos, "");
+            new EntitySeed<Distrito>(context).Load(distritos, "Distritos");
 
             var escolas = new List<Escola>
             {
@@ -298,7 +298,7 @@ namespace SAED.Web.Extensions
                 new Tema { Id = 15, DisciplinaId = 3, Nome = "Tema 05 - Disciplina Cie" }
             };
 
-            new EntitySeed<Tema>(context).Load(temas, "");
+            new EntitySeed<Tema>(context).Load(temas, "Temas");
 
             var descritores = new List<Descritor>
             {
@@ -319,7 +319,7 @@ namespace SAED.Web.Extensions
                 new Descritor { Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3" }
             };
 
-            new EntitySeed<Descritor>(context).Load(descritores, "");
+            new EntitySeed<Descritor>(context).Load(descritores, "Descritores");
 
             var questoes = new List<Questao>
             {
@@ -336,7 +336,7 @@ namespace SAED.Web.Extensions
                 new Questao { Id = 11, DescritorId = 3, Item = "P02", Descricao = "Teste2" }
             };
 
-            new EntitySeed<Questao>(context).Load(questoes, "");
+            new EntitySeed<Questao>(context).Load(questoes, "Questoes");
 
             var alternativas = new List<Alternativa>
             {
@@ -362,7 +362,7 @@ namespace SAED.Web.Extensions
                 new Alternativa { Id = 20, QuestaoId = 5, Descricao = "40", Correta = false }
             };
 
-            new EntitySeed<Alternativa>(context).Load(alternativas, "");
+            new EntitySeed<Alternativa>(context).Load(alternativas, "Alternativas");
 
             var avaliacaoDisciplinas = new List<AvaliacaoDisciplina>
             {

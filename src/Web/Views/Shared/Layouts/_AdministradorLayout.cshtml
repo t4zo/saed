@@ -46,13 +46,13 @@
 
     @RenderSection("Styles", required: false)
 </head>
-<body class="c-app c-dark-theme">
+<body class="c-app">
     <div>
         <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
             <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/assets/brand/coreui-base-white.svg" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="/assets/brand/coreui-signet-white.svg" width="118" height="46" alt="CoreUI Logo"></div>
             <ul class="c-sidebar-nav">
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" asp-area="Administrador" asp-controller="Dashboard" asp-action="Index">
+                    <a class="c-sidebar-nav-link" asp-area="Administrador" asp-controller="Dashboard">
                         <i class="c-sidebar-nav-icon cil-home"></i>Inicio
                     </a>
                 </li>
@@ -76,6 +76,11 @@
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item">
+                            <a class="c-sidebar-nav-link" asp-area="administrador" asp-controller="Avaliacoes" asp-action="Index">
+                                <span class="c-sidebar-nav-icon"></span>Avaliacoes
+                            </a>
+                        </li>
+                        <li class="c-sidebar-nav-item">
                             <a class="c-sidebar-nav-link" asp-area="administrador" asp-controller="Disciplinas" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Disciplinas
                             </a>
@@ -93,6 +98,11 @@
                         <li class="c-sidebar-nav-item">
                             <a class="c-sidebar-nav-link" asp-area="administrador" asp-controller="Questoes" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Questões
+                            </a>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <a class="c-sidebar-nav-link" asp-area="administrador" asp-controller="Alternativas" asp-action="Index">
+                                <span class="c-sidebar-nav-icon"></span>Alternativas
                             </a>
                         </li>
                     </ul>
@@ -297,9 +307,9 @@
                         </div>
                     </li>
                 </ul>
-                <div class="c-subheader px-3">
+                @*<div class="c-subheader px-3">
                     @RenderSection("Breadcrumb", required: false)
-                </div>
+                </div>*@
             </header>
             <div class="c-body">
                 <main class="c-main">
@@ -309,15 +319,15 @@
                         </div>
                     </div>
                 </main>
+                <footer class="c-footer d-flex justify-content-center">
+                    <div>
+                        <span>Desenvolvido com</span>
+                        <i class="c-sidebar-nav-icon cil-heart"></i>
+                        <span>pelo</span>
+                        <img src="/assets/img/logo-SIEM.jpg" alt="Logomarca do SIEM" width="16" height="16" />
+                    </div>
+                </footer>
             </div>
-            <footer class="c-footer d-flex justify-content-center">
-                <div>
-                    <span>Desenvolvido com</span>
-                    <i class="c-sidebar-nav-icon cil-heart"></i>
-                    <span>pelo</span>
-                    <img src="/assets/img/logo-SIEM.jpg" alt="Logomarca do SIEM" width="16" height="16" />
-                </div>
-            </footer>
         </div>
     </div>
 
