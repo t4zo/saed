@@ -7,6 +7,8 @@ using SAED.Infrastructure.Identity;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SAED.Infrastructure.Data
 {
@@ -65,6 +67,25 @@ namespace SAED.Infrastructure.Data
             }
 
             return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            foreach (var entityEntry in entries)
+            {
+                entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
+                }
+            }
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         private string GetConnectionEnvironmentString()
