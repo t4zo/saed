@@ -1,46 +1,51 @@
-﻿using SAED.ApplicationCore.Entities;
+﻿using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Interfaces;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SAED.Infrastructure.Data.Seed
 {
-    public abstract class EntitySeed<TEntity> : IEntitySeed where TEntity : BaseEntity
+    public class EntitySeed<TEntity> : IEntitySeed<TEntity> where TEntity : class
     {
         protected readonly ApplicationDbContext _context;
-        protected string RessourceName { get; set; }
 
-        protected EntitySeed(ApplicationDbContext context, string ressourceName)
+        public EntitySeed(ApplicationDbContext context)
         {
             _context = context;
-            RessourceName = ressourceName;
         }
 
-        public virtual async Task LoadAsync()
+        public virtual void Load(IEnumerable<TEntity> entities, string tableName)
         {
+
             var dbSet = _context.Set<TEntity>();
 
             if (!dbSet.Any())
             {
-                var assembly = Assembly.GetExecutingAssembly();
+                dbSet.AddRange(entities);
 
-                using var stream = assembly.GetManifestResourceStream(RessourceName);
-                using var reader = new StreamReader(stream, Encoding.UTF8);
-
-                string json = await reader.ReadToEndAsync();
-                List<TEntity> entities = JsonSerializer.Deserialize<List<TEntity>>(json);
+                using var transaction = _context.Database.BeginTransaction();
+                
+                if (string.IsNullOrEmpty(tableName))
+                {
+                    tableName = typeof(TEntity).Name;
+                }
 
                 foreach (var entity in entities)
                 {
-                    await dbSet.AddAsync(entity);
+                    if (!(entity is IManyToMany))
+                    {
+                        _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} ON;");
+                    }
+
+                    _context.SaveChanges();
+
+                    if (!(entity is IManyToMany))
+                    {
+                        _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} OFF;");
+                    }
                 }
 
-                await _context.SaveChangesAsync();
+                transaction.Commit();
             }
         }
     }

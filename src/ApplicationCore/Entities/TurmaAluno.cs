@@ -1,6 +1,8 @@
-﻿namespace SAED.ApplicationCore.Entities
+﻿using SAED.ApplicationCore.Interfaces;
+
+namespace SAED.ApplicationCore.Entities
 {
-    public class TurmaAluno
+    public class TurmaAluno : IManyToMany
     {
         public int TurmaId { get; set; }
         public Turma Turma { get; set; }

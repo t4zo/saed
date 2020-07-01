@@ -97,6 +97,7 @@ namespace SAED.Web
 
             app.CreateRolesAsync(serviceProvider, Configuration).GetAwaiter().GetResult();
             app.CreateUsersAsync(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.SeedDatabase(serviceProvider);
 
             app.UseCors(DefaultCorsPolicyName);
 

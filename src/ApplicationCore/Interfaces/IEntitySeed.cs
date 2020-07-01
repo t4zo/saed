@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Interfaces
 {
-    public interface IEntitySeed
+    public interface IEntitySeed<TEntity> where TEntity : class
     {
-        Task LoadAsync();
+        void Load(IEnumerable<TEntity> entities, string tableName);
     }
 }

@@ -1,21 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using SAED.ApplicationCore.Entities;
+using SAED.Infrastructure.Data;
+using SAED.Infrastructure.Data.Seed;
 using System;
 using System.Collections.Generic;
 
-namespace SAED.Infrastructure.Data
+namespace SAED.Web.Extensions
 {
     public static class SeedExtension
     {
-        public static ModelBuilder SeedDatabase(this ModelBuilder builder)
+        public static IApplicationBuilder SeedDatabase(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
+            var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
             var avaliacoes = new List<Avaliacao>
             {
                 new Avaliacao { Id = 1, Codigo = "2020", Status = StatusAvaliacao.EmAndamento },
                 new Avaliacao { Id = 2, Codigo = "2021", Status = StatusAvaliacao.ARealizar }
             };
 
-            builder.Entity<Avaliacao>().HasData(avaliacoes);
+            new EntitySeed<Avaliacao>(context).Load(avaliacoes, "Avaliacoes");
 
             var distritos = new List<Distrito>
             {
@@ -31,7 +36,7 @@ namespace SAED.Infrastructure.Data
                 new Distrito { Id = 10, Nome = "Mandacaru", Zona = "Rural", Distancia = 10 }
             };
 
-            builder.Entity<Distrito>().HasData(distritos);
+            new EntitySeed<Distrito>(context).Load(distritos, "");
 
             var escolas = new List<Escola>
             {
@@ -170,7 +175,7 @@ namespace SAED.Infrastructure.Data
                 new Escola { Id = 133, Inep = 29026520, Nome = "VEREADOR AMADEUS DAMÁSIO", Telefone = "7435381883", Email = "ESCOLAAMADEUSDAMASIO@GMAIL.COM", DistritoId = 5 }
             };
 
-            builder.Entity<Escola>().HasData(escolas);
+            new EntitySeed<Escola>(context).Load(escolas, "Escolas");
 
             var cursos = new List<Curso>
             {
@@ -179,7 +184,7 @@ namespace SAED.Infrastructure.Data
                 new Curso { Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA" }
             };
 
-            builder.Entity<Curso>().HasData(cursos);
+            new EntitySeed<Curso>(context).Load(cursos, "");
 
             var segmentos = new List<Segmento>
             {
@@ -192,7 +197,7 @@ namespace SAED.Infrastructure.Data
                 new Segmento { Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF" }
             };
 
-            builder.Entity<Segmento>().HasData(segmentos);
+            new EntitySeed<Segmento>(context).Load(segmentos, "");
 
             var etapas = new List<Etapa>
             {
@@ -220,7 +225,7 @@ namespace SAED.Infrastructure.Data
                 new Etapa { Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1}
             };
 
-            builder.Entity<Etapa>().HasData(etapas);
+            new EntitySeed<Etapa>(context).Load(etapas, "");
 
             var turnos = new List<Turno>
             {
@@ -231,7 +236,7 @@ namespace SAED.Infrastructure.Data
                 new Turno { Id = 5, Nome = "Não Informado" }
             };
 
-            builder.Entity<Turno>().HasData(turnos);
+            new EntitySeed<Turno>(context).Load(turnos, "");
 
             var formas = new List<Forma>
             {
@@ -239,7 +244,7 @@ namespace SAED.Infrastructure.Data
                 new Forma { Id = 2, Nome = "Multi" }
             };
 
-            builder.Entity<Forma>().HasData(formas);
+            new EntitySeed<Forma>(context).Load(formas, "");
 
             var salas = new List<Sala>
             {
@@ -248,14 +253,14 @@ namespace SAED.Infrastructure.Data
                 new Sala { Id = 3, EscolaId = 1, Numero = 1 }
             };
 
-            builder.Entity<Sala>().HasData(salas);
+            new EntitySeed<Sala>(context).Load(salas, "");
 
             var turmas = new List<Turma>
             {
                 new Turma { Id = 1, SalaId = 1, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "A", QtdAlunos = 15, Extinta = false }
             };
 
-            builder.Entity<Turma>().HasData(turmas);
+            new EntitySeed<Turma>(context).Load(turmas, "");
 
             var alunos = new List<Aluno>
             {
@@ -263,7 +268,7 @@ namespace SAED.Infrastructure.Data
                 new Aluno { Id = 2, Nome = "João carlos", Nascimento = new DateTime(day: 09, month: 09, year: 1999) }
             };
 
-            builder.Entity<Aluno>().HasData(alunos);
+            new EntitySeed<Aluno>(context).Load(alunos, "");
 
             var disciplinas = new List<Disciplina>
             {
@@ -272,7 +277,7 @@ namespace SAED.Infrastructure.Data
                 new Disciplina { Id = 3, Nome = "Ciências", Sigla = "Cie" }
             };
 
-            builder.Entity<Disciplina>().HasData(disciplinas);
+            new EntitySeed<Disciplina>(context).Load(disciplinas, "Disciplinas");
 
             var temas = new List<Tema>
             {
@@ -293,7 +298,7 @@ namespace SAED.Infrastructure.Data
                 new Tema { Id = 15, DisciplinaId = 3, Nome = "Tema 05 - Disciplina Cie" }
             };
 
-            builder.Entity<Tema>().HasData(temas);
+            new EntitySeed<Tema>(context).Load(temas, "");
 
             var descritores = new List<Descritor>
             {
@@ -314,7 +319,7 @@ namespace SAED.Infrastructure.Data
                 new Descritor { Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3" }
             };
 
-            builder.Entity<Descritor>().HasData(descritores);
+            new EntitySeed<Descritor>(context).Load(descritores, "");
 
             var questoes = new List<Questao>
             {
@@ -331,7 +336,7 @@ namespace SAED.Infrastructure.Data
                 new Questao { Id = 11, DescritorId = 3, Item = "P02", Descricao = "Teste2" }
             };
 
-            builder.Entity<Questao>().HasData(questoes);
+            new EntitySeed<Questao>(context).Load(questoes, "");
 
             var alternativas = new List<Alternativa>
             {
@@ -357,7 +362,7 @@ namespace SAED.Infrastructure.Data
                 new Alternativa { Id = 20, QuestaoId = 5, Descricao = "40", Correta = false }
             };
 
-            builder.Entity<Alternativa>().HasData(alternativas);
+            new EntitySeed<Alternativa>(context).Load(alternativas, "");
 
             var avaliacaoDisciplinas = new List<AvaliacaoDisciplina>
             {
@@ -366,14 +371,14 @@ namespace SAED.Infrastructure.Data
                 new AvaliacaoDisciplina { AvaliacaoId = 2, DisciplinaId = 3 }
             };
 
-            builder.Entity<AvaliacaoDisciplina>().HasData(avaliacaoDisciplinas);
+            new EntitySeed<AvaliacaoDisciplina>(context).Load(avaliacaoDisciplinas, "");
 
             var avaliacaoDistritos = new List<AvaliacaoDistrito>
             {
                 new AvaliacaoDistrito { AvaliacaoId = 1, DistritoId = 1 }
             };
 
-            builder.Entity<AvaliacaoDistrito>().HasData(avaliacaoDistritos);
+            new EntitySeed<AvaliacaoDistrito>(context).Load(avaliacaoDistritos, "");
 
             var turmaAlunos = new List<TurmaAluno>
             {
@@ -381,7 +386,7 @@ namespace SAED.Infrastructure.Data
                 new TurmaAluno { TurmaId = 1, AlunoId = 2 }
             };
 
-            builder.Entity<TurmaAluno>().HasData(turmaAlunos);
+            new EntitySeed<TurmaAluno>(context).Load(turmaAlunos, "");
 
             var respostaAlunos = new List<RespostaAluno>
             {
@@ -391,14 +396,14 @@ namespace SAED.Infrastructure.Data
                 new RespostaAluno { AvaliacaoId = 1, AlunoId = 2, AlternativaId = 10 }
             };
 
-            builder.Entity<RespostaAluno>().HasData(respostaAlunos);
+            new EntitySeed<RespostaAluno>(context).Load(respostaAlunos, "");
 
             var etapaDescritores = new List<EtapaDescritor>
             {
                 new EtapaDescritor { EtapaId = 11, DescritorId = 1 }
             };
 
-            builder.Entity<EtapaDescritor>().HasData(etapaDescritores);
+            new EntitySeed<EtapaDescritor>(context).Load(etapaDescritores, "");
 
             var questaoAvaliacoes = new List<QuestaoAvaliacao>
             {
@@ -406,9 +411,9 @@ namespace SAED.Infrastructure.Data
                 new QuestaoAvaliacao { QuestaoId = 2, AvaliacaoId = 1 }
             };
 
-            builder.Entity<QuestaoAvaliacao>().HasData(questaoAvaliacoes);
+            new EntitySeed<QuestaoAvaliacao>(context).Load(questaoAvaliacoes, "");
 
-            return builder;
+            return app;
         }
     }
 }

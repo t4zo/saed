@@ -1,6 +1,8 @@
-﻿namespace SAED.ApplicationCore.Entities
+﻿using SAED.ApplicationCore.Interfaces;
+
+namespace SAED.ApplicationCore.Entities
 {
-    public class EtapaDescritor
+    public class EtapaDescritor : IManyToMany
     {
         public int EtapaId { get; set; }
         public Etapa Etapa { get; set; }

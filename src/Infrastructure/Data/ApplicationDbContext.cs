@@ -32,16 +32,11 @@ namespace SAED.Infrastructure.Data
 
             var entities = builder.Model.GetEntityTypes();
 
-            //if (!entities.First().Model. .GetSeedData().Any())
-            //{
-                foreach (var entity in entities)
-                {
-                    entity.AddProperty("CreatedDate", typeof(DateTime)).SetDefaultValue(DateTime.Now);
-                    entity.AddProperty("UpdatedDate", typeof(DateTime)).SetDefaultValue(DateTime.Now);
-                }
-
-                builder.SeedDatabase();
-            //}
+            foreach (var entity in entities)
+            {
+                entity.AddProperty("CreatedDate", typeof(DateTime));
+                entity.AddProperty("UpdatedDate", typeof(DateTime));
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

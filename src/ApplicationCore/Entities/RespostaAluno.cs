@@ -1,6 +1,8 @@
-﻿namespace SAED.ApplicationCore.Entities
+﻿using SAED.ApplicationCore.Interfaces;
+
+namespace SAED.ApplicationCore.Entities
 {
-    public class RespostaAluno
+    public class RespostaAluno : IManyToMany
     {
         public int AvaliacaoId { get; set; }
         public Avaliacao Avaliacao { get; set; }
