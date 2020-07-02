@@ -39,11 +39,11 @@ namespace SAED.Api.Extensions
                     IssuerSigningKey = appConfiguration.Token.Key,
 
                     // Validate the JWT Issuer (iss) claim
-                    ValidateIssuer = true,
+                    ValidateIssuer = false,
                     ValidIssuer = appConfiguration.Token.Issuer,
 
                     // Validate the JWT Audience (aud) claim
-                    ValidateAudience = true,
+                    ValidateAudience = false,
                     ValidAudience = appConfiguration.Token.Audience,
 
                     // Validate the token expiry
