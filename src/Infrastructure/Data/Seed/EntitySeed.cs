@@ -16,7 +16,6 @@ namespace SAED.Infrastructure.Data.Seed
 
         public virtual void Load(IEnumerable<TEntity> entities, string tableName)
         {
-
             var dbSet = _context.Set<TEntity>();
 
             if (!dbSet.Any())
@@ -24,7 +23,7 @@ namespace SAED.Infrastructure.Data.Seed
                 dbSet.AddRange(entities);
 
                 using var transaction = _context.Database.BeginTransaction();
-                
+
                 if (string.IsNullOrEmpty(tableName))
                 {
                     tableName = typeof(TEntity).Name;
@@ -32,6 +31,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                 foreach (var entity in entities)
                 {
+                    // Comment if using Npgsql
                     if (!(entity is IManyToMany))
                     {
                         _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} ON;");
@@ -39,6 +39,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                     _context.SaveChanges();
 
+                    // Comment if using Npgsql
                     if (!(entity is IManyToMany))
                     {
                         _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} OFF;");

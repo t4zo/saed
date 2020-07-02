@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Entities;
-using SAED.Infrastructure.Data;
-using Microsoft.AspNetCore.Authorization;
-using SAED.ApplicationCore.Constants;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SAED.ApplicationCore.Constants;
+using SAED.ApplicationCore.Entities;
+using SAED.ApplicationCore.Interfaces;
+using System.Threading.Tasks;
 
 namespace Web.Controllers
 {

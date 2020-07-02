@@ -59,7 +59,8 @@ namespace SAED.Web
                 options.LowercaseUrls = true;
             });
 
-            services.ConfigureApplicationCookie(options => {
+            services.ConfigureApplicationCookie(options =>
+            {
                 options.LoginPath = "/";
                 options.AccessDeniedPath = "/";
             });
