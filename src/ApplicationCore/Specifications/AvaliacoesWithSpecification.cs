@@ -5,6 +5,6 @@ namespace SAED.ApplicationCore.Specifications
 {
     public sealed class AvaliacoesWithSpecification : BaseSpecification<Avaliacao>
     {
-        public AvaliacoesWithSpecification(int id) : base(a => a.Id == id) { }
+        public AvaliacoesWithSpecification(int id) : base(x => x.Id == id) { }
     }
 }

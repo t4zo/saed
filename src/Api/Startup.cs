@@ -38,7 +38,7 @@ namespace SAED.Api
             services.AddTransient<IUserService, UserService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-            //services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             services.AddCustomCors(DefaultCorsPolicyName);
 
@@ -95,6 +95,7 @@ namespace SAED.Api
 
             app.CreateRoles(serviceProvider, Configuration).Wait();
             app.CreateUsers(serviceProvider, Configuration).Wait();
+            app.SeedDatabase(serviceProvider);
 
             app.UseCors(DefaultCorsPolicyName);
 

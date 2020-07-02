@@ -16,9 +16,9 @@
                     <span asp-validation-for="Inep" class="text-danger"></span>
                 </div>
                 <div class="col-md-5 mb-3">
-                    <label asp-for="MatrizId" class="control-label">Matriz</label>
-                    <select asp-for="MatrizId" class="form-control" asp-items="ViewBag.MatrizId" readonly></select>
-                    <span asp-validation-for="MatrizId" class="text-danger"></span>
+                    <label asp-for="Matriz.Nome" class="control-label">Matriz</label>
+                    <input asp-for="Matriz.Nome" class="form-control" readonly />
+                    <span asp-validation-for="Matriz.Nome" class="text-danger"></span>
                 </div>
                 <div class="col-md-5 mb-3">
                     <label asp-for="Nome" class="control-label">Escola</label>
@@ -26,9 +26,9 @@
                     <span asp-validation-for="Nome" class="text-danger"></span>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label asp-for="DistritoId" class="control-label">Distrito</label>
-                    <select asp-for="DistritoId" class="form-control" asp-items="ViewBag.DistritoId" readonly></select>
-                    <span asp-validation-for="DistritoId" class="text-danger"></span>
+                    <label asp-for="Distrito.Nome" class="control-label">Distrito</label>
+                    <input asp-for="Distrito.Nome" class="form-control" readonly />
+                    <span asp-validation-for="Distrito.Nome" class="text-danger"></span>
                 </div>
                 <div class="col-md-10 mb-3">
                     <label asp-for="Endereco" class="control-label"></label>

@@ -17,7 +17,9 @@
                 </div>
                 <div class="col-md-5 mb-3">
                     <label asp-for="MatrizId" class="control-label">Matriz</label>
-                    <select asp-for="MatrizId" class="form-control" asp-items="ViewBag.MatrizId"></select>
+                    <select asp-for="MatrizId" class="form-control" asp-items="ViewBag.MatrizId">
+                        <option value="">-----</option>
+                    </select>
                     <span asp-validation-for="MatrizId" class="text-danger"></span>
                 </div>
                 <div class="col-md-5 mb-3">

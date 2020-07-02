@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace SAED.Api.Controllers
 {
-    [Authorize(AuthorizationConstants.Roles.Superuser)]
-    [ApiController]
-    [Route("v1/[controller]")]
-    public class AvaliacoesController : ControllerBase
+    [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
+    public class AvaliacoesController : ApiControllerBase
     {
         private readonly IAsyncRepository<Avaliacao> _avaliacaoRepository;
         private readonly IUnityOfWork _uow;
@@ -23,7 +21,6 @@ namespace SAED.Api.Controllers
             _uow = uow;
         }
 
-        [Authorize(Roles = AuthorizationConstants.Roles.Superuser)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Avaliacao>>> GetAll()
         {
@@ -43,6 +40,7 @@ namespace SAED.Api.Controllers
             return Ok(avaliacao);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Create)]
         [HttpPost]
         public async Task<ActionResult<Avaliacao>> Create(Avaliacao avaliacao)
         {
@@ -52,6 +50,7 @@ namespace SAED.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = avaliacao.Id }, avaliacao);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Avaliacao avaliacao)
         {
@@ -74,6 +73,7 @@ namespace SAED.Api.Controllers
             return NoContent();
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Avaliacao>> Delete(int id)
         {

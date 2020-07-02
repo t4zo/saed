@@ -26,11 +26,13 @@ namespace Web.Areas.Administrador.Controllers
             return View(await _avaliacaoRepository.ListAllAsync());
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Create)]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Avaliacao avaliacao)
@@ -45,6 +47,7 @@ namespace Web.Areas.Administrador.Controllers
             return View(avaliacao);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
             var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
@@ -57,6 +60,7 @@ namespace Web.Areas.Administrador.Controllers
             return View(avaliacao);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Avaliacao avaliacao)
@@ -92,6 +96,7 @@ namespace Web.Areas.Administrador.Controllers
             return View(avaliacao);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
@@ -104,6 +109,7 @@ namespace Web.Areas.Administrador.Controllers
             return View(avaliacao);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

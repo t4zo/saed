@@ -4,12 +4,10 @@ using SAED.Api.Entities.Dto;
 using SAED.Api.Interfaces;
 using System.Threading.Tasks;
 
-namespace Api.Controllers
+namespace SAED.Api.Controllers
 {
-    [ApiController]
-    [Route("v1/[controller]")]
     [AllowAnonymous]
-    public class AuthController : ControllerBase
+    public class AuthController : ApiControllerBase
     {
         private readonly IUserService _userService;
 

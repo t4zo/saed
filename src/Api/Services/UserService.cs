@@ -5,14 +5,15 @@ using Microsoft.IdentityModel.Tokens;
 using SAED.Api.Configurations;
 using SAED.Api.Entities.Dto;
 using SAED.Api.Interfaces;
-using SAED.ApplicationCore.Constants;
 using SAED.Infrastructure.Identity;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Api.Services
 {
@@ -43,6 +44,7 @@ namespace SAED.Api.Services
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(username);
+                var userClaims = await _userManager.GetClaimsAsync(user);
                 var roles = await _userManager.GetRolesAsync(user);
 
                 // authentication successful so generate jwt token
@@ -53,10 +55,12 @@ namespace SAED.Api.Services
                     {
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim(AuthorizationConstants.Remember, remember.ToString().ToLower())
+                        new Claim(Remember, remember.ToString().ToLower())
                     });
 
                 claimsIdentity.AddClaims(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+                AddUserClaims(claimsIdentity, userClaims, roles);
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
@@ -80,6 +84,28 @@ namespace SAED.Api.Services
             }
 
             return null;
+        }
+
+        private void AddUserClaims(ClaimsIdentity claimsIdentity, IList<Claim> userClaims, IList<string> roles)
+        {
+            foreach (var role in roles)
+            {
+                if (role.Equals(Roles.Administrador))
+                {
+                    foreach (var userClaim in userClaims)
+                    {
+                        claimsIdentity.AddClaim(new Claim(userClaim.Type, userClaim.Value));
+                    }
+                }
+
+                if (role.Equals(Roles.Aplicador))
+                {
+                    foreach (var userClaim in userClaims)
+                    {
+                        claimsIdentity.AddClaim(new Claim(userClaim.Type, userClaim.Value));
+                    }
+                }
+            }
         }
     }
 }

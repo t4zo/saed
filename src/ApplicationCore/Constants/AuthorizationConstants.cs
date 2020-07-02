@@ -43,6 +43,9 @@ namespace SAED.ApplicationCore.Constants
             public static class Avaliacoes
             {
                 public const string View = "Permissions.Avaliacoes.View";
+                public const string Create = "Permissions.Avaliacoes.Create";
+                public const string Update = "Permissions.Avaliacoes.Update";
+                public const string Delete = "Permissions.Avaliacoes.Delete";
             }
 
             public static class Escolas
@@ -51,6 +54,14 @@ namespace SAED.ApplicationCore.Constants
                 public const string Create = "Permissions.Escolas.Create";
                 public const string Update = "Permissions.Escolas.Update";
                 public const string Delete = "Permissions.Escolas.Delete";
+            }
+
+            public static class Disciplinas
+            {
+                public const string View = "Permissions.Disciplinas.View";
+                public const string Create = "Permissions.Disciplinas.Create";
+                public const string Update = "Permissions.Disciplinas.Update";
+                public const string Delete = "Permissions.Disciplinas.Delete";
             }
         }
 
