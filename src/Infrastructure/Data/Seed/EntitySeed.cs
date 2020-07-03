@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ApplicationCore.Constants;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SAED.ApplicationCore.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,15 +11,18 @@ namespace SAED.Infrastructure.Data.Seed
     public class EntitySeed<TEntity> : IEntitySeed<TEntity> where TEntity : class
     {
         protected readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public EntitySeed(ApplicationDbContext context)
+        public EntitySeed(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public virtual void Load(IEnumerable<TEntity> entities, string tableName)
         {
             var dbSet = _context.Set<TEntity>();
+            var provider = _configuration[Providers.PROVIDER];
 
             if (!dbSet.Any())
             {
@@ -31,18 +37,22 @@ namespace SAED.Infrastructure.Data.Seed
 
                 foreach (var entity in entities)
                 {
-                    // Comment if using Npgsql
-                    if (!(entity is IManyToMany))
+                    if (provider != Providers.DigitalOcean && provider != Providers.Heroku)
                     {
-                        _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} ON;");
+                        if (!(entity is IManyToMany))
+                        {
+                            _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} ON;");
+                        }
                     }
 
                     _context.SaveChanges();
 
-                    // Comment if using Npgsql
-                    if (!(entity is IManyToMany))
+                    if (provider != Providers.DigitalOcean && provider != Providers.Heroku)
                     {
-                        _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} OFF;");
+                        if (!(entity is IManyToMany))
+                        {
+                            _context.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {tableName} OFF;");
+                        }
                     }
                 }
 

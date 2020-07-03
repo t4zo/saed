@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ApplicationCore.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,11 +16,13 @@ namespace SAED.Infrastructure.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         private readonly IConfiguration _configuration;
+        private string _provider;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
             : base(options)
         {
             _configuration = configuration;
+            _provider = _configuration[Providers.PROVIDER];
         }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
@@ -52,7 +55,14 @@ namespace SAED.Infrastructure.Data
 
             string connectionString = GetConnectionEnvironmentString();
 
-            optionsBuilder.UseSqlServer(connectionString);
+            if (_provider == Providers.DigitalOcean)
+            {
+                optionsBuilder.UseNpgsql(connectionString);
+            }
+            else
+            {
+                optionsBuilder.UseSqlServer(connectionString);
+            }
         }
 
         public override int SaveChanges()
@@ -95,12 +105,16 @@ namespace SAED.Infrastructure.Data
 
         private string GetConnectionEnvironmentString()
         {
-            var env = _configuration["ASPNETCORE_ENVIRONMENT"];
-
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            if (env == "Heroku")
+            if (_provider == Providers.DigitalOcean)
             {
+                connectionString = _configuration.GetConnectionString("DefaultPostgresConnection");
+            }
+            else if (_provider == Providers.Heroku)
+            {
+                connectionString = _configuration.GetConnectionString("DefaultConnection");
+
                 var connUrl = _configuration["DATABASE_URL"];
 
                 // Parse connection URL to connection string for Npgsql

@@ -1,43 +1,64 @@
-﻿//using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using Microsoft.AspNetCore.Builder;
-//using Microsoft.Extensions.DependencyInjection;
-//using Microsoft.OpenApi.Models;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
-//namespace SAED.Api.Extensions
-//{
-//    public static class SwaggerExtension
-//    {
-//        public static IServiceCollection AddSwagger(this IServiceCollection services)
-//        {
-//            // Register the Swagger generator, defining 1 or more Swagger documents
-//            services.AddSwaggerGen(options =>
-//            {
-//                options.SwaggerDoc("v1", new OpenApiInfo { Title = "SAED API", Version = "v1" });
+namespace SAED.Api.Extensions
+{
+    public static class SwaggerExtension
+    {
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.EnableAnnotations();
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
 
-//                // Define the BearerAuth scheme that's in use
-//                options.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme()
-//                {
-//                    In = ParameterLocation.Header,
-//                    Description = "Autenticação baseada em Json Web Token (JWT). Exemplo: \"Bearer {token}\"",
-//                    Name = "Authorization",
-//                    Type = SecuritySchemeType.ApiKey,
-//                    Scheme = JwtBearerDefaults.AuthenticationScheme
-//                });
-//            });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
 
-//            return services;
-//        }
+                        },
+                        new List<string>()
+                    }
+                });
+            });
 
-//        public static IApplicationBuilder ConfigureSwagger(this IApplicationBuilder app)
-//        {
-//            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-//            // specifying the Swagger JSON endpoint.
-//            app.UseSwaggerUI(c =>
-//            {
-//                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SAED API V1");
-//                c.RoutePrefix = "swagger";
-//            });
-//            return app;
-//        }
-//    }
-//}
+            return services;
+        }
+
+        public static IApplicationBuilder ConfigureSwagger(this IApplicationBuilder app)
+        {
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SAED API V1");
+                c.RoutePrefix = "swagger";
+            });
+
+            return app;
+        }
+    }
+}

@@ -72,6 +72,8 @@ namespace SAED.Api
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddSwagger();
+
             services.AddRouting(options =>
             {
                 options.LowercaseUrls = true;
@@ -99,9 +101,7 @@ namespace SAED.Api
 
             app.UseCors(DefaultCorsPolicyName);
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            // app.UseSwagger();
-            // app.ConfigureSwagger();
+            app.UseSwagger();
 
             app.UseHttpsRedirection();
 

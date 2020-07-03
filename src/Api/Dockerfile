@@ -1,16 +1,22 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-bionic AS build
-WORKDIR /var/www/app
+WORKDIR /src
 # ENV ASPNETCORE_URLS=http://*:$PORT
-COPY "SAED.csproj" .
-RUN dotnet restore
+COPY ["src/Api/Api.csproj", "src/Api/"]
+RUN dotnet restore "src/Api/Api.csproj"
 COPY . .
-RUN dotnet build -c Release -o /var/www/app/build
+WORKDIR "/src/src/Api"
+RUN dotnet build "Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /var/www/app/publish
+RUN dotnet publish "Api.csproj" -c Release -o /var/www/app/publish
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-bionic AS runtime
+FROM base AS final
 LABEL maintainer="Tacio de Souza Campos"
-WORKDIR /var/www/app
-COPY --from=publish /var/www/app/publish .
-ENTRYPOINT ["dotnet", "SAED.dll"]
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Api.dll"]

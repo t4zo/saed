@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 
-namespace SAED.ApplicationCore.Services
+namespace SAED.Api
 {
-    public class AutoMapper : Profile
+    public class MappingProfile : Profile
     {
-        public AutoMapper()
+        public MappingProfile()
         {
             //CreateMap<IdentityUser<int>, UserDto>();
         }

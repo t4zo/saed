@@ -1,3 +1,4 @@
+using ApplicationCore.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -15,16 +16,19 @@ namespace SAED.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Heroku")
+                    var provider = Environment.GetEnvironmentVariable(Providers.PROVIDER);
+
+                    if (provider == Providers.DigitalOcean)
                     {
-                        webBuilder.UseStartup<Startup>();
+                        webBuilder.UseStartup<Startup>().UseUrls("https://localhost:5101");
+                    }
+                    else if (provider == Providers.Heroku)
+                    {
+                        webBuilder.UseStartup<Startup>().UseUrls($"http://*:{Environment.GetEnvironmentVariable("PORT")}");
                     }
                     else
                     {
-                        var PORT = Environment.GetEnvironmentVariable("PORT");
-
-                        webBuilder.UseStartup<Startup>()
-                        .UseUrls($"http://*:{PORT}");
+                        webBuilder.UseStartup<Startup>();
                     }
                 });
     }
