@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using SAED.Api.Configurations;
 using SAED.Api.Entities.Dto;
 using SAED.Api.Interfaces;
+using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Identity;
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
@@ -19,19 +14,19 @@ namespace SAED.Api.Services
 {
     public class UserService : IUserService
     {
-        private readonly AppConfiguration _appConfiguration;
+        private readonly ITokenService _tokenService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMapper _mapper;
 
         public UserService(
-            IOptionsMonitor<AppConfiguration> options,
+            ITokenService tokenService,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IMapper mapper
             )
         {
-            _appConfiguration = options.Get("AppConfiguration");
+            _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
@@ -47,10 +42,6 @@ namespace SAED.Api.Services
                 var userClaims = await _userManager.GetClaimsAsync(user);
                 var roles = await _userManager.GetRolesAsync(user);
 
-                // authentication successful so generate jwt token
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appConfiguration.Token.SecurityKey);
-
                 var claimsIdentity = new ClaimsIdentity(new Claim[]
                     {
                         new Claim(ClaimTypes.Name, user.UserName),
@@ -59,21 +50,9 @@ namespace SAED.Api.Services
                     });
 
                 claimsIdentity.AddClaims(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+                var token = _tokenService.GenerateJWTToken(claimsIdentity);
 
                 AddUserClaims(claimsIdentity, userClaims, roles);
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = claimsIdentity,
-                    Issuer = _appConfiguration.Token.Issuer,
-                    Audience = _appConfiguration.Token.Audience,
-                    IssuedAt = DateTime.UtcNow,
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
 
                 var userDto = _mapper.Map<UserDto>(user);
 

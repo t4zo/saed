@@ -44,6 +44,8 @@ namespace SAED.Infrastructure.Data
 
             foreach (var entity in entities)
             {
+                //entity.AddProperty("CreatedBy", typeof(int));
+                //entity.AddProperty("UpdatedBy", typeof(int));
                 entity.AddProperty("CreatedDate", typeof(DateTime));
                 entity.AddProperty("UpdatedDate", typeof(DateTime));
             }
@@ -73,6 +75,7 @@ namespace SAED.Infrastructure.Data
 
             foreach (var entityEntry in entries)
             {
+                //entityEntry.Property("UpdatedBy").CurrentValue = _userManager.GetUserAsync(HttpContext.User);
                 entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                 if (entityEntry.State == EntityState.Added)
