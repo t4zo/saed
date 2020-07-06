@@ -32,7 +32,7 @@ namespace SAED.Api.Services
             _mapper = mapper;
         }
 
-        public async Task<UserDto> AuthenticateAsync(string username, string password, bool remember)
+        public async Task<UserRequest> AuthenticateAsync(string username, string password, bool remember)
         {
             var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent: remember, lockoutOnFailure: false);
 
@@ -54,7 +54,7 @@ namespace SAED.Api.Services
 
                 AddUserClaims(claimsIdentity, userClaims, roles);
 
-                var userDto = _mapper.Map<UserDto>(user);
+                var userDto = _mapper.Map<UserRequest>(user);
 
                 userDto.Roles = roles;
                 userDto.Token = token;

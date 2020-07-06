@@ -6,7 +6,7 @@ using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using System.Threading.Tasks;
 
-namespace Web.Areas.Administrador.Controllers
+namespace SAED.Web.Areas.Administrador.Controllers
 {
     [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]

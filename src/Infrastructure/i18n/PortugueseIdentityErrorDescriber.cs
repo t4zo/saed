@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Infrastructure.i18n
+namespace SAED.Infrastructure.i18n
 {
     public class PortugueseIdentityErrorDescriber : IdentityErrorDescriber
     {

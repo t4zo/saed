@@ -8,7 +8,7 @@ namespace SAED.Api.Utilities
     {
         public AutoMapping()
         {
-            CreateMap<ApplicationUser, UserDto>();
+            CreateMap<ApplicationUser, UserRequest>();
         }
     }
 }

@@ -1,15 +1,14 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Entities;
-using SAED.Infrastructure.Data;
 using SAED.ApplicationCore.Constants;
-using Microsoft.AspNetCore.Authorization;
+using SAED.ApplicationCore.Entities;
+using SAED.ApplicationCore.Interfaces;
+using SAED.Infrastructure.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Web.Areas.Administrador.Controllers
+namespace SAED.Web.Areas.Administrador.Controllers
 {
     [Authorize(AuthorizationConstants.Permissions.Disciplinas.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]

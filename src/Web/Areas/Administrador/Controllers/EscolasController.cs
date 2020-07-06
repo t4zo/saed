@@ -1,15 +1,15 @@
-﻿using ApplicationCore.Specifications;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
+using SAED.ApplicationCore.Specifications;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Web.Areas.Administrador.Controllers
+namespace SAED.Web.Areas.Administrador.Controllers
 {
     [Authorize(AuthorizationConstants.Permissions.Escolas.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]

@@ -6,7 +6,7 @@ using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using System.Threading.Tasks;
 
-namespace Web.Controllers
+namespace SAED.Web.Controllers
 {
     [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
     public class AvaliacoesController : Controller

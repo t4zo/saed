@@ -5,6 +5,6 @@ namespace SAED.Api.Interfaces
 {
     public interface IUserService
     {
-        Task<UserDto> AuthenticateAsync(string username, string password, bool remember);
+        Task<UserRequest> AuthenticateAsync(string username, string password, bool remember);
     }
 }

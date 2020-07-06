@@ -2,7 +2,7 @@
 
 namespace SAED.Api.Entities.Dto
 {
-    public class UserDto
+    public class UserRequest
     {
         public int Id { get; set; }
         public string Username { get; set; }
@@ -10,7 +10,7 @@ namespace SAED.Api.Entities.Dto
         public IEnumerable<string> Roles { get; set; }
         public string Token { get; set; }
 
-        public UserDto WithoutPassword()
+        public UserRequest WithoutPassword()
         {
             Password = "";
             return this;

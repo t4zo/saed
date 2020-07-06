@@ -1,5 +1,5 @@
 using AutoMapper;
-using Infrastructure.i18n;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,8 +15,10 @@ using SAED.Api.Services;
 using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Services;
 using SAED.Infrastructure.Data;
+using SAED.Infrastructure.i18n;
 using SAED.Infrastructure.Identity;
 using System;
+using System.Reflection;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Api
@@ -46,16 +48,12 @@ namespace SAED.Api
 
             services.AddDbContext<ApplicationDbContext>();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(configureExpression => configureExpression.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+
             services.AddJwtSecurity(Configuration);
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(Roles.AllName, policy => policy.RequireRole(Roles.All));
-                options.AddPolicy(Roles.Superuser, policy => policy.RequireRole(Roles.Superuser));
-                options.AddPolicy(Roles.Administrador, policy => policy.RequireRole(Roles.Administrador));
-                options.AddPolicy(Roles.Aplicador, policy => policy.RequireRole(Roles.Aplicador));
-            });
+            services.AddAuthorization();
 
             services.AddIdentityCore<ApplicationUser>(options =>
             {
@@ -115,8 +113,8 @@ namespace SAED.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints
-                .MapControllers()
-                .RequireAuthorization();
+                    .MapControllers()
+                    .RequireAuthorization();
             });
         }
     }

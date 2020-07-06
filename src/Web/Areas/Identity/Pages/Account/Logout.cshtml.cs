@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using SAED.Infrastructure.Identity;
 using System.Threading.Tasks;
 
-namespace Web.Areas.Identity.Pages.Account
+namespace SAED.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LogoutModel : PageModel

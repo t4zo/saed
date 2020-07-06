@@ -1,8 +1,8 @@
-﻿using ApplicationCore.Constants;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Identity;
 using System;
@@ -16,7 +16,7 @@ namespace SAED.Infrastructure.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         private readonly IConfiguration _configuration;
-        private string _provider;
+        private readonly string _provider;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
             : base(options)
@@ -116,8 +116,6 @@ namespace SAED.Infrastructure.Data
             }
             else if (_provider == Providers.Heroku)
             {
-                connectionString = _configuration.GetConnectionString("DefaultConnection");
-
                 var connUrl = _configuration["DATABASE_URL"];
 
                 // Parse connection URL to connection string for Npgsql

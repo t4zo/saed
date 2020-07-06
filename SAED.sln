@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "src\Web\Web.csproj", "{C18E0B08-8F8C-4A31-9ABD-43578414A10B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.Web", "src\Web\SAED.Web.csproj", "{C18E0B08-8F8C-4A31-9ABD-43578414A10B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B4EB763C-BCB1-408F-A3B1-E747647BE52F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2C0D39D2-454F-4EA9-A411-5CF25D6D1377}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{A3D34B8B-43A3-4C18-964D-84DB39883B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.UnitTests", "tests\UnitTests\SAED.UnitTests.csproj", "{A3D34B8B-43A3-4C18-964D-84DB39883B5C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C18E0B08-8F8C-4A31-9ABD-43578414A10B} = {C18E0B08-8F8C-4A31-9ABD-43578414A10B}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "src\ApplicationCore\ApplicationCore.csproj", "{DFD67295-DD83-4ADE-92A7-65B9B35FF132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.ApplicationCore", "src\ApplicationCore\SAED.ApplicationCore.csproj", "{DFD67295-DD83-4ADE-92A7-65B9B35FF132}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{E2113DAE-76D5-47AB-8648-431C44C63E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.Infrastructure", "src\Infrastructure\SAED.Infrastructure.csproj", "{E2113DAE-76D5-47AB-8648-431C44C63E39}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DFD67295-DD83-4ADE-92A7-65B9B35FF132} = {DFD67295-DD83-4ADE-92A7-65B9B35FF132}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{FF5A5F6A-6439-4460-BE70-96F1DF1B612B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.Api", "src\Api\SAED.Api.csproj", "{FF5A5F6A-6439-4460-BE70-96F1DF1B612B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DFD67295-DD83-4ADE-92A7-65B9B35FF132} = {DFD67295-DD83-4ADE-92A7-65B9B35FF132}
 		{E2113DAE-76D5-47AB-8648-431C44C63E39} = {E2113DAE-76D5-47AB-8648-431C44C63E39}

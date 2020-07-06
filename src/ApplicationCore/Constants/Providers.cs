@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore.Constants
+﻿namespace SAED.ApplicationCore.Constants
 {
     public static class Providers
     {

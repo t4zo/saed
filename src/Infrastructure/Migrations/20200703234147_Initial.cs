@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace Infrastructure.Migrations
+namespace SAED.Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {

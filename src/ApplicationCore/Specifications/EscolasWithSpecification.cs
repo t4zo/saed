@@ -3,7 +3,7 @@ using SAED.ApplicationCore.Entities;
 using System;
 using System.Linq.Expressions;
 
-namespace ApplicationCore.Specifications
+namespace SAED.ApplicationCore.Specifications
 {
     public class EscolasWithSpecification : BaseSpecification<Escola>
     {
