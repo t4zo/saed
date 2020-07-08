@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.Api.Entities.Dto;
+using SAED.Api.Entities.Responses;
 using SAED.Api.Interfaces;
 using SAED.ApplicationCore.Constants;
 using SAED.Infrastructure.Identity;
@@ -12,13 +14,15 @@ namespace SAED.Api.Controllers
 {
     public class AuthController : ApiControllerBase
     {
-        private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public AuthController(IUserService userService, UserManager<ApplicationUser> userManager)
+        public AuthController(UserManager<ApplicationUser> userManager, IMapper mapper, IUserService userService)
         {
-            _userService = userService;
             _userManager = userManager;
+            _mapper = mapper;
+            _userService = userService;
         }
 
         [AllowAnonymous]
@@ -32,11 +36,11 @@ namespace SAED.Api.Controllers
                 return ValidationProblem("Usuário ou Senha Inválido(s)");
             }
 
-            return Ok(new
+            return Ok(new AuthenticationResponse
             {
-                success = true,
-                message = "User logged!",
-                user
+                Success = true,
+                Message = "User logged!",
+                User = _mapper.Map<UserResponse>(user)
             });
         }
 

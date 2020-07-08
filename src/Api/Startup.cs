@@ -101,7 +101,7 @@ namespace SAED.Api
 
             app.UseCors(DefaultCorsPolicyName);
 
-            app.UseSwagger();
+            app.UseConfiguredSwagger();
 
             app.UseHttpsRedirection();
 
@@ -112,9 +112,7 @@ namespace SAED.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints
-                    .MapControllers()
-                    .RequireAuthorization();
+                endpoints.MapControllers().RequireAuthorization();
             });
         }
     }

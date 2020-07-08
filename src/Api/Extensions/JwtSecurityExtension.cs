@@ -21,7 +21,6 @@ namespace SAED.Api.Extensions
 
             // configure jwt authentication
             var appConfiguration = appConfigurationSection.Get<AppConfiguration>();
-            var key = Encoding.ASCII.GetBytes(appConfiguration.Token.SecurityKey);
 
             services.AddAuthentication(options =>
             {

@@ -23,7 +23,7 @@ namespace SAED.Web.Authorization
             var user = await _userManager.GetUserAsync(context.User);
 
             // Se não estiver logado retorna não autorizado
-            if (user == null)
+            if (user is null)
             {
                 return;
             }

@@ -32,7 +32,6 @@ namespace SAED.ApplicationCore.Constants
             public static class Users
             {
                 public const string View = "Permissions.Users.View";
-                public const string Test = "Permissions.Users.Test";
             }
 
             public static class Dashboard

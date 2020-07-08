@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SAED.Api.Entities.Dto;
+using SAED.Api.Entities.Responses;
 
 namespace SAED.Api
 {
@@ -6,7 +8,7 @@ namespace SAED.Api
     {
         public MappingProfile()
         {
-            //CreateMap<IdentityUser<int>, UserDto>();
+            CreateMap<UserRequest, UserResponse>();
         }
     }
 }
