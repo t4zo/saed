@@ -25,7 +25,7 @@ namespace SAED.Web.Areas.Api.Controllers
             return Ok(avaliacoes);
         }
 
-        [Authorize(Permissions.Users.Test)]
+        [Authorize(Permissions.Avaliacoes.View)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
