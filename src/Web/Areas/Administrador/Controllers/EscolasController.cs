@@ -16,13 +16,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
     public class EscolasController : Controller
     {
         private readonly IAsyncRepository<Escola> _escolasRepository;
-        private readonly IAsyncRepository<Distrito> _distritoRepository;
+        private readonly IAsyncRepository<Distrito> _distritosRepository;
         private readonly IUnityOfWork _uow;
 
-        public EscolasController(IAsyncRepository<Escola> escolasRepository, IAsyncRepository<Distrito> distritoRepository, IUnityOfWork uow)
+        public EscolasController(IAsyncRepository<Escola> escolasRepository, IAsyncRepository<Distrito> distritosRepository, IUnityOfWork uow)
         {
             _escolasRepository = escolasRepository;
-            _distritoRepository = distritoRepository;
+            _distritosRepository = distritosRepository;
             _uow = uow;
         }
 
@@ -40,6 +40,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome");
             ViewData["MatrizId"] = new SelectList(escolas, "Id", "Nome");
+            
             return View();
         }
 
@@ -74,9 +75,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 return NotFound();
             }
-            ViewData["DistritoId"] = new SelectList(await _distritoRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
-            ViewData["MatrizId"] = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Nome", escola.MatrizId);
 
+            ViewData["DistritoId"] = new SelectList(await _distritosRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
+            ViewData["MatrizId"] = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Nome", escola.MatrizId);
+           
             return View(escola);
         }
 
@@ -112,7 +114,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DistritoId"] = new SelectList(await _distritoRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
+
+            ViewData["DistritoId"] = new SelectList(await _distritosRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
             ViewData["MatrizId"] = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Email", escola.MatrizId);
 
             return View(escola);
@@ -140,8 +143,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var escola = await _escolasRepository.GetByIdAsync(id);
             await _escolasRepository.DeleteAsync(escola);
-
             await _uow.CommitAsync();
+            
             return RedirectToAction(nameof(Index));
         }
     }

@@ -62,6 +62,14 @@ namespace SAED.ApplicationCore.Constants
                 public const string Update = "Permissions.Disciplinas.Update";
                 public const string Delete = "Permissions.Disciplinas.Delete";
             }
+
+            public static class Temas
+            {
+                public const string View = "Permissions.Temas.View";
+                public const string Create = "Permissions.Temas.Create";
+                public const string Update = "Permissions.Temas.Update";
+                public const string Delete = "Permissions.Temas.Delete";
+            }
         }
 
         public static class Database

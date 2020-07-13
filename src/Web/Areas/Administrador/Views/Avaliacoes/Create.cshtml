@@ -7,11 +7,11 @@
 <main class="card p-4">
     <h1>Adicionar Avaliação</h1>
     <hr />
-        <form asp-area="Administrador" asp-controller="Avaliacoes" asp-action="Create">
-            <div class="row">
+    <form asp-area="Administrador" asp-controller="Avaliacoes" asp-action="Create">
+        <div class="row">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-md-6 mb-3">
-                <label asp-for="Codigo" class="control-label"></label>
+                <label asp-for="Codigo" class="control-label">Código</label>
                 <input asp-for="Codigo" class="form-control" />
                 <span asp-validation-for="Codigo" class="text-danger"></span>
             </div>

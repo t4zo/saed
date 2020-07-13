@@ -8,11 +8,11 @@ using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
-    public class AvaliacoesController : BaseApiController
+    public class AvaliacoesApiController : BaseApiController
     {
         private readonly IAsyncRepository<Avaliacao> _avalicaoRepository;
 
-        public AvaliacoesController(IAsyncRepository<Avaliacao> avalicaoRepository)
+        public AvaliacoesApiController(IAsyncRepository<Avaliacao> avalicaoRepository)
         {
             _avalicaoRepository = avalicaoRepository;
         }

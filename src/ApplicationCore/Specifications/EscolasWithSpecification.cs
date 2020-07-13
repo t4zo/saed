@@ -13,7 +13,7 @@ namespace SAED.ApplicationCore.Specifications
             AddInclude(x => x.Matriz);
         }
 
-        public EscolasWithSpecification(Expression<Func<Escola, bool>> predicate) : base(predicate)
+        public EscolasWithSpecification(Expression<Func<Escola, bool>> criteria) : base(criteria)
         {
             AddInclude(x => x.Distrito);
             AddInclude(x => x.Matriz);

@@ -15,7 +15,6 @@ namespace SAED.Infrastructure.Data.Config
                 .IsRequired();
 
             builder.Property(x => x.Zona)
-                .HasMaxLength(8)
                 .IsRequired();
 
             builder.Property(x => x.Distancia)

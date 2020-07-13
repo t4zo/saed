@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
-    public class DistritosController : BaseApiController
+    public class DistritosApiController : BaseApiController
     {
         private readonly IAsyncRepository<Distrito> _distritoRepository;
 
-        public DistritosController(IAsyncRepository<Distrito> distritoRepository)
+        public DistritosApiController(IAsyncRepository<Distrito> distritoRepository)
         {
             _distritoRepository = distritoRepository;
         }

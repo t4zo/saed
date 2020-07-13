@@ -6,9 +6,15 @@ namespace SAED.ApplicationCore.Entities
     public class Distrito : BaseEntity, IAggregateRoot
     {
         public string Nome { get; set; }
-        public string Zona { get; set; }
+        public ZonaEnum Zona { get; set; }
         public int Distancia { get; set; }
         public ICollection<Escola> Escolas { get; set; }
         public ICollection<AvaliacaoDistrito> AvaliacaoDistritos { get; set; }
+    }
+
+    public enum ZonaEnum
+    {
+        Urbana,
+        Rural
     }
 }

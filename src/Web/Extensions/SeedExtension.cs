@@ -26,16 +26,16 @@ namespace SAED.Web.Extensions
 
             var distritos = new List<Distrito>
             {
-                new Distrito { Id = 1, Nome = "Sede", Zona = "Urbana", Distancia = 0 },
-                new Distrito { Id = 2, Nome = "Abóbora", Zona = "Rural", Distancia = 110 },
-                new Distrito { Id = 3, Nome = "Itamotinga", Zona = "Rural", Distancia = 75 },
-                new Distrito { Id = 4, Nome = "Juremal", Zona = "Rural", Distancia = 50 },
-                new Distrito { Id = 5, Nome = "Carnaíba", Zona = "Rural", Distancia = 25 },
-                new Distrito { Id = 6, Nome = "Maniçoba", Zona = "Rural", Distancia = 40 },
-                new Distrito { Id = 7, Nome = "Pinhões", Zona = "Rural", Distancia = 75 },
-                new Distrito { Id = 8, Nome = "Junco", Zona = "Rural", Distancia = 35 },
-                new Distrito { Id = 9, Nome = "Massaroca", Zona = "Rural", Distancia = 70 },
-                new Distrito { Id = 10, Nome = "Mandacaru", Zona = "Rural", Distancia = 10 }
+                new Distrito { Id = 1, Nome = "Sede", Zona = ZonaEnum.Urbana, Distancia = 0 },
+                new Distrito { Id = 2, Nome = "Abóbora", Zona = ZonaEnum.Rural, Distancia = 110 },
+                new Distrito { Id = 3, Nome = "Itamotinga", Zona = ZonaEnum.Rural, Distancia = 75 },
+                new Distrito { Id = 4, Nome = "Juremal", Zona = ZonaEnum.Rural, Distancia = 50 },
+                new Distrito { Id = 5, Nome = "Carnaíba", Zona = ZonaEnum.Rural, Distancia = 25 },
+                new Distrito { Id = 6, Nome = "Maniçoba", Zona = ZonaEnum.Rural, Distancia = 40 },
+                new Distrito { Id = 7, Nome = "Pinhões", Zona = ZonaEnum.Rural, Distancia = 75 },
+                new Distrito { Id = 8, Nome = "Junco", Zona = ZonaEnum.Rural, Distancia = 35 },
+                new Distrito { Id = 9, Nome = "Massaroca", Zona = ZonaEnum.Rural, Distancia = 70 },
+                new Distrito { Id = 10, Nome = "Mandacaru", Zona = ZonaEnum.Rural, Distancia = 10 }
             };
 
             new EntitySeed<Distrito>(context, configuration).Load(distritos, "Distritos");
