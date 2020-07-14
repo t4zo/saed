@@ -17,6 +17,6 @@ jobs:
         with:
           dotnet-version: 3.1.301
       - name: Build with dotnet
-        run: dotnet build ./src/Web/SAED.Web.sln --configuration Release
+        run: dotnet build ./src/Web/SAED.Web.csproj --configuration Release
       - name: Test with dotnet
-        run: dotnet test ./src/Api/SAED.Api.sln --configuration Release
+        run: dotnet test ./src/Api/SAED.Api.csproj --configuration Release
