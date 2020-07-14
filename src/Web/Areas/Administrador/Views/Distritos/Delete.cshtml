@@ -13,17 +13,14 @@
             <div class="col-md-6 mb-3">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" readonly />
-                <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="col-md-3 mb-3">
                 <label asp-for="Zona" class="control-label"></label>
                 <select asp-for="Zona" class="form-control" asp-items="Html.GetEnumSelectList<ZonaEnum>()" readonly></select>
-                <span asp-validation-for="Zona" class="text-danger"></span>
             </div>
             <div class="col-md-3 mb-3">
                 <label asp-for="Distancia" class="control-label"></label>
                 <input asp-for="Distancia" class="form-control" readonly />
-                <span asp-validation-for="Distancia" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
         </div>

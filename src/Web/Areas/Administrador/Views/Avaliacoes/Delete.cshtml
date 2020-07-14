@@ -13,12 +13,10 @@
             <div class="col-md-6 mb-3">
                 <label asp-for="Codigo" class="control-label">Código</label>
                 <input asp-for="Codigo" class="form-control" readonly />
-                <span asp-validation-for="Codigo" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
                 <label asp-for="Status" class="control-label"></label>
                 <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusAvaliacao>()" disabled></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
         </div>

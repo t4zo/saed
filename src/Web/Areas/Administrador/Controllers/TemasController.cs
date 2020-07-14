@@ -29,7 +29,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Index()
         {
             var specification = new TemasWithSpecification();
-            return View(await _temasRepository.ListAsync(specification));
+            var temas = await _temasRepository.ListAsync(specification);
+            return View(temas.OrderBy(x => x.Nome));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Temas.Create)]

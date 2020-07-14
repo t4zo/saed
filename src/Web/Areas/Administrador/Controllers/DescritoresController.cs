@@ -1,70 +1,88 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Interfaces;
+using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.Infrastructure.Data;
+using SAED.ApplicationCore.Interfaces;
+using SAED.ApplicationCore.Specifications;
+using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Area("Administrador")]
+    [Authorize(AuthorizationConstants.Permissions.Descritores.View)]
+    [Area(AuthorizationConstants.Areas.Administrador)]
     public class DescritoresController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAsyncRepository<Disciplina> _disciplinasRepository;
+        private readonly IAsyncRepository<Tema> _temasRepository;
+        private readonly IAsyncRepository<Descritor> _descritoresRepository;
         private readonly IUnityOfWork _uow;
 
-        public DescritoresController(ApplicationDbContext context, IUnityOfWork uow)
+        public DescritoresController(
+            IAsyncRepository<Disciplina> disciplinasRepository,
+            IAsyncRepository<Tema> temasRepository,
+            IAsyncRepository<Descritor> descritoresRepository,
+            IUnityOfWork uow
+            )
         {
-            _context = context;
+            _disciplinasRepository = disciplinasRepository;
+            _temasRepository = temasRepository;
+            _descritoresRepository = descritoresRepository;
             _uow = uow;
         }
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Descritores.Include(d => d.Tema);
-            return View(await applicationDbContext.ToListAsync());
+            var descritores = new DescritoresWithSpecification();
+            return View(await _descritoresRepository.ListAsync(descritores));
         }
 
-        public IActionResult Create()
+        [Authorize(AuthorizationConstants.Permissions.Descritores.Create)]
+        public async Task<IActionResult> CreateAsync()
         {
-            ViewData["TemaId"] = new SelectList(_context.Temas, "Id", "Nome");
-            
+            var temas = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome");
+
             return View();
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Descritores.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Descritor descritor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(descritor);
+                await _descritoresRepository.AddAsync(descritor);
                 await _uow.CommitAsync();
-                
+
                 return RedirectToAction(nameof(Index));
             }
-            
-            ViewData["TemaId"] = new SelectList(_context.Temas, "Id", "Nome", descritor.TemaId);
-        
+
+            var temas = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
+
             return View(descritor);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Descritores.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var descritor = await _context.Descritores.FindAsync(id);
+            var descritor = await _descritoresRepository.GetByIdAsync(id);
 
             if (descritor is null)
             {
                 return NotFound();
             }
 
-            ViewData["TemaId"] = new SelectList(_context.Temas, "Id", "Nome", descritor.TemaId);
-            
+            var temas = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
+
             return View(descritor);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Descritores.Update)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Descritor descritor)
@@ -78,12 +96,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 try
                 {
-                    _context.Update(descritor);
+                    await _descritoresRepository.UpdateAsync(descritor);
                     await _uow.CommitAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_context.Descritores.Any(e => e.Id == id))
+                    var entity = await _descritoresRepository.GetByIdAsync(id);
+                    if (entity is null)
                     {
                         return NotFound();
                     }
@@ -96,32 +115,37 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["TemaId"] = new SelectList(_context.Temas, "Id", "Nome", descritor.TemaId);
+            var temas = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Descritores.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var descritor = await _context.Descritores.Include(d => d.Tema)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var descritor = await _descritoresRepository.GetByIdAsync(id);
 
             if (descritor is null)
             {
                 return NotFound();
             }
 
+            var temas = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
+
             return View(descritor);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Descritores.Delete)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var descritor = await _context.Descritores.FindAsync(id);
-            _context.Descritores.Remove(descritor);
+            var descritor = await _descritoresRepository.GetByIdAsync(id);
+            await _descritoresRepository.DeleteAsync(descritor);
             await _uow.CommitAsync();
-            
+
             return RedirectToAction(nameof(Index));
         }
     }

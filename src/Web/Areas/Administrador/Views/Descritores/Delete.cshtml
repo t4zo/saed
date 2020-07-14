@@ -11,14 +11,12 @@
         <div class="row">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-md-6 mb-3">
-                <label asp-for="TemaId" class="control-label">Tema</label>
-                <select asp-for="TemaId" class="form-control" asp-items="ViewBag.TemaId" readonly></select>
-                <span asp-validation-for="TemaId" class="text-danger"></span>
+                <label asp-for="Tema.Nome" class="control-label">Tema</label>
+                <input asp-for="Tema.Nome" class="form-control" readonly />
             </div>
             <div class="col-md-6 mb-3">
                 <label asp-for="Nome" class="control-label">Descritor</label>
                 <input asp-for="Nome" class="form-control" readonly />
-                <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
         </div>

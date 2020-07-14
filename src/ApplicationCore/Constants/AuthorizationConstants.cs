@@ -70,6 +70,22 @@ namespace SAED.ApplicationCore.Constants
                 public const string Update = "Permissions.Temas.Update";
                 public const string Delete = "Permissions.Temas.Delete";
             }
+
+            public static class Descritores
+            {
+                public const string View = "Permissions.Descritores.View";
+                public const string Create = "Permissions.Descritores.Create";
+                public const string Update = "Permissions.Descritores.Update";
+                public const string Delete = "Permissions.Descritores.Delete";
+            }
+
+            public static class Questoes
+            {
+                public const string View = "Permissions.Questoes.View";
+                public const string Create = "Permissions.Questoes.Create";
+                public const string Update = "Permissions.Questoes.Update";
+                public const string Delete = "Permissions.Questoes.Delete";
+            }
         }
 
         public static class Database

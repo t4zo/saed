@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
@@ -23,7 +24,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _avaliacaoRepository.ListAllAsync());
+            var avaliacoes = await _avaliacaoRepository.ListAllAsync();
+            return View(avaliacoes.OrderBy(x => x.Codigo));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Create)]

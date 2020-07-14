@@ -29,7 +29,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Index()
         {
             var specification = new EscolasWithSpecification();
-            return View(await _escolasRepository.ListAsync(specification));
+            var escolas = await _escolasRepository.ListAsync(specification);
+            return View(escolas.OrderBy(x => x.Nome));
         }
 
         public async Task<IActionResult> Create()
@@ -40,7 +41,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome");
             ViewData["MatrizId"] = new SelectList(escolas, "Id", "Nome");
-            
+
             return View();
         }
 
@@ -78,7 +79,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             ViewData["DistritoId"] = new SelectList(await _distritosRepository.ListAllAsync(), "Id", "Nome", escola.DistritoId);
             ViewData["MatrizId"] = new SelectList(await _escolasRepository.ListAllAsync(), "Id", "Nome", escola.MatrizId);
-           
+
             return View(escola);
         }
 
@@ -144,7 +145,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var escola = await _escolasRepository.GetByIdAsync(id);
             await _escolasRepository.DeleteAsync(escola);
             await _uow.CommitAsync();
-            
+
             return RedirectToAction(nameof(Index));
         }
     }
