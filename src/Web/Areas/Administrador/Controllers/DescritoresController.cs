@@ -6,6 +6,7 @@ using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Specifications;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
@@ -32,17 +33,37 @@ namespace SAED.Web.Areas.Administrador.Controllers
             _uow = uow;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? disciplinaId, int? temaId)
         {
-            var descritores = new DescritoresWithSpecification();
-            return View(await _descritoresRepository.ListAsync(descritores));
+            var disciplinas = await _disciplinasRepository.ListAllAsync();
+            ViewBag.Disciplinas = new SelectList(disciplinas, "Id", "Nome", disciplinaId);
+
+            var descritoresSpecification = new DescritoresWithSpecification();
+            var descritores = await _descritoresRepository.ListAsync(descritoresSpecification);
+
+            if (disciplinaId.HasValue)
+            {
+                var specification = new TemasWithSpecification(t => t.DisciplinaId == disciplinaId.Value);
+
+                var temas = await _temasRepository.ListAsync(specification);
+                ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
+
+                descritores = descritores.Where(d => d.Tema.DisciplinaId == disciplinaId.Value).ToList();
+
+                if (temaId.HasValue)
+                {
+                    descritores = descritores.Where(d => d.TemaId == temaId.Value).ToList();
+                }
+            }
+
+            return View(descritores);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Descritores.Create)]
         public async Task<IActionResult> CreateAsync()
         {
-            var temas = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome");
+            var specification = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome");
 
             return View();
         }
@@ -60,8 +81,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var temas = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
+            var specification = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -76,8 +97,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            var temas = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
+            var specification = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -115,8 +136,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var temas = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
+            var specification = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -131,8 +152,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            var temas = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(temas), "Id", "Nome", descritor.TemaId);
+            var specification = new TemasWithSpecification();
+            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }

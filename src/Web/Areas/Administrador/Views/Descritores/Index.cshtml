@@ -4,6 +4,30 @@
     ViewData["Title"] = "Descritores";
 }
 
+<form id="form-filter" method="get" action="">
+    <div class="card p-3">
+        <div class="row d-flex justify-content-around align-items-center">
+            <div class="col-5">
+                <h4 class="card-header border-0">Disciplinas</h4>
+            </div>
+
+            <select class="form-control col-5" id="disciplinaId" name="disciplinaId" asp-items="ViewBag.Disciplinas">
+                <option disabled selected value=""> -- Selecione a Disciplina -- </option>
+            </select>
+        </div>
+    </div>
+    <div class="card p-3">
+        <div class="row d-flex justify-content-around align-items-center">
+            <div class="col-5">
+                <h4 class="card-header border-0">Temas</h4>
+            </div>
+            <select class="form-control col-5" id="temaId" name="temaId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Temas" disabled="@(ViewBag.Temas == null)">
+                <option disabled selected value=""> -- Selecione o Tema -- </option>
+            </select>
+        </div>
+    </div>
+</form>
+
 <div class="card p-3">
     @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Descritores", Controller = "Descritores", Action = "Descritores" });}
     <table id="table_id" class="table table-hover mdl-data-table text-center">
@@ -31,3 +55,15 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script>
+        document.querySelector("#disciplinaId").addEventListener("change", () => {
+            const form = document.querySelector('#form-filter');
+            document.querySelector("#temaId").selectedIndex = -1;
+
+            form.action = removeUrlParam("temaId", window.location.href);
+            form.submit();
+        });
+    </script>
+}
