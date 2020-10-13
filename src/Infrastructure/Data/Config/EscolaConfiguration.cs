@@ -31,11 +31,11 @@ namespace SAED.Infrastructure.Data.Config
                 .HasMaxLength(128)
                 .IsRequired(false);
 
-            builder.Property(x => x.Numero)
+            builder.Property(x => x.Rua)
+                .HasMaxLength(256)
                 .IsRequired(false);
 
-            builder.Property(x => x.Complemento)
-                .HasMaxLength(128)
+            builder.Property(x => x.Numero)
                 .IsRequired(false);
 
             builder.Property(x => x.Email)

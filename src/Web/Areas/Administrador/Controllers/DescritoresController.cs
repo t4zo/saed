@@ -6,6 +6,7 @@ using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Specifications;
+using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,19 +19,19 @@ namespace SAED.Web.Areas.Administrador.Controllers
         private readonly IAsyncRepository<Disciplina> _disciplinasRepository;
         private readonly IAsyncRepository<Tema> _temasRepository;
         private readonly IAsyncRepository<Descritor> _descritoresRepository;
-        private readonly IUnityOfWork _uow;
+        private readonly ApplicationDbContext _context;
 
         public DescritoresController(
             IAsyncRepository<Disciplina> disciplinasRepository,
             IAsyncRepository<Tema> temasRepository,
             IAsyncRepository<Descritor> descritoresRepository,
-            IUnityOfWork uow
+            ApplicationDbContext context
             )
         {
             _disciplinasRepository = disciplinasRepository;
             _temasRepository = temasRepository;
             _descritoresRepository = descritoresRepository;
-            _uow = uow;
+            _context = context;
         }
 
         public async Task<IActionResult> Index(int? disciplinaId, int? temaId)
@@ -76,7 +77,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 await _descritoresRepository.AddAsync(descritor);
-                await _uow.CommitAsync();
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -118,7 +119,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 try
                 {
                     await _descritoresRepository.UpdateAsync(descritor);
-                    await _uow.CommitAsync();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -165,7 +166,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var descritor = await _descritoresRepository.GetByIdAsync(id);
             await _descritoresRepository.DeleteAsync(descritor);
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

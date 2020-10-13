@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace SAED.ApplicationCore.Constants
+﻿namespace SAED.ApplicationCore.Constants
 {
     public class AuthorizationConstants
     {
         public static class Roles
         {
-            public const string AllName = "All";
-
             public const string Superuser = "Superuser";
 
             public const string Administrador = "Administrador";
 
             public const string Aplicador = "Aplicador";
-
-            public static IEnumerable<string> All = new List<string> { Superuser, Administrador, Aplicador };
         }
 
         public static class Areas

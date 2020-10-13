@@ -36,7 +36,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                 foreach (var entity in entities)
                 {
-                    if (provider != Providers.DigitalOcean && provider != Providers.Heroku)
+                    if (provider != Providers.DigitalOcean)
                     {
                         if (!(entity is IManyToMany))
                         {
@@ -46,7 +46,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                     _context.SaveChanges();
 
-                    if (provider != Providers.DigitalOcean && provider != Providers.Heroku)
+                    if (provider != Providers.DigitalOcean)
                     {
                         if (!(entity is IManyToMany))
                         {

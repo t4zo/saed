@@ -5,7 +5,7 @@
 }
 
 <div class="card p-3">
-    @{await Html.RenderPartialAsync("Partials/Table/_Header", new SAED.Web.Areas.Administrador.Dtos.TableHeader { Header = "Avaliacoes", Controller = "Avaliacoes", Action = "Avaliacoes" });}
+    @{await Html.RenderPartialAsync("Partials/Table/_Header", new SAED.Web.Areas.Administrador.ViewModels.TableHeader { Header = "Avaliacoes", Controller = "Avaliacoes", Action = "Avaliacoes" });}
     <table id="table_id" class="table table-hover mdl-data-table text-center">
         <thead>
             <tr>

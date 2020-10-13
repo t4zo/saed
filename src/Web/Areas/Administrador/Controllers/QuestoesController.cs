@@ -6,6 +6,7 @@ using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Specifications;
+using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,17 +18,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
     {
         private readonly IAsyncRepository<Descritor> _descritoresRepository;
         private readonly IAsyncRepository<Questao> _questoesRepository;
-        private readonly IUnityOfWork _uow;
+        private readonly ApplicationDbContext _context;
 
         public QuestoesController(
             IAsyncRepository<Descritor> descritoresRepository,
             IAsyncRepository<Questao> questoesRepository,
-            IUnityOfWork uow
+            ApplicationDbContext context
         )
         {
             _descritoresRepository = descritoresRepository;
             _questoesRepository = questoesRepository;
-            _uow = uow;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -53,7 +54,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 await _questoesRepository.AddAsync(questao);
-                await _uow.CommitAsync();
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -93,7 +94,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 try
                 {
                     await _questoesRepository.UpdateAsync(questao);
-                    await _uow.CommitAsync();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -136,7 +137,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var questao = await _questoesRepository.GetByIdAsync(id);
             await _questoesRepository.DeleteAsync(questao);
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

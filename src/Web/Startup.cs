@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Services;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Authorization;
@@ -31,7 +30,6 @@ namespace SAED.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-            services.AddTransient<IUnityOfWork, UnityOfWorkService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();

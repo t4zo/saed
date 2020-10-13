@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,12 +14,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
     public class DisciplinasController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IUnityOfWork _uow;
 
-        public DisciplinasController(ApplicationDbContext context, IUnityOfWork uow)
+        public DisciplinasController(ApplicationDbContext context)
         {
             _context = context;
-            _uow = uow;
         }
 
         public async Task<IActionResult> Index()
@@ -43,7 +40,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(disciplina);
-                await _uow.CommitAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -78,7 +75,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 try
                 {
                     _context.Update(disciplina);
-                    await _uow.CommitAsync();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,7 +117,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var disciplina = await _context.Disciplinas.FindAsync(id);
             _context.Disciplinas.Remove(disciplina);
 
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
     }

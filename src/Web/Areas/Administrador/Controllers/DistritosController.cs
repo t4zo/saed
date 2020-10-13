@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,12 +11,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
     public class DistritosController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IUnityOfWork _uow;
 
-        public DistritosController(ApplicationDbContext context, IUnityOfWork uow)
+        public DistritosController(ApplicationDbContext context)
         {
             _context = context;
-            _uow = uow;
         }
 
         public async Task<IActionResult> Index()
@@ -38,7 +35,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(distrito);
-                await _uow.CommitAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -71,7 +68,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 try
                 {
                     _context.Update(distrito);
-                    await _uow.CommitAsync();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -111,7 +108,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var distrito = await _context.Distritos.FindAsync(id);
             _context.Distritos.Remove(distrito);
 
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
     }

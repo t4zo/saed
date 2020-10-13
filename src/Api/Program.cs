@@ -16,15 +16,9 @@ namespace SAED.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var provider = Environment.GetEnvironmentVariable(Providers.PROVIDER);
-
-                    if (provider == Providers.DigitalOcean)
+                    if (Environment.GetEnvironmentVariable(Providers.PROVIDER) == Providers.DigitalOcean)
                     {
                         webBuilder.UseStartup<Startup>().UseUrls("https://localhost:5101");
-                    }
-                    else if (provider == Providers.Heroku)
-                    {
-                        webBuilder.UseStartup<Startup>().UseUrls($"http://*:{Environment.GetEnvironmentVariable("PORT")}");
                     }
                     else
                     {

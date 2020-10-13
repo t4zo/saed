@@ -1,4 +1,4 @@
-﻿namespace SAED.Web.Areas.Administrador.Dtos
+﻿namespace SAED.Web.Areas.Administrador.ViewModels
 {
     public class TableHeader
     {

@@ -6,7 +6,6 @@
 
         public const string Azure = "Azure";
         public const string DigitalOcean = "DigitalOcean";
-        public const string Heroku = "Heroku";
 
     }
 }

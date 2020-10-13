@@ -13,7 +13,6 @@ using SAED.Api.Extensions;
 using SAED.Api.Interfaces;
 using SAED.Api.Services;
 using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Services;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.i18n;
 using SAED.Infrastructure.Identity;
@@ -37,7 +36,6 @@ namespace SAED.Api
         {
             services.AddTransient(typeof(IAsyncRepository<>), typeof(EfRepository<>));
 
-            services.AddTransient<IUnityOfWork, UnityOfWorkService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IUserService, UserService>();
 
@@ -95,8 +93,8 @@ namespace SAED.Api
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.CreateRoles(serviceProvider, Configuration).Wait();
-            app.CreateUsers(serviceProvider, Configuration).Wait();
+            app.CreateRoles(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.CreateUsers(serviceProvider, Configuration).GetAwaiter().GetResult();
             app.SeedDatabase(serviceProvider);
 
             app.UseCors(DefaultCorsPolicyName);

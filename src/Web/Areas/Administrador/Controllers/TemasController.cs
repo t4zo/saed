@@ -6,6 +6,7 @@ using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Specifications;
+using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,13 +18,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
     {
         private readonly IAsyncRepository<Disciplina> _disciplinasRepository;
         private readonly IAsyncRepository<Tema> _temasRepository;
-        private readonly IUnityOfWork _uow;
+        private readonly ApplicationDbContext _context;
 
-        public TemasController(IAsyncRepository<Disciplina> disciplinasRepository, IAsyncRepository<Tema> temasRepository, IUnityOfWork uow)
+        public TemasController(
+            IAsyncRepository<Disciplina> disciplinasRepository,
+            IAsyncRepository<Tema> temasRepository,
+            ApplicationDbContext context)
         {
             _disciplinasRepository = disciplinasRepository;
             _temasRepository = temasRepository;
-            _uow = uow;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -57,7 +61,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 await _temasRepository.AddAsync(tema);
-                await _uow.CommitAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -96,7 +100,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 try
                 {
                     await _temasRepository.UpdateAsync(tema);
-                    await _uow.CommitAsync();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -141,7 +145,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var tema = await _temasRepository.GetByIdAsync(id);
             await _temasRepository.DeleteAsync(tema);
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

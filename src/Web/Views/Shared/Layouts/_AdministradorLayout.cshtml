@@ -2,13 +2,12 @@
 @using SAED.ApplicationCore.Entities
 @using SAED.Infrastructure.Identity
 @using Microsoft.AspNetCore.Http
+@using static SAED.ApplicationCore.Constants.AuthorizationConstants
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-@using Newtonsoft.Json
-
 @{
-//var avaliacaoJson = HttpContextAccessor.HttpContext.Session.GetString("avaliacao");
-//var avaliacao = JsonConvert.DeserializeObject<Avaliacao>(avaliacaoJson != null ? avaliacaoJson : "");
+    //var avaliacaoJson = HttpContextAccessor.HttpContext.Session.GetString("avaliacao");
+    //var avaliacao = JsonConvert.DeserializeObject<Avaliacao>(avaliacaoJson != null ? avaliacaoJson : "");
 }
 
 <!DOCTYPE html>
@@ -38,7 +37,6 @@
 
     <!-- Main styles-->
     <link href="~/css/administrador/table/header.min.css" rel="stylesheet" />
-    <link href="~/css/home.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     @*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css">*@
@@ -52,7 +50,7 @@
             <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/assets/brand/coreui-base-white.svg" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="/assets/brand/coreui-signet-white.svg" width="118" height="46" alt="CoreUI Logo"></div>
             <ul class="c-sidebar-nav">
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Dashboard">
+                    <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Dashboard">
                         <i class="c-sidebar-nav-icon cil-home"></i>Inicio
                     </a>
                 </li>
@@ -63,12 +61,12 @@
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Distritos" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Distritos" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Distritos
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Escolas" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Escolas" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Escolas
                             </a>
                         </li>
@@ -81,32 +79,32 @@
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Avaliações
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Disciplinas" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Disciplinas" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Disciplinas
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Temas" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Temas" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Temas
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Descritores" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Descritores" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Descritores
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Questoes" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Questoes" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Questões
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@SAED.ApplicationCore.Constants.AuthorizationConstants.Areas.Administrador" asp-controller="Alternativas" asp-action="Index">
+                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Alternativas" asp-action="Index">
                                 <span class="c-sidebar-nav-icon"></span>Alternativas
                             </a>
                         </li>
@@ -313,8 +311,8 @@
                     </li>
                 </ul>
                 @*<div class="c-subheader px-3">
-                    @RenderSection("Breadcrumb", required: false)
-                </div>*@
+                        @RenderSection("Breadcrumb", required: false)
+                    </div>*@
             </header>
             <div class="c-body">
                 <main class="c-main">

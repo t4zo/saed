@@ -6,6 +6,7 @@ using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Specifications;
+using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,13 +18,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
     {
         private readonly IAsyncRepository<Escola> _escolasRepository;
         private readonly IAsyncRepository<Distrito> _distritosRepository;
-        private readonly IUnityOfWork _uow;
+        private readonly ApplicationDbContext _context;
 
-        public EscolasController(IAsyncRepository<Escola> escolasRepository, IAsyncRepository<Distrito> distritosRepository, IUnityOfWork uow)
+        public EscolasController(IAsyncRepository<Escola> escolasRepository, IAsyncRepository<Distrito> distritosRepository, ApplicationDbContext context)
         {
             _escolasRepository = escolasRepository;
             _distritosRepository = distritosRepository;
-            _uow = uow;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -57,7 +58,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 await _escolasRepository.AddAsync(escola);
-                await _uow.CommitAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -98,7 +99,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 try
                 {
                     await _escolasRepository.UpdateAsync(escola);
-                    await _uow.CommitAsync();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -144,7 +145,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var escola = await _escolasRepository.GetByIdAsync(id);
             await _escolasRepository.DeleteAsync(escola);
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

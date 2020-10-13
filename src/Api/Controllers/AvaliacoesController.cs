@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
+using SAED.Infrastructure.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,12 +14,12 @@ namespace SAED.Api.Controllers
     public class AvaliacoesController : ApiControllerBase
     {
         private readonly IAsyncRepository<Avaliacao> _avaliacaoRepository;
-        private readonly IUnityOfWork _uow;
+        private readonly ApplicationDbContext _context;
 
-        public AvaliacoesController(IAsyncRepository<Avaliacao> avaliacaoRepository, IUnityOfWork uow)
+        public AvaliacoesController(IAsyncRepository<Avaliacao> avaliacaoRepository, ApplicationDbContext context)
         {
             _avaliacaoRepository = avaliacaoRepository;
-            _uow = uow;
+            _context = context;
         }
 
         [HttpGet]
@@ -45,7 +46,7 @@ namespace SAED.Api.Controllers
         public async Task<ActionResult<Avaliacao>> Create(Avaliacao avaliacao)
         {
             await _avaliacaoRepository.AddAsync(avaliacao);
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(Get), new { id = avaliacao.Id }, avaliacao);
         }
@@ -63,7 +64,7 @@ namespace SAED.Api.Controllers
 
             try
             {
-                await _uow.CommitAsync();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -85,7 +86,7 @@ namespace SAED.Api.Controllers
             }
 
             await _avaliacaoRepository.DeleteAsync(avaliacao);
-            await _uow.CommitAsync();
+            await _context.SaveChangesAsync();
 
             return Ok(avaliacao);
         }
