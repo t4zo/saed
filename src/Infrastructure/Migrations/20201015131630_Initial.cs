@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SAED.Infrastructure.Migrations
 {
@@ -388,8 +388,8 @@ namespace SAED.Infrastructure.Migrations
                     DistritoId = table.Column<int>(nullable: false),
                     Endereco = table.Column<string>(maxLength: 256, nullable: true),
                     Bairro = table.Column<string>(maxLength: 128, nullable: true),
+                    Rua = table.Column<string>(maxLength: 256, nullable: true),
                     Numero = table.Column<int>(nullable: true),
-                    Complemento = table.Column<string>(maxLength: 128, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: false),
                     Telefone = table.Column<string>(maxLength: 11, nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),

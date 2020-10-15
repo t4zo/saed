@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
+using SAED.Web.Extensions;
+using System.Text.Json;
 using System.Threading.Tasks;
+using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Controllers
 {
@@ -20,25 +23,21 @@ namespace SAED.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var avaliacoes = await _avaliacaoRepository.ListAllAsync();
-            return View(new SelectList(avaliacoes, "Id", "Codigo"));
+            ViewBag.Avaliacoes = new SelectList(await _avaliacaoRepository.ListAllAsync(), "Id", "Codigo");
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Index(int? id)
+        public async Task<IActionResult> Index(int id)
         {
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-            //var avaliacao = await _avalicaoRepository.GetByIdAsync(id);
+            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
 
-            //HttpContext.Session.SetString("user", JsonConvert.SerializeObject(user));
-            //HttpContext.Session.SetString("avaliacao", JsonConvert.SerializeObject(avaliacao));
+            HttpContext.Session.Set("avaliacao", avaliacao);
 
-            //var roles = await _userManager.GetRolesAsync(user);
-
-            //if (roles.Contains(AuthorizationConstants.Roles.Superuser) || roles.Contains(AuthorizationConstants.Roles.Administrador))
-            //{
-            //    return Redirect(Url.RouteUrl(new { controller = "Dashboard", action = "Index", area = "Administrador" }));
-            //}
+            if (User.IsInRole(Roles.Superuser) || User.IsInRole(Roles.Administrador))
+            {
+                return Redirect(Url.RouteUrl(new { controller = "Dashboard", action = "Index", area = "Administrador" }));
+            }
 
             //return Redirect(Url.RouteUrl(new { controller = "Alunos", action = "Index", area = "Exame" }));
             return Redirect(Url.RouteUrl(new { controller = "Dashboard", action = "Index", area = "Administrador" }));

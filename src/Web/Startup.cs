@@ -52,9 +52,13 @@ namespace SAED.Web
                 options.SignIn.RequireConfirmedEmail = false;
             });
 
-            services.AddRouting(options =>
+            services.AddRouting(options => options.LowercaseUrls = true);
+
+            services.AddSession(options =>
             {
-                options.LowercaseUrls = true;
+                options.IdleTimeout = TimeSpan.FromHours(12);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
 
             services.ConfigureApplicationCookie(options =>
@@ -109,6 +113,8 @@ namespace SAED.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

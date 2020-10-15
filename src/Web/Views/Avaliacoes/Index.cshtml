@@ -27,72 +27,44 @@
     <link href="~/css/home.min.css" rel="stylesheet">
 
     <style>
-        .card-container {
-            width: 35vw;
+        .card {
+            width: 100%;
+            max-width: 480px;
         }
     </style>
 </head>
-<body class="c-app flex-row align-items-center">
-    <div class="container">
-        <div class="row justify-content-center ga">
-            <main class="d-flex justify-content-center align-items-center vh-100">
-                <div class="card-group card-container">
-                    <div class="card px-4 py-2">
-                        <section class="card-body">
-                            <form action="/avaliacoes" method="post">
-                                <h1 class="card-title text-center">Avaliações</h1>
-                                <hr />
-                                <select name="avaliacaoId" id="selectAvaliacao" class="form-control my-4" asp-items="Model">
-                                    <option disabled selected value=""> -- Selecione a avaliação -- </option>
-                                </select>
-                                <div class="d-flex justify-content-center">
-                                    <a class="btn btn-outline-dark mr-2 w-25 logout">
-                                        <i class="c-sidebar-nav-icon cil-account-logout mr-1"></i>Sair
-                                    </a>
-                                    <button type="submit" class="btn btn-primary btn-confirm w-25" disabled>
-                                        Entrar
-                                    </button>
-                                </div>
-                            </form>
-                            <form class="logout-form"
-                                  asp-area="Identity"
-                                  asp-page="/Account/Logout"
-                                  asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            </form>
-                        </section>
-                    </div>
+<body>
+    <main class="d-flex justify-content-around align-items-center vh-100">
+        <div class="card p-5">
+            <h2 class="card-title text-center">Selecionar Avaliação</h2>
+            <hr />
+            <form action="/avaliacoes" method="post">
+                <select id="id" name="id" class="form-control mt-4 mb-5" asp-items="ViewBag.Avaliacoes"></select>
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-outline-dark mr-2 w-25 logout" onclick="logout()">
+                        <i class="c-sidebar-nav-icon cil-account-logout mr-1"></i>Sair
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-confirm btn-block">
+                        Entrar
+                    </button>
                 </div>
-            </main>
+            </form>
+            <form class="logout-form"
+                  asp-area="Identity"
+                  asp-page="/Account/Logout"
+                  asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            </form>
         </div>
-    </div>
-
-    <!-- JQuery -->
-    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
+    </main>
 
     <!-- CoreUI and necessary plugins-->
     <script src="~/vendors/pace-progress/js/pace.min.js"></script>
     <script src="~/vendors/coreui/dist/js/coreui.bundle.min.js"></script>
 
     <script>
-        function validadeBtnEntrar() {
-            document.querySelector("#selectAvaliacao")
-                .addEventListener("change", () => {
-                    document.querySelector(".btn-confirm").removeAttribute('disabled');
-                });
-        }
-
         function logout() {
-            document.querySelector(".logout")
-                .addEventListener("click", () => {
-                    const logoutForm = document.querySelector(".logout-form");
-                    logoutForm.submit();
-                });
+            document.querySelector(".logout-form").submit();
         }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            validadeBtnEntrar();
-            logout();
-        });
     </script>
 </body>
 </html>

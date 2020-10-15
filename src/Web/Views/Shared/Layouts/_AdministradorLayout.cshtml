@@ -1,13 +1,10 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using SAED.ApplicationCore.Entities
-@using SAED.Infrastructure.Identity
-@using Microsoft.AspNetCore.Http
+﻿@using SAED.ApplicationCore.Entities
+@using SAED.Web.Extensions;
 @using static SAED.ApplicationCore.Constants.AuthorizationConstants
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-    //var avaliacaoJson = HttpContextAccessor.HttpContext.Session.GetString("avaliacao");
-    //var avaliacao = JsonConvert.DeserializeObject<Avaliacao>(avaliacaoJson != null ? avaliacaoJson : "");
+    var avaliacao = HttpContextAccessor.HttpContext.Session.Get<Avaliacao>("avaliacao");
 }
 
 <!DOCTYPE html>
@@ -247,8 +244,8 @@
 
                 <ul class="c-header-nav ml-auto mr-4">
                     <li class="c-header-nav-item d-md-down-none d-flex">
-                        @*<div class="mr-2">@(avaliacaoJson != null ? avaliacao.Codigo : "")</div>*@
-                        <a class="c-header-nav-link" asp-area="" asp-controller="Avaliacoes" asp-action="Index">
+                        <div class="mr-2">@avaliacao?.Codigo</div>
+                        <a class="c-header-nav-link" href="/avaliacoes">
                             <i class="c-icon cil-transfer"></i>
                         </a>
                     </li>
