@@ -46,7 +46,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             return View();
         }
 
-        [Authorize(AuthorizationConstants.Permissions.Escolas.Create)]
+        //[Authorize(AuthorizationConstants.Permissions.Escolas.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Escola escola)

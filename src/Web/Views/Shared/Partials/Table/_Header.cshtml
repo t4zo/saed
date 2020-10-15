@@ -1,32 +1,33 @@
 ﻿@model SAED.Web.Areas.Administrador.ViewModels.TableHeader
 
-<div class="row">
-    <div class="col-6 col-sm-6 col-md-3">
-        <h1 class="card-header border-0">@Model.Header</h1>
+<div class="uk-grid-column-large uk-flex-center uk-flex-middle uk-margin-bottom" uk-grid>
+    <div class="uk-width-auto">
+        <h1 class="uk-card-title">@Model.Header</h1>
     </div>
-    <div class="col-5 col-sm-5 col-md-3 d-flex d-md-none justify-content-end align-items-center">
+    @*<div class="col-5 col-sm-5 col-md-3 d-flex d-md-none justify-content-end align-items-center">
         <a class="table--header-add"
            asp-area="Administrador"
            asp-controller=@Model.Controller
            asp-action="Create">
             Adicionar
         </a>
-    </div>
-    <form asp-action="Index" class="col-md-6 my-3 my-md-0 d-flex justify-content-center align-items-center">
-        <div class="d-flex flex-grow-1 align-items-center">
-            @*<a class="btn btn-default" asp-action="Index"><i class="cil-x"></i></a>*@
+    </div>*@
+<div class="uk-width-expand">
+    @*<div class="d-flex flex-grow-1 align-items-center">  *@
+    @*<a class="btn btn-default" asp-action="Index"><i class="cil-x"></i></a>*@
 
-            <input id="searchInput" class="form-control" placeholder="Pesquisar" />
-
-            @*<button class="btn btn-default" type="submit"><i class="cil-search"></i></button>*@
-        </div>
+    <form class="uk-search uk-search-navbar uk-width-expand" style="border: 1px solid grey;">
+        <span uk-search-icon></span>
+        <input id="searchInput" class="uk-search-input" type="search" placeholder="Pesquisar" />
     </form>
-    <div class="col-md-3 d-none d-md-flex justify-content-center align-items-center">
-        <a class="table--header-add"
+
+    @*<button class="btn btn-default" type="submit"><i class="cil-search"></i></button>*@
+    @*</div>*@
+</div>
+    <div class="uk-width-auto">
+        <a class="uk-icon-button uk-button-danger" uk-icon="plus"
            asp-area="Administrador"
            asp-controller=@Model.Controller
-           asp-action="Create">
-            Adicionar
-        </a>
+           asp-action="Create"></a>
     </div>
 </div>

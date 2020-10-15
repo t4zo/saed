@@ -26,6 +26,14 @@
     <!-- Bootstrap Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+    <!-- UIkit -->
+    <link rel="stylesheet" href="~/vendors/uikit/css/uikit.min.css" />
+    <script defer src="~/vendors/uikit/js/uikit.min.js"></script>
+    <script defer src="~/vendors/uikit/js/uikit-icons.min.js"></script>
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>*@
+
     <!-- CoreUI Styles -->
     <link href="~/vendors/coreui/dist/css/coreui.min.css" rel="stylesheet">
 
@@ -41,293 +49,90 @@
 
     @RenderSection("Styles", required: false)
 </head>
-<body class="c-app">
-    <div>
-        <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-            <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/assets/brand/coreui-base-white.svg" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="/assets/brand/coreui-signet-white.svg" width="118" height="46" alt="CoreUI Logo"></div>
-            <ul class="c-sidebar-nav">
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Dashboard">
-                        <i class="c-sidebar-nav-icon cil-home"></i>Inicio
-                    </a>
-                </li>
-
-                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="c-sidebar-nav-icon cil-puzzle"></i>Básico
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Distritos" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Distritos
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Escolas" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Escolas
-                            </a>
-                        </li>
+<body>
+    <div id="sidebar" uk-offcanvas="slide">
+        <div class="uk-offcanvas-bar">
+            @*<div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/assets/brand/coreui-base-white.svg" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="/assets/brand/coreui-signet-white.svg" width="118" height="46" alt="CoreUI Logo"></div>*@
+            <ul class="uk-nav uk-nav-default">
+                <li class="uk-active"><a href="#">Active</a></li>
+                <li class="uk-parent">
+                    <a href="#">Parent</a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#">Sub item</a></li>
+                        <li><a href="#">Sub item</a></li>
                     </ul>
                 </li>
+                <li class="uk-nav-header">Header</li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="uk-grid-column-collapse" uk-grid>
+        <nav class="uk-width-1-5 uk-card uk-card-default uk-visible@m" style="background-color: #f8f8f8;">
+            <div>
+                <p class="uk-text-center uk-margin-top">Logo</p>
+                <hr class="uk-list-divider" />
+            </div>
+            <ul class="uk-nav uk-nav-default uk-margin-left">
+                <li class="uk-active"><a href="#">Inicio</a></li>
 
-                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="c-sidebar-nav-icon cil-lightbulb"></i>Elaboração
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Avaliações
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Disciplinas" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Disciplinas
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Temas" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Temas
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Descritores" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Descritores
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Questoes" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Questões
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" asp-area="@Areas.Administrador" asp-controller="Alternativas" asp-action="Index">
-                                <span class="c-sidebar-nav-icon"></span>Alternativas
-                            </a>
-                        </li>
+                <li class="uk-nav-header">Básico</li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Distritos" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Distritos</a></li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Escolas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Escolas</a></li>
+                <li class="uk-nav-divider"></li>
+
+                <li class="uk-nav-header">Elaboração</li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Avaliações</a></li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Disciplinas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Disciplinas</a></li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Temas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Temas</a></li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Descritores" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Descritores</a></li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Questoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Questões</a></li>
+                <li><a asp-area="@Areas.Administrador" asp-controller="Alternativas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="thumbnails"></span> Alternativas</a></li>
+                <li class="uk-nav-divider"></li>
+
+                <li class="uk-parent">
+                    <a href="#">Parent</a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#">Sub item</a></li>
+                        <li><a href="#">Sub item</a></li>
                     </ul>
                 </li>
+                <li class="uk-nav-divider"></li>
 
-                <li class="c-sidebar-nav-item">
-                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="c-sidebar-nav-link border-0">
-                            <i class="c-sidebar-nav-icon cil-account-logout"></i>Sair
-                        </button>
+                <li class="uk-margin-small-top">
+                    <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <a onclick="document.querySelector('.logout-form').submit();"><span class="uk-margin-small-right" uk-icon="sign-in"></span> Sair</a>
                     </form>
                 </li>
 
-                <li class="c-sidebar-nav-title">Components</li>
-
-                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="c-sidebar-nav-icon cil-puzzle"></i>Base
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/breadcrumb.html"><span class="c-sidebar-nav-icon"></span> Breadcrumb</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/cards.html"><span class="c-sidebar-nav-icon"></span> Cards</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/carousel.html"><span class="c-sidebar-nav-icon"></span> Carousel</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/collapse.html"><span class="c-sidebar-nav-icon"></span> Collapse</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/forms.html"><span class="c-sidebar-nav-icon"></span> Forms</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/jumbotron.html"><span class="c-sidebar-nav-icon"></span> Jumbotron</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/list-group.html"><span class="c-sidebar-nav-icon"></span> List group</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/navs.html"><span class="c-sidebar-nav-icon"></span> Navs</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/pagination.html"><span class="c-sidebar-nav-icon"></span> Pagination</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/popovers.html"><span class="c-sidebar-nav-icon"></span> Popovers</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/progress.html"><span class="c-sidebar-nav-icon"></span> Progress</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/scrollspy.html"><span class="c-sidebar-nav-icon"></span> Scrollspy</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/switches.html"><span class="c-sidebar-nav-icon"></span> Switches</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/tables.html"><span class="c-sidebar-nav-icon"></span> Tables</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/tabs.html"><span class="c-sidebar-nav-icon"></span> Tabs</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/tooltips.html"><span class="c-sidebar-nav-icon"></span> Tooltips</a></li>
-                    </ul>
-                </li>
-                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="c-sidebar-nav-icon cil-cursor"></i>Buttons
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/buttons.html"><span class="c-sidebar-nav-icon"></span> Buttons</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/button-group.html"><span class="c-sidebar-nav-icon"></span> Buttons Group</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> Dropdowns</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/brand-buttons.html"><span class="c-sidebar-nav-icon"></span> Brand Buttons</a></li>
-                    </ul>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="charts.html">
-                        <i class="c-sidebar-nav-icon cil-chart-pie"></i>Charts
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="c-sidebar-nav-icon cil-star"></i>Icons
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="icons/coreui-icons-free.html"> CoreUI Icons<span class="badge badge-success">Free</span></a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="icons/coreui-icons-brand.html"> CoreUI Icons - Brand</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="icons/coreui-icons-flag.html"> CoreUI Icons - Flag</a></li>
-                    </ul>
-                </li>
-                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="c-sidebar-nav-icon cil-bell"></i>Notifications
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="notifications/alerts.html"><span class="c-sidebar-nav-icon"></span> Alerts</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="notifications/badge.html"><span class="c-sidebar-nav-icon"></span> Badge</a></li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="notifications/modals.html"><span class="c-sidebar-nav-icon"></span> Modals</a></li>
-                    </ul>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="widgets.html">
-                        <i class="c-sidebar-nav-icon cil-calculator"></i>Widgets<span class="badge badge-info">NEW</span>
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-divider"></li>
-                <li class="c-sidebar-nav-title">Extras</li>
-                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="c-sidebar-nav-icon cil-star"></i>Pages
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" href="login.html" target="_top">
-                                <i class="c-sidebar-nav-icon cil-account-logout"></i>Login
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" href="register.html" target="_top">
-                                <i class="c-sidebar-nav-icon cil-account-logout"></i>Register
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" href="404.html" target="_top">
-                                <i class="c-sidebar-nav-icon cil-bug"></i>Error 404
-                            </a>
-                        </li>
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" href="500.html" target="_top">
-                                <i class="c-sidebar-nav-icon cil-bug"></i>Error 500
-                            </a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
-        </div>
-        <div class="c-wrapper">
-            <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
-                <button class="c-header-toggler c-class-toggler d-lg-none mr-auto"
-                        type="button"
-                        data-target="#sidebar"
-                        data-class="c-sidebar-show">
-                    <span class="c-header-toggler-icon"></span>
-                </button>
-
-                <button class="c-header-toggler c-class-toggler ml-3 d-md-down-none"
-                        type="button"
-                        data-target="#sidebar"
-                        data-class="c-sidebar-lg-show"
-                        responsive="true">
-                    <span class="c-header-toggler-icon"></span>
-                </button>
-
-                <div class="d-flex justify-content-center align-items-center flex-grow-1 mx-2">
-                    <div>@User.Identity.Name</div>
+        </nav>
+        <div class="uk-width-4-5@m">
+            <nav class="uk-navbar uk-navbar-container uk-margin uk-flex-between uk-flex-middle" style="height: 70px;">
+                <a class="uk-navbar-toggle uk-hidden@m" uk-navbar-toggle-icon uk-toggle="#sidebar"></a>
+                <h4 class="uk-navbar-item uk-logo">@User.Identity.Name</h4>
+                <div>
+                    <span class="uk-margin-small-right">@avaliacao?.Codigo</span>
+                    <a href="/avaliacoes" class="uk-icon-button uk-margin-small-right" uk-icon="sign-out"></a>
                 </div>
+            </nav>
 
-                @*
-                    <ul class="c-header-nav d-md-down-none">
-                        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Dashboard</a></li>
-                        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Users</a></li>
-                        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li>
-                    </ul>
-                *@
-
-                <ul class="c-header-nav ml-auto mr-4">
-                    <li class="c-header-nav-item d-md-down-none d-flex">
-                        <div class="mr-2">@avaliacao?.Codigo</div>
-                        <a class="c-header-nav-link" href="/avaliacoes">
-                            <i class="c-icon cil-transfer"></i>
-                        </a>
-                    </li>
-                    @*
-                        <li class="c-header-nav-item d-md-down-none mx-2">
-                            <a class="c-header-nav-link" href="#">
-                                <i class="c-sidebar-nav-icon cil-list-rich"></i>
-                            </a>
-                        </li>
-                        <li class="c-header-nav-item d-md-down-none mx-2">
-                            <a class="c-header-nav-link" href="#">
-                                <i class="c-sidebar-nav-icon cil-envelope-open"></i>
-                            </a>
-                        </li>
-                    *@
-                    <li class="c-header-nav-item dropdown">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="c-avatar"><img class="c-avatar-img" src="/assets/img/avatars/6.jpg" alt="user@email.com"></div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right pt-0">
-                            <div class="dropdown-header bg-light py-2"><strong>Conta</strong></div>
-                            <a class="dropdown-item" asp-area="" asp-controller="Avaliacoes" asp-action="Index">
-                                <i class="c-sidebar-nav-icon cil-transfer"></i>Alterar Avaliação
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="c-sidebar-nav-icon cil-envelope-open"></i>Messages<span class="badge badge-success ml-auto">42</span>
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="c-sidebar-nav-icon cil-task"></i>Tasks<span class="badge badge-danger ml-auto">42</span>
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="c-sidebar-nav-icon cil-comment-square"></i>Comments<span class="badge badge-warning ml-auto">42</span>
-                            </a>
-
-                            <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div>
-
-                            <a class="dropdown-item" href="#">
-                                <i class="c-sidebar-nav-icon cil-user"></i>Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="c-sidebar-nav-icon cil-settings"></i>Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="c-sidebar-nav-icon cil-credit-card"></i>Payments<span class="badge badge-secondary ml-auto">42</span>
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="c-sidebar-nav-icon cil-file"></i>Projects<span class="badge badge-primary ml-auto">42</span>
-                            </a>
-
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
-
-                                <i class="c-sidebar-nav-icon cil-lock-locked"></i>Lock Account
-                            </a>
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="teste">
-                                <button type="submit" class="dropdown-item">
-                                    <i class="c-sidebar-nav-icon cil-account-logout"></i>Sair
-                                </button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-                @*<div class="c-subheader px-3">
-                        @RenderSection("Breadcrumb", required: false)
-                    </div>*@
-            </header>
-            <div class="c-body">
-                <main class="c-main">
-                    <div class="container-fluid">
-                        <div class="fade-in">
-                            @RenderBody()
-                        </div>
-                    </div>
-                </main>
-                <footer class="c-footer d-flex justify-content-center">
-                    <div>
-                        <span>Desenvolvido com</span>
-                        <i class="c-sidebar-nav-icon cil-heart"></i>
-                        <span>pelo</span>
-                        <img src="/assets/img/logo-SIEM.jpg" alt="Logomarca do SIEM" width="16" height="16" />
-                    </div>
-                </footer>
+            <div class="uk-container">
+                <div class="uk-animation-fade">
+                    @RenderBody()
+                </div>
             </div>
+
+            <hr class="uk-list-divider uk-margin-top uk-margin-remove-bottom" />
+            <footer class="uk-flex uk-flex-center uk-flex-middle uk-padding-small">
+                    <span>Desenvolvido com</span>
+                    <span class="uk-margin-small-left uk-margin-small-right" uk-icon="heart"></span>
+                    <span>pelo</span>
+                    <img src="/assets/img/logo-SIEM.jpg" alt="Logomarca do SIEM" class="uk-margin-small-left" width="16" height="16" />
+            </footer>
         </div>
     </div>
 
@@ -391,10 +196,6 @@
             }
             return rtn;
         }
-    </script>
-
-    <script>
-
     </script>
 
     @RenderSection("Scripts", required: false)
