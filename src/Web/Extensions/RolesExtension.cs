@@ -20,7 +20,7 @@ namespace SAED.Web.Extensions
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
-            if (!roleManager.Roles.AnyAsync().Result)
+            if (!await roleManager.Roles.AnyAsync())
             {
                 var appConfigurations = configuration.GetSection("AppConfiguration").Get<AppConfiguration>();
 

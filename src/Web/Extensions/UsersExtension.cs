@@ -27,9 +27,7 @@ namespace SAED.Web.Extensions
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
-            var hasUser = await context.Users.AnyAsync();
-
-            if (!hasUser)
+            if (!await context.Users.AnyAsync())
             {
                 var appConfiguration = configuration.GetSection("AppConfiguration").Get<AppConfiguration>();
 

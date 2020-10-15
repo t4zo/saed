@@ -86,24 +86,21 @@ namespace SAED.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.IsInDocker(serviceProvider, Configuration);
+            app.CreateRoles(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.CreateUsers(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.SeedDatabase(serviceProvider);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.CreateRoles(serviceProvider, Configuration).GetAwaiter().GetResult();
-            app.CreateUsers(serviceProvider, Configuration).GetAwaiter().GetResult();
-            app.SeedDatabase(serviceProvider);
-
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseHttpsRedirection();
 
             app.UseConfiguredSwagger();
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+            app.UseCors(DefaultCorsPolicyName);
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -91,8 +91,6 @@ namespace SAED.Web
                 app.UseHsts();
             }
 
-            app.IsInDocker(serviceProvider, Configuration);
-
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -102,19 +100,23 @@ namespace SAED.Web
             app.CreateUsersAsync(serviceProvider, Configuration).GetAwaiter().GetResult();
             app.SeedDatabase(serviceProvider);
 
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseCookiePolicy();
 
             app.UseRouting();
+            //app.UseRequestLocalization();
+            app.UseCors(DefaultCorsPolicyName);
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseSession();
+            // app.UseResponseCaching();
 
             app.UseEndpoints(endpoints =>
             {
