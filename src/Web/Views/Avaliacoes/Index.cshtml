@@ -10,43 +10,34 @@
 
     <link rel="icon" href="~/assets/favicon/favicon.ico">
 
-    <!-- Icons-->
-    <link href="~/vendors/coreui/icons/css/free.min.css" rel="stylesheet">
-    <link href="~/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <!-- CoreUI Styles -->
-    <link href="~/vendors/coreui/dist/css/coreui.min.css" rel="stylesheet">
+    <!-- UIkit -->
+    <link rel="stylesheet" href="~/vendors/uikit/css/uikit.min.css" />
+    <script defer src="~/vendors/uikit/js/uikit.min.js"></script>
+    <script defer src="~/vendors/uikit/js/uikit-icons.min.js"></script>
 
     <!-- Pace Progress Styles -->
     <link href="~/vendors/pace-progress/css/pace.css" rel="stylesheet">
 
-    <!-- Main Styles -->
-    <link href="~/css/home.min.css" rel="stylesheet">
-
     <style>
-        .card {
+        .uk-card {
             width: 100%;
             max-width: 480px;
         }
     </style>
 </head>
 <body>
-    <main class="d-flex justify-content-around align-items-center vh-100">
-        <div class="card p-5">
-            <h2 class="card-title text-center">Selecionar Avaliação</h2>
-            <hr />
+    <main class="uk-flex uk-flex-1 uk-flex-around uk-flex-middle uk-height-viewport">
+        <div class="uk-card uk-card-default uk-card-body">
+            <h2 class="uk-card-title uk-text-center">Selecionar Avaliação</h2>
+
+            <hr class="uk-list-divider" />
+            
             <form action="/avaliacoes" method="post">
-                <select id="id" name="id" class="form-control mt-4 mb-5" asp-items="ViewBag.Avaliacoes"></select>
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-outline-dark mr-2 w-25 logout" onclick="logout()">
-                        <i class="c-sidebar-nav-icon cil-account-logout mr-1"></i>Sair
-                    </a>
-                    <button type="submit" class="btn btn-primary btn-confirm btn-block">
-                        Entrar
-                    </button>
+                <p class="uk-text-lead uk-text-small">Olá @User.Identity.Name, por favor, selecione uma avaliação para entrar!</p>
+                <select id="id" name="id" class="uk-select uk-margin-top uk-margin-bottom" asp-items="ViewBag.Avaliacoes"></select>
+                <div class="uk-flex uk-flex-center uk-margin-top">
+                    <a class="uk-button uk-button-default" onclick="logout()">Sair</a>
+                    <button class="uk-button uk-button-primary uk-flex-1">Entrar</button>
                 </div>
             </form>
             <form class="logout-form"

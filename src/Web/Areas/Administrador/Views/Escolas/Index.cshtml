@@ -4,7 +4,7 @@
     ViewData["Title"] = "Escolas";
 }
 
-<div class="uk-card uk-card-default uk-card-body">
+<main class="uk-card uk-card-default uk-card-body">
     @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Escolas", Controller = "Escolas", Action = "Escolas" });}
     <div class="uk-overflow-auto">
         <table id="table_id" class="uk-table uk-table-hover uk-table-justify uk-table-striped">
@@ -23,8 +23,8 @@
                         <td>@Html.DisplayFor(modelItem => item.Distrito.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                        <td class="d-flex flex-wrap justify-content-center">
-                            <a class="uk-margin-small-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                        <td class="uk-flex uk-flex-around">
+                            <a uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
                             <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
                         </td>
                     </tr>
@@ -32,4 +32,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</main>

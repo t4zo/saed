@@ -4,28 +4,30 @@
     ViewData["Title"] = "Temas";
 }
 
-<div class="card p-3">
+<main class="uk-card uk-card-default uk-card-body">
     @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Temas", Controller = "Temas", Action = "Temas" });}
-    <table id="table_id" class="table table-hover mdl-data-table text-center">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Disciplina)</th>
-                <th>Tema</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="uk-overflow-auto">
+        <table id="table_id" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Disciplina.Nome)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                    <td class="d-flex flex-wrap justify-content-center">
-                        <a class="action-icon-container mx-lg-2 my-1 my-sm-0" title="Editar" asp-action="Edit" asp-route-id="@item.Id"><i class="cil-pencil font-lg"></i></a>
-                        <a class="action-icon-container mx-lg-2 my-1 my-sm-0" title="Remover" asp-action="Delete" asp-route-id="@item.Id"><i class="cil-trash font-lg"></i></a>
-                    </td>
+                    <th>@Html.DisplayNameFor(model => model.Disciplina)</th>
+                    <th>Tema</th>
+                    <th class="uk-text-center">Ações</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Disciplina.Nome)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td class="uk-flex uk-flex-center">
+                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</main>

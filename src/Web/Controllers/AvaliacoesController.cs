@@ -5,7 +5,6 @@ using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.ApplicationCore.Interfaces;
 using SAED.Web.Extensions;
-using System.Text.Json;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 

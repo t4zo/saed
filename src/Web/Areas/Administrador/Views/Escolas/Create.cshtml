@@ -7,73 +7,73 @@
 <main class="uk-card uk-card-default uk-card-body">
     <div class="uk-flex uk-flex-between uk-flex-bottom">
         <a class="uk-icon-button uk-button-default" asp-action="Index" uk-icon="arrow-left"></a>
-        <h3 class="uk-card-title">Adicionar Escola</h3>
-        <a class="uk-icon-button uk-button-primary" asp-action="Index" uk-icon="check" onclick="document.querySelector('.create-form').submit();"></a>
+        <h3 class="uk-card-title uk-text-uppercase">Adicionar Escola</h3>
+        <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="document.querySelector('.create-form').submit();"></button>
     </div>
 
     <hr class="uk-list-divider" />
 
-    <form class="uk-grid-row-small create-form" uk-grid asp-area="Administrador" asp-controller="Escolas" asp-action="Create" method="post">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form class="uk-grid-row-small create-form" uk-grid asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
         <div class="uk-width-1-5">
-            <label class="uk-form-label" asp-for="Inep"></label>
-            <input class="uk-input" asp-for="Inep" />
+            <label asp-for="Inep" class="uk-form-label"></label>
+            <input asp-for="Inep" class="uk-input" />
             <span asp-validation-for="Inep" class="text-danger"></span>
         </div>
 
         <div class="uk-width-2-5">
-            <label class="uk-form-label" asp-for="MatrizId">Matriz</label>
-            <select class="uk-select" asp-for="MatrizId" asp-items="ViewBag.MatrizId">
+            <label asp-for="MatrizId" class="uk-form-label">Matriz</label>
+            <select asp-for="MatrizId" class="uk-select" asp-items="ViewBag.MatrizId">
                 <option value="">-----</option>
             </select>
             <span asp-validation-for="MatrizId" class="text-danger"></span>
         </div>
 
         <div class="uk-width-2-5">
-            <label class="uk-form-label" asp-for="Nome">Escola</label>
-            <input class="uk-input" asp-for="Nome" />
+            <label asp-for="Nome" class="uk-form-label">Escola</label>
+            <input asp-for="Nome" class="uk-input" />
             <span asp-validation-for="Nome" class="text-danger"></span>
         </div>
 
         <div class="uk-width-1-6">
-            <label class="uk-form-label" asp-for="DistritoId">Matriz</label>
-            <select class="uk-select" asp-for="DistritoId" asp-items="ViewBag.DistritoId"></select>
+            <label asp-for="DistritoId" class="uk-form-label">Distrito</label>
+            <select asp-for="DistritoId" class="uk-select" asp-items="ViewBag.DistritoId"></select>
             <span asp-validation-for="DistritoId" class="text-danger"></span>
         </div>
 
         <div class="uk-width-5-6">
-            <label class="uk-form-label" asp-for="Endereco">Endereço</label>
-            <input class="uk-input" asp-for="Endereco" />
+            <label asp-for="Endereco" class="uk-form-label">Endereço</label>
+            <input asp-for="Endereco" class="uk-input" />
             <span asp-validation-for="Endereco" class="text-danger"></span>
         </div>
 
         <div class="uk-width-1-3">
-            <label class="uk-form-label" asp-for="Bairro"></label>
-            <input class="uk-input" asp-for="Bairro" />
+            <label asp-for="Bairro" class="uk-form-label"></label>
+            <input asp-for="Bairro" class="uk-input" />
             <span asp-validation-for="Bairro" class="text-danger"></span>
         </div>
 
         <div class="uk-width-1-2">
-            <label class="uk-form-label" asp-for="Rua"></label>
-            <input class="uk-input" asp-for="Rua" />
+            <label asp-for="Rua" class="uk-form-label"></label>
+            <input asp-for="Rua" class="uk-input" />
             <span asp-validation-for="Rua" class="text-danger"></span>
         </div>
 
         <div class="uk-width-1-6">
-            <label class="uk-form-label" asp-for="Numero">Número</label>
-            <input class="uk-input" asp-for="Numero" />
+            <label asp-for="Numero" class="uk-form-label">Número</label>
+            <input asp-for="Numero" class="uk-input" />
             <span asp-validation-for="Numero" class="text-danger"></span>
         </div>
 
-        <div class="uk-width-1-4">
-            <label class="uk-form-label" asp-for="Email"></label>
-            <input class="uk-input" asp-for="Email" />
+        <div class="uk-width-3-4">
+            <label asp-for="Email" class="uk-form-label"></label>
+            <input asp-for="Email" class="uk-input" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
-        <div class="uk-width-3-4">
-            <label class="uk-form-label" asp-for="Telefone"></label>
-            <input class="uk-input" asp-for="Telefone" />
+        <div class="uk-width-1-4">
+            <label asp-for="Telefone" class="uk-form-label"></label>
+            <input asp-for="Telefone" class="uk-input" />
             <span asp-validation-for="Telefone" class="text-danger"></span>
         </div>
     </form>

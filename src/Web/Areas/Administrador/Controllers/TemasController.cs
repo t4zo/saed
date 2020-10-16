@@ -133,8 +133,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            ViewData["DisciplinaId"] = tema.Disciplina;
-
             return View(tema);
         }
 

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SAED.ApplicationCore.Interfaces;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
@@ -19,8 +21,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var distritos = await _context.Distritos.ToListAsync();
-            return View(distritos.OrderBy(x => x.Nome));
+            return View(await _context.Distritos.ToListAsync());
         }
 
         public IActionResult Create()
@@ -36,8 +37,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 _context.Add(distrito);
                 await _context.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
+
 
             return View(distrito);
         }
@@ -50,6 +53,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 return NotFound();
             }
+
 
             return View(distrito);
         }
@@ -84,6 +88,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+
 
             return View(distrito);
         }
