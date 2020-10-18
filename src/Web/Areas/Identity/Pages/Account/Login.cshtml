@@ -18,60 +18,82 @@
     <link rel="icon" href="~/assets/favicon/favicon.ico">
 
     <!-- Icons-->
-    <link href="~/vendors/coreui/icons/css/free.min.css" rel="stylesheet">
     <link href="~/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <!-- CoreUI Styles -->
-    <link href="~/vendors/coreui/dist/css/coreui.min.css" rel="stylesheet">
+    <!-- UIkit -->
+    <link rel="stylesheet" href="~/vendors/uikit/css/uikit.min.css" />
+    <script defer src="~/vendors/uikit/js/uikit.min.js"></script>
+    <script defer src="~/vendors/uikit/js/uikit-icons.min.js"></script>
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>*@
 
     <!-- Pace Progress Styles -->
     <link href="~/vendors/pace-progress/css/pace.css" rel="stylesheet">
+    <script defer src="~/vendors/pace-progress/js/pace.min.js"></script>
 
-    <!-- Main Styles -->
-    <link href="~/css/home.min.css" rel="stylesheet">
+    <style>
+        .grid {
+            display: grid;
+            grid-template: 1fr auto / 60% 40%;
+            grid-template-areas: "aside content" "aside footer";
+        }
+
+        .aside {
+            grid-area: aside;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .content {
+            grid-area: content;
+            min-height: calc(100vh - 81px);
+        }
+
+        .footer {
+            grid-area: footer;
+            align-self: center;
+        }
+
+        @@media only screen and (max-width: 960px) {
+            .grid {
+                display: grid;
+                grid-template: 1fr auto / 1fr;
+                grid-template-areas: "content" "footer";
+            }
+        }
+    </style>
 </head>
-<body>
-    <main class="d-flex justify-content-around">
-        <aside class="flex-grow-1 aside d-none d-md-block">
-            <img class="aside--image" src="https://images.pexels.com/photos/3558597/pexels-photo-3558597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1280&w=1656" alt="Alternate Text" />
-            @*<img class="aside--image" src="https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Alternate Text" />*@
-        </aside>
+<body class="grid">
+    <aside class="uk-visible@m aside">
+        <img class="aside--image" src="https://images.pexels.com/photos/3558597/pexels-photo-3558597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1280&w=1656" alt="Alternate Text" />
+        @*<img class="aside--image" src="https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Alternate Text" />*@
+    </aside>
 
-        <section class="flex-grow-1 section d-flex flex-column justify-content-around align-items-center">
-            <div class="w-100">
-                <h1 class="card-title text-center">SAED</h1>
-                <hr />
-                <form asp-route-returnUrl="~/avaliacoes" class="section--form" method="post">
-                    <div class="my-5">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="form-group mt-5">
-                            <label asp-for="Input.Email"></label>
-                            <input asp-for="Input.Email" class="form-control" />
-                            <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.Password">Senha</label>
-                            <input asp-for="Input.Password" class="form-control" />
-                            <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        </div>
+    <main class="uk-flex uk-flex-column uk-flex-around uk-width-1-1 content">
+        <div>
+            <h1 class="uk-text-center">SAED</h1>
+            <hr class="uk-list-divider uk-margin-large-bottom" />
+            <form asp-route-returnUrl="~/avaliacoes" class="uk-margin-large-left uk-margin-large-right" method="post">
+                <div asp-validation-summary="All" class="uk-text-danger"></div>
+                <div class="uk-margin">
+                    <div class="uk-inline uk-display-block">
+                        <a class="uk-form-icon" href="#" uk-icon="user"></a>
+                        <input asp-for="Input.Email" class="uk-input" placeholder="Usuário" />
                     </div>
-                    <div class="d-flex justify-content-center mt-5">
-                        <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
+                <div class="uk-inline uk-display-block">
+                    <div class="uk-margin">
+                        <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="lock"></a>
+                        <input asp-for="Input.Password" class="uk-input" placeholder="Senha" />
                     </div>
-                </form>
-            </div>
-            <footer>Desenvolvido pelo SIEM</footer>
-        </section>
+                </div>
+                <button type="submit" class="uk-button uk-button-primary uk-align-center uk-margin-large-top">Entrar</button>
+            </form>
+        </div>
     </main>
-
-    <!-- JQuery -->
-    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
-
-    <!-- CoreUI and necessary plugins-->
-    <script src="~/vendors/pace-progress/js/pace.min.js"></script>
-    <script src="~/vendors/coreui/dist/js/coreui.bundle.min.js"></script>
+    <footer class="uk-align-center footer">Desenvolvido pelo SIEM</footer>
 </body>
 </html>

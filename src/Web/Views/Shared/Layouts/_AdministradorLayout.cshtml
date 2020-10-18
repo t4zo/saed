@@ -23,16 +23,13 @@
     <link href="~/vendors/coreui/icons/css/free.min.css" rel="stylesheet">
     <link href="~/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
     <!-- UIkit -->
     <link rel="stylesheet" href="~/vendors/uikit/css/uikit.min.css" />
     <script defer src="~/vendors/uikit/js/uikit.min.js"></script>
     <script defer src="~/vendors/uikit/js/uikit-icons.min.js"></script>
     @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
-    <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>*@
+        <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>*@
 
     <!-- CoreUI Styles -->
     <link href="~/vendors/coreui/dist/css/coreui.min.css" rel="stylesheet">
@@ -46,6 +43,42 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     @*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css">*@
     @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.material.min.css">*@
+
+    <style>
+        .grid {
+            display: grid;
+            grid-template: auto minmax(calc(100vh - 162px), 1fr) auto / 1fr 4fr;
+            grid-template-areas: "aside header header" "aside content content" "aside footer footer";
+        }
+
+        .aside {
+            grid-area: aside;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .header {
+            grid-area: header;
+        }
+
+        .content {
+            grid-area: content;
+        }
+
+        .footer {
+            grid-area: footer;
+        }
+
+        @@media only screen and (max-width: 960px) {
+            .grid {
+                display: grid;
+                grid-template: auto minmax(calc(100vh - 162px), 1fr) auto / 1fr;
+                grid-template-areas: "header header" "content content" "footer footer";
+            }
+        }
+    </style>
 
     @RenderSection("Styles", required: false)
 </head>
@@ -70,14 +103,14 @@
             </ul>
         </div>
     </div>
-    <div class="uk-grid-column-collapse" uk-grid>
-        <nav class="uk-width-1-5 uk-card uk-card-default uk-visible@m" style="background-color: #f8f8f8;">
+    <div class="grid">
+        <aside class="uk-card uk-card-default uk-visible@m aside" style="background-color: #f8f8f8;">
             <div>
                 <p class="uk-text-center uk-margin-top">Logo</p>
                 <hr class="uk-list-divider" />
             </div>
             <ul class="uk-nav uk-nav-default uk-margin-left">
-                <li class="uk-active"><a href="#">Inicio</a></li>
+                <li class="uk-active"><a asp-area="@Areas.Administrador" asp-controller="Dashboard" asp-action="Index">Inicio</a></li>
 
                 <li class="uk-nav-header">Básico</li>
                 <li><a asp-area="@Areas.Administrador" asp-controller="Distritos" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Distritos</a></li>
@@ -107,36 +140,34 @@
                         <a onclick="document.querySelector('.logout-form').submit();"><span class="uk-margin-small-right" uk-icon="sign-in"></span> Sair</a>
                     </form>
                 </li>
-
             </ul>
+        </aside>
+        <nav class="uk-navbar uk-navbar-container uk-margin-bottom uk-flex-between uk-flex-middle header" style="height: 70px;">
+            <a class="uk-navbar-toggle uk-hidden@m" uk-navbar-toggle-icon uk-toggle="#sidebar"></a>
+            <div class="uk-visible@m"></div>
+            <h4 class="uk-navbar-item uk-logo">@User.Identity.Name</h4>
+            <div>
+                <span class="uk-margin-small-right">@avaliacao?.Codigo</span>
+                <a href="/avaliacoes" class="uk-icon-button uk-margin-small-right" uk-icon="sign-out"></a>
+            </div>
         </nav>
-        <div class="uk-width-4-5@m">
-            <nav class="uk-navbar uk-navbar-container uk-margin uk-flex-between uk-flex-middle" style="height: 70px;">
-                <a class="uk-navbar-toggle uk-hidden@m" uk-navbar-toggle-icon uk-toggle="#sidebar"></a>
-                <div class="uk-visible@m"></div>
-                <h4 class="uk-navbar-item uk-logo">@User.Identity.Name</h4>
-                <div>
-                    <span class="uk-margin-small-right">@avaliacao?.Codigo</span>
-                    <a href="/avaliacoes" class="uk-icon-button uk-margin-small-right" uk-icon="sign-out"></a>
-                </div>
-            </nav>
-
-            <div class="uk-container">
+        <div class="content">
+            <div class="uk-container uk-container-expand" style="min-height: calc(100% - 166px)">
                 <div class="uk-animation-fade">
                     @RenderBody()
                 </div>
             </div>
-
-            <hr class="uk-list-divider uk-margin-top uk-margin-remove-bottom" />
-            <footer class="uk-flex uk-flex-center uk-flex-middle uk-padding-small">
-                    <span>Desenvolvido com</span>
-                    <span class="uk-margin-small-left uk-margin-small-right" uk-icon="heart"></span>
-                    <span>pelo</span>
-                    <img src="/assets/img/logo-SIEM.jpg" alt="Logomarca do SIEM" class="uk-margin-small-left" width="16" height="16" />
-            </footer>
         </div>
+        <footer class="footer">
+            <hr class="uk-list-divider uk-margin-top uk-margin-remove-bottom" />
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-padding-small">
+                <span>Desenvolvido com</span>
+                <span class="uk-margin-small-left uk-margin-small-right" uk-icon="heart"></span>
+                <span>pelo</span>
+                <img src="/assets/img/logo-SIEM.jpg" alt="Logomarca do SIEM" class="uk-margin-small-left" width="16" height="16" />
+            </div>
+        </footer>
     </div>
-
     <!-- JQuery -->
     <script src="~/vendors/jquery/dist/jquery.min.js"></script>
 
