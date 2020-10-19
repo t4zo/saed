@@ -7,7 +7,7 @@
 <main class="uk-card uk-card-default uk-card-body">
     @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Avaliacoes", Controller = "Avaliacoes", Action = "Avaliacoes" });}
     <div class="uk-overflow-auto">
-        <table id="table_id" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+        <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Codigo)</th>
@@ -22,7 +22,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Status)</td>
                     <td class="uk-flex uk-flex-center">
                         <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                        <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                        @*<a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>*@
                     </td>
                 </tr>
         }

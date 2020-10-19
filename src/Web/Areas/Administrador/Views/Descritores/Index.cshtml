@@ -5,17 +5,17 @@
 }
 
 <form id="form-filter" class="uk-card uk-card-default uk-margin-bottom" style="padding: 25px 0;" method="get" action="">
-    <div class="uk-grid uk-flex-around" uk-grid>
-        <section class="uk-width-1-3 uk-margin-remove-first-child">
+    <div class="uk-grid uk-flex-around uk-padding-small" uk-grid>
+        <section class="uk-width-1-3@s uk-margin-remove-first-child">
             <label class="uk-form-label">Disciplinas</label>
             <select class="uk-select" id="disciplinaId" name="disciplinaId" asp-items="ViewBag.Disciplinas">
                 <option disabled selected value=""> -- Selecione a Disciplina -- </option>
             </select>
         </section>
-        <section class="uk-width-1-3">
+        <section class="uk-width-1-3@s">
             <label class="uk-form-label">Temas</label>
             <select class="uk-select" id="temaId" name="temaId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Temas" disabled="@(ViewBag.Temas == null)">
-                <option disabled selected value=""> -- Selecione a Disciplina -- </option>
+                <option disabled selected value=""> -- Selecione o Tema -- </option>
             </select>
         </section>
     </div>
@@ -24,7 +24,7 @@
 <main class="uk-card uk-card-default uk-card-body">
     @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Descritores", Controller = "Descritores", Action = "Descritores" });}
     <div class="uk-overflow-auto">
-        <table id="table_id" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+        <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Tema.Disciplina)</th>
@@ -41,8 +41,10 @@
                         <td>@Html.DisplayFor(modelItem => item.Tema.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td class="uk-flex uk-flex-center">
-                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id" style="align-self: flex-end"></a>
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
+                                <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
+                            </form>
                         </td>
                     </tr>
                 }
@@ -61,4 +63,5 @@
             form.submit();
         });
     </script>
+    <script src="~/scripts/removeItem.js"></script>
 }

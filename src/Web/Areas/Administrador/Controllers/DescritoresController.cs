@@ -64,6 +64,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             var specification = new TemasWithSpecification();
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome");
             ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome");
 
             return View();
@@ -91,7 +92,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Descritores.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var descritor = await _descritoresRepository.GetByIdAsync(id);
+            var descritor = await _context.Descritores.AsNoTracking().Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == id);
 
             if (descritor is null)
             {
@@ -99,6 +100,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
 
             var specification = new TemasWithSpecification();
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome", descritor.Tema.DisciplinaId);
             ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
