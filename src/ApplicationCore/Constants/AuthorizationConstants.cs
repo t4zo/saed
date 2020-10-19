@@ -41,6 +41,14 @@
                 public const string Delete = "Permissions.Avaliacoes.Delete";
             }
 
+            public static class Distritos
+            {
+                public const string View = "Permissions.Distritos.View";
+                public const string Create = "Permissions.Distritos.Create";
+                public const string Update = "Permissions.Distritos.Update";
+                public const string Delete = "Permissions.Distritos.Delete";
+            }
+
             public static class Escolas
             {
                 public const string View = "Permissions.Escolas.View";

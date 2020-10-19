@@ -4,44 +4,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Specifications;
 using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]
     public class QuestoesController : Controller
     {
-        private readonly IAsyncRepository<Descritor> _descritoresRepository;
-        private readonly IAsyncRepository<Questao> _questoesRepository;
         private readonly ApplicationDbContext _context;
 
-        public QuestoesController(
-            IAsyncRepository<Descritor> descritoresRepository,
-            IAsyncRepository<Questao> questoesRepository,
-            ApplicationDbContext context
-        )
+        public QuestoesController(ApplicationDbContext context)
         {
-            _descritoresRepository = descritoresRepository;
-            _questoesRepository = questoesRepository;
             _context = context;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
         public async Task<IActionResult> Index()
         {
-            var specification = new QuestoesWithSpecification();
-            var questoes = await _questoesRepository.ListAsync(specification);
-            return View(questoes.OrderBy(x => x.Descritor.Nome));
+            return View(await _context.Questoes.Include(x => x.Descritor).OrderBy(x => x.Descritor.Nome).ToListAsync());
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         public async Task<IActionResult> CreateAsync()
         {
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome");
+            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome");
 
             return View();
         }
@@ -53,13 +41,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _questoesRepository.AddAsync(questao);
+                await _context.Questoes.AddAsync(questao);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
 
             return View(questao);
         }
@@ -67,14 +55,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var questao = await _questoesRepository.GetByIdAsync(id);
+            var questao = await _context.Questoes.FindAsync(id);
 
             if (questao is null)
             {
                 return NotFound();
             }
 
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
 
             return View(questao);
         }
@@ -93,12 +81,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 try
                 {
-                    await _questoesRepository.UpdateAsync(questao);
+                    _context.Update(questao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var entity = await _descritoresRepository.GetByIdAsync(id);
+                    var entity = await _context.Questoes.FindAsync(id);
                     if (entity is null)
                     {
                         return NotFound();
@@ -112,7 +100,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
 
             return View(questao);
         }
@@ -120,7 +108,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var questao = await _questoesRepository.FirstOrDefaultAsync(new QuestoesWithSpecification(x => x.Id == id));
+            var questao = await _context.Questoes.FindAsync(id);
 
             if (questao is null)
             {
@@ -135,8 +123,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var questao = await _questoesRepository.GetByIdAsync(id);
-            await _questoesRepository.DeleteAsync(questao);
+            var questao = await _context.Questoes.FindAsync(id);
+            _context.Remove(questao);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

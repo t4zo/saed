@@ -4,52 +4,39 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Specifications;
 using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Descritores.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]
     public class DescritoresController : Controller
     {
-        private readonly IAsyncRepository<Disciplina> _disciplinasRepository;
-        private readonly IAsyncRepository<Tema> _temasRepository;
-        private readonly IAsyncRepository<Descritor> _descritoresRepository;
         private readonly ApplicationDbContext _context;
 
-        public DescritoresController(
-            IAsyncRepository<Disciplina> disciplinasRepository,
-            IAsyncRepository<Tema> temasRepository,
-            IAsyncRepository<Descritor> descritoresRepository,
-            ApplicationDbContext context
-            )
+        public DescritoresController(ApplicationDbContext context)
         {
-            _disciplinasRepository = disciplinasRepository;
-            _temasRepository = temasRepository;
-            _descritoresRepository = descritoresRepository;
             _context = context;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Descritores.View)]
         public async Task<IActionResult> Index(int? disciplinaId, int? temaId)
         {
-            var disciplinas = await _disciplinasRepository.ListAllAsync();
-            ViewBag.Disciplinas = new SelectList(disciplinas, "Id", "Nome", disciplinaId);
+            var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
-            var descritoresSpecification = new DescritoresWithSpecification();
-            var descritores = await _descritoresRepository.ListAsync(descritoresSpecification);
+            var descritores = await _context.Descritores
+                .AsNoTracking()
+                .Include("Tema.Disciplina")
+                .ToListAsync();
 
             if (disciplinaId.HasValue)
             {
-                var specification = new TemasWithSpecification(t => t.DisciplinaId == disciplinaId.Value);
-
-                var temas = await _temasRepository.ListAsync(specification);
-                ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
-
                 descritores = descritores.Where(d => d.Tema.DisciplinaId == disciplinaId.Value).ToList();
+
+                //var temas = descritores.Select(x => x.Tema).Distinct();
+                var temas = await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == disciplinaId.Value).Distinct().ToListAsync();
+                ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
 
                 if (temaId.HasValue)
                 {
@@ -57,15 +44,15 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 }
             }
 
+            ViewBag.Disciplinas = new SelectList(disciplinas, "Id", "Nome", disciplinaId);
+
             return View(descritores);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Descritores.Create)]
         public async Task<IActionResult> CreateAsync()
         {
-            var specification = new TemasWithSpecification();
             ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome");
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome");
 
             return View();
         }
@@ -77,14 +64,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _descritoresRepository.AddAsync(descritor);
+                await _context.AddAsync(descritor);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            var specification = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] = new SelectList(await _context.Temas.ToListAsync(), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -92,16 +78,18 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Descritores.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var descritor = await _context.Descritores.AsNoTracking().Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == id);
+            var descritor = await _context.Descritores
+                .AsNoTracking()
+                .Include("Tema.Disciplina")
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (descritor is null)
             {
                 return NotFound();
             }
 
-            var specification = new TemasWithSpecification();
             ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome", descritor.Tema.DisciplinaId);
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] = new SelectList(await _context.Temas.Where(x => x.DisciplinaId == descritor.Tema.DisciplinaId).ToListAsync(), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -120,12 +108,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 try
                 {
-                    await _descritoresRepository.UpdateAsync(descritor);
+                    _context.Update(descritor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var entity = await _descritoresRepository.GetByIdAsync(id);
+                    var entity = await _context.Descritores.FindAsync(id);
                     if (entity is null)
                     {
                         return NotFound();
@@ -139,8 +127,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var specification = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -148,15 +135,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Descritores.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var descritor = await _descritoresRepository.GetByIdAsync(id);
+            var descritor = await _context.Descritores.FindAsync(id);
 
             if (descritor is null)
             {
                 return NotFound();
             }
 
-            var specification = new TemasWithSpecification();
-            ViewData["TemaId"] = new SelectList(await _temasRepository.ListAsync(specification), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -166,8 +152,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var descritor = await _descritoresRepository.GetByIdAsync(id);
-            await _descritoresRepository.DeleteAsync(descritor);
+            var descritor = await _context.Descritores.FindAsync(id);
+            _context.Remove(descritor);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

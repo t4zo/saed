@@ -23,10 +23,6 @@ namespace SAED.Infrastructure.Data.Config
             builder.Property(x => x.DistritoId)
                 .IsRequired();
 
-            builder.Property(x => x.Endereco)
-                .HasMaxLength(256)
-                .IsRequired(false);
-
             builder.Property(x => x.Bairro)
                 .HasMaxLength(128)
                 .IsRequired(false);

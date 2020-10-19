@@ -10,9 +10,5 @@
     <EmbeddedResource Remove="Services\**" />
     <None Remove="Services\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Ardalis.Specification" Version="3.0.0" />
-  </ItemGroup>
   
 </Project>

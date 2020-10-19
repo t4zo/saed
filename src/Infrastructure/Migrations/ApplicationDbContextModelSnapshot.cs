@@ -447,10 +447,6 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Endereco")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
                     b.Property<int?>("Inep")
                         .HasColumnType("int");
 

@@ -1,10 +1,9 @@
-﻿using SAED.ApplicationCore.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SAED.ApplicationCore.Entities
 {
-    public class Avaliacao : BaseEntity, IAggregateRoot
+    public class Avaliacao : BaseEntity
     {
         public string Codigo { get; set; } = "";
         public StatusAvaliacao Status { get; set; }

@@ -386,7 +386,6 @@ namespace SAED.Infrastructure.Migrations
                     MatrizId = table.Column<int>(nullable: true),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
                     DistritoId = table.Column<int>(nullable: false),
-                    Endereco = table.Column<string>(maxLength: 256, nullable: true),
                     Bairro = table.Column<string>(maxLength: 128, nullable: true),
                     Rua = table.Column<string>(maxLength: 256, nullable: true),
                     Numero = table.Column<int>(nullable: true),

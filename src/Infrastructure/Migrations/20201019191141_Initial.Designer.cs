@@ -10,7 +10,7 @@ using SAED.Infrastructure.Data;
 namespace SAED.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201015131630_Initial")]
+    [Migration("20201019191141_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -446,10 +446,6 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Endereco")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 

@@ -1,9 +1,8 @@
-﻿using SAED.ApplicationCore.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Entities
 {
-    public class Escola : BaseEntity, IAggregateRoot
+    public class Escola : BaseEntity
     {
         public int? Inep { get; set; }
         public int? MatrizId { get; set; }
@@ -11,7 +10,6 @@ namespace SAED.ApplicationCore.Entities
         public string Nome { get; set; }
         public int DistritoId { get; set; }
         public Distrito Distrito { get; set; }
-        public string Endereco { get; set; }
         public string Bairro { get; set; }
         public string Rua { get; set; }
         public int? Numero { get; set; }

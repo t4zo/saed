@@ -1,9 +1,8 @@
-﻿using SAED.ApplicationCore.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Entities
 {
-    public class Questao : BaseEntity, IAggregateRoot
+    public class Questao : BaseEntity
     {
         public int DescritorId { get; set; }
         public Descritor Descritor { get; set; }

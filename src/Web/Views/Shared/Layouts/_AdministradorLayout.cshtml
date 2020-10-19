@@ -167,18 +167,20 @@
 
         function configureVanillaDataTable() {
             var myTable = document.querySelector("#dataTable");
-            new DataTable(myTable, {
-                layout: {
-                    top: "",
-                    bottom: "{select}{pager}"
-                },
-                labels: {
-                    placeholder: "Pesquisar",
-                    perPage: "{select} registros por página",
-                    noRows: "Registros não encontrados",
-                    info: "{start} à {end} de {rows} registros",
-                },
-            });
+            if (myTable) {
+                new DataTable(myTable, {
+                    layout: {
+                        top: "",
+                        bottom: "{select}{pager}"
+                    },
+                    labels: {
+                        placeholder: "Pesquisar",
+                        perPage: "{select} registros por página",
+                        noRows: "Registros não encontrados",
+                        info: "{start} à {end} de {rows} registros",
+                    },
+                });
+            }
         }
 
         function removeUrlParam(key, sourceURL) {

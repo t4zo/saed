@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Disciplinas.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]
     public class DisciplinasController : Controller
     {
@@ -20,6 +19,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             _context = context;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Disciplinas.View)]
         public async Task<IActionResult> Index()
         {
             var disciplinas = await _context.Disciplinas.ToListAsync();

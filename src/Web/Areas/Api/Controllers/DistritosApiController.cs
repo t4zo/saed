@@ -1,25 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using SAED.Infrastructure.Data;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
     public class DistritosApiController : BaseApiController
     {
-        private readonly IAsyncRepository<Distrito> _distritoRepository;
+        private readonly ApplicationDbContext _context;
 
-        public DistritosApiController(IAsyncRepository<Distrito> distritoRepository)
+        public DistritosApiController(ApplicationDbContext context)
         {
-            _distritoRepository = distritoRepository;
+            _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var distritos = await _distritoRepository.ListAllAsync();
+            var distritos = await _context.Distritos.ToListAsync();
 
-            if (distritos == null) return BadRequest();
+            if (distritos is null)
+            {
+                return NotFound();
+            }
 
             return Ok(distritos);
         }

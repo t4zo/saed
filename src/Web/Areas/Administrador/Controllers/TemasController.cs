@@ -4,47 +4,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Specifications;
 using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Temas.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]
     public class TemasController : Controller
     {
-        private readonly IAsyncRepository<Disciplina> _disciplinasRepository;
-        private readonly IAsyncRepository<Tema> _temasRepository;
         private readonly ApplicationDbContext _context;
 
-        public TemasController(
-            IAsyncRepository<Disciplina> disciplinasRepository,
-            IAsyncRepository<Tema> temasRepository,
-            ApplicationDbContext context)
+        public TemasController(ApplicationDbContext context)
         {
-            _disciplinasRepository = disciplinasRepository;
-            _temasRepository = temasRepository;
             _context = context;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Temas.View)]
         public async Task<IActionResult> Index()
         {
-            var specification = new TemasWithSpecification();
-            var temas = await _temasRepository.ListAsync(specification);
-            return View(temas.OrderBy(x => x.Nome));
+            return View(await _context.Temas.AsNoTracking().Include(x => x.Disciplina).OrderBy(x => x.Nome).ToListAsync());
         }
 
         [Authorize(AuthorizationConstants.Permissions.Temas.Create)]
         public async Task<IActionResult> CreateAsync()
         {
-            var specification = new TemasWithSpecification();
-            var temas = await _temasRepository.ListAsync(specification);
-            var disciplinas = temas.Select(x => x.Disciplina).ToHashSet().OrderBy(x => x.Id);
-
-            ViewData["DisciplinaId"] = new SelectList(disciplinas, "Id", "Nome");
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome");
 
             return View();
         }
@@ -54,18 +39,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Tema tema)
         {
-            var specification = new TemasWithSpecification();
-            var temas = await _temasRepository.ListAsync(specification);
-            var disciplinas = await _disciplinasRepository.ListAllAsync();
-
             if (ModelState.IsValid)
             {
-                await _temasRepository.AddAsync(tema);
+                await _context.Temas.AddAsync(tema);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DisciplinaId"] = new SelectList(disciplinas, "Id", "Nome", tema.DisciplinaId);
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome", tema.DisciplinaId);
 
             return View(tema);
         }
@@ -73,14 +54,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var tema = await _temasRepository.GetByIdAsync(id);
+            var tema = await _context.Temas.FindAsync(id);
 
             if (tema is null)
             {
                 return NotFound();
             }
 
-            ViewData["DisciplinaId"] = new SelectList(await _disciplinasRepository.ListAllAsync(), "Id", "Nome", tema.DisciplinaId);
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome", tema.DisciplinaId);
 
             return View(tema);
         }
@@ -99,12 +80,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 try
                 {
-                    await _temasRepository.UpdateAsync(tema);
+                    _context.Update(tema);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var entity = await _temasRepository.GetByIdAsync(id);
+                    var entity = await _context.Temas.FindAsync(id);
                     if (entity is null)
                     {
                         return NotFound();
@@ -118,7 +99,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DisciplinaId"] = new SelectList(await _disciplinasRepository.ListAllAsync(), "Id", "Nome", tema.DisciplinaId);
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome", tema.DisciplinaId);
 
             return View(tema);
         }
@@ -126,7 +107,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var tema = await _temasRepository.FirstAsync(new TemasWithSpecification(x => x.Id == id));
+            var tema = await _context.Temas.FindAsync(id);
 
             if (tema is null)
             {
@@ -141,8 +122,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tema = await _temasRepository.GetByIdAsync(id);
-            await _temasRepository.DeleteAsync(tema);
+            var tema = await _context.Temas.FindAsync(id);
+            _context.Remove(tema);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
