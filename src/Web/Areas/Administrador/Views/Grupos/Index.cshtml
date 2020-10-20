@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Grupos";
+}
+
+<main class="uk-card uk-card-default uk-card-body">
+    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Grupos", Controller = "Grupos", Action = "Create" });}
+    <div class="uk-overflow-auto">
+        <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+            <thead>
+                <tr>
+                    <th>Grupo</th>
+                    <th class="uk-text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in ViewBag.Roles as List<Microsoft.AspNetCore.Identity.IdentityRole<int>>)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => role.Name)</td>
+                    <td class="uk-flex uk-flex-center">
+                        <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@role.Id" style="align-self: flex-end"></a>
+                        <form asp-action="Delete" asp-route-id="@role.Id" method="post" class="form-delete-@role.Id">
+                            <a href="javascript:removeItem(@role.Id);" uk-icon="trash" title="Remover"></a>
+                        </form>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="~/scripts/removeItem.js"></script>
+}

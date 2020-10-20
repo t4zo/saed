@@ -1,5 +1,6 @@
 ﻿@using SAED.ApplicationCore.Entities
 @using SAED.Web.Extensions;
+@using System.Security.Claims;
 @using static SAED.ApplicationCore.Constants.AuthorizationConstants
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
@@ -27,8 +28,13 @@
         <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>*@
 
+    <!-- Vanilla DataTables -->
     <link href="~/vendors/datatables/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
     <script src="~/vendors/datatables/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
+
+    <!-- Simplebar -->
+    <link rel="stylesheet" href="https://unpkg.com/simplebar@5.3.0/dist/simplebar.css" />
+    <script src="https://unpkg.com/simplebar@5.3.0/dist/simplebar.min.js"></script>
 
     <!-- Pace Progress Styles -->
     <link href="~/vendors/pace-progress/css/pace.css" rel="stylesheet">
@@ -60,6 +66,10 @@
 
         .footer {
             grid-area: footer;
+        }
+
+        .logout-form > a:hover {
+            text-decoration: none;
         }
 
         @@media only screen and (max-width: 960px) {
@@ -95,7 +105,7 @@
         </div>
     </div>
     <div class="grid">
-        <aside class="uk-card uk-card-default uk-visible@m aside" style="background-color: #f8f8f8;">
+        <aside class="uk-card uk-card-default uk-visible@m aside" style="background-color: #f8f8f8;" data-simplebar>
             <div>
                 <p class="uk-text-center uk-margin-top">Logo</p>
                 <hr class="uk-list-divider" />
@@ -103,19 +113,85 @@
             <ul class="uk-nav uk-nav-default uk-margin-left">
                 <li class="uk-active"><a asp-area="@Areas.Administrador" asp-controller="Dashboard" asp-action="Index">Inicio</a></li>
 
-                <li class="uk-nav-header">Básico</li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Distritos" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Distritos</a></li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Escolas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Escolas</a></li>
-                <li class="uk-nav-divider"></li>
+                @if (User.HasClaim(x => x.Value == Permissions.Grupos.View) || User.HasClaim(x => x.Value == Permissions.Usuarios.View))
+                {
+                    <li class="uk-nav-header">Segurança</li>
+                }
 
-                <li class="uk-nav-header">Elaboração</li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Avaliações</a></li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Disciplinas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Disciplinas</a></li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Temas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Temas</a></li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Descritores" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Descritores</a></li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Questoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Questões</a></li>
-                <li><a asp-area="@Areas.Administrador" asp-controller="Alternativas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="thumbnails"></span> Alternativas</a></li>
-                <li class="uk-nav-divider"></li>
+                @if (User.HasClaim(x => x.Value == Permissions.Grupos.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Grupos" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Grupos</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Usuarios.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Usuarios" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Usuários</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Grupos.View) || User.HasClaim(x => x.Value == Permissions.Usuarios.View))
+                {
+                    <li class="uk-nav-divider"></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Distritos.View) || User.HasClaim(x => x.Value == Permissions.Escolas.View) || User.HasClaim(x => x.Value == Permissions.Avaliacoes.View))
+                {
+                    <li class="uk-nav-header">Básico</li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Distritos.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Distritos" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Distritos</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Escolas.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Escolas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Escolas</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Avaliacoes.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Avaliações</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Distritos.View) || User.HasClaim(x => x.Value == Permissions.Escolas.View) || User.HasClaim(x => x.Value == Permissions.Avaliacoes.View))
+                {
+                    <li class="uk-nav-divider"></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Disciplinas.View) || User.HasClaim(x => x.Value == Permissions.Temas.View) || User.HasClaim(x => x.Value == Permissions.Descritores.View) || User.HasClaim(x => x.Value == Permissions.Questoes.View) || User.HasClaim(x => x.Value == Permissions.Alternativas.View))
+                {
+                    <li class="uk-nav-header">Elaboração</li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Disciplinas.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Disciplinas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Disciplinas</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Temas.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Temas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Temas</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Descritores.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Descritores" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Descritores</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Questoes.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Questoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Questões</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Alternativas.View))
+                {
+                    <li><a asp-area="@Areas.Administrador" asp-controller="Alternativas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="thumbnails"></span> Alternativas</a></li>
+                }
+
+                @if (User.HasClaim(x => x.Value == Permissions.Disciplinas.View) || User.HasClaim(x => x.Value == Permissions.Temas.View) || User.HasClaim(x => x.Value == Permissions.Descritores.View) || User.HasClaim(x => x.Value == Permissions.Questoes.View) || User.HasClaim(x => x.Value == Permissions.Alternativas.View))
+                {
+                    <li class="uk-nav-divider"></li>
+                }
 
                 <li class="uk-parent">
                     <a href="#">Parent</a>
@@ -126,9 +202,9 @@
                 </li>
                 <li class="uk-nav-divider"></li>
 
-                <li class="uk-margin-small-top">
+                <li class="uk-margin-top uk-margin-bottom">
                     <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <a class="uk-text-danger" onclick="document.querySelector('.logout-form').submit();"><span class="uk-margin-small-right" uk-icon="sign-in"></span> Sair</a>
+                        <a class="uk-text-danger" onclick="document.querySelector('.logout-form').submit();"><span class="uk-margin-small-right" uk-icon="arrow-left"></span> Sair</a>
                     </form>
                 </li>
             </ul>

@@ -1,0 +1,82 @@
+﻿@model SAED.Web.Areas.Administrador.ViewModels.GrupoViewModel;
+
+@{
+    ViewData["Title"] = "Editar Grupo";
+}
+
+<main class="uk-card uk-card-default uk-card-body">
+    <div class="uk-flex uk-flex-between uk-flex-bottom">
+        <a class="uk-icon-button uk-button-default" asp-action="Index" uk-icon="arrow-left"></a>
+        <span class="uk-card-title uk-text-uppercase uk-text-center">Editar Grupo</span>
+        <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="sendForm()"></button>
+    </div>
+    <hr class="uk-list-divider" />
+    <form class="smart-select" method="post">
+        <div class="uk-width-1-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="Nome" class="uk-form-label"></label>
+            <input asp-for="Nome" class="uk-input" />
+            <span asp-validation-for="Nome" class="uk-text-danger"></span>
+        </div>
+        <hr class="uk-list-divider" />
+        <div id="smartSelect" class="uk-grid uk-grid-column-small" uk-grid>
+            <div class="uk-width-2-5@s">
+                <div class="uk-flex uk-flex-between uk-flex-middle" style="min-height: 40px">
+                    <h5 class="uk-width-2-5 uk-margin-remove uk-text-small">Permissões Disponíveis</h5>
+                    <input :searchAvailableField="searchAvailableField" @@keyUp="searchAvailable" class="uk-input uk-width-1-2" placeholder="Pesquisar" />
+                </div>
+                <select multiple size="10" v-model="availableSelected" class="uk-select uk-width-1-1">
+                    <option v-on:dblclick="add" v-if="!searchAvailableField" v-for="permissao in available" :key="permissao">
+                        {{ permissao }}
+                    </option>
+                    <option v-on:dblclick="add" v-else v-for="permissao in availableSearch">
+                        {{ permissao }}
+                    </option>
+                </select>
+                <p @@click.prevent="addAll" class="uk-button uk-button-small uk-button-primary uk-width-1-1">Escolher Todos</p>
+                <p class="uk-text-small uk-text-lead">Pressione “Control”, ou “Command” no Mac, para selecionar mais de um.</p>
+            </div>
+            <div class="uk-visible@s">
+                <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-height-1-1">
+                    <span @@click.prevent='add' style="margin-bottom: 10px" class="uk-icon-button uk-button-primary" uk-icon="arrow-right"></span>
+                    <span @@click.prevent='remove' class="uk-icon-button uk-button-danger" uk-icon="arrow-left"></span>
+                </div>
+            </div>
+            <div class="uk-hidden@s uk-width-1-1">
+                <div class="uk-flex uk-flex-center uk-flex-middle uk-width-1-1">
+                    <span @@click.prevent='add' style="margin-right: 10px" class="uk-icon-button uk-button-primary" uk-icon="arrow-right"></span>
+                    <span @@click.prevent='remove' class="uk-icon-button uk-button-danger" uk-icon="arrow-left"></span>
+                </div>
+            </div>
+            <div class="uk-width-2-5@s">
+                <div class="uk-flex uk-flex-between uk-flex-middle" style="min-height: 40px">
+                    <h5 class="uk-width-2-5 uk-margin-remove uk-text-small">Permissões Escolhidas</h5>
+                </div>
+                <select multiple size="10" v-model="chosenSelected" class="uk-select uk-width-1-1 chosenSelected" asp-for="PermissoesEscolhidas">
+                    <option v-on:dblclick="remove" v-if="!searchChosenField" v-for="permissao in chosen" :key="permissao">
+                        {{ permissao }}
+                    </option>
+                    <option v-on:dblclick="remove" v-else v-for="permissao in chosenSearch">
+                        {{ permissao }}
+                    </option>
+                </select>
+                <p @@click.prevent="removeAll" class="uk-button uk-button-small uk-button-danger uk-width-1-1">Remover Todos</p>
+            </div>
+        </div>
+    </form>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="~/scripts/smartSelect.js"></script>
+    <script>
+        smartSelect({ available: @Html.Raw(JsonSerializer.Serialize(ViewBag.AllPermissions)), chosen: @Html.Raw(JsonSerializer.Serialize(Model.PermissoesEscolhidas)) });
+        function sendForm() {
+            const chosenSelectedOptions = document.querySelectorAll('.chosenSelected option');
+            chosenSelectedOptions.forEach(option => option.selected = true);
+
+            document.querySelector('form.smart-select').submit();
+        }
+    </script>
+}

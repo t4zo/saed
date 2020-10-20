@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Constants;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
 using System.Threading.Tasks;
@@ -10,7 +8,6 @@ using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
     public class AvaliacoesController : Controller
     {
         private readonly ApplicationDbContext _context;

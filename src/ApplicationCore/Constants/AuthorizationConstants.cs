@@ -23,6 +23,22 @@
 
         public static class Permissions
         {
+            public static class Grupos
+            {
+                public const string View = "Permissions.Grupos.View";
+                public const string Create = "Permissions.Grupos.Create";
+                public const string Update = "Permissions.Grupos.Update";
+                public const string Delete = "Permissions.Grupos.Delete";
+            }
+
+            public static class Usuarios
+            {
+                public const string View = "Permissions.Usuarios.View";
+                public const string Create = "Permissions.Usuarios.Create";
+                public const string Update = "Permissions.Usuarios.Update";
+                public const string Delete = "Permissions.Usuarios.Delete";
+            }
+
             public static class Users
             {
                 public const string View = "Permissions.Users.View";
@@ -87,6 +103,14 @@
                 public const string Create = "Permissions.Questoes.Create";
                 public const string Update = "Permissions.Questoes.Update";
                 public const string Delete = "Permissions.Questoes.Delete";
+            }
+
+            public static class Alternativas
+            {
+                public const string View = "Permissions.Alternativas.View";
+                public const string Create = "Permissions.Alternativas.Create";
+                public const string Update = "Permissions.Alternativas.Update";
+                public const string Delete = "Permissions.Alternativas.Delete";
             }
         }
 
