@@ -1,23 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-SAED-2A6D66F1-BFF5-4E8F-8901-1AD6B1ADCB54</UserSecretsId>
     <!--<Nullable>enable</Nullable>-->
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="wwwroot\js\**" />
-    <Content Remove="wwwroot\js\**" />
-    <EmbeddedResource Remove="wwwroot\js\**" />
-    <None Remove="wwwroot\js\**" />
-    <TypeScriptCompile Remove="wwwroot\js\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\css\administrador\table\header.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\administrador\table\icons.css" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
@@ -41,9 +28,5 @@
     <ProjectReference Include="..\ApplicationCore\SAED.ApplicationCore.csproj" />
     <ProjectReference Include="..\Infrastructure\SAED.Infrastructure.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Administrador\Styles\" />
-  </ItemGroup>
-
+  
 </Project>
