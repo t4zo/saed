@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,6 +51,8 @@ namespace SAED.Api
 
             services.AddJwtSecurity(Configuration);
 
+            services.AddProblemDetails();      
+
             services.AddAuthorization();
 
             services.AddIdentityCore<ApplicationUser>(options =>
@@ -85,6 +88,8 @@ namespace SAED.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseProblemDetails();
+
             app.CreateRoles(serviceProvider, Configuration).GetAwaiter().GetResult();
             app.CreateUsers(serviceProvider, Configuration).GetAwaiter().GetResult();
             app.SeedDatabase(serviceProvider);
@@ -96,7 +101,6 @@ namespace SAED.Api
 
             app.UseHttpsRedirection();
 
-            app.UseGlobalExceptionHandler(logger);
             app.UseConfiguredSwagger();
 
             app.UseRouting();
