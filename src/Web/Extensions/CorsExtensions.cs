@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace SAED.Api.Extensions
+namespace SAED.Web.Extensions
 {
-    public static class CorsExtension
+    public static class CorsExtensions
     {
         public static IServiceCollection AddCustomCors(this IServiceCollection service, string _defaultCorsPolicyName)
         {

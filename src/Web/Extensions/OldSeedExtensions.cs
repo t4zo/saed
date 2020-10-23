@@ -1,6 +1,6 @@
 ﻿namespace SAED.Web.Extensions
 {
-    public static class OldSeedExtension
+    public static class OldSeedExtensions
     {
         //public static async Task<IApplicationBuilder> SeedDatabaseAsync(
         //    this IApplicationBuilder app,

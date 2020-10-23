@@ -12,7 +12,7 @@ using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
 {
-    public static class RolesExtension
+    public static class RolesExtensions
     {
         public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {

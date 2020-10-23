@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace SAED.Web.Extensions
 {
-    public static class SeedExtension
+    public static class SeedExtensions
     {
         public static IApplicationBuilder SeedDatabase(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {

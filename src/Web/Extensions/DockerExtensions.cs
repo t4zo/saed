@@ -7,7 +7,7 @@ using System;
 
 namespace SAED.Web.Extensions
 {
-    public static class DockerExtension
+    public static class DockerExtensions
     {
         public static IApplicationBuilder IsInDocker(this IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider, IConfiguration configuration)
         {

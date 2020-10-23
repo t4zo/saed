@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SAED.Api.Extensions
 {
-    public static class RolesExtension
+    public static class RolesExtensions
     {
         public static async Task<IApplicationBuilder> CreateRoles(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {

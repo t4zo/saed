@@ -7,7 +7,7 @@ using SAED.Api.Configurations;
 
 namespace SAED.Api.Extensions
 {
-    public static class JwtSecurityExtension
+    public static class JwtSecurityExtensions
     {
         public static IServiceCollection AddJwtSecurity(
             this IServiceCollection services,

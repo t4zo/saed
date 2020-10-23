@@ -15,7 +15,7 @@ using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
 {
-    public static class UsersExtension
+    public static class UsersExtensions
     {
         public static async Task<IApplicationBuilder> CreateUsersAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
