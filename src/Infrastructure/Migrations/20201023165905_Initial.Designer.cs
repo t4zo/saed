@@ -10,7 +10,7 @@ using SAED.Infrastructure.Data;
 namespace SAED.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201019191141_Initial")]
+    [Migration("20201023165905_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -569,17 +569,17 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DescritorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Enunciado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Habilitada")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Html")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Item")
                         .IsRequired()

@@ -15,10 +15,10 @@ namespace SAED.Infrastructure.Data.Config
                 .IsRequired();
 
             builder.Property(x => x.Descricao)
-                .IsRequired();
-
-            builder.Property(x => x.Html)
                 .IsRequired(false);
+
+            builder.Property(x => x.Enunciado)
+                .IsRequired();
 
             builder.HasOne(questao => questao.Descritor)
                 .WithMany(descritor => descritor.Questoes)

@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SAED.Infrastructure.Migrations
 {
@@ -512,8 +512,8 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DescritorId = table.Column<int>(nullable: false),
                     Item = table.Column<string>(maxLength: 8, nullable: false),
-                    Descricao = table.Column<string>(nullable: false),
-                    Html = table.Column<string>(nullable: true),
+                    Descricao = table.Column<string>(nullable: true),
+                    Enunciado = table.Column<string>(nullable: false),
                     Habilitada = table.Column<bool>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false)

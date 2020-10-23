@@ -325,17 +325,17 @@ namespace SAED.Api.Extensions
 
             var questoes = new List<Questao>
             {
-                new Questao { Id = 1, DescritorId = 1, Item = "P01", Descricao = "Questao 01 - Descritor 1" },
-                new Questao { Id = 2, DescritorId = 1, Item = "P02", Descricao = "Questao 02 - Descritor 1" },
-                new Questao { Id = 3, DescritorId = 1, Item = "P03", Descricao = "Questao 03 - Descritor 1" },
-                new Questao { Id = 4, DescritorId = 1, Item = "P04", Descricao = "Questao 04 - Descritor 1" },
-                new Questao { Id = 5, DescritorId = 2, Item = "P01", Descricao = "Questao 01 - Descritor 2" },
-                new Questao { Id = 6, DescritorId = 2, Item = "P02", Descricao = "Questao 02 - Descritor 2" },
-                new Questao { Id = 7, DescritorId = 3, Item = "P01", Descricao = "Questao 01 - Descritor 3" },
-                new Questao { Id = 8, DescritorId = 4, Item = "P01", Descricao = "Questao 01 - Descritor 4" },
-                new Questao { Id = 9, DescritorId = 4, Item = "P02", Descricao = "Questao 02 - Descritor 4" },
-                new Questao { Id = 10, DescritorId = 2, Item = "P01", Descricao = "Teste" },
-                new Questao { Id = 11, DescritorId = 3, Item = "P02", Descricao = "Teste2" }
+                new Questao { Id = 1, DescritorId = 1, Item = "P01", Enunciado = "Questao 01 - Descritor 1" },
+                new Questao { Id = 2, DescritorId = 1, Item = "P02", Enunciado = "Questao 02 - Descritor 1" },
+                new Questao { Id = 3, DescritorId = 1, Item = "P03", Enunciado = "Questao 03 - Descritor 1" },
+                new Questao { Id = 4, DescritorId = 1, Item = "P04", Enunciado = "Questao 04 - Descritor 1" },
+                new Questao { Id = 5, DescritorId = 2, Item = "P01", Enunciado = "Questao 01 - Descritor 2" },
+                new Questao { Id = 6, DescritorId = 2, Item = "P02", Enunciado = "Questao 02 - Descritor 2" },
+                new Questao { Id = 7, DescritorId = 3, Item = "P01", Enunciado = "Questao 01 - Descritor 3" },
+                new Questao { Id = 8, DescritorId = 4, Item = "P01", Enunciado = "Questao 01 - Descritor 4" },
+                new Questao { Id = 9, DescritorId = 4, Item = "P02", Enunciado = "Questao 02 - Descritor 4" },
+                new Questao { Id = 10, DescritorId = 2, Item = "P01", Enunciado = "Teste" },
+                new Questao { Id = 11, DescritorId = 3, Item = "P02", Enunciado = "Teste2" }
             };
 
             new EntitySeed<Questao>(context, configuration).Load(questoes, "Questoes");
