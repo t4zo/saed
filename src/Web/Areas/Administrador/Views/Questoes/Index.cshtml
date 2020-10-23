@@ -47,10 +47,16 @@
                         <td>@Html.DisplayFor(modelItem => item.Item)</td>
                         <td>@Html.DisplayFor(modelItem => item.Habilitada)</td>
                         <td class="uk-flex uk-flex-center">
-                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
-                                <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
-                            </form>
+                            @if (User.HasClaim(x => x.Value == Permissions.Questoes.Update))
+                            {
+                                <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                            }
+                            @if (User.HasClaim(x => x.Value == Permissions.Questoes.Delete))
+                            {
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
+                                    <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
+                                </form>
+                            }
                         </td>
                     </tr>
                 }

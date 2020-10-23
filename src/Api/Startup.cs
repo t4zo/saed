@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SAED.Api.Authorization;
+using SAED.Api.Configurations;
 using SAED.Api.Extensions;
 using SAED.Api.Interfaces;
 using SAED.Api.Services;
@@ -42,9 +43,11 @@ namespace SAED.Api
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
-            services.AddCustomCors(DefaultCorsPolicyName);
+            services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
 
             services.AddDbContext<ApplicationDbContext>();
+
+            services.AddCustomCors(DefaultCorsPolicyName);
 
             services.AddControllers()
                 .AddFluentValidation(configureExpression => configureExpression.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
@@ -90,8 +93,8 @@ namespace SAED.Api
 
             app.UseProblemDetails();
 
-            app.CreateRoles(serviceProvider, Configuration).GetAwaiter().GetResult();
-            app.CreateUsers(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.CreateRoles(serviceProvider).GetAwaiter().GetResult();
+            app.CreateUsers(serviceProvider).GetAwaiter().GetResult();
             app.SeedDatabase(serviceProvider);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions

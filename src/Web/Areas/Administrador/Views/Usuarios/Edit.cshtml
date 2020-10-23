@@ -7,7 +7,7 @@
 <main class="uk-card uk-card-default uk-card-body">
     <div class="uk-flex uk-flex-between uk-flex-bottom">
         <a class="uk-icon-button uk-button-default" asp-action="Index" uk-icon="arrow-left"></a>
-        <span class="uk-card-title uk-text-uppercase uk-text-center">Adicionar Usuário</span>
+        <span class="uk-card-title uk-text-uppercase uk-text-center">Editar Usuário</span>
         <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="sendForm()"></button>
     </div>
     <hr class="uk-list-divider" />
@@ -37,7 +37,7 @@
             <div class="uk-width-2-5@s">
                 <div class="uk-flex uk-flex-between uk-flex-middle" style="min-height: 40px;">
                     <h5 class="uk-width-1-3 uk-margin-remove">Disponíveis</h5>
-                    <input :searchAvailableField="searchAvailableField" @@keyUp="searchAvailable" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
+                    <input :searchAvailableField="searchAvailableField" @@input="searchAvailable" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
                 </div>
                 <select multiple size="10" v-model="availableSelected" class="uk-select uk-width-1-1">
                     <option v-on:dblclick="add" v-if="!searchAvailableField" v-for="permissao in available" :key="permissao">
@@ -65,7 +65,7 @@
             <div class="uk-width-2-5@s">
                 <div class="uk-flex uk-flex-between uk-flex-middle">
                     <h5 class="uk-width-1-3 uk-margin-remove">Escolhidas</h5>
-                    <input :searchChosenField="searchChosenField" @@keyUp="searchChosen" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
+                    <input :searchChosenField="searchChosenField" @@input="searchChosen" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
                 </div>
                 <select multiple size="10" v-model="chosenSelected" class="uk-select uk-width-1-1 rolesChosenSelected" asp-for="RolesEscolhidas">
                     <option v-on:dblclick="remove" v-if="!searchChosenField" v-for="permissao in chosen" :key="permissao">
@@ -84,7 +84,7 @@
             <div class="uk-width-2-5@s">
                 <div class="uk-flex uk-flex-between uk-flex-middle" style="min-height: 40px;">
                     <h5 class="uk-width-1-3 uk-margin-remove">Disponíveis</h5>
-                    <input :searchAvailableField="searchAvailableField" @@keyUp="searchAvailable" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
+                    <input :searchAvailableField="searchAvailableField" @@input="searchAvailable" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
                 </div>
                 <select multiple size="10" v-model="availableSelected" class="uk-select uk-width-1-1">
                     <option v-on:dblclick="add" v-if="!searchAvailableField" v-for="permissao in available" :key="permissao">
@@ -112,7 +112,7 @@
             <div class="uk-width-2-5@s">
                 <div class="uk-flex uk-flex-between uk-flex-middle">
                     <h5 class="uk-width-1-3 uk-margin-remove">Escolhidas</h5>
-                    <input :searchChosenField="searchChosenField" @@keyUp="searchChosen" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
+                    <input :searchChosenField="searchChosenField" @@input="searchChosen" class="uk-width-1-2 uk-input" placeholder="Pesquisar" />
                 </div>
                 <select multiple size="10" v-model="chosenSelected" class="uk-select uk-width-1-1 permissoesChosenSelected" asp-for="PermissoesEscolhidas">
                     <option v-on:dblclick="remove" v-if="!searchChosenField" v-for="permissao in chosen" :key="permissao">

@@ -62,11 +62,11 @@ namespace SAED.Web
                 options.Cookie.IsEssential = true;
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/";
-                options.AccessDeniedPath = "/";
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = "/";
+            //    options.AccessDeniedPath = "/";
+            //});
 
             services.AddResponseCompression();
 

@@ -60,11 +60,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View();
             }
 
-            await _userManager.AddToRolesAsync(usuario, viewModel.RolesEscolhidas);
-
-            foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+            if (viewModel.RolesEscolhidas != null)
             {
-                await _userManager.AddClaimAsync(usuario, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                await _userManager.AddToRolesAsync(usuario, viewModel.RolesEscolhidas);
+            }
+
+            if (viewModel.RolesEscolhidas != null)
+            {
+                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                {
+                    await _userManager.AddClaimAsync(usuario, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                }
             }
 
             return RedirectToAction(nameof(Index));
@@ -124,11 +130,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Edit));
             }
 
-            await _userManager.AddToRolesAsync(usuario, viewModel.RolesEscolhidas);
-
-            foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+            if (viewModel.RolesEscolhidas != null)
             {
-                await _userManager.AddClaimAsync(usuario, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                await _userManager.AddToRolesAsync(usuario, viewModel.RolesEscolhidas);
+            }
+
+            if (viewModel.PermissoesEscolhidas != null)
+            {
+                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                {
+                    await _userManager.AddClaimAsync(usuario, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                }
             }
 
             return RedirectToAction(nameof(Index));

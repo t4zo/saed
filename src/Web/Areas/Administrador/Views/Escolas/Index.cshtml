@@ -24,9 +24,15 @@
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>
                         <td class="uk-flex uk-flex-around">
-                            <a uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
-                        </td>
+                            @if (User.HasClaim(x => x.Value == Permissions.Escolas.Update))
+                            {
+                                <a uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                            }
+                            @if (User.HasClaim(x => x.Value == Permissions.Escolas.Delete))
+                            {
+                                <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                            }
+                            </td>
                     </tr>
                 }
             </tbody>

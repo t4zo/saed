@@ -10,12 +10,15 @@
             <input class="uk-search-input dataTable-custom-input" type="search" placeholder="Pesquisar" />
         </form>
     </div>
-    <div class="uk-width-auto">
-        <a class="uk-icon-button uk-button-danger" uk-icon="plus"
-           asp-area="Administrador"
-           asp-controller=@Model.Controller
-           asp-action="Create"></a>
-    </div>
+    @if (User.HasClaim(x => x.Value == $"Permissions.{@Model.Controller}.Create"))
+    {
+        <div class="uk-width-auto">
+            <a class="uk-icon-button uk-button-danger" uk-icon="plus"
+               asp-area="Administrador"
+               asp-controller=@Model.Controller
+               asp-action="Create"></a>
+        </div>
+    }
 </div>
 <div class="uk-width-expand uk-hidden@s uk-margin-small-bottom">
     <form class="uk-search uk-search-navbar uk-width-expand" style="border: 1px solid grey;">

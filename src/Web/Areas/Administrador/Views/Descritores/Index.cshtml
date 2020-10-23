@@ -41,10 +41,16 @@
                         <td>@Html.DisplayFor(modelItem => item.Tema.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td class="uk-flex uk-flex-center">
-                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id" style="align-self: flex-end"></a>
-                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
-                                <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
-                            </form>
+                            @if (User.HasClaim(x => x.Value == Permissions.Descritores.Update))
+                            {
+                                <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id" style="align-self: flex-end"></a>
+                            }
+                            @if (User.HasClaim(x => x.Value == Permissions.Descritores.Delete))
+                            {
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
+                                    <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
+                                </form>
+                            }
                         </td>
                     </tr>
                 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SAED.Api.Configurations;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
@@ -17,23 +17,16 @@ namespace SAED.Api.Extensions
 {
     public static class UsersExtension
     {
-        public static async Task<IApplicationBuilder> CreateUsers(
-            this IApplicationBuilder app,
-            IServiceProvider serviceProvider,
-            IConfiguration configuration
-            )
+        public static async Task<IApplicationBuilder> CreateUsers(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>();
 
-            var hasUser = await context.Users.AnyAsync();
-
-            if (!hasUser)
+            if (!await context.Users.AnyAsync())
             {
-                var appConfiguration = configuration.GetSection("AppConfiguration").Get<AppConfiguration>();
-
-                foreach (var _user in appConfiguration.Users)
+                foreach (var _user in appConfiguration.Value.Users)
                 {
                     var user = new ApplicationUser { Email = _user.Email, UserName = _user.UserName };
                     var result = await userManager.CreateAsync(user, _user.Password);

@@ -59,18 +59,19 @@
                 this.searchChosen(null, this.searchChosenField);
             },
             addAll() {
-                if (this.available.length >= 1) {
-                    const available = JSON.parse(JSON.stringify(this.available));
+                if (this.availableSearch.length >= 1) {
+                    const availableSearch = JSON.parse(JSON.stringify(this.availableSearch));
 
-                    available.forEach(avail => {
+                    availableSearch.forEach(avail => {
                         if (!this.chosen.includes(avail)) {
                             this.chosen = [...this.chosen, avail];
                         }
                     });
 
-                    this.available = [];
+                    this.availableSearch = [];
                 }
 
+                this.available = this.available.filter(x => !this.chosen.includes(x));
                 this.searchAvailable(null, this.searchAvailableField);
                 this.searchChosen(null, this.searchChosenField);
             },
@@ -93,18 +94,19 @@
                 this.searchChosen(null, this.searchChosenField);
             },
             removeAll() {
-                if (this.chosen.length >= 1) {
-                    const chosen = JSON.parse(JSON.stringify(this.chosen));
+                if (this.chosenSearch.length >= 1) {
+                    const chosenSearch = JSON.parse(JSON.stringify(this.chosenSearch));
 
-                    chosen.forEach(chos => {
+                    chosenSearch.forEach(chos => {
                         if (!this.available.includes(chos)) {
                             this.available = [...this.available, chos];
                         }
                     });
 
-                    this.chosen = [];
+                    this.chosenSearch = [];
                 }
 
+                this.chosen = this.chosen.filter(x => !this.available.includes(x));
                 this.searchAvailable(null, this.searchAvailableField);
                 this.searchChosen(null, this.searchChosenField);
             },

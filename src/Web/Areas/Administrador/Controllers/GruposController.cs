@@ -54,9 +54,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View();
             }
 
-            foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+            if (viewModel.PermissoesEscolhidas != null)
             {
-                await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                {
+                    await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                }
             }
 
             await _context.SaveChangesAsync();
@@ -93,9 +96,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 await _roleManager.RemoveClaimAsync(role, claim);
             }
 
-            foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+            if (viewModel.PermissoesEscolhidas != null)
             {
-                await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                {
+                    await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                }
             }
 
             await _context.SaveChangesAsync();
