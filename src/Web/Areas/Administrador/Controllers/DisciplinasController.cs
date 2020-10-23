@@ -98,8 +98,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var disciplina = await _context.Disciplinas
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var disciplina = await _context.Disciplinas.FindAsync(id);
 
             if (disciplina is null)
             {

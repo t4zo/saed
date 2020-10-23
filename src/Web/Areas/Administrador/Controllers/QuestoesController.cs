@@ -21,15 +21,48 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? disciplinaId, int? temaId, int? descritorId)
         {
-            return View(await _context.Questoes.Include(x => x.Descritor).OrderBy(x => x.Descritor.Nome).ToListAsync());
+            var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
+
+            var questoes = await _context.Questoes
+                .AsNoTracking()
+                .Include("Descritor.Tema.Disciplina")
+                .ToListAsync();
+
+            if (disciplinaId.HasValue)
+            {
+                questoes = questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplinaId.Value).ToList();
+
+                //var temas = questoes.Select(x => x.Descritor.Tema).Distinct();
+                var temas = await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == disciplinaId.Value).Distinct().ToListAsync();
+                ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
+
+                if (temaId.HasValue)
+                {
+                    questoes = questoes.Where(x => x.Descritor.TemaId == temaId.Value).ToList();
+
+                    //var descritores = questoes.Select(x => x.Descritor).Distinct();
+                    var descritores = await _context.Descritores.AsNoTracking().Where(x => x.TemaId == temaId.Value).Distinct().ToListAsync();
+                    ViewBag.Descritores = new SelectList(descritores, "Id", "Nome", descritorId);
+
+                    if (descritorId.HasValue)
+                    {
+                        questoes = questoes.Where(d => d.DescritorId == descritorId.Value).ToList();
+                    }
+                }
+            }
+
+            ViewBag.Disciplinas = new SelectList(disciplinas, "Id", "Nome", disciplinaId);
+
+            return View(questoes);
+
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         public async Task<IActionResult> CreateAsync()
         {
-            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome");
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome");
 
             return View();
         }
@@ -55,14 +88,26 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var questao = await _context.Questoes.FindAsync(id);
+            var questao = await _context.Questoes
+                .AsNoTracking()
+                .Include("Descritor.Tema.Disciplina")
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var temaId = questao.Descritor.TemaId;
+            var disciplinaId = questao.Descritor.Tema.DisciplinaId;
 
             if (questao is null)
             {
                 return NotFound();
             }
 
-            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
+            var disciplinas = await _context.Disciplinas.ToListAsync();
+            var temas = await _context.Temas.Include(x => x.Descritores).Where(x => x.DisciplinaId == disciplinaId).Distinct().ToListAsync();
+            var descritores = temas.Where(x => x.Id == temaId).SelectMany(x => x.Descritores).Distinct();
+
+            ViewData["DisciplinaId"] = new SelectList(disciplinas, "Id", "Nome", questao.Descritor.Tema.DisciplinaId);
+            ViewData["TemaId"] = new SelectList(temas, "Id", "Nome", questao.Descritor.TemaId);
+            ViewData["DescritorId"] = new SelectList(descritores, "Id", "Nome", questao.Descritor.TemaId);
 
             return View(questao);
         }
@@ -108,7 +153,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var questao = await _context.Questoes.FindAsync(id);
+            var questao = await _context.Questoes.Include("Descritor.Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == id);
 
             if (questao is null)
             {

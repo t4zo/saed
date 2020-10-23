@@ -28,7 +28,7 @@
 </form>
 
 <main class="uk-card uk-card-default uk-card-body">
-    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Questões", Controller = "Questões", Action = "Questoes" });}
+    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Questões", Controller = "Questoes", Action = "Create" });}
     <div class="uk-overflow-auto">
         <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
             <thead>
@@ -53,9 +53,7 @@
                             }
                             @if (User.HasClaim(x => x.Value == Permissions.Questoes.Delete))
                             {
-                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
-                                    <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
-                                </form>
+                                <a asp-action="Delete" asp-route-id="@item.Id" uk-icon="trash" title="Remover"></a>
                             }
                         </td>
                     </tr>
@@ -64,3 +62,15 @@
         </table>
     </div>
 </main>
+
+@section Scripts {
+    <script>
+        document.querySelector("#disciplinaId").addEventListener("change", () => {
+            const form = document.querySelector('#form-filter');
+            document.querySelector("#temaId").selectedIndex = -1;
+
+            form.action = removeUrlParam("temaId", window.location.href);
+            form.submit();
+        });
+    </script>
+}
