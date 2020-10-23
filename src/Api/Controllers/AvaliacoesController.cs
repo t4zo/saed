@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,27 +12,25 @@ namespace SAED.Api.Controllers
     [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
     public class AvaliacoesController : ApiControllerBase
     {
-        private readonly IAsyncRepository<Avaliacao> _avaliacaoRepository;
         private readonly ApplicationDbContext _context;
 
-        public AvaliacoesController(IAsyncRepository<Avaliacao> avaliacaoRepository, ApplicationDbContext context)
+        public AvaliacoesController(ApplicationDbContext context)
         {
-            _avaliacaoRepository = avaliacaoRepository;
             _context = context;
         }
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Avaliacao>>> GetAll()
         {
-            return Ok(await _avaliacaoRepository.ListAllAsync());
+            return Ok(await _context.Avaliacoes.ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Avaliacao>> Get(int id)
         {
-            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
-            if (avaliacao == null)
+            if (avaliacao is null)
             {
                 return NotFound();
             }
@@ -45,7 +42,7 @@ namespace SAED.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Avaliacao>> Create(Avaliacao avaliacao)
         {
-            await _avaliacaoRepository.AddAsync(avaliacao);
+            await _context.AddAsync(avaliacao);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(Get), new { id = avaliacao.Id }, avaliacao);
@@ -60,7 +57,7 @@ namespace SAED.Api.Controllers
                 return NotFound();
             }
 
-            await _avaliacaoRepository.UpdateAsync(avaliacao);
+            _context.Update(avaliacao);
 
             try
             {
@@ -78,14 +75,14 @@ namespace SAED.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Avaliacao>> Delete(int id)
         {
-            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao == null)
             {
                 return NotFound();
             }
 
-            await _avaliacaoRepository.DeleteAsync(avaliacao);
+            _context.Remove(avaliacao);
             await _context.SaveChangesAsync();
 
             return Ok(avaliacao);

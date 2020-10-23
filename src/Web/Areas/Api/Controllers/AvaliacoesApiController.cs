@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Specifications;
+using Microsoft.EntityFrameworkCore;
+using SAED.Infrastructure.Data;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
@@ -10,28 +9,25 @@ namespace SAED.Web.Areas.Api.Controllers
 {
     public class AvaliacoesApiController : BaseApiController
     {
-        private readonly IAsyncRepository<Avaliacao> _avalicaoRepository;
+        private readonly ApplicationDbContext _context;
 
-        public AvaliacoesApiController(IAsyncRepository<Avaliacao> avalicaoRepository)
+        public AvaliacoesApiController(ApplicationDbContext context)
         {
-            _avalicaoRepository = avalicaoRepository;
+            _context = context;
         }
 
         [Authorize(Permissions.Avaliacoes.View)]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var avaliacoes = await _avalicaoRepository.ListAllAsync();
-            return Ok(avaliacoes);
+            return Ok(await _context.Avaliacoes.ToListAsync());
         }
 
         [Authorize(Permissions.Avaliacoes.View)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            var avaliacaoSpec = new AvaliacoesWithSpecification(id);
-            var avaliacoes = await _avalicaoRepository.FirstOrDefaultAsync(avaliacaoSpec);
-            return Ok(avaliacoes);
+            return Ok(await _context.Avaliacoes.FindAsync(id));
         }
     }
 }

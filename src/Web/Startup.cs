@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SAED.ApplicationCore.Interfaces;
+using Microsoft.Extensions.Logging;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Authorization;
+using SAED.Web.Configurations;
 using SAED.Web.Extensions;
 using System;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
@@ -29,10 +30,10 @@ namespace SAED.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+            services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
 
             services.AddDbContext<ApplicationDbContext>();
 
@@ -61,11 +62,11 @@ namespace SAED.Web
                 options.Cookie.IsEssential = true;
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/";
-                options.AccessDeniedPath = "/";
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = "/";
+            //    options.AccessDeniedPath = "/";
+            //});
 
             services.AddResponseCompression();
 
@@ -77,7 +78,7 @@ namespace SAED.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
@@ -86,18 +87,13 @@ namespace SAED.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-
-            app.CreateRolesAsync(serviceProvider, Configuration).GetAwaiter().GetResult();
-            app.CreateUsersAsync(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.CreateRolesAsync(serviceProvider).GetAwaiter().GetResult();
+            app.CreateUsersAsync(serviceProvider).GetAwaiter().GetResult();
             app.SeedDatabase(serviceProvider);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions

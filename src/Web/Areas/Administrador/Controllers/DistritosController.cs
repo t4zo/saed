@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Area("Administrador")]
+    [Area(AuthorizationConstants.Areas.Administrador)]
     public class DistritosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,17 +19,19 @@ namespace SAED.Web.Areas.Administrador.Controllers
             _context = context;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Distritos.View)]
         public async Task<IActionResult> Index()
         {
-            var distritos = await _context.Distritos.ToListAsync();
-            return View(distritos.OrderBy(x => x.Nome));
+            return View(await _context.Distritos.ToListAsync());
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Distritos.Create)]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Distritos.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Distrito distrito)
@@ -36,12 +40,15 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 _context.Add(distrito);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
 
             return View(distrito);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Distritos.Update)]
         public async Task<IActionResult> Edit(int id)
         {
             var distrito = await _context.Distritos.FindAsync(id);
@@ -51,9 +58,11 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
+
             return View(distrito);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Distritos.Update)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Distrito distrito)
@@ -85,13 +94,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+
             return View(distrito);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Distritos.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var distrito = await _context.Distritos
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var distrito = await _context.Distritos.FindAsync(id);
 
             if (distrito is null)
             {
@@ -101,6 +111,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             return View(distrito);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Distritos.Delete)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

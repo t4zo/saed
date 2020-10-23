@@ -447,10 +447,6 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Endereco")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
                     b.Property<int?>("Inep")
                         .HasColumnType("int");
 
@@ -571,17 +567,17 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DescritorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Enunciado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Habilitada")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Html")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Item")
                         .IsRequired()

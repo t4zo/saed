@@ -1,36 +1,32 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
-using System.Text.Json;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
     public class AvaliacoesController : Controller
     {
-        private readonly IAsyncRepository<Avaliacao> _avaliacaoRepository;
+        private readonly ApplicationDbContext _context;
 
-        public AvaliacoesController(IAsyncRepository<Avaliacao> avaliacaoRepository)
+        public AvaliacoesController(ApplicationDbContext context)
         {
-            _avaliacaoRepository = avaliacaoRepository;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.Avaliacoes = new SelectList(await _avaliacaoRepository.ListAllAsync(), "Id", "Codigo");
+            ViewBag.Avaliacoes = new SelectList(await _context.Avaliacoes.ToListAsync(), "Id", "Codigo");
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(int id)
         {
-            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             HttpContext.Session.Set("avaliacao", avaliacao);
 

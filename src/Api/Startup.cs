@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SAED.Api.Authorization;
+using SAED.Api.Configurations;
 using SAED.Api.Extensions;
 using SAED.Api.Interfaces;
 using SAED.Api.Services;
@@ -34,22 +37,24 @@ namespace SAED.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IUserService, UserService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
-            services.AddCustomCors(DefaultCorsPolicyName);
+            services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
 
             services.AddDbContext<ApplicationDbContext>();
+
+            services.AddCustomCors(DefaultCorsPolicyName);
 
             services.AddControllers()
                 .AddFluentValidation(configureExpression => configureExpression.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddJwtSecurity(Configuration);
+
+            services.AddProblemDetails();      
 
             services.AddAuthorization();
 
@@ -79,15 +84,17 @@ namespace SAED.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.CreateRoles(serviceProvider, Configuration).GetAwaiter().GetResult();
-            app.CreateUsers(serviceProvider, Configuration).GetAwaiter().GetResult();
+            app.UseProblemDetails();
+
+            app.CreateRoles(serviceProvider).GetAwaiter().GetResult();
+            app.CreateUsers(serviceProvider).GetAwaiter().GetResult();
             app.SeedDatabase(serviceProvider);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions

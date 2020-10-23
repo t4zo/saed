@@ -1,9 +1,8 @@
-﻿using SAED.ApplicationCore.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Entities
 {
-    public class Tema : BaseEntity, IAggregateRoot
+    public class Tema : BaseEntity
     {
         public int DisciplinaId { get; set; }
         public Disciplina Disciplina { get; set; }

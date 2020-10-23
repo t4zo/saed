@@ -1,9 +1,8 @@
-﻿using SAED.ApplicationCore.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SAED.ApplicationCore.Entities
 {
-    public class Descritor : BaseEntity, IAggregateRoot
+    public class Descritor : BaseEntity
     {
         public int TemaId { get; set; }
         public Tema Tema { get; set; }

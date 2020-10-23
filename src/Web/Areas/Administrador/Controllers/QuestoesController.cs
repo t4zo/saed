@@ -4,44 +4,65 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
-using SAED.ApplicationCore.Specifications;
 using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]
     public class QuestoesController : Controller
     {
-        private readonly IAsyncRepository<Descritor> _descritoresRepository;
-        private readonly IAsyncRepository<Questao> _questoesRepository;
         private readonly ApplicationDbContext _context;
 
-        public QuestoesController(
-            IAsyncRepository<Descritor> descritoresRepository,
-            IAsyncRepository<Questao> questoesRepository,
-            ApplicationDbContext context
-        )
+        public QuestoesController(ApplicationDbContext context)
         {
-            _descritoresRepository = descritoresRepository;
-            _questoesRepository = questoesRepository;
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
+        public async Task<IActionResult> Index(int? disciplinaId, int? temaId, int? descritorId)
         {
-            var specification = new QuestoesWithSpecification();
-            var questoes = await _questoesRepository.ListAsync(specification);
-            return View(questoes.OrderBy(x => x.Descritor.Nome));
+            var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
+
+            var questoes = await _context.Questoes
+                .AsNoTracking()
+                .Include("Descritor.Tema.Disciplina")
+                .ToListAsync();
+
+            if (disciplinaId.HasValue)
+            {
+                questoes = questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplinaId.Value).ToList();
+
+                //var temas = questoes.Select(x => x.Descritor.Tema).Distinct();
+                var temas = await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == disciplinaId.Value).Distinct().ToListAsync();
+                ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
+
+                if (temaId.HasValue)
+                {
+                    questoes = questoes.Where(x => x.Descritor.TemaId == temaId.Value).ToList();
+
+                    //var descritores = questoes.Select(x => x.Descritor).Distinct();
+                    var descritores = await _context.Descritores.AsNoTracking().Where(x => x.TemaId == temaId.Value).Distinct().ToListAsync();
+                    ViewBag.Descritores = new SelectList(descritores, "Id", "Nome", descritorId);
+
+                    if (descritorId.HasValue)
+                    {
+                        questoes = questoes.Where(d => d.DescritorId == descritorId.Value).ToList();
+                    }
+                }
+            }
+
+            ViewBag.Disciplinas = new SelectList(disciplinas, "Id", "Nome", disciplinaId);
+
+            return View(questoes);
+
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         public async Task<IActionResult> CreateAsync()
         {
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome");
+            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome");
 
             return View();
         }
@@ -53,13 +74,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _questoesRepository.AddAsync(questao);
+                await _context.Questoes.AddAsync(questao);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
 
             return View(questao);
         }
@@ -67,14 +88,26 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var questao = await _questoesRepository.GetByIdAsync(id);
+            var questao = await _context.Questoes
+                .AsNoTracking()
+                .Include("Descritor.Tema.Disciplina")
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var temaId = questao.Descritor.TemaId;
+            var disciplinaId = questao.Descritor.Tema.DisciplinaId;
 
             if (questao is null)
             {
                 return NotFound();
             }
 
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome", questao.DescritorId);
+            var disciplinas = await _context.Disciplinas.ToListAsync();
+            var temas = await _context.Temas.Include(x => x.Descritores).Where(x => x.DisciplinaId == disciplinaId).Distinct().ToListAsync();
+            var descritores = temas.Where(x => x.Id == temaId).SelectMany(x => x.Descritores).Distinct();
+
+            ViewData["DisciplinaId"] = new SelectList(disciplinas, "Id", "Nome", questao.Descritor.Tema.DisciplinaId);
+            ViewData["TemaId"] = new SelectList(temas, "Id", "Nome", questao.Descritor.TemaId);
+            ViewData["DescritorId"] = new SelectList(descritores, "Id", "Nome", questao.Descritor.TemaId);
 
             return View(questao);
         }
@@ -93,12 +126,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 try
                 {
-                    await _questoesRepository.UpdateAsync(questao);
+                    _context.Update(questao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var entity = await _descritoresRepository.GetByIdAsync(id);
+                    var entity = await _context.Questoes.FindAsync(id);
                     if (entity is null)
                     {
                         return NotFound();
@@ -112,7 +145,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(await _descritoresRepository.ListAllAsync(), "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
 
             return View(questao);
         }
@@ -120,7 +153,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var questao = await _questoesRepository.FirstOrDefaultAsync(new QuestoesWithSpecification(x => x.Id == id));
+            var questao = await _context.Questoes.Include("Descritor.Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == id);
 
             if (questao is null)
             {
@@ -135,8 +168,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var questao = await _questoesRepository.GetByIdAsync(id);
-            await _questoesRepository.DeleteAsync(questao);
+            var questao = await _context.Questoes.FindAsync(id);
+            _context.Remove(questao);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

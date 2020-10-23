@@ -3,30 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
     [Area(AuthorizationConstants.Areas.Administrador)]
     public class AvaliacoesController : Controller
     {
-        private readonly IAsyncRepository<Avaliacao> _avaliacaoRepository;
         private readonly ApplicationDbContext _context;
 
-        public AvaliacoesController(IAsyncRepository<Avaliacao> avaliacaoRepository, ApplicationDbContext context)
+        public AvaliacoesController(ApplicationDbContext context)
         {
-            _avaliacaoRepository = avaliacaoRepository;
             _context = context;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
         public async Task<IActionResult> Index()
         {
-            var avaliacoes = await _avaliacaoRepository.ListAllAsync();
-            return View(avaliacoes.OrderBy(x => x.Codigo));
+            return View(await _context.Avaliacoes.AsNoTracking().OrderBy(x => x.Codigo).ToListAsync());
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Create)]
@@ -42,7 +38,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _avaliacaoRepository.AddAsync(avaliacao);
+                await _context.Avaliacoes.AddAsync(avaliacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -53,7 +49,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -77,12 +73,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 try
                 {
-                    await _avaliacaoRepository.UpdateAsync(avaliacao);
+                    _context.Update(avaliacao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var entity = _avaliacaoRepository.GetByIdAsync(avaliacao.Id);
+                    var entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
                     if (entity.Id != id)
                     {
                         return NotFound();
@@ -102,7 +98,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -117,8 +113,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var avaliacao = await _avaliacaoRepository.GetByIdAsync(id);
-            await _avaliacaoRepository.DeleteAsync(avaliacao);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            _context.Remove(avaliacao);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
