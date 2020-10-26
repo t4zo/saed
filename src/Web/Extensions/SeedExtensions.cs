@@ -186,7 +186,7 @@ namespace SAED.Web.Extensions
                 new Curso { Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA" }
             };
 
-            new EntitySeed<Curso>(context, configuration).Load(cursos, "");
+            new EntitySeed<Curso>(context, configuration).Load(cursos, "Cursos");
 
             var segmentos = new List<Segmento>
             {
@@ -199,7 +199,7 @@ namespace SAED.Web.Extensions
                 new Segmento { Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF" }
             };
 
-            new EntitySeed<Segmento>(context, configuration).Load(segmentos, "");
+            new EntitySeed<Segmento>(context, configuration).Load(segmentos, "Segmentos");
 
             var etapas = new List<Etapa>
             {
@@ -227,7 +227,7 @@ namespace SAED.Web.Extensions
                 new Etapa { Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1}
             };
 
-            new EntitySeed<Etapa>(context, configuration).Load(etapas, "");
+            new EntitySeed<Etapa>(context, configuration).Load(etapas, "Etapas");
 
             var turnos = new List<Turno>
             {
@@ -366,14 +366,14 @@ namespace SAED.Web.Extensions
 
             new EntitySeed<Alternativa>(context, configuration).Load(alternativas, "Alternativas");
 
-            var avaliacaoDisciplinas = new List<AvaliacaoDisciplina>
-            {
-                new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 1 },
-                new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 2 },
-                new AvaliacaoDisciplina { AvaliacaoId = 2, DisciplinaId = 3 }
-            };
+            //var avaliacaoDisciplinas = new List<AvaliacaoDisciplina>
+            //{
+            //    new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 1 },
+            //    new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 2 },
+            //    new AvaliacaoDisciplina { AvaliacaoId = 2, DisciplinaId = 3 }
+            //};
 
-            new EntitySeed<AvaliacaoDisciplina>(context, configuration).Load(avaliacaoDisciplinas, "");
+            //new EntitySeed<AvaliacaoDisciplina>(context, configuration).Load(avaliacaoDisciplinas, "AvaliacaoDisciplinas");
 
             var avaliacaoDistritos = new List<AvaliacaoDistrito>
             {

@@ -26,6 +26,10 @@ namespace SAED.Infrastructure.Data
         }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
+        public DbSet<Curso> Cursos { get; set; }
+        public DbSet<Segmento> Segmentos { get; set; }
+        public DbSet<Etapa> Etapas { get; set; }
+        public DbSet<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
         public DbSet<Distrito> Distritos { get; set; }
         public DbSet<Escola> Escolas { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }

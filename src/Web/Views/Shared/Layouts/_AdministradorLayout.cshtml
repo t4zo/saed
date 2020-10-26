@@ -152,14 +152,14 @@
                     <li class="uk-nav-divider"></li>
                 }
 
-                @if (User.HasClaim(x => x.Value == Permissions.Disciplinas.View) || User.HasClaim(x => x.Value == Permissions.Temas.View) || User.HasClaim(x => x.Value == Permissions.Descritores.View) || User.HasClaim(x => x.Value == Permissions.Questoes.View) || User.HasClaim(x => x.Value == Permissions.Alternativas.View))
+                @if (User.HasClaim(x => x.Value == Permissions.AvaliacaoDisciplinasEtapas.View) || User.HasClaim(x => x.Value == Permissions.Temas.View) || User.HasClaim(x => x.Value == Permissions.Descritores.View) || User.HasClaim(x => x.Value == Permissions.Questoes.View) || User.HasClaim(x => x.Value == Permissions.Alternativas.View))
                 {
                     <li class="uk-nav-header">Elaboração</li>
                 }
 
-                @if (User.HasClaim(x => x.Value == Permissions.Disciplinas.View))
+                @if (User.HasClaim(x => x.Value == Permissions.AvaliacaoDisciplinasEtapas.View))
                 {
-                    <li><a asp-area="@Areas.Administrador" asp-controller="Disciplinas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Disciplinas</a></li>
+                    <li><a asp-area="@Areas.Administrador" asp-controller="AvaliacaoDisciplinasEtapas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Disciplinas</a></li>
                 }
 
                 @if (User.HasClaim(x => x.Value == Permissions.Temas.View))

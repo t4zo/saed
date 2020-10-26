@@ -71,6 +71,14 @@
         "dist/js/uikit.js",
         "dist/js/uikit.min.js"
       ]
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "quill-image-resize@3.0.9",
+      "destination": "wwwroot/lib/quill-image-resize/",
+      "files": [
+        "image-resize.min.js"
+      ]
     }
   ]
 }

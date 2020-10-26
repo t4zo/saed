@@ -57,6 +57,38 @@
                 public const string Delete = "Permissions.Avaliacoes.Delete";
             }
 
+            public static class AvaliacaoDisciplinasEtapas
+            {
+                public const string View = "Permissions.AvaliacaoDisciplinasEtapas.View";
+                public const string Create = "Permissions.AvaliacaoDisciplinasEtapas.Create";
+                public const string Update = "Permissions.AvaliacaoDisciplinasEtapas.Update";
+                public const string Delete = "Permissions.AvaliacaoDisciplinasEtapas.Delete";
+            }
+
+            public static class Cursos
+            {
+                public const string View = "Permissions.Cursos.View";
+                public const string Create = "Permissions.Cursos.Create";
+                public const string Update = "Permissions.Cursos.Update";
+                public const string Delete = "Permissions.Cursos.Delete";
+            }
+
+            public static class Segmentos
+            {
+                public const string View = "Permissions.Segmentos.View";
+                public const string Create = "Permissions.Segmentos.Create";
+                public const string Update = "Permissions.Segmentos.Update";
+                public const string Delete = "Permissions.Segmentos.Delete";
+            }
+
+            public static class Etapas
+            {
+                public const string View = "Permissions.Etapas.View";
+                public const string Create = "Permissions.Etapas.Create";
+                public const string Update = "Permissions.Etapas.Update";
+                public const string Delete = "Permissions.Etapas.Delete";
+            }
+
             public static class Distritos
             {
                 public const string View = "Permissions.Distritos.View";

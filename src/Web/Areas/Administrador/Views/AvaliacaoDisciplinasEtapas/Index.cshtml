@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SAED.ApplicationCore.Entities.AvaliacaoDisciplinaEtapa>
+
+@{
+    ViewData["Title"] = "Avaliações";
+}
+
+<main class="uk-card uk-card-default uk-card-body">
+    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Disciplinas", Controller = "AvaliacaoDisciplinasEtapas", Action = "Create" });}
+    <div class="uk-overflow-auto">
+        <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Avaliacao)</th>
+                    <th>@Html.DisplayNameFor(model => model.Disciplina)</th>
+                    <th>@Html.DisplayNameFor(model => model.QtdQuestoes)</th>
+                    <th class="uk-text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Avaliacao.Codigo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Disciplina.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.QtdQuestoes)</td>
+                    <td class="uk-flex uk-flex-center">
+                        @if (User.HasClaim(x => x.Value == Permissions.AvaliacaoDisciplinasEtapas.Update))
+                        {
+                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-disciplinaId="@item.DisciplinaId" asp-route-etapaId="@item.EtapaId"></a>
+                        }
+                        @if (User.HasClaim(x => x.Value == Permissions.AvaliacaoDisciplinasEtapas.Delete))
+                        {
+                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-disciplinaId="@item.DisciplinaId" asp-route-etapaId="@item.EtapaId"></a>
+                        }
+                    </td>
+                </tr>
+        }
+            </tbody>
+    </table>
+    </div>
+</main>

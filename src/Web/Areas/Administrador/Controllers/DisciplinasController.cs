@@ -22,8 +22,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.View)]
         public async Task<IActionResult> Index()
         {
-            var disciplinas = await _context.Disciplinas.ToListAsync();
-            return View(disciplinas.OrderBy(x => x.Id));
+            return View(await _context.Disciplinas.ToListAsync());
         }
 
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Create)]

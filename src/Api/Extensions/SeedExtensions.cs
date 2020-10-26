@@ -366,14 +366,14 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Alternativa>(context, configuration).Load(alternativas, "Alternativas");
 
-            var avaliacaoDisciplinas = new List<AvaliacaoDisciplina>
+            var avaliacaoDisciplinas = new List<AvaliacaoDisciplinaEtapa>
             {
-                new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 1 },
-                new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 2 },
-                new AvaliacaoDisciplina { AvaliacaoId = 2, DisciplinaId = 3 }
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 1 },
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 2 },
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 2, DisciplinaId = 3 }
             };
 
-            new EntitySeed<AvaliacaoDisciplina>(context, configuration).Load(avaliacaoDisciplinas, "");
+            new EntitySeed<AvaliacaoDisciplinaEtapa>(context, configuration).Load(avaliacaoDisciplinas, "");
 
             var avaliacaoDistritos = new List<AvaliacaoDistrito>
             {

@@ -35,6 +35,7 @@
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Descritor)</th>
                     <th>@Html.DisplayNameFor(model => model.Item)</th>
+                    <th>@Html.DisplayNameFor(model => model.Enunciado)</th>
                     <th>@Html.DisplayNameFor(model => model.Habilitada)</th>
                     <th class="uk-text-center">Ações</th>
                 </tr>
@@ -45,6 +46,7 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Descritor.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Item)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Enunciado)</td>
                         <td>@Html.DisplayFor(modelItem => item.Habilitada)</td>
                         <td class="uk-flex uk-flex-center">
                             @if (User.HasClaim(x => x.Value == Permissions.Questoes.Update))

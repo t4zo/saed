@@ -4,23 +4,30 @@ using SAED.ApplicationCore.Entities;
 
 namespace SAED.Infrastructure.Data.Config
 {
-    public class AvaliacaoDisciplinaConfiguration : IEntityTypeConfiguration<AvaliacaoDisciplina>
+    public class AvaliacaoDisciplinaConfiguration : IEntityTypeConfiguration<AvaliacaoDisciplinaEtapa>
     {
-        public void Configure(EntityTypeBuilder<AvaliacaoDisciplina> builder)
+        public void Configure(EntityTypeBuilder<AvaliacaoDisciplinaEtapa> builder)
         {
             builder
-                .HasOne(disciplinaAvaliacao => disciplinaAvaliacao.Disciplina)
-                .WithMany(disciplina => disciplina.AvaliacaoDisciplinas)
-                .HasForeignKey(disciplinaAvaliacao => disciplinaAvaliacao.DisciplinaId)
+                .HasOne(avaliacaoDisciplinaEtapa => avaliacaoDisciplinaEtapa.Avaliacao)
+                .WithMany(avaliacao => avaliacao.AvaliacaoDisciplinasEtapas)
+                .HasForeignKey(avaliacaoDisciplinaEtapa => avaliacaoDisciplinaEtapa.AvaliacaoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasOne(disciplinaAvaliacao => disciplinaAvaliacao.Avaliacao)
-                .WithMany(avaliacao => avaliacao.AvaliacaoDisciplinas)
-                .HasForeignKey(disciplinaAvaliacao => disciplinaAvaliacao.AvaliacaoId)
+                .HasOne(avaliacaoDisciplinaEtapa => avaliacaoDisciplinaEtapa.Disciplina)
+                .WithMany(disciplina => disciplina.AvaliacaoDisciplinasEtapas)
+                .HasForeignKey(avaliacaoDisciplinaEtapa => avaliacaoDisciplinaEtapa.DisciplinaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasKey(avaliacaoTurma => new { avaliacaoTurma.DisciplinaId, avaliacaoTurma.AvaliacaoId });
+            builder
+                .HasOne(avaliacaoDisciplinaEtapa => avaliacaoDisciplinaEtapa.Etapa)
+                .WithMany(etapa => etapa.AvaliacaoDisciplinasEtapas)
+                .HasForeignKey(avaliacaoDisciplinaEtapa => avaliacaoDisciplinaEtapa.EtapaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasKey(avaliacaoDisciplinaEtapa => 
+            new { avaliacaoDisciplinaEtapa.DisciplinaId, avaliacaoDisciplinaEtapa.AvaliacaoId, avaliacaoDisciplinaEtapa.EtapaId });
         }
     }
 }

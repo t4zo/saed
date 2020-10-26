@@ -270,7 +270,7 @@ namespace SAED.Infrastructure.Migrations
                     b.ToTable("Avaliacoes");
                 });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplina", b =>
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplinaEtapa", b =>
                 {
                     b.Property<int>("DisciplinaId")
                         .HasColumnType("int");
@@ -278,17 +278,25 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("AvaliacaoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("EtapaId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("QtdQuestoes")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("DisciplinaId", "AvaliacaoId");
+                    b.HasKey("DisciplinaId", "AvaliacaoId", "EtapaId");
 
                     b.HasIndex("AvaliacaoId");
 
-                    b.ToTable("AvaliacaoDisciplina");
+                    b.HasIndex("EtapaId");
+
+                    b.ToTable("AvaliacaoDisciplinasEtapas");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDistrito", b =>
@@ -337,7 +345,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Curso");
+                    b.ToTable("Cursos");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Descritor", b =>
@@ -509,7 +517,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasIndex("SegmentoId");
 
-                    b.ToTable("Etapa");
+                    b.ToTable("Etapas");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.EtapaDescritor", b =>
@@ -698,7 +706,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasIndex("CursoId");
 
-                    b.ToTable("Segmento");
+                    b.ToTable("Segmentos");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Tema", b =>
@@ -981,17 +989,23 @@ namespace SAED.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplina", b =>
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplinaEtapa", b =>
                 {
                     b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
-                        .WithMany("AvaliacaoDisciplinas")
+                        .WithMany("AvaliacaoDisciplinasEtapas")
                         .HasForeignKey("AvaliacaoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SAED.ApplicationCore.Entities.Disciplina", "Disciplina")
-                        .WithMany("AvaliacaoDisciplinas")
+                        .WithMany("AvaliacaoDisciplinasEtapas")
                         .HasForeignKey("DisciplinaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
+                        .WithMany("AvaliacaoDisciplinasEtapas")
+                        .HasForeignKey("EtapaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

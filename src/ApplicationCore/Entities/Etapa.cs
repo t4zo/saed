@@ -9,6 +9,7 @@ namespace SAED.ApplicationCore.Entities
         public Segmento Segmento { get; set; }
         public int Normativa { get; set; }
         public ICollection<Turma> Turmas { get; set; }
+        public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
         public ICollection<EtapaDescritor> EtapaDescritores { get; set; }
     }
 }

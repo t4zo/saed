@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
+using SAED.Web.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,7 +24,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.View)]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Temas.AsNoTracking().Include(x => x.Disciplina).OrderBy(x => x.Nome).ToListAsync());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+
+            var temas = await _context.Temas
+                .AsNoTracking()
+                .Include(x => x.Disciplina)
+                .ToListAsync();
+            return View(temas);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Temas.Create)]

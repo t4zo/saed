@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
+using SAED.Web.Areas.Administrador.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,10 +16,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
     public class QuestoesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public QuestoesController(ApplicationDbContext context)
+        public QuestoesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
@@ -70,8 +74,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Questao questao)
+        public async Task<IActionResult> Create(QuestaoViewModel questaoViewModel)
         {
+            var questao = _mapper.Map<Questao>(questaoViewModel);
             if (ModelState.IsValid)
             {
                 await _context.Questoes.AddAsync(questao);

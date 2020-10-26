@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SAED.ApplicationCore.Entities;
+using SAED.Web.Areas.Administrador.ViewModels;
 
 namespace SAED.Web
 {
@@ -6,7 +8,7 @@ namespace SAED.Web
     {
         public MappingProfile()
         {
-            //CreateMap<IdentityUser<int>, UserDto>();
+            CreateMap<Questao, QuestaoViewModel>().ReverseMap();
         }
     }
 }
