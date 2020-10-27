@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
+using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization
 {
@@ -16,14 +17,16 @@ namespace SAED.Web.Authorization
             _fallbackPolicyProvider = new DefaultAuthorizationPolicyProvider(options);
         }
 
-        public Task<AuthorizationPolicy> GetDefaultPolicyAsync() => _fallbackPolicyProvider.GetDefaultPolicyAsync();
-
+        public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
+        {
+            return _fallbackPolicyProvider.GetDefaultPolicyAsync();
+        }
 
         // Cria dinamicamente uma política com um requisito que contém a permissão.
         // O nome da política deve corresponder à permissão necessária.
         public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            if (policyName.StartsWith("Permissions", StringComparison.OrdinalIgnoreCase))
+            if (policyName.StartsWith(CustomClaimTypes.Permission, StringComparison.OrdinalIgnoreCase))
             {
                 var policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));
@@ -34,6 +37,9 @@ namespace SAED.Web.Authorization
             return _fallbackPolicyProvider.GetPolicyAsync(policyName);
         }
 
-        public Task<AuthorizationPolicy> GetFallbackPolicyAsync() => _fallbackPolicyProvider.GetFallbackPolicyAsync();
+        public Task<AuthorizationPolicy> GetFallbackPolicyAsync()
+        {
+            return _fallbackPolicyProvider.GetFallbackPolicyAsync();
+        }
     }
 }
