@@ -40,6 +40,7 @@ namespace SAED.Infrastructure.Data
         public DbSet<Descritor> Descritores { get; set; }
         public DbSet<Questao> Questoes { get; set; }
         public DbSet<Alternativa> Alternativas { get; set; }
+        public DbSet<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -4,17 +4,17 @@ using SAED.ApplicationCore.Entities;
 
 namespace SAED.Infrastructure.Data.Config
 {
-    public class QuestaoAvaliacaoConfiguration : IEntityTypeConfiguration<QuestaoAvaliacao>
+    public class QuestaoAvaliacaoConfiguration : IEntityTypeConfiguration<AvaliacaoQuestao>
     {
-        public void Configure(EntityTypeBuilder<QuestaoAvaliacao> builder)
+        public void Configure(EntityTypeBuilder<AvaliacaoQuestao> builder)
         {
             builder.HasOne(questaoAvaliacao => questaoAvaliacao.Avaliacao)
-                .WithMany(questao => questao.QuestaoAvaliacoes)
+                .WithMany(questao => questao.AvaliacaoQuestoes)
                 .HasForeignKey(questaoAvaliacao => questaoAvaliacao.AvaliacaoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(questaoAvaliacao => questaoAvaliacao.Questao)
-                .WithMany(questao => questao.QuestaoAvaliacoes)
+                .WithMany(questao => questao.AvaliacaoQuestoes)
                 .HasForeignKey(QuestaoAvaliacao => QuestaoAvaliacao.QuestaoId)
                 .OnDelete(DeleteBehavior.Cascade);
 

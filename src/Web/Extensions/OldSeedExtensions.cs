@@ -37,7 +37,7 @@
         //await new TurmaAlunosSeed(context).LoadAsync();
         //await new RespostaAlunosSeed(context).LoadAsync();
         //await new EtapaDescritoresSeed(context).LoadAsync();
-        //await new QuestaoAvaliacoesSeed(context).LoadAsync();
+        //await new AvaliacaoQuestoesSeed(context).LoadAsync();
 
         //    return app;
         //}

@@ -2,7 +2,7 @@
 
 namespace SAED.ApplicationCore.Entities
 {
-    public class QuestaoAvaliacao : IManyToMany
+    public class AvaliacaoQuestao : IManyToMany
     {
         public int AvaliacaoId { get; set; }
         public Avaliacao Avaliacao { get; set; }

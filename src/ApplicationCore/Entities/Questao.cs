@@ -11,6 +11,6 @@ namespace SAED.ApplicationCore.Entities
         public string Enunciado { get; set; }
         public bool Habilitada { get; set; }
         public ICollection<Alternativa> Alternativas { get; set; }
-        public ICollection<QuestaoAvaliacao> QuestaoAvaliacoes { get; set; }
+        public ICollection<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
     }
 }

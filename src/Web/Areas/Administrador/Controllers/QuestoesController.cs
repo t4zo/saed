@@ -7,6 +7,7 @@ using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Administrador.ViewModels;
+using SAED.Web.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -74,12 +75,20 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(QuestaoViewModel questaoViewModel)
+        public async Task<IActionResult> Create(Questao questao)
         {
-            var questao = _mapper.Map<Questao>(questaoViewModel);
             if (ModelState.IsValid)
             {
-                await _context.Questoes.AddAsync(questao);
+                var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+
+                var _questao = await _context.Questoes.AddAsync(questao);
+                await _context.SaveChangesAsync();
+
+                if (questao.Habilitada)
+                {
+                    await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao { AvaliacaoId = avaliacao.Id, QuestaoId = _questao.Entity.Id });
+                }
+
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -129,6 +138,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (ModelState.IsValid)
             {
+                var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
                 try
                 {
                     _context.Update(questao);
@@ -146,6 +156,24 @@ namespace SAED.Web.Areas.Administrador.Controllers
                         throw;
                     }
                 }
+
+                var avaliacaoQuestao = await _context.AvaliacaoQuestoes.Include(x => x.Questao).FirstOrDefaultAsync(x => x.AvaliacaoId == avaliacao.Id && x.QuestaoId == questao.Id);
+
+                if (avaliacaoQuestao is null)
+                {
+                    if (questao.Habilitada)
+                    {
+                        await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao { AvaliacaoId = avaliacao.Id, QuestaoId = questao.Id });
+                    }
+                }
+                else
+                {
+                    if (!questao.Habilitada)
+                    {
+                        _context.Remove(avaliacaoQuestao);
+                    }
+                }
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }

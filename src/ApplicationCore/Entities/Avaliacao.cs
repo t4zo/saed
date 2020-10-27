@@ -10,7 +10,7 @@ namespace SAED.ApplicationCore.Entities
         public ICollection<UsuarioTurmaAvaliacao> UsuarioTurmaAvaliacao { get; set; }
         public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
         public ICollection<AvaliacaoDistrito> AvaliacaoDistritos { get; set; }
-        public ICollection<QuestaoAvaliacao> QuestaoAvaliacoes { get; set; }
+        public ICollection<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
         public ICollection<RespostaAluno> RespostaAlunos { get; set; }
     }
 

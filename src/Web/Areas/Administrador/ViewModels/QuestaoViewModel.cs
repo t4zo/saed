@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SAED.Web.Areas.Administrador.ViewModels
 {
-    public class QuestaoViewModel
+    public class QuestaoViewModel : BaseEntity
     {
         public int DescritorId { get; set; }
         public Descritor Descritor { get; set; }
@@ -12,6 +12,6 @@ namespace SAED.Web.Areas.Administrador.ViewModels
         public string Enunciado { get; set; }
         public bool Habilitada { get; set; }
         public IList<Alternativa> Alternativas { get; set; }
-        public IEnumerable<QuestaoAvaliacao> QuestaoAvaliacoes { get; set; }
+        public IEnumerable<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
     }
 }

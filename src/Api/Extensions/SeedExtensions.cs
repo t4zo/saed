@@ -407,13 +407,13 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<EtapaDescritor>(context, configuration).Load(etapaDescritores, "");
 
-            var questaoAvaliacoes = new List<QuestaoAvaliacao>
+            var questaoAvaliacoes = new List<AvaliacaoQuestao>
             {
-                new QuestaoAvaliacao { QuestaoId = 1, AvaliacaoId = 1 },
-                new QuestaoAvaliacao { QuestaoId = 2, AvaliacaoId = 1 }
+                new AvaliacaoQuestao { QuestaoId = 1, AvaliacaoId = 1 },
+                new AvaliacaoQuestao { QuestaoId = 2, AvaliacaoId = 1 }
             };
 
-            new EntitySeed<QuestaoAvaliacao>(context, configuration).Load(questaoAvaliacoes, "");
+            new EntitySeed<AvaliacaoQuestao>(context, configuration).Load(questaoAvaliacoes, "");
 
             return app;
         }

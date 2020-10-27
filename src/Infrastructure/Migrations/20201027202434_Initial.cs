@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SAED.Infrastructure.Migrations
 {
@@ -659,7 +659,7 @@ namespace SAED.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuestaoAvaliacao",
+                name: "AvaliacaoQuestoes",
                 columns: table => new
                 {
                     AvaliacaoId = table.Column<int>(nullable: false),
@@ -671,15 +671,15 @@ namespace SAED.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestaoAvaliacao", x => new { x.AvaliacaoId, x.QuestaoId });
+                    table.PrimaryKey("PK_AvaliacaoQuestoes", x => new { x.AvaliacaoId, x.QuestaoId });
                     table.ForeignKey(
-                        name: "FK_QuestaoAvaliacao_Avaliacoes_AvaliacaoId",
+                        name: "FK_AvaliacaoQuestoes_Avaliacoes_AvaliacaoId",
                         column: x => x.AvaliacaoId,
                         principalTable: "Avaliacoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_QuestaoAvaliacao_Questoes_QuestaoId",
+                        name: "FK_AvaliacaoQuestoes_Questoes_QuestaoId",
                         column: x => x.QuestaoId,
                         principalTable: "Questoes",
                         principalColumn: "Id",
@@ -838,6 +838,11 @@ namespace SAED.Infrastructure.Migrations
                 column: "DistritoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AvaliacaoQuestoes_QuestaoId",
+                table: "AvaliacaoQuestoes",
+                column: "QuestaoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Descritores_TemaId",
                 table: "Descritores",
                 column: "TemaId");
@@ -861,11 +866,6 @@ namespace SAED.Infrastructure.Migrations
                 name: "IX_Etapas_SegmentoId",
                 table: "Etapas",
                 column: "SegmentoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuestaoAvaliacao_QuestaoId",
-                table: "QuestaoAvaliacao",
-                column: "QuestaoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questoes_DescritorId",
@@ -958,10 +958,10 @@ namespace SAED.Infrastructure.Migrations
                 name: "AvaliacaoDistrito");
 
             migrationBuilder.DropTable(
-                name: "EtapaDescritor");
+                name: "AvaliacaoQuestoes");
 
             migrationBuilder.DropTable(
-                name: "QuestaoAvaliacao");
+                name: "EtapaDescritor");
 
             migrationBuilder.DropTable(
                 name: "RespostaAluno");

@@ -10,7 +10,7 @@ using SAED.Infrastructure.Data;
 namespace SAED.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201027141710_Initial")]
+    [Migration("20201027202434_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -347,6 +347,33 @@ namespace SAED.Infrastructure.Migrations
                     b.ToTable("AvaliacaoDistrito");
                 });
 
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoQuestao", b =>
+                {
+                    b.Property<int>("AvaliacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestaoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AvaliacaoId", "QuestaoId");
+
+                    b.HasIndex("QuestaoId");
+
+                    b.ToTable("AvaliacaoQuestoes");
+                });
+
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Curso", b =>
                 {
                     b.Property<int>("Id")
@@ -681,33 +708,6 @@ namespace SAED.Infrastructure.Migrations
                     b.HasIndex("DescritorId");
 
                     b.ToTable("Questoes");
-                });
-
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.QuestaoAvaliacao", b =>
-                {
-                    b.Property<int>("AvaliacaoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestaoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("AvaliacaoId", "QuestaoId");
-
-                    b.HasIndex("QuestaoId");
-
-                    b.ToTable("QuestaoAvaliacao");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.RespostaAluno", b =>
@@ -1210,6 +1210,21 @@ namespace SAED.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoQuestao", b =>
+                {
+                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                        .WithMany("AvaliacaoQuestoes")
+                        .HasForeignKey("AvaliacaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Questao", "Questao")
+                        .WithMany("AvaliacaoQuestoes")
+                        .HasForeignKey("QuestaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Descritor", b =>
                 {
                     b.HasOne("SAED.ApplicationCore.Entities.Tema", "Tema")
@@ -1261,21 +1276,6 @@ namespace SAED.Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Descritor", "Descritor")
                         .WithMany("Questoes")
                         .HasForeignKey("DescritorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.QuestaoAvaliacao", b =>
-                {
-                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
-                        .WithMany("QuestaoAvaliacoes")
-                        .HasForeignKey("AvaliacaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SAED.ApplicationCore.Entities.Questao", "Questao")
-                        .WithMany("QuestaoAvaliacoes")
-                        .HasForeignKey("QuestaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
