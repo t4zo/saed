@@ -54,7 +54,7 @@ namespace SAED.Api
 
             services.AddJwtSecurity(Configuration);
 
-            services.AddProblemDetails();      
+            services.AddProblemDetails();
 
             services.AddAuthorization();
 

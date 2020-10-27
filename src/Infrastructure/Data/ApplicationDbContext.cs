@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using SAED.Infrastructure.Identity;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,13 +18,15 @@ namespace SAED.Infrastructure.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly string _provider;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
             _configuration = configuration;
-            _provider = _configuration[Providers.PROVIDER];
+            _httpContextAccessor = httpContextAccessor;
+            _provider = configuration[Providers.PROVIDER];
         }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
@@ -48,8 +52,8 @@ namespace SAED.Infrastructure.Data
 
             foreach (var entity in entities)
             {
-                //entity.AddProperty("CreatedBy", typeof(int));
-                //entity.AddProperty("UpdatedBy", typeof(int));
+                entity.AddProperty("CreatedBy", typeof(string));
+                entity.AddProperty("UpdatedBy", typeof(string));
                 entity.AddProperty("CreatedDate", typeof(DateTime));
                 entity.AddProperty("UpdatedDate", typeof(DateTime));
             }
@@ -77,11 +81,12 @@ namespace SAED.Infrastructure.Data
 
             foreach (var entityEntry in entries)
             {
-                //entityEntry.Property("UpdatedBy").CurrentValue = _userManager.GetUserAsync(HttpContext.User);
+                entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                 entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                 if (entityEntry.State == EntityState.Added)
                 {
+                    entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                     entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                 }
             }
@@ -97,10 +102,12 @@ namespace SAED.Infrastructure.Data
 
             foreach (var entityEntry in entries)
             {
+                entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                 entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                 if (entityEntry.State == EntityState.Added)
                 {
+                    entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                     entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                 }
             }

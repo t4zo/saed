@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace SAED.Infrastructure.Migrations
 {
@@ -15,7 +15,9 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
                     Nascimento = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -32,7 +34,9 @@ namespace SAED.Infrastructure.Migrations
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -60,7 +64,10 @@ namespace SAED.Infrastructure.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    LastLogin = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -76,7 +83,9 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Codigo = table.Column<string>(nullable: false),
                     Status = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -92,7 +101,9 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
                     Sigla = table.Column<string>(maxLength: 8, nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -108,7 +119,9 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 128, nullable: false),
                     Sigla = table.Column<string>(maxLength: 8, nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -125,7 +138,9 @@ namespace SAED.Infrastructure.Migrations
                     Nome = table.Column<string>(maxLength: 32, nullable: false),
                     Zona = table.Column<int>(nullable: false),
                     Distancia = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -140,7 +155,9 @@ namespace SAED.Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 16, nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -155,7 +172,9 @@ namespace SAED.Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 32, nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -172,7 +191,9 @@ namespace SAED.Infrastructure.Migrations
                     RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -195,7 +216,9 @@ namespace SAED.Infrastructure.Migrations
                     UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -217,7 +240,9 @@ namespace SAED.Infrastructure.Migrations
                     ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -237,7 +262,9 @@ namespace SAED.Infrastructure.Migrations
                 {
                     UserId = table.Column<int>(nullable: false),
                     RoleId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -265,7 +292,9 @@ namespace SAED.Infrastructure.Migrations
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -288,7 +317,9 @@ namespace SAED.Infrastructure.Migrations
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
                     Sigla = table.Column<string>(maxLength: 10, nullable: false),
                     CursoId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -310,7 +341,9 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DisciplinaId = table.Column<int>(nullable: false),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -330,7 +363,9 @@ namespace SAED.Infrastructure.Migrations
                 {
                     AvaliacaoId = table.Column<int>(nullable: false),
                     DistritoId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -365,7 +400,9 @@ namespace SAED.Infrastructure.Migrations
                     Numero = table.Column<int>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: false),
                     Telefone = table.Column<string>(maxLength: 11, nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -394,7 +431,9 @@ namespace SAED.Infrastructure.Migrations
                     Nome = table.Column<string>(maxLength: 64, nullable: false),
                     SegmentoId = table.Column<int>(nullable: false),
                     Normativa = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -416,7 +455,9 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TemaId = table.Column<int>(nullable: false),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -438,7 +479,9 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero = table.Column<int>(nullable: false),
                     EscolaId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -460,7 +503,9 @@ namespace SAED.Infrastructure.Migrations
                     DisciplinaId = table.Column<int>(nullable: false),
                     EtapaId = table.Column<int>(nullable: false),
                     QtdQuestoes = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -492,7 +537,9 @@ namespace SAED.Infrastructure.Migrations
                 {
                     EtapaId = table.Column<int>(nullable: false),
                     DescritorId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -523,7 +570,9 @@ namespace SAED.Infrastructure.Migrations
                     Descricao = table.Column<string>(nullable: true),
                     Enunciado = table.Column<string>(nullable: false),
                     Habilitada = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -550,7 +599,9 @@ namespace SAED.Infrastructure.Migrations
                     Nome = table.Column<string>(maxLength: 32, nullable: false),
                     QtdAlunos = table.Column<int>(nullable: false),
                     Extinta = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -591,7 +642,9 @@ namespace SAED.Infrastructure.Migrations
                     Descricao = table.Column<string>(nullable: false),
                     Correta = table.Column<bool>(nullable: false),
                     QuestaoId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -611,7 +664,9 @@ namespace SAED.Infrastructure.Migrations
                 {
                     AvaliacaoId = table.Column<int>(nullable: false),
                     QuestaoId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -637,7 +692,9 @@ namespace SAED.Infrastructure.Migrations
                 {
                     TurmaId = table.Column<int>(nullable: false),
                     AlunoId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -664,7 +721,9 @@ namespace SAED.Infrastructure.Migrations
                     ApplicationUserId = table.Column<int>(nullable: false),
                     TurmaId = table.Column<int>(nullable: false),
                     AvaliacaoId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -691,7 +750,9 @@ namespace SAED.Infrastructure.Migrations
                     AvaliacaoId = table.Column<int>(nullable: false),
                     AlunoId = table.Column<int>(nullable: false),
                     AlternativaId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

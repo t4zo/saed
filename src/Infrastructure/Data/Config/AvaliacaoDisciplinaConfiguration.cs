@@ -26,7 +26,7 @@ namespace SAED.Infrastructure.Data.Config
                 .HasForeignKey(avaliacaoDisciplinaEtapa => avaliacaoDisciplinaEtapa.EtapaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasKey(avaliacaoDisciplinaEtapa => 
+            builder.HasKey(avaliacaoDisciplinaEtapa =>
             new { avaliacaoDisciplinaEtapa.DisciplinaId, avaliacaoDisciplinaEtapa.AvaliacaoId, avaliacaoDisciplinaEtapa.EtapaId });
         }
     }

@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using SAED.Api.Entities.Dto;
 using SAED.Api.Interfaces;
 using SAED.ApplicationCore.Interfaces;
+using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -17,18 +19,21 @@ namespace SAED.Api.Services
         private readonly ITokenService _tokenService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
         public UserService(
             ITokenService tokenService,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context,
             IMapper mapper
             )
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
             _mapper = mapper;
         }
 
@@ -53,6 +58,9 @@ namespace SAED.Api.Services
                 var token = _tokenService.GenerateJWTToken(claimsIdentity);
 
                 AddUserClaims(claimsIdentity, userClaims, roles);
+
+                user.LastLogin = DateTime.Now;
+                await _context.SaveChangesAsync();
 
                 var userDto = _mapper.Map<UserRequest>(user);
 

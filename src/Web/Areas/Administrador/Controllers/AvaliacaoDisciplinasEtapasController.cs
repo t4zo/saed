@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,8 +49,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(
-                    x => x.AvaliacaoId == avaliacao.Id && 
-                    x.DisciplinaId == avaliacaoDisciplinaEtapa.DisciplinaId && 
+                    x => x.AvaliacaoId == avaliacao.Id &&
+                    x.DisciplinaId == avaliacaoDisciplinaEtapa.DisciplinaId &&
                     x.EtapaId == avaliacaoDisciplinaEtapa.EtapaId);
 
                 if (!avaliacaoDisciplinaEtapaExists)
@@ -74,7 +73,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Edit(int disciplinaId, int etapaId)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
-            
+
             var avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas
                 .Include(x => x.Disciplina)
                 .Include(x => x.Etapa)
@@ -112,7 +111,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     var avaliacaoDisciplinaEtapaExists = _context.AvaliacaoDisciplinasEtapas.Any(
-                        x => x.AvaliacaoId == avaliacao.Id && 
+                        x => x.AvaliacaoId == avaliacao.Id &&
                         x.DisciplinaId == disciplinaId &&
                         x.EtapaId == etapaId);
 
