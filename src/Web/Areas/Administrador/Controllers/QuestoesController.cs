@@ -64,9 +64,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult CreateAsync()
         {
-            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome");
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
             return View();
         }
@@ -85,7 +85,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questao.DescritorId);
 
             return View(questao);
         }
@@ -150,7 +150,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(await _context.Descritores.ToListAsync(), "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questao.DescritorId);
 
             return View(questao);
         }

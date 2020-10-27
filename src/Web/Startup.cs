@@ -14,6 +14,7 @@ using SAED.Infrastructure.Identity;
 using SAED.Web.Authorization;
 using SAED.Web.Configurations;
 using SAED.Web.Extensions;
+using SAED.Web.Services;
 using System;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
@@ -36,6 +37,8 @@ namespace SAED.Web
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddScoped<UserService>();
+
             services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
 
             services.AddDbContext<ApplicationDbContext>();
@@ -43,33 +46,50 @@ namespace SAED.Web
             services.AddCustomCors(DefaultCorsPolicyName);
 
             services.AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<IdentityRole<int>>()
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<IdentityOptions>(options =>
             {
+                // Password settings
                 options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
 
-                options.SignIn.RequireConfirmedEmail = false;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = false;
+
+                // User settings
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
             });
-
-            services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromHours(12);
-                options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+
+                options.IdleTimeout = TimeSpan.FromHours(12);
             });
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = "/";
-            //    options.AccessDeniedPath = "/";
-            //});
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddResponseCompression();
 

@@ -40,6 +40,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 _context.Add(disciplina);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -114,8 +115,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var disciplina = await _context.Disciplinas.FindAsync(id);
             _context.Disciplinas.Remove(disciplina);
-
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

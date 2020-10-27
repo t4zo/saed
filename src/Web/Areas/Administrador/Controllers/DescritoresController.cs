@@ -50,9 +50,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Descritores.Create)]
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult CreateAsync()
         {
-            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome");
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
             return View();
         }
@@ -70,7 +70,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["TemaId"] = new SelectList(await _context.Temas.ToListAsync(), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] = new SelectList(_context.Temas, "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -88,8 +88,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.ToListAsync(), "Id", "Nome", descritor.Tema.DisciplinaId);
-            ViewData["TemaId"] = new SelectList(await _context.Temas.Where(x => x.DisciplinaId == descritor.Tema.DisciplinaId).ToListAsync(), "Id", "Nome", descritor.TemaId);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", descritor.Tema.DisciplinaId);
+            ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == descritor.Tema.DisciplinaId).ToListAsync(), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }

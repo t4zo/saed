@@ -29,13 +29,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .AsNoTracking()
                 .Include(x => x.Disciplina)
                 .ToListAsync();
+
             return View(temas);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Temas.Create)]
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult CreateAsync()
         {
-            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome");
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
             return View();
         }
@@ -49,10 +50,11 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 await _context.Temas.AddAsync(tema);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome", tema.DisciplinaId);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", tema.DisciplinaId);
 
             return View(tema);
         }
@@ -67,7 +69,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome", tema.DisciplinaId);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", tema.DisciplinaId);
 
             return View(tema);
         }
@@ -105,7 +107,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DisciplinaId"] = new SelectList(await _context.Disciplinas.AsNoTracking().ToListAsync(), "Id", "Nome", tema.DisciplinaId);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", tema.DisciplinaId);
 
             return View(tema);
         }

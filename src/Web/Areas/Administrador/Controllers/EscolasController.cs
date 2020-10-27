@@ -23,13 +23,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Escolas.View)]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Escolas.AsNoTracking().Include(x => x.Distrito).OrderBy(x => x.Nome).ToListAsync());
+            return View(await _context.Escolas.Include(x => x.Distrito).ToListAsync());
         }
 
         [Authorize(AuthorizationConstants.Permissions.Escolas.Create)]
         public async Task<IActionResult> Create()
         {
-            var distritos = await _context.Distritos.AsNoTracking().Include(x => x.Escolas).ToListAsync();
+            var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
 
             ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome");
             ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Nome");
@@ -42,7 +42,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Escola escola)
         {
-            var distritos = await _context.Distritos.AsNoTracking().Include(x => x.Escolas).ToListAsync();
+            var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
 
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Escolas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var distritos = await _context.Distritos.AsNoTracking().Include(x => x.Escolas).ToListAsync();
+            var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
             var escola = distritos.FirstOrDefault(x => x.Escolas.Any(y => y.Id == id)).Escolas.First();
 
             if (escola is null)
@@ -84,7 +84,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            var distritos = await _context.Distritos.AsNoTracking().Include(x => x.Escolas).ToListAsync();
+            var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
 
             if (ModelState.IsValid)
             {

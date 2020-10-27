@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var role in ViewBag.Roles as List<Microsoft.AspNetCore.Identity.IdentityRole<int>>)
+                @foreach (var role in ViewBag.Roles as List<SAED.Infrastructure.Identity.ApplicationRole>)
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => role.Name)</td>

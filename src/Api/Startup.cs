@@ -68,7 +68,7 @@ namespace SAED.Api
                 options.SignIn.RequireConfirmedEmail = false;
             })
                 .AddErrorDescriber<PortugueseIdentityErrorDescriber>()
-                .AddRoles<IdentityRole<int>>()
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
                 .AddSignInManager();

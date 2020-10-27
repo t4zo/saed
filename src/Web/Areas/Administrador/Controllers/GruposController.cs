@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Extensions;
 using SAED.Infrastructure.Data;
+using SAED.Infrastructure.Identity;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
     public class GruposController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public GruposController(ApplicationDbContext context, RoleManager<IdentityRole<int>> roleManager)
+        public GruposController(ApplicationDbContext context, RoleManager<ApplicationRole> roleManager)
         {
             _context = context;
             _roleManager = roleManager;
@@ -46,13 +47,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(GrupoViewModel viewModel)
         {
-            var result = await _roleManager.CreateAsync(new IdentityRole<int> { Name = viewModel.Nome });
-            var role = await _roleManager.FindByNameAsync(viewModel.Nome);
-
+            var result = await _roleManager.CreateAsync(new ApplicationRole { Name = viewModel.Nome });
             if (!result.Succeeded)
             {
-                return View();
+                return RedirectToAction(nameof(Create));
             }
+
+            var role = await _roleManager.FindByNameAsync(viewModel.Nome);
 
             if (viewModel.PermissoesEscolhidas != null)
             {
@@ -106,12 +107,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
-        }
-
-        [Authorize(Permissions.Grupos.Delete)]
-        public IActionResult Delete()
-        {
             return RedirectToAction(nameof(Index));
         }
 

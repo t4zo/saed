@@ -1,7 +1,14 @@
-﻿namespace SAED.ApplicationCore.Entities
+﻿using System;
+
+namespace SAED.ApplicationCore.Entities
 {
-    public class BaseEntity
+    public abstract class BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
-        public int Id { get; set; }
+        public TKey Id { get; set; }
+    }
+
+    public abstract class BaseEntity : BaseEntity<int>
+    {
+
     }
 }

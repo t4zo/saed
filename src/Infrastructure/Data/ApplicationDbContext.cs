@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SAED.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -78,18 +77,21 @@ namespace SAED.Infrastructure.Data
             var entries = ChangeTracker
                 .Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
-
-            foreach (var entityEntry in entries)
+            try
             {
-                entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
-                entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
-
-                if (entityEntry.State == EntityState.Added)
+                foreach (var entityEntry in entries)
                 {
-                    entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
-                    entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
+                    entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                    entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
+
+                    if (entityEntry.State == EntityState.Added)
+                    {
+                        entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                        entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
+                    }
                 }
             }
+            catch { }
 
             return base.SaveChanges();
         }
@@ -100,17 +102,21 @@ namespace SAED.Infrastructure.Data
                 .Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
-            foreach (var entityEntry in entries)
+            try
             {
-                entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
-                entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
-
-                if (entityEntry.State == EntityState.Added)
+                foreach (var entityEntry in entries)
                 {
-                    entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
-                    entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
+                    entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                    entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
+
+                    if (entityEntry.State == EntityState.Added)
+                    {
+                        entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                        entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
+                    }
                 }
             }
+            catch { }
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }

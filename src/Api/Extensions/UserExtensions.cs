@@ -21,7 +21,7 @@ namespace SAED.Api.Extensions
         {
             var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>();
 
             if (!await context.Users.AnyAsync())
@@ -91,11 +91,11 @@ namespace SAED.Api.Extensions
             }
         }
 
-        private static async Task SeedRoleClaims(RoleManager<IdentityRole<int>> roleManager, string role)
+        private static async Task SeedRoleClaims(RoleManager<ApplicationRole> roleManager, string role)
         {
             if (role.Equals(Roles.Administrador))
             {
-                IdentityRole<int> _role = await roleManager.FindByNameAsync(role);
+                var _role = await roleManager.FindByNameAsync(role);
                 await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
                 await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
                 await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create));
@@ -113,7 +113,7 @@ namespace SAED.Api.Extensions
 
             if (role.Equals(Roles.Aplicador))
             {
-                IdentityRole<int> _role = await roleManager.FindByNameAsync(role);
+                var _role = await roleManager.FindByNameAsync(role);
                 await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
                 await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
                 await roleManager.AddClaimAsync(_role, new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));

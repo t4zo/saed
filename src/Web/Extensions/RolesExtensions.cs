@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SAED.ApplicationCore.Extensions;
+using SAED.Infrastructure.Identity;
 using SAED.Web.Configurations;
 using System;
 using System.Security.Claims;
@@ -16,7 +17,7 @@ namespace SAED.Web.Extensions
     {
         public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>();
 
             if (!await roleManager.Roles.AnyAsync())
@@ -25,7 +26,7 @@ namespace SAED.Web.Extensions
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                     {
-                        await roleManager.CreateAsync(new IdentityRole<int> { Name = role, NormalizedName = role.ToUpper() });
+                        await roleManager.CreateAsync(new ApplicationRole { Name = role, NormalizedName = role.ToUpper() });
                     }
 
                     await SeedRoleClaims(roleManager, role);
@@ -35,7 +36,7 @@ namespace SAED.Web.Extensions
             return app;
         }
 
-        private static async Task SeedRoleClaims(RoleManager<IdentityRole<int>> roleManager, string role)
+        private static async Task SeedRoleClaims(RoleManager<ApplicationRole> roleManager, string role)
         {
             var permissions = typeof(Permissions).GetAllPublicConstantValues<string>();
 

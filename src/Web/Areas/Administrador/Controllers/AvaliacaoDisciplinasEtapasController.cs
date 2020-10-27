@@ -57,7 +57,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 {
                     avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
                     _context.Add(avaliacaoDisciplinaEtapa);
-
                 }
 
                 await _context.SaveChangesAsync();
