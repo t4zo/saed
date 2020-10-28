@@ -10,7 +10,7 @@ using SAED.Infrastructure.Data;
 namespace SAED.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201027202434_Initial")]
+    [Migration("20201028180054_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -301,9 +301,6 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("QtdQuestoes")
-                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -689,6 +686,9 @@ namespace SAED.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EtapaId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Habilitada")
                         .HasColumnType("bit");
 
@@ -706,6 +706,8 @@ namespace SAED.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DescritorId");
+
+                    b.HasIndex("EtapaId");
 
                     b.ToTable("Questoes");
                 });
@@ -1276,6 +1278,12 @@ namespace SAED.Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Descritor", "Descritor")
                         .WithMany("Questoes")
                         .HasForeignKey("DescritorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
+                        .WithMany("Questoes")
+                        .HasForeignKey("EtapaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

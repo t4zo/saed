@@ -23,6 +23,10 @@ namespace SAED.Infrastructure.Data.Config
             builder.HasOne(questao => questao.Descritor)
                 .WithMany(descritor => descritor.Questoes)
                 .HasForeignKey(questao => questao.DescritorId);
+
+            builder.HasOne(questao => questao.Etapa)
+                .WithMany(etapa => etapa.Questoes)
+                .HasForeignKey(questao => questao.EtapaId);
         }
     }
 }

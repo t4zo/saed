@@ -34,9 +34,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public IActionResult Create()
         {
-            ViewData["AvaliacaoId"] = new SelectList(_context.Avaliacoes, "Id", "Codigo");
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
             ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome");
+
             return View();
         }
 
@@ -46,27 +46,25 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(
-                    x => x.AvaliacaoId == avaliacao.Id &&
-                    x.DisciplinaId == avaliacaoDisciplinaEtapa.DisciplinaId &&
-                    x.EtapaId == avaliacaoDisciplinaEtapa.EtapaId);
-
-                if (!avaliacaoDisciplinaEtapaExists)
-                {
-                    avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
-                    _context.Add(avaliacaoDisciplinaEtapa);
-                }
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
 
-            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+            var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(
+                x => x.AvaliacaoId == avaliacao.Id &&
+                x.DisciplinaId == avaliacaoDisciplinaEtapa.DisciplinaId &&
+                x.EtapaId == avaliacaoDisciplinaEtapa.EtapaId);
 
-            return View(avaliacaoDisciplinaEtapa);
+            if (!avaliacaoDisciplinaEtapaExists)
+            {
+                avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
+                _context.Add(avaliacaoDisciplinaEtapa);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int disciplinaId, int etapaId)

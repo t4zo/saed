@@ -47,6 +47,10 @@
                 </select>
             </div>
             <div class="uk-width-1-3">
+                <label class="uk-form-label">Etapa</label>
+                <select asp-for="EtapaId" class="uk-select" asp-items="ViewBag.EtapaId"></select>
+            </div>
+            <div class="uk-width-1-3">
                 <label asp-for="Item" class="uk-form-label"></label>
                 <input asp-for="Item" class="uk-input" />
                 <span asp-validation-for="Item" class="text-danger"></span>
@@ -56,7 +60,7 @@
                 <input asp-for="Descricao" class="uk-input" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
-            <div class="uk-width-1-3 uk-flex uk-flex-middle">
+            <div class="uk-width-1-3 uk-flex uk-flex-middle uk-margin-top">
                 <input class="uk-checkbox uk-margin-small-right" asp-for="Habilitada" style="width: 25px; height: 25px;" />
                 <label asp-for="Habilitada" class="uk-form-label"></label>
             </div>
@@ -74,7 +78,7 @@
                 <div class="uk-width-1-2">
                     <div class="uk-flex uk-flex-between">
                         <p class="uk-text-center">Alternativa A</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[0].Correta"></label>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[0].Correta" checked onchange="selectAlternativa(0)"></label>
                     </div>
                     <div id="alternativaAEditor"></div>
                     <input type="hidden" asp-for="Alternativas[0].Descricao" class="uk-input" />
@@ -82,7 +86,7 @@
                 <div class="uk-width-1-2">
                     <div class="uk-flex uk-flex-between">
                         <p class="uk-text-center">Alternativa B</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[1].Correta"></label>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[1].Correta" onchange="selectAlternativa(1)"></label>
                     </div>
                     <div id="alternativaBEditor"></div>
                     <input type="hidden" asp-for="Alternativas[1].Descricao" class="uk-input" />
@@ -90,7 +94,7 @@
                 <div class="uk-width-1-2">
                     <div class="uk-flex uk-flex-between">
                         <p class="uk-text-center">Alternativa C</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[2].Correta"></label>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[2].Correta" onchange="selectAlternativa(2)"></label>
                     </div>
                     <div id="alternativaCEditor"></div>
                     <input type="hidden" asp-for="Alternativas[2].Descricao" class="uk-input" />
@@ -98,11 +102,19 @@
                 <div class="uk-width-1-2 uk-flex-between">
                     <div class="uk-flex uk-flex-between">
                         <p class="uk-text-center">Alternativa D</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[3].Correta"></label>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[3].Correta" onchange="selectAlternativa(3)"></label>
                     </div>
                     <div id="alternativaDEditor"></div>
                     <input type="hidden" asp-for="Alternativas[3].Descricao" class="uk-input" />
                 </div>
+                @*<div class="uk-width-1-1 uk-flex-between">
+                    <div class="uk-flex uk-flex-between">
+                        <p class="uk-text-center">Alternativa E</p>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[4].Correta" onchange="selectAlternativa(4)"></label>
+                    </div>
+                    <div id="alternativaEEditor"></div>
+                    <input type="hidden" asp-for="Alternativas[4].Descricao" class="uk-input" />
+                </div>*@
             </div>
         </section>
     </form>
@@ -140,6 +152,7 @@
         const quillAlternativaBEditor = new Quill('#alternativaBEditor', { theme: 'snow' });
         const quillAlternativaCEditor = new Quill('#alternativaCEditor', { theme: 'snow' });
         const quillAlternativaDEditor = new Quill('#alternativaDEditor', { theme: 'snow' });
+        //const quillAlternativaEEditor = new Quill('#alternativaEEditor', { theme: 'snow' });
 
         function submitForm() {
             bindEnunciadoEditorToInput();
@@ -148,6 +161,7 @@
             bindAlternativaToInput('#Alternativas_1__Descricao', quillAlternativaBEditor);
             bindAlternativaToInput('#Alternativas_2__Descricao', quillAlternativaCEditor);
             bindAlternativaToInput('#Alternativas_3__Descricao', quillAlternativaDEditor);
+            //bindAlternativaToInput('#Alternativas_4__Descricao', quillAlternativaEEditor);
 
             document.querySelector('.create-form').submit();
         }
@@ -190,6 +204,16 @@
         function bindAlternativaToInput(selector, quill) {
             const inputField = document.querySelector(selector);
             inputField.value = JSON.stringify(quill.getContents());
+        }
+
+        function selectAlternativa(id) {
+            const checkboxes = document.querySelectorAll(".alternativas .uk-checkbox");
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            checkboxes[id].checked = true;
         }
     </script>
 }

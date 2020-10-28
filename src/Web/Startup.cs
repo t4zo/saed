@@ -43,7 +43,7 @@ namespace SAED.Web
 
             services.AddDbContext<ApplicationDbContext>();
 
-            services.AddCustomCors(DefaultCorsPolicyName);
+            // services.AddCustomCors(DefaultCorsPolicyName);
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<ApplicationRole>()
@@ -70,7 +70,7 @@ namespace SAED.Web
             {
                 options.Cookie.IsEssential = true;
                 options.Cookie.HttpOnly = true;
-                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.SameSite = SameSiteMode.Unspecified;
 
                 options.IdleTimeout = TimeSpan.FromHours(12);
             });
@@ -83,14 +83,17 @@ namespace SAED.Web
                 options.LoginPath = "/";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromHours(1);
-                options.SlidingExpiration = true;
+                options.SlidingExpiration = false;
+
+                options.Cookie.SameSite = SameSiteMode.Unspecified;
 
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             });
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
-            services.AddResponseCompression();
+            // services.AddResponseCaching();
+            // services.AddResponseCompression();
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -122,18 +125,25 @@ namespace SAED.Web
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            var supportedCultures = new[] { "pt-BR" };
+            var localizationOptions = new RequestLocalizationOptions()
+                .SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseRouting();
-            //app.UseRequestLocalization();
-            app.UseCors(DefaultCorsPolicyName);
+            // app.UseRequestLocalization();
+            // app.UseCors(DefaultCorsPolicyName);
 
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
             // app.UseResponseCaching();
+            // app.UseResponseCompression();
 
             app.UseEndpoints(endpoints =>
             {

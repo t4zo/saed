@@ -502,7 +502,6 @@ namespace SAED.Infrastructure.Migrations
                     AvaliacaoId = table.Column<int>(nullable: false),
                     DisciplinaId = table.Column<int>(nullable: false),
                     EtapaId = table.Column<int>(nullable: false),
-                    QtdQuestoes = table.Column<int>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(nullable: true),
@@ -566,6 +565,7 @@ namespace SAED.Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DescritorId = table.Column<int>(nullable: false),
+                    EtapaId = table.Column<int>(nullable: false),
                     Item = table.Column<string>(maxLength: 8, nullable: false),
                     Descricao = table.Column<string>(nullable: true),
                     Enunciado = table.Column<string>(nullable: false),
@@ -582,6 +582,12 @@ namespace SAED.Infrastructure.Migrations
                         name: "FK_Questoes_Descritores_DescritorId",
                         column: x => x.DescritorId,
                         principalTable: "Descritores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Questoes_Etapas_EtapaId",
+                        column: x => x.EtapaId,
+                        principalTable: "Etapas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -873,6 +879,11 @@ namespace SAED.Infrastructure.Migrations
                 column: "DescritorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Questoes_EtapaId",
+                table: "Questoes",
+                column: "EtapaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RespostaAluno_AlternativaId",
                 table: "RespostaAluno",
                 column: "AlternativaId",
@@ -994,9 +1005,6 @@ namespace SAED.Infrastructure.Migrations
                 name: "Questoes");
 
             migrationBuilder.DropTable(
-                name: "Etapas");
-
-            migrationBuilder.DropTable(
                 name: "Forma");
 
             migrationBuilder.DropTable(
@@ -1009,7 +1017,7 @@ namespace SAED.Infrastructure.Migrations
                 name: "Descritores");
 
             migrationBuilder.DropTable(
-                name: "Segmentos");
+                name: "Etapas");
 
             migrationBuilder.DropTable(
                 name: "Escolas");
@@ -1018,13 +1026,16 @@ namespace SAED.Infrastructure.Migrations
                 name: "Temas");
 
             migrationBuilder.DropTable(
-                name: "Cursos");
+                name: "Segmentos");
 
             migrationBuilder.DropTable(
                 name: "Distritos");
 
             migrationBuilder.DropTable(
                 name: "Disciplinas");
+
+            migrationBuilder.DropTable(
+                name: "Cursos");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model SAED.ApplicationCore.Entities.Questao
+﻿@model QuestaoViewModel
 
 @{
     ViewData["Title"] = "Editar Questão";
@@ -6,6 +6,16 @@
 
 @section Styles {
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <style>
+        #enunciadoEditor {
+            height: 170px;
+        }
+
+        .alternativas .ql-container {
+            height: 45px;
+        }
+    </style>
 }
 
 <main class="uk-card uk-card-default uk-card-body">
@@ -36,6 +46,10 @@
             </select>
         </div>
         <div class="uk-width-1-3">
+            <label class="uk-form-label">Etapa</label>
+            <select asp-for="EtapaId" class="uk-select" asp-items="ViewBag.EtapaId"></select>
+        </div>
+        <div class="uk-width-1-3">
             <label asp-for="Item" class="uk-form-label"></label>
             <input asp-for="Item" class="uk-input" />
             <span asp-validation-for="Item" class="uk-text-danger"></span>
@@ -45,21 +59,73 @@
             <input asp-for="Descricao" class="uk-input" />
             <span asp-validation-for="Descricao" class="uk-text-danger"></span>
         </div>
-        <div class="uk-width-1-3">
-            <input class="uk-checkbox" asp-for="Habilitada" />
+        <div class="uk-width-1-3 uk-flex uk-flex-middle uk-margin-top">
+            <input class="uk-checkbox" asp-for="Habilitada" style="width: 25px; height: 25px;" />
             <label asp-for="Habilitada" class="uk-form-label"></label>
         </div>
-        <div class="uk-width-1-1 uk-margin-large-bottom">
+        <div class="uk-width-1-1">
+            <h2 class="uk-text-center">Enunciado</h2>
             <!-- Create the editor container -->
-            <div id="editor"></div>
+            <div id="enunciadoEditor"></div>
         </div>
         <input type="hidden" asp-for="Enunciado" />
         <input type="hidden" asp-for="Id" />
+        @*<hr class="uk-list-divider" />*@
+        <section class="uk-margin-large-top uk-margin-bottom alternativas">
+            <h3 class="uk-text-center">Alternativas</h3>
+            <div class="uk-grid" uk-grid>
+                <div class="uk-width-1-2">
+                    <div class="uk-flex uk-flex-between">
+                        <p class="uk-text-center">Alternativa A</p>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[0].Correta" checked onchange="selectAlternativa(0)"></label>
+                    </div>
+                    <div id="alternativaAEditor"></div>
+                    <input type="hidden" asp-for="Alternativas[0].Descricao" class="uk-input" />
+                </div>
+                <div class="uk-width-1-2">
+                    <div class="uk-flex uk-flex-between">
+                        <p class="uk-text-center">Alternativa B</p>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[1].Correta" onchange="selectAlternativa(1)"></label>
+                    </div>
+                    <div id="alternativaBEditor"></div>
+                    <input type="hidden" asp-for="Alternativas[1].Descricao" class="uk-input" />
+                </div>
+                <div class="uk-width-1-2">
+                    <div class="uk-flex uk-flex-between">
+                        <p class="uk-text-center">Alternativa C</p>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[2].Correta" onchange="selectAlternativa(2)"></label>
+                    </div>
+                    <div id="alternativaCEditor"></div>
+                    <input type="hidden" asp-for="Alternativas[2].Descricao" class="uk-input" />
+                </div>
+                <div class="uk-width-1-2 uk-flex-between">
+                    <div class="uk-flex uk-flex-between">
+                        <p class="uk-text-center">Alternativa D</p>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[3].Correta" onchange="selectAlternativa(3)"></label>
+                    </div>
+                    <div id="alternativaDEditor"></div>
+                    <input type="hidden" asp-for="Alternativas[3].Descricao" class="uk-input" />
+                </div>
+                @*<div class="uk-width-1-1 uk-flex-between">
+                        <div class="uk-flex uk-flex-between">
+                            <p class="uk-text-center">Alternativa E</p>
+                            <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[4].Correta" onchange="selectAlternativa(4)"></label>
+                        </div>
+                        <div id="alternativaEEditor"></div>
+                        <input type="hidden" asp-for="Alternativas[4].Descricao" class="uk-input" />
+                    </div>*@
+            </div>
+        </section>
     </form>
 </main>
 
 @section Scripts {
     <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="~/lib/quill-image-resize/image-resize.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const disciplinaField = document.querySelector("#Disciplinas");
@@ -78,60 +144,85 @@
                 descritorField.disabled = true;
             });
 
-            bindDeltaToInput();
+            const toolbarOptions = [
+                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                ['blockquote', 'code-block'],
+
+                [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+                [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+                [{ 'direction': 'rtl' }],                         // text direction
+
+                [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                ['link', 'image', 'video', 'formula'],          // add's image support
+                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                [{ 'font': [] }],
+                [{ 'align': [] }],
+
+                ['clean']                                         // remove formatting button
+            ];
+
+            const quillEnunciadoEditor = new Quill('#enunciadoEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: toolbarOptions,
+                    imageResize: {
+                        displaySize: true // default false
+                    }
+                },
+            });
+
+            const quillAlternativaAEditor = new Quill('#alternativaAEditor', { theme: 'snow' });
+            const quillAlternativaBEditor = new Quill('#alternativaBEditor', { theme: 'snow' });
+            const quillAlternativaCEditor = new Quill('#alternativaCEditor', { theme: 'snow' });
+            const quillAlternativaDEditor = new Quill('#alternativaDEditor', { theme: 'snow' });
+            // const quillAlternativaEEditor = new Quill('#alternativaEEditor', { theme: 'snow' });
+
+            bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
+            bindDeltaToInput("#Alternativas_0__Descricao", quillAlternativaAEditor);
+            bindDeltaToInput("#Alternativas_1__Descricao", quillAlternativaBEditor);
+            bindDeltaToInput("#Alternativas_2__Descricao", quillAlternativaCEditor);
+            bindDeltaToInput("#Alternativas_3__Descricao", quillAlternativaDEditor);
+            //bindDeltaToInput("#Alternativas_4__Descricao", quillAlternativaEEditor);
         });
-    </script>
 
-    <!-- Include the Quill library -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="~/lib/quill-image-resize/image-resize.min.js"></script>
-
-    <!-- Initialize Quill editor -->
-    <script>
         function submitForm() {
-            bindQuillToInput();
+            bindEnunciadoEditorToInput();
+
+            bindAlternativaToInput('#Alternativas_0__Descricao', quillAlternativaAEditor);
+            bindAlternativaToInput('#Alternativas_1__Descricao', quillAlternativaBEditor);
+            bindAlternativaToInput('#Alternativas_2__Descricao', quillAlternativaCEditor);
+            bindAlternativaToInput('#Alternativas_3__Descricao', quillAlternativaDEditor);
+            //bindAlternativaToInput('#Alternativas_4__Descricao', quillAlternativaEEditor);
+
             document.querySelector('.create-form').submit();
         }
 
-        const toolbarOptions = [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
-
-            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
-
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            ['link', 'image', 'video', 'formula'],          // add's image support
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-
-            ['clean']                                         // remove formatting button
-        ];
-
-        var quill = new Quill('#editor', {
-            theme: 'snow',
-            modules: {
-                toolbar: toolbarOptions,
-                imageResize: {
-                    displaySize: true // default false
-                }
-            }
-
-        });
-
-        function bindQuillToInput() {
+        function bindEnunciadoEditorToInput() {
             const inputField = document.querySelector("#Enunciado");
+            inputField.value = JSON.stringify(quillEnunciadoEditor.getContents());
+        }
+
+        function bindAlternativaToInput(selector, quill) {
+            const inputField = document.querySelector(selector);
             inputField.value = JSON.stringify(quill.getContents());
         }
 
-        function bindDeltaToInput() {
-            const deltaOps = document.querySelector('#Enunciado').value;
+        function bindDeltaToInput(selector, quill) {
+            const deltaOps = document.querySelector(selector).value;
             quill.setContents(JSON.parse(deltaOps));
+        }
+
+        function selectAlternativa(id) {
+            const checkboxes = document.querySelectorAll(".alternativas .uk-checkbox");
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            checkboxes[id].checked = true;
         }
     </script>
 }

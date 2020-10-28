@@ -8,6 +8,7 @@ using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,14 +27,30 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
-        public async Task<IActionResult> Index(int? disciplinaId, int? temaId, int? descritorId)
+        public async Task<IActionResult> Index(int? disciplinaId, int? temaId, int? descritorId, int? etapaId)
         {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
             var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
-            var questoes = await _context.Questoes
+            IEnumerable<Questao> questoes; 
+
+            if(etapaId.HasValue)
+            {
+                questoes = await _context.Questoes
                 .AsNoTracking()
                 .Include("Descritor.Tema.Disciplina")
+                .Include(x => x.Etapa)
+                .Where(x => x.EtapaId == etapaId)
                 .ToListAsync();
+            } 
+            else
+            {
+                questoes = await _context.Questoes
+                .AsNoTracking()
+                .Include("Descritor.Tema.Disciplina")
+                .Include(x => x.Etapa)
+                .ToListAsync();
+            }
 
             if (disciplinaId.HasValue)
             {
@@ -58,6 +75,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 }
             }
 
+            var etapas = await _context.Etapas
+                .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                .ToListAsync();
+
+            //var etapas = await _context.AvaliacaoDisciplinasEtapas.Include(x => x.Etapa)
+            //    .Where(x => x.AvaliacaoId == avaliacao.Id)
+            //    .Select(x => x.Etapa)
+            //    .Distinct()
+            //    .ToListAsync();
+
+            ViewBag.Etapas = new SelectList(etapas, "Id", "Nome", etapaId);
             ViewBag.Disciplinas = new SelectList(disciplinas, "Id", "Nome", disciplinaId);
 
             return View(questoes);
@@ -65,8 +93,15 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
-        public IActionResult CreateAsync()
+        public async Task<IActionResult> CreateAsync()
         {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+
+            var etapas = await _context.Etapas
+                .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                .ToListAsync();
+
+            ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
             return View();
@@ -81,12 +116,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
-                var _questao = await _context.Questoes.AddAsync(questao);
+                await _context.Questoes.AddAsync(questao);
                 await _context.SaveChangesAsync();
 
                 if (questao.Habilitada)
                 {
-                    await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao { AvaliacaoId = avaliacao.Id, QuestaoId = _questao.Entity.Id });
+                    await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao { AvaliacaoId = avaliacao.Id, QuestaoId = questao.Id });
                 }
 
                 await _context.SaveChangesAsync();
@@ -102,28 +137,37 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+
             var questao = await _context.Questoes
                 .AsNoTracking()
                 .Include("Descritor.Tema.Disciplina")
+                .Include(x => x.Alternativas)
                 .FirstOrDefaultAsync(x => x.Id == id);
-
-            var temaId = questao.Descritor.TemaId;
-            var disciplinaId = questao.Descritor.Tema.DisciplinaId;
-
+            
             if (questao is null)
             {
                 return NotFound();
             }
 
+            var temaId = questao.Descritor.TemaId;
+            var disciplinaId = questao.Descritor.Tema.DisciplinaId;
+
             var disciplinas = await _context.Disciplinas.ToListAsync();
             var temas = await _context.Temas.Include(x => x.Descritores).Where(x => x.DisciplinaId == disciplinaId).Distinct().ToListAsync();
             var descritores = temas.Where(x => x.Id == temaId).SelectMany(x => x.Descritores).Distinct();
 
+            var etapas = await _context.Etapas
+                .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                .ToListAsync();
+
+            ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
             ViewData["DisciplinaId"] = new SelectList(disciplinas, "Id", "Nome", questao.Descritor.Tema.DisciplinaId);
             ViewData["TemaId"] = new SelectList(temas, "Id", "Nome", questao.Descritor.TemaId);
             ViewData["DescritorId"] = new SelectList(descritores, "Id", "Nome", questao.Descritor.TemaId);
 
-            return View(questao);
+            var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
+            return View(questaoViewModel);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]

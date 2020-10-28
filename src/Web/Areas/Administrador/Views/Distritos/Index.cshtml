@@ -17,24 +17,31 @@
                 </tr>
             </thead>
             <tbody>
-        @foreach (var item in Model) {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Zona)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Distancia)</td>
-                    <td class="uk-flex uk-flex-center">
-                        @if (User.HasClaim(x => x.Value == Permissions.Distritos.Update))
-                        {
-                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                        }
-                        @if (User.HasClaim(x => x.Value == Permissions.Distritos.Delete))
-                        {
-                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
-                        }
-                    </td>
-                </tr>
-        }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Zona)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Distancia)</td>
+                        <td class="uk-flex uk-flex-center">
+                            @if (User.HasClaim(x => x.Value == Permissions.Distritos.Update))
+                            {
+                                <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                            }
+                            @if (User.HasClaim(x => x.Value == Permissions.Distritos.Delete))
+                            {
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
+                                    <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
-    </table>
+        </table>
     </div>
 </main>
+
+@section Scripts {
+    <script src="~/scripts/removeItem.js"></script>
+}

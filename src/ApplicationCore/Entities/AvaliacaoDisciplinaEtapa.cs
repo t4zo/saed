@@ -10,6 +10,5 @@ namespace SAED.ApplicationCore.Entities
         public Disciplina Disciplina { get; set; }
         public int EtapaId { get; set; }
         public Etapa Etapa { get; set; }
-        public int QtdQuestoes { get; set; }
     }
 }

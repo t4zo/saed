@@ -9,7 +9,6 @@ using SAED.Infrastructure.Identity;
 using SAED.Web.Configurations;
 using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
@@ -35,8 +34,6 @@ namespace SAED.Web.Extensions
                         foreach (var role in user.Roles)
                         {
                             await userManager.AddToRoleAsync(applicationUser, role);
-
-                            //await SeedUserClaims(userManager, user, role);
                         };
                     }
 
@@ -58,25 +55,6 @@ namespace SAED.Web.Extensions
                 {
                     context.Add(new UsuarioTurmaAvaliacao { ApplicationUserId = user.Id, AvaliacaoId = avaliacao.Id, TurmaId = 1 });
                 }
-            }
-        }
-
-        private static async Task SeedUserClaims(UserManager<ApplicationUser> userManager, ApplicationUser user, string role)
-        {
-            if (role.Equals(Roles.Administrador))
-            {
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create));
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update));
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete));
-            }
-
-            if (role.Equals(Roles.Aplicador))
-            {
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
-                await userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
             }
         }
     }
