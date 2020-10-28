@@ -17,7 +17,6 @@ using SAED.Web.Configurations;
 using SAED.Web.Extensions;
 using SAED.Web.Services;
 using System;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web
 {

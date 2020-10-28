@@ -32,9 +32,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
             var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
-            IEnumerable<Questao> questoes; 
+            IEnumerable<Questao> questoes;
 
-            if(etapaId.HasValue)
+            if (etapaId.HasValue)
             {
                 questoes = await _context.Questoes
                 .AsNoTracking()
@@ -42,7 +42,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Include(x => x.Etapa)
                 .Where(x => x.EtapaId == etapaId)
                 .ToListAsync();
-            } 
+            }
             else
             {
                 questoes = await _context.Questoes
@@ -144,7 +144,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Include("Descritor.Tema.Disciplina")
                 .Include(x => x.Alternativas)
                 .FirstOrDefaultAsync(x => x.Id == id);
-            
+
             if (questao is null)
             {
                 return NotFound();
