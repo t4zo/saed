@@ -10,7 +10,6 @@ namespace SAED.ApplicationCore.Entities
         public int Normativa { get; set; }
         public ICollection<Turma> Turmas { get; set; }
         public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
-        public ICollection<EtapaDescritor> EtapaDescritores { get; set; }
         public ICollection<Questao> Questoes { get; set; }
     }
 }

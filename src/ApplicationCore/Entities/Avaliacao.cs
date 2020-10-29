@@ -9,7 +9,6 @@ namespace SAED.ApplicationCore.Entities
         public StatusAvaliacao Status { get; set; }
         public ICollection<UsuarioTurmaAvaliacao> UsuarioTurmaAvaliacao { get; set; }
         public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
-        public ICollection<AvaliacaoDistrito> AvaliacaoDistritos { get; set; }
         public ICollection<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
         public ICollection<RespostaAluno> RespostaAlunos { get; set; }
     }

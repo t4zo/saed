@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Adicionar Questão";
-    var qtdAlternativas = 4;
+    var qtdAlternativas = 5;
 }
 
 @section Styles {
@@ -73,7 +73,6 @@
             </div>
             <input type="hidden" asp-for="Enunciado" />
         </section>
-        @*<hr class="uk-list-divider" />*@
         <section class="uk-margin-large-top uk-margin-bottom alternativas">
             <h3 class="uk-text-center">Alternativas</h3>
             <div class="uk-grid selectCheckboxAsRadio" uk-grid>
@@ -88,14 +87,6 @@
                         <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
                     </div>
                 }
-                @*<div class="uk-width-1-1 uk-flex-between">
-                        <div class="uk-flex uk-flex-between">
-                            <p class="uk-text-center">Alternativa E</p>
-                            <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[4].Correta" onchange="selectCheckboxAsRadio(4)"></label>
-                        </div>
-                        <div id="alternativaEEditor"></div>
-                        <input type="hidden" asp-for="Alternativas[4].Descricao" class="uk-input" />
-                    </div>*@
             </div>
         </section>
     </form>

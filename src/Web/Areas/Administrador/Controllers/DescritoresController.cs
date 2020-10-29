@@ -62,6 +62,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Descritor descritor)
         {
+            if(descritor.TemaId == 0)
+            {
+                ModelState.AddModelError("Tema", "Tema Inválido");
+                ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+                return View(descritor);
+            }
+
             if (ModelState.IsValid)
             {
                 await _context.AddAsync(descritor);

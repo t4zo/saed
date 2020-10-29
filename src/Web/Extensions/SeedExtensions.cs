@@ -375,13 +375,6 @@ namespace SAED.Web.Extensions
 
             //new EntitySeed<AvaliacaoDisciplina>(context, configuration).Load(avaliacaoDisciplinas, "AvaliacaoDisciplinas");
 
-            var avaliacaoDistritos = new List<AvaliacaoDistrito>
-            {
-                new AvaliacaoDistrito { AvaliacaoId = 1, DistritoId = 1 }
-            };
-
-            new EntitySeed<AvaliacaoDistrito>(context, configuration).Load(avaliacaoDistritos, "");
-
             var turmaAlunos = new List<TurmaAluno>
             {
                 new TurmaAluno { TurmaId = 1, AlunoId = 1 },
@@ -399,13 +392,6 @@ namespace SAED.Web.Extensions
             };
 
             new EntitySeed<RespostaAluno>(context, configuration).Load(respostaAlunos, "");
-
-            var etapaDescritores = new List<EtapaDescritor>
-            {
-                new EtapaDescritor { EtapaId = 11, DescritorId = 1 }
-            };
-
-            new EntitySeed<EtapaDescritor>(context, configuration).Load(etapaDescritores, "");
 
             var questaoAvaliacoes = new List<AvaliacaoQuestao>
             {

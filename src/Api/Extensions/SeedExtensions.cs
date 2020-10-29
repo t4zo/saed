@@ -368,19 +368,12 @@ namespace SAED.Api.Extensions
 
             var avaliacaoDisciplinas = new List<AvaliacaoDisciplinaEtapa>
             {
-                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 1 },
-                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 2 },
-                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 2, DisciplinaId = 3 }
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11 },
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11 },
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11 }
             };
 
             new EntitySeed<AvaliacaoDisciplinaEtapa>(context, configuration).Load(avaliacaoDisciplinas, "");
-
-            var avaliacaoDistritos = new List<AvaliacaoDistrito>
-            {
-                new AvaliacaoDistrito { AvaliacaoId = 1, DistritoId = 1 }
-            };
-
-            new EntitySeed<AvaliacaoDistrito>(context, configuration).Load(avaliacaoDistritos, "");
 
             var turmaAlunos = new List<TurmaAluno>
             {
@@ -399,13 +392,6 @@ namespace SAED.Api.Extensions
             };
 
             new EntitySeed<RespostaAluno>(context, configuration).Load(respostaAlunos, "");
-
-            var etapaDescritores = new List<EtapaDescritor>
-            {
-                new EtapaDescritor { EtapaId = 11, DescritorId = 1 }
-            };
-
-            new EntitySeed<EtapaDescritor>(context, configuration).Load(etapaDescritores, "");
 
             var questaoAvaliacoes = new List<AvaliacaoQuestao>
             {
