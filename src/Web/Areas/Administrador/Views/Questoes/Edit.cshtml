@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Editar Questão";
+    var qtdAlternativas = 4;
 }
 
 @section Styles {
@@ -25,56 +26,56 @@
         <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="submitForm()"></button>
     </div>
     <hr class="uk-list-divider" />
-    <form class="uk-grid-row-small form" uk-grid asp-action="Edit">
+    <form class="form" asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
-        <div class="uk-width-1-3">
-            <label class="uk-form-label">Disciplina</label>
-            <select id="Disciplinas" class="uk-select" asp-items="ViewBag.DisciplinaId">
-                <option value="">---------</option>
-            </select>
-        </div>
-        <div class="uk-width-1-3">
-            <label class="uk-form-label">Tema</label>
-            <select id="Temas" class="uk-select" asp-items="ViewBag.TemaId">
-                <option value="">---------</option>
-            </select>
-        </div>
-        <div class="uk-width-1-3">
-            <label class="uk-form-label">Descritores</label>
-            <select asp-for="DescritorId" class="uk-select" asp-items="ViewBag.DescritorId">
-                <option value="">---------</option>
-            </select>
-        </div>
-        <div class="uk-width-1-3">
-            <label class="uk-form-label">Etapa</label>
-            <select asp-for="EtapaId" class="uk-select" asp-items="ViewBag.EtapaId"></select>
-        </div>
-        <div class="uk-width-1-3">
-            <label asp-for="Item" class="uk-form-label"></label>
-            <input asp-for="Item" class="uk-input" />
-            <span asp-validation-for="Item" class="uk-text-danger"></span>
-        </div>
-        <div class="uk-width-1-3">
-            <label asp-for="Descricao" class="uk-form-label"></label>
-            <input asp-for="Descricao" class="uk-input" />
-            <span asp-validation-for="Descricao" class="uk-text-danger"></span>
-        </div>
-        <div class="uk-width-1-3 uk-flex uk-flex-middle uk-margin-top">
-            <input class="uk-checkbox" asp-for="Habilitada" style="width: 25px; height: 25px;" />
-            <label asp-for="Habilitada" class="uk-form-label"></label>
-        </div>
-        <div class="uk-width-1-1">
-            <h2 class="uk-text-center">Enunciado</h2>
-            <!-- Create the editor container -->
-            <div id="enunciadoEditor"></div>
-        </div>
-        <input type="hidden" asp-for="Enunciado" />
-        <input type="hidden" asp-for="Id" />
-        @*<hr class="uk-list-divider" />*@
+        <section class="uk-grid-row-small" uk-grid>
+            <div class="uk-width-1-3">
+                <label class="uk-form-label">Disciplina</label>
+                <select id="Disciplinas" asp-items="ViewBag.DisciplinaId" class="uk-select @(ViewContext.ViewData.ModelState.ContainsKey("EtapaDisciplina") ? "uk-form-danger" : string.Empty)">
+                    <option value="">---------</option>
+                </select>
+            </div>
+            <div class="uk-width-1-3">
+                <label class="uk-form-label">Tema</label>
+                <select id="Temas" class="uk-select" asp-items="ViewBag.TemaId">
+                    <option value="">---------</option>
+                </select>
+            </div>
+            <div class="uk-width-1-3">
+                <label class="uk-form-label">Descritores</label>
+                <select asp-for="DescritorId" asp-items="ViewBag.DescritorId" class="uk-select @(ViewContext.ViewData.ModelState.ContainsKey("DescritorId") ? "uk-form-danger" : string.Empty)">
+                    <option value="">---------</option>
+                </select>
+                <span asp-validation-for="Descritor" class="uk-text-danger"></span>
+            </div>
+            <div class="uk-width-1-3">
+                <label class="uk-form-label">Etapa</label>
+                <select asp-for="EtapaId" asp-items="ViewBag.EtapaId" class="uk-select @(ViewContext.ViewData.ModelState.ContainsKey("EtapaDisciplina") ? "uk-form-danger" : string.Empty)"></select>
+            </div>
+            <div class="uk-width-1-3">
+                <label asp-for="Item" class="uk-form-label"></label>
+                <input asp-for="Item" class="uk-input" />
+                <span asp-validation-for="Item" class="uk-text-danger"></span>
+            </div>
+            <div class="uk-width-1-3">
+                <label asp-for="Descricao" class="uk-form-label"></label>
+                <input asp-for="Descricao" class="uk-input" />
+            </div>
+            <div class="uk-width-1-3 uk-flex uk-flex-middle uk-margin-top">
+                <input class="uk-checkbox" asp-for="Habilitada" style="width: 25px; height: 25px;" />
+                <label asp-for="Habilitada" class="uk-form-label"></label>
+            </div>
+            <div class="uk-width-1-1">
+                <h2 class="uk-text-center">Enunciado</h2>
+                <div id="enunciadoEditor"></div>
+            </div>
+            <input type="hidden" asp-for="Enunciado" />
+            <input type="hidden" asp-for="Id" />
+        </section>
         <section class="uk-margin-large-top uk-margin-bottom alternativas">
             <h3 class="uk-text-center">Alternativas</h3>
             <div class="uk-grid selectCheckboxAsRadio" uk-grid>
-                @for (int i = 0; i < 4; i++)
+                @for (int i = 0; i < qtdAlternativas; i++)
                 {
                     <div class="uk-width-1-2">
                         <div class="uk-flex uk-flex-between">
@@ -87,14 +88,14 @@
                     </div>
                 }
                 @*<div class="uk-width-1-1 uk-flex-between">
-            <div class="uk-flex uk-flex-between">
-                <p class="uk-text-center">Alternativa E</p>
-                <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[4].Correta" onchange="selectCheckboxAsRadio(4)"></label>
-            </div>
-            <div id="alternativaEEditor"></div>
-            <input type="hidden" asp-for="Alternativas[4].Descricao" class="uk-input" />
-                    <input type="hidden" asp-for="Alternativas[4].Id" class="uk-input" value="@Model.Alternativas[4].Id"/>
-        </div>*@
+                    <div class="uk-flex uk-flex-between">
+                        <p class="uk-text-center">Alternativa E</p>
+                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[4].Correta" onchange="selectCheckboxAsRadio(4)"></label>
+                    </div>
+                    <div id="alternativaEEditor"></div>
+                    <input type="hidden" asp-for="Alternativas[4].Descricao" class="uk-input" />
+                            <input type="hidden" asp-for="Alternativas[4].Id" class="uk-input" value="@Model.Alternativas[4].Id"/>
+                </div>*@
             </div>
         </section>
     </form>
@@ -103,17 +104,14 @@
 @section Scripts {
     <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
     <script type="text/javascript" src="~/scripts/selectCheckboxAsRadio.js"></script>
+    <script type="text/javascript" src="~/scripts/quill.js"></script>
 
     <!-- Include the Quill library -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="~/libs/quill-image-resize/image-resize.min.js"></script>
 
     <script>
-        let quillAlternativa0Editor;
-        let quillAlternativa1Editor;
-        let quillAlternativa2Editor;
-        let quillAlternativa3Editor;
-        let quillAlternativa4Editor;
+        const alternativas = [];
 
         document.addEventListener("DOMContentLoaded", () => {
             const disciplinaField = document.querySelector("#Disciplinas");
@@ -134,57 +132,20 @@
 
         });
 
-        const toolbarOptions = [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
-
-            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
-
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            ['link', 'image', 'video', 'formula'],          // add's image support
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-
-            ['clean']                                         // remove formatting button
-        ];
-
-        const quillEnunciadoEditor = new Quill('#enunciadoEditor', {
-            theme: 'snow',
-            modules: {
-                toolbar: toolbarOptions,
-                imageResize: {
-                    displaySize: true // default false
-                }
-            },
-        });
-
-        quillAlternativa0Editor = new Quill('#alternativa0Editor', { theme: 'snow' });
-        quillAlternativa1Editor = new Quill('#alternativa1Editor', { theme: 'snow' });
-        quillAlternativa2Editor = new Quill('#alternativa2Editor', { theme: 'snow' });
-        quillAlternativa3Editor = new Quill('#alternativa3Editor', { theme: 'snow' });
-        //quillAlternativa4Editor = new Quill('#alternativa4Editor', { theme: 'snow' });
-
+        const quillEnunciadoEditor = createExpandedQuill("#enunciadoEditor");
         bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
-        bindDeltaToInput("#Alternativas_0__Descricao", quillAlternativa0Editor);
-        bindDeltaToInput("#Alternativas_1__Descricao", quillAlternativa1Editor);
-        bindDeltaToInput("#Alternativas_2__Descricao", quillAlternativa2Editor);
-        bindDeltaToInput("#Alternativas_3__Descricao", quillAlternativa3Editor);
-        //bindDeltaToInput("#Alternativas_4__Descricao", quillAlternativa4Editor);
+
+        for (var i = 0; i < @qtdAlternativas; i++) {
+            alternativas.push(createTinyQuill(`#alternativa${i}Editor`));
+            bindDeltaToInput(`#Alternativas_${i}__Descricao`, alternativas[i]);
+        }
 
         function submitForm() {
             bindEnunciadoEditorToInput();
 
-            bindAlternativaToInput('#Alternativas_0__Descricao', quillAlternativa0Editor);
-            bindAlternativaToInput('#Alternativas_1__Descricao', quillAlternativa1Editor);
-            bindAlternativaToInput('#Alternativas_2__Descricao', quillAlternativa2Editor);
-            bindAlternativaToInput('#Alternativas_3__Descricao', quillAlternativa3Editor);
-            //bindAlternativaToInput('#Alternativas_4__Descricao', quillAlternativa4Editor);
+            for (var i = 0; i < @qtdAlternativas; i++) {
+                bindAlternativaToInput(`#Alternativas_${i}__Descricao`, alternativas[i]);
+            }
 
             document.querySelector('.form').submit();
         }
@@ -201,6 +162,9 @@
 
         function bindDeltaToInput(selector, quill) {
             const deltaOps = document.querySelector(selector).value;
+            if (deltaOps === "") {
+                deltaOps = "{}"
+            }
             quill.setContents(JSON.parse(deltaOps));
         }
     </script>

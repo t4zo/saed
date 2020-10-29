@@ -117,21 +117,34 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
                 var descritor = await _context.Descritores.Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == questao.DescritorId);
-                var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x => x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId && x.EtapaId == questao.EtapaId);
 
+                if (descritor is null)
+                {
+                    ModelState.AddModelError("Descritor", "Descritor inválido");
+
+                    var etapas = await _context.Etapas
+                        .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                        .ToListAsync();
+
+                    ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
+                    ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+
+                    var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
+                    return View(questaoViewModel);
+                }
+
+                var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x => x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId && x.EtapaId == questao.EtapaId);
                 if (!avaliacaoDisciplinaEtapaExists)
                 {
+                    ModelState.AddModelError("", "Etapa e/ou Disciplina inválida(s)");
+                    ModelState.AddModelError("EtapaDisciplina", "Etapa e/ou Disciplina inválida(s)");
+
                     var etapas = await _context.Etapas
                         .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
                         .ToListAsync();
 
                     ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questao.EtapaId);
                     ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
-
-                    questao.Descritor = descritor;
-
-                    ModelState.AddModelError("", "Etapa e Disciplina inválida");
-                    ModelState.AddModelError("EtapaDisciplina", "Etapa e Disciplina inválida");
 
                     var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
                     return View(questaoViewModel);
@@ -201,9 +214,44 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
+            var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+
+            var descritor = await _context.Descritores.Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == questao.DescritorId);
+
+            if (descritor is null)
+            {
+                ModelState.AddModelError("Descritor", "Descritor inválido");
+
+                var etapas = await _context.Etapas
+                    .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                    .ToListAsync();
+
+                ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questao.EtapaId);
+                ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+
+                var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
+                return View(questaoViewModel);
+            }
+
+            var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x => x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId && x.EtapaId == questao.EtapaId);
+            if (!avaliacaoDisciplinaEtapaExists)
+            {
+                ModelState.AddModelError("", "Etapa e/ou Disciplina inválida(s)");
+                ModelState.AddModelError("EtapaDisciplina", "Etapa e/ou Disciplina inválida(s)");
+
+                var etapas = await _context.Etapas
+                    .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                    .ToListAsync();
+
+                ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questao.EtapaId);
+                ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+
+                var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
+                return View(questaoViewModel);
+            }
+
             if (ModelState.IsValid)
             {
-                var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
                 try
                 {
                     _context.Update(questao);
