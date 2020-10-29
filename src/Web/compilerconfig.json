@@ -1,6 +1,10 @@
 ﻿[
   {
-    "outputFile": "Web.wwwroot/css/administrador/table/header.css",
-    "inputFile": "Web.Areas/Administrador/Styles/table/header.scss"
+    "outputFile": "Styles/Global.css",
+    "inputFile": "Styles/Global.scss"
+  },
+  {
+    "outputFile": "wwwroot/styles/Home.css",
+    "inputFile": "wwwroot/styles/Home.scss"
   }
 ]

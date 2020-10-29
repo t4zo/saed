@@ -25,12 +25,12 @@
         <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="submitForm()"></button>
     </div>
     <hr class="uk-list-divider" />
-    <form class="create-form" asp-action="Create">
+    <form asp-action="Create" class="form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <section class="uk-grid-row-small create-form" uk-grid>
+        <section class="uk-grid-row-small" uk-grid>
             <div class="uk-width-1-3">
                 <label class="uk-form-label">Disciplina</label>
-                <select id="Disciplinas" class="uk-select" asp-items="ViewBag.DisciplinaId">
+                <select id="Disciplinas" asp-items="ViewBag.DisciplinaId" class="uk-select @(ViewContext.ViewData.ModelState.ContainsKey("EtapaDisciplina") ? "uk-form-danger" : string.Empty)">
                     <option value="">---------</option>
                 </select>
             </div>
@@ -48,7 +48,8 @@
             </div>
             <div class="uk-width-1-3">
                 <label class="uk-form-label">Etapa</label>
-                <select asp-for="EtapaId" class="uk-select" asp-items="ViewBag.EtapaId"></select>
+                <select asp-for="EtapaId" asp-items="ViewBag.EtapaId" class="uk-select @(ViewContext.ViewData.ModelState.ContainsKey("EtapaDisciplina") ? "uk-form-danger" : string.Empty)"></select>
+                <span asp-validation-for="EtapaId" class="uk-text-danger"></span>
             </div>
             <div class="uk-width-1-3">
                 <label asp-for="Item" class="uk-form-label"></label>
@@ -58,7 +59,7 @@
             <div class="uk-width-1-3">
                 <label asp-for="Descricao" class="uk-form-label">Descrição</label>
                 <input asp-for="Descricao" class="uk-input" />
-                <span asp-validation-for="Descricao" class="text-danger"></span>
+                <span asp-validation-for="Descricao" class="uk-text-danger"></span>
             </div>
             <div class="uk-width-1-3 uk-flex uk-flex-middle uk-margin-top">
                 <input class="uk-checkbox uk-margin-small-right" asp-for="Habilitada" style="width: 25px; height: 25px;" />
@@ -74,47 +75,26 @@
         @*<hr class="uk-list-divider" />*@
         <section class="uk-margin-large-top uk-margin-bottom alternativas">
             <h3 class="uk-text-center">Alternativas</h3>
-            <div class="uk-grid" uk-grid>
-                <div class="uk-width-1-2">
-                    <div class="uk-flex uk-flex-between">
-                        <p class="uk-text-center">Alternativa A</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[0].Correta" checked onchange="selectAlternativa(0)"></label>
+            <div class="uk-grid selectCheckboxAsRadio" uk-grid>
+                @for (int i = 0; i < 4; i++)
+                {
+                    <div class="uk-width-1-2">
+                        <div class="uk-flex uk-flex-between">
+                            <p class="uk-text-center">@(i+1)º Alternativa</p>
+                            <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[i].Correta" onchange="selectCheckboxAsRadio(@i)"></label>
+                        </div>
+                        <div id="alternativa@(i)Editor"></div>
+                        <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
                     </div>
-                    <div id="alternativaAEditor"></div>
-                    <input type="hidden" asp-for="Alternativas[0].Descricao" class="uk-input" />
-                </div>
-                <div class="uk-width-1-2">
-                    <div class="uk-flex uk-flex-between">
-                        <p class="uk-text-center">Alternativa B</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[1].Correta" onchange="selectAlternativa(1)"></label>
-                    </div>
-                    <div id="alternativaBEditor"></div>
-                    <input type="hidden" asp-for="Alternativas[1].Descricao" class="uk-input" />
-                </div>
-                <div class="uk-width-1-2">
-                    <div class="uk-flex uk-flex-between">
-                        <p class="uk-text-center">Alternativa C</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[2].Correta" onchange="selectAlternativa(2)"></label>
-                    </div>
-                    <div id="alternativaCEditor"></div>
-                    <input type="hidden" asp-for="Alternativas[2].Descricao" class="uk-input" />
-                </div>
-                <div class="uk-width-1-2 uk-flex-between">
-                    <div class="uk-flex uk-flex-between">
-                        <p class="uk-text-center">Alternativa D</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[3].Correta" onchange="selectAlternativa(3)"></label>
-                    </div>
-                    <div id="alternativaDEditor"></div>
-                    <input type="hidden" asp-for="Alternativas[3].Descricao" class="uk-input" />
-                </div>
+                }
                 @*<div class="uk-width-1-1 uk-flex-between">
-                    <div class="uk-flex uk-flex-between">
-                        <p class="uk-text-center">Alternativa E</p>
-                        <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[4].Correta" onchange="selectAlternativa(4)"></label>
-                    </div>
-                    <div id="alternativaEEditor"></div>
-                    <input type="hidden" asp-for="Alternativas[4].Descricao" class="uk-input" />
-                </div>*@
+                        <div class="uk-flex uk-flex-between">
+                            <p class="uk-text-center">Alternativa E</p>
+                            <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[4].Correta" onchange="selectCheckboxAsRadio(4)"></label>
+                        </div>
+                        <div id="alternativaEEditor"></div>
+                        <input type="hidden" asp-for="Alternativas[4].Descricao" class="uk-input" />
+                    </div>*@
             </div>
         </section>
     </form>
@@ -122,7 +102,19 @@
 
 @section Scripts {
     <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
+    <script type="text/javascript" src="~/scripts/selectCheckboxAsRadio.js"></script>
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="~/libs/quill-image-resize/image-resize.min.js"></script>
+
     <script>
+        let quillAlternativa0Editor;
+        let quillAlternativa1Editor;
+        let quillAlternativa2Editor;
+        let quillAlternativa3Editor;
+        let quillAlternativa4Editor;
+
         document.addEventListener("DOMContentLoaded", () => {
             const disciplinaField = document.querySelector("#Disciplinas");
             const temaField = document.querySelector("#Temas");
@@ -139,32 +131,8 @@
                 descritorField.selectedIndex = 0;
                 descritorField.disabled = true;
             });
+
         });
-    </script>
-
-    <!-- Include the Quill library -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="~/lib/quill-image-resize/image-resize.min.js"></script>
-
-    <!-- Initialize Quill editor -->
-    <script>
-        const quillAlternativaAEditor = new Quill('#alternativaAEditor', { theme: 'snow' });
-        const quillAlternativaBEditor = new Quill('#alternativaBEditor', { theme: 'snow' });
-        const quillAlternativaCEditor = new Quill('#alternativaCEditor', { theme: 'snow' });
-        const quillAlternativaDEditor = new Quill('#alternativaDEditor', { theme: 'snow' });
-        //const quillAlternativaEEditor = new Quill('#alternativaEEditor', { theme: 'snow' });
-
-        function submitForm() {
-            bindEnunciadoEditorToInput();
-
-            bindAlternativaToInput('#Alternativas_0__Descricao', quillAlternativaAEditor);
-            bindAlternativaToInput('#Alternativas_1__Descricao', quillAlternativaBEditor);
-            bindAlternativaToInput('#Alternativas_2__Descricao', quillAlternativaCEditor);
-            bindAlternativaToInput('#Alternativas_3__Descricao', quillAlternativaDEditor);
-            //bindAlternativaToInput('#Alternativas_4__Descricao', quillAlternativaEEditor);
-
-            document.querySelector('.create-form').submit();
-        }
 
         const toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -196,6 +164,31 @@
             },
         });
 
+        quillAlternativa0Editor = new Quill('#alternativa0Editor', { theme: 'snow' });
+        quillAlternativa1Editor = new Quill('#alternativa1Editor', { theme: 'snow' });
+        quillAlternativa2Editor = new Quill('#alternativa2Editor', { theme: 'snow' });
+        quillAlternativa3Editor = new Quill('#alternativa3Editor', { theme: 'snow' });
+        //quillAlternativa4Editor = new Quill('#alternativa4Editor', { theme: 'snow' });
+
+        bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
+        bindDeltaToInput("#Alternativas_0__Descricao", quillAlternativa0Editor);
+        bindDeltaToInput("#Alternativas_1__Descricao", quillAlternativa1Editor);
+        bindDeltaToInput("#Alternativas_2__Descricao", quillAlternativa2Editor);
+        bindDeltaToInput("#Alternativas_3__Descricao", quillAlternativa3Editor);
+        //bindDeltaToInput("#Alternativas_4__Descricao", quillAlternativa4Editor);
+
+        function submitForm() {
+            bindEnunciadoEditorToInput();
+
+            bindAlternativaToInput('#Alternativas_0__Descricao', quillAlternativa0Editor);
+            bindAlternativaToInput('#Alternativas_1__Descricao', quillAlternativa1Editor);
+            bindAlternativaToInput('#Alternativas_2__Descricao', quillAlternativa2Editor);
+            bindAlternativaToInput('#Alternativas_3__Descricao', quillAlternativa3Editor);
+            //bindAlternativaToInput('#Alternativas_4__Descricao', quillAlternativa4Editor);
+
+            document.querySelector('.form').submit();
+        }
+
         function bindEnunciadoEditorToInput() {
             const inputField = document.querySelector("#Enunciado");
             inputField.value = JSON.stringify(quillEnunciadoEditor.getContents());
@@ -206,14 +199,9 @@
             inputField.value = JSON.stringify(quill.getContents());
         }
 
-        function selectAlternativa(id) {
-            const checkboxes = document.querySelectorAll(".alternativas .uk-checkbox");
-
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-
-            checkboxes[id].checked = true;
+        function bindDeltaToInput(selector, quill) {
+            const deltaOps = document.querySelector(selector).value;
+            quill.setContents(JSON.parse(deltaOps));
         }
     </script>
 }

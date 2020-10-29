@@ -4,7 +4,7 @@
   "libraries": [
     {
       "library": "vanilla-datatables@1.6.16",
-      "destination": "wwwroot/lib/vanilla-datatables/",
+      "destination": "wwwroot/libs/vanilla-datatables/",
       "files": [
         "dist/vanilla-dataTables.min.css",
         "dist/vanilla-dataTables.min.js",
@@ -14,7 +14,7 @@
     },
     {
       "library": "pace-js@1.0.2",
-      "destination": "wwwroot/lib/pace-js/",
+      "destination": "wwwroot/libs/pace-js/",
       "files": [
         "themes/blue/pace-theme-center-atom.css",
         "themes/blue/pace-theme-center-simple.css",
@@ -38,7 +38,7 @@
     },
     {
       "library": "simplebar@5.3.0",
-      "destination": "wwwroot/lib/simplebar/",
+      "destination": "wwwroot/libs/simplebar/",
       "files": [
         "src/helpers.js",
         "src/index.js",
@@ -58,7 +58,7 @@
     },
     {
       "library": "uikit@3.5.9",
-      "destination": "wwwroot/lib/uikit/",
+      "destination": "wwwroot/libs/uikit/",
       "files": [
         "dist/css/uikit-core.css",
         "dist/css/uikit-core.min.css",
@@ -75,7 +75,7 @@
     {
       "provider": "jsdelivr",
       "library": "quill-image-resize@3.0.9",
-      "destination": "wwwroot/lib/quill-image-resize/",
+      "destination": "wwwroot/libs/quill-image-resize/",
       "files": [
         "image-resize.min.js"
       ]
