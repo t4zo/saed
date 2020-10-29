@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Authorization;
@@ -17,6 +16,7 @@ using SAED.Web.Configurations;
 using SAED.Web.Extensions;
 using SAED.Web.Services;
 using System;
+using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web
 {
@@ -42,7 +42,7 @@ namespace SAED.Web
 
             services.AddDbContext<ApplicationDbContext>();
 
-            // services.AddCustomCors(DefaultCorsPolicyName);
+            services.AddCustomCors(DefaultCorsPolicyName);
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<ApplicationRole>()
@@ -101,7 +101,7 @@ namespace SAED.Web
             services.AddRazorPages();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ILoggerFactory logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -136,7 +136,7 @@ namespace SAED.Web
 
             app.UseRouting();
             // app.UseRequestLocalization();
-            // app.UseCors(DefaultCorsPolicyName);
+            app.UseCors(DefaultCorsPolicyName);
 
             app.UseAuthentication();
             app.UseAuthorization();
