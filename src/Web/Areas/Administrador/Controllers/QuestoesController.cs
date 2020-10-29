@@ -110,13 +110,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Questao questao)
+        public async Task<IActionResult> Create(QuestaoViewModel questaoViewModel)
         {
             if (ModelState.IsValid)
             {
                 var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
-                var descritor = await _context.Descritores.Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == questao.DescritorId);
+                var descritor = await _context.Descritores.Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == questaoViewModel.DescritorId);
 
                 if (descritor is null)
                 {
@@ -129,11 +129,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
                     ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
-                    var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
                     return View(questaoViewModel);
                 }
 
-                var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x => x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId && x.EtapaId == questao.EtapaId);
+                var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x => x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId && x.EtapaId == questaoViewModel.EtapaId);
                 if (!avaliacaoDisciplinaEtapaExists)
                 {
                     ModelState.AddModelError("", "Etapa e/ou Disciplina inválida(s)");
@@ -143,13 +142,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
                         .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
                         .ToListAsync();
 
-                    ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questao.EtapaId);
+                    ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);
                     ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
-                    var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
                     return View(questaoViewModel);
                 }
 
+                var questao = _mapper.Map<Questao>(questaoViewModel);
                 await _context.Questoes.AddAsync(questao);
                 await _context.SaveChangesAsync();
 
@@ -163,9 +162,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
 
-            return View(questao);
+            return View(questaoViewModel);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
@@ -207,16 +206,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Questao questao)
+        public async Task<IActionResult> Edit(int id, QuestaoViewModel questaoViewModel)
         {
-            if (id != questao.Id)
+            if (id != questaoViewModel.Id)
             {
                 return NotFound();
             }
 
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
-            var descritor = await _context.Descritores.Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == questao.DescritorId);
+            var descritor = await _context.Descritores.Include("Tema.Disciplina").FirstOrDefaultAsync(x => x.Id == questaoViewModel.DescritorId);
 
             if (descritor is null)
             {
@@ -226,14 +225,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
                     .ToListAsync();
 
-                ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questao.EtapaId);
+                ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);
                 ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
-                var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
                 return View(questaoViewModel);
             }
 
-            var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x => x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId && x.EtapaId == questao.EtapaId);
+            var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x => x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId && x.EtapaId == questaoViewModel.EtapaId);
             if (!avaliacaoDisciplinaEtapaExists)
             {
                 ModelState.AddModelError("", "Etapa e/ou Disciplina inválida(s)");
@@ -243,15 +241,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
                     .ToListAsync();
 
-                ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questao.EtapaId);
+                ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);
                 ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
-                var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
                 return View(questaoViewModel);
             }
 
+
             if (ModelState.IsValid)
             {
+                var questao = _mapper.Map<Questao>(questaoViewModel);
+
                 try
                 {
                     _context.Update(questao);
@@ -291,9 +291,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questao.DescritorId);
+            ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
 
-            return View(questao);
+            return View(questaoViewModel);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Delete)]

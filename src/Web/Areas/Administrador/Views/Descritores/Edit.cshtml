@@ -21,8 +21,8 @@
         </div>
         <div class="uk-width-1-3">
             <label asp-for="TemaId" class="uk-form-label">Tema</label>
-            <select asp-for="TemaId" class="uk-select" asp-items="ViewBag.TemaId"></select>
-            <span asp-validation-for="TemaId" class="uk-text-danger"></span>
+            <select asp-for="TemaId" asp-items="ViewBag.TemaId" class="uk-select @(ViewContext.ViewData.ModelState.ContainsKey("Tema") ? "uk-form-danger" : string.Empty)"></select>
+            <span asp-validation-for="Tema" class="uk-text-danger"></span>
         </div>
         <div class="uk-width-1-3">
             <label asp-for="Nome" class="uk-form-label">Descritor</label>

@@ -62,7 +62,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Descritor descritor)
         {
-            if(descritor.TemaId == 0)
+            if (descritor.TemaId == 0)
             {
                 ModelState.AddModelError("Tema", "Tema Inválido");
                 ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
@@ -109,6 +109,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (id != descritor.Id)
             {
                 return NotFound();
+            }
+
+            if (descritor.TemaId == 0)
+            {
+                ModelState.AddModelError("Tema", "Tema Inválido");
+                ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+                return View(descritor);
             }
 
             if (ModelState.IsValid)
