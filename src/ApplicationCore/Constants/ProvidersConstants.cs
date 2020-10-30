@@ -1,6 +1,6 @@
 ﻿namespace SAED.ApplicationCore.Constants
 {
-    public static class Providers
+    public static class ProvidersConstants
     {
         public const string PROVIDER = "PROVIDER";
 

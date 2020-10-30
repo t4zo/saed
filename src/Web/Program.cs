@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using SAED.ApplicationCore.Constants;
+using System;
 
 namespace SAED.Web
 {
@@ -14,7 +16,14 @@ namespace SAED.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    if (Environment.GetEnvironmentVariable(ProvidersConstants.PROVIDER) == ProvidersConstants.DigitalOcean)
+                    {
+                        webBuilder.UseStartup<Startup>().UseUrls("http://localhost:5000");
+                    }
+                    else
+                    {
+                        webBuilder.UseStartup<Startup>();
+                    }
                 });
     }
 }

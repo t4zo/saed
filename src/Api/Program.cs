@@ -16,7 +16,7 @@ namespace SAED.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    if (Environment.GetEnvironmentVariable(Providers.PROVIDER) == Providers.DigitalOcean)
+                    if (Environment.GetEnvironmentVariable(ProvidersConstants.PROVIDER) == ProvidersConstants.DigitalOcean)
                     {
                         webBuilder.UseStartup<Startup>().UseUrls("https://localhost:5101");
                     }

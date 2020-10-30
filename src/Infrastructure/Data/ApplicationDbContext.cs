@@ -85,7 +85,7 @@ namespace SAED.Infrastructure.Data
             var entries = ChangeTracker
                 .Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
-            
+
             try
             {
                 foreach (var entityEntry in entries)
