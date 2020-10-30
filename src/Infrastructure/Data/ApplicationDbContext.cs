@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
+using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Identity;
 using System;
 using System.Linq;
@@ -45,24 +46,28 @@ namespace SAED.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
             var entities = builder.Model.GetEntityTypes();
 
             foreach (var entity in entities)
             {
+                if (_provider == Providers.DigitalOcean && !(entity is IManyToMany))
+                {
+                    entity.FindProperty("Id")?.SetIdentityStartValue(DatabaseConstants.StartIdValue);
+                }
+
                 entity.AddProperty("CreatedBy", typeof(string));
                 entity.AddProperty("UpdatedBy", typeof(string));
                 entity.AddProperty("CreatedDate", typeof(DateTime));
                 entity.AddProperty("UpdatedDate", typeof(DateTime));
             }
+
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            base.OnModelCreating(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-
             if (_provider == Providers.DigitalOcean)
             {
                 optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection"));
@@ -71,6 +76,8 @@ namespace SAED.Infrastructure.Data
             {
                 optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
             }
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         public override int SaveChanges()
@@ -78,6 +85,7 @@ namespace SAED.Infrastructure.Data
             var entries = ChangeTracker
                 .Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+            
             try
             {
                 foreach (var entityEntry in entries)

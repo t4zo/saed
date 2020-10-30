@@ -1,6 +1,6 @@
 ﻿namespace SAED.ApplicationCore.Constants
 {
-    public class AuthorizationConstants
+    public static class AuthorizationConstants
     {
         public static class Roles
         {
@@ -144,13 +144,6 @@
                 public const string Update = "Permissions.Alternativas.Update";
                 public const string Delete = "Permissions.Alternativas.Delete";
             }
-        }
-
-        public static class Database
-        {
-            public static int StartValueId = 100;
-
-            public const string DefaultPassword = "123qwe";
         }
 
         public const string DefaultCorsPolicyName = "localhost";
