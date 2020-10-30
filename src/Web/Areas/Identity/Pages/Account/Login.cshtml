@@ -56,7 +56,7 @@
         }
     </style>
 </head>
-<body class="grid">
+<body class="grid uk-overflow-hidden">
     <aside class="uk-visible@m aside">
         <img class="aside--image" src="https://images.pexels.com/photos/3558597/pexels-photo-3558597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1280&w=1656" alt="Alternate Text" />
         @*<img class="aside--image" src="https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Alternate Text" />*@
@@ -70,13 +70,13 @@
                 <div asp-validation-summary="All" class="uk-text-danger"></div>
                 <div class="uk-margin">
                     <div class="uk-inline uk-display-block">
-                        <a class="uk-form-icon" href="#" uk-icon="user"></a>
+                        <a class="uk-form-icon" uk-icon="user"></a>
                         <input asp-for="Input.Email" class="uk-input" placeholder="Usuário" />
                     </div>
                 </div>
                 <div class="uk-inline uk-display-block">
                     <div class="uk-margin">
-                        <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="lock"></a>
+                        <a class="uk-form-icon uk-form-icon-flip" uk-icon="lock"></a>
                         <input asp-for="Input.Password" class="uk-input" placeholder="Senha" />
                     </div>
                 </div>

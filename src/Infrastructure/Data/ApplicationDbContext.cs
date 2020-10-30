@@ -19,14 +19,14 @@ namespace SAED.Infrastructure.Data
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly string _provider;
+        private readonly string _databaseProvider;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
-            _provider = configuration[Providers.PROVIDER];
+            _databaseProvider = configuration[DatabaseConstants.DATABASE];
         }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
@@ -50,7 +50,7 @@ namespace SAED.Infrastructure.Data
 
             foreach (var entity in entities)
             {
-                if (_provider == Providers.DigitalOcean && !(entity is IManyToMany))
+                if (_databaseProvider == DatabaseConstants.Postgres && !(entity is IManyToMany))
                 {
                     entity.FindProperty("Id")?.SetIdentityStartValue(DatabaseConstants.StartIdValue);
                 }
@@ -68,7 +68,7 @@ namespace SAED.Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (_provider == Providers.DigitalOcean)
+            if (_databaseProvider == DatabaseConstants.Postgres)
             {
                 optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection"));
             }

@@ -10,7 +10,7 @@ using SAED.Infrastructure.Data;
 namespace SAED.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201028180054_Initial")]
+    [Migration("20201030190017_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -317,33 +317,6 @@ namespace SAED.Infrastructure.Migrations
                     b.ToTable("AvaliacaoDisciplinasEtapas");
                 });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDistrito", b =>
-                {
-                    b.Property<int>("AvaliacaoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DistritoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("AvaliacaoId", "DistritoId");
-
-                    b.HasIndex("DistritoId");
-
-                    b.ToTable("AvaliacaoDistrito");
-                });
-
             modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoQuestao", b =>
                 {
                     b.Property<int>("AvaliacaoId")
@@ -605,33 +578,6 @@ namespace SAED.Infrastructure.Migrations
                     b.HasIndex("SegmentoId");
 
                     b.ToTable("Etapas");
-                });
-
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.EtapaDescritor", b =>
-                {
-                    b.Property<int>("EtapaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DescritorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("EtapaId", "DescritorId");
-
-                    b.HasIndex("DescritorId");
-
-                    b.ToTable("EtapaDescritor");
                 });
 
             modelBuilder.Entity("SAED.ApplicationCore.Entities.Forma", b =>
@@ -1197,21 +1143,6 @@ namespace SAED.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDistrito", b =>
-                {
-                    b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
-                        .WithMany("AvaliacaoDistritos")
-                        .HasForeignKey("AvaliacaoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SAED.ApplicationCore.Entities.Distrito", "Distrito")
-                        .WithMany("AvaliacaoDistritos")
-                        .HasForeignKey("DistritoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoQuestao", b =>
                 {
                     b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
@@ -1254,21 +1185,6 @@ namespace SAED.Infrastructure.Migrations
                     b.HasOne("SAED.ApplicationCore.Entities.Segmento", "Segmento")
                         .WithMany("Etapas")
                         .HasForeignKey("SegmentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.EtapaDescritor", b =>
-                {
-                    b.HasOne("SAED.ApplicationCore.Entities.Descritor", "Descritor")
-                        .WithMany("EtapaDescritores")
-                        .HasForeignKey("DescritorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
-                        .WithMany("EtapaDescritores")
-                        .HasForeignKey("EtapaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

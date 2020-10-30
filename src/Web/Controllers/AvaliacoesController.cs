@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.Infrastructure.Data;
@@ -8,6 +9,7 @@ using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Controllers
 {
+    [Authorize]
     public class AvaliacoesController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -21,7 +21,7 @@ namespace SAED.Infrastructure.Data.Seed
         public virtual void Load(IEnumerable<TEntity> entities, string tableName)
         {
             var dbSet = _context.Set<TEntity>();
-            var provider = _configuration[Providers.PROVIDER];
+            var databaseProvider = _configuration[DatabaseConstants.DATABASE];
 
             if (!dbSet.Any())
             {
@@ -36,7 +36,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                 foreach (var entity in entities)
                 {
-                    if (provider != Providers.DigitalOcean)
+                    if (databaseProvider != DatabaseConstants.Postgres)
                     {
                         if (!(entity is IManyToMany))
                         {
@@ -46,7 +46,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                     _context.SaveChanges();
 
-                    if (provider != Providers.DigitalOcean)
+                    if (databaseProvider != DatabaseConstants.Postgres)
                     {
                         if (!(entity is IManyToMany))
                         {

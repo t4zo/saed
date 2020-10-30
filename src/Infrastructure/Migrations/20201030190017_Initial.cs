@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SAED.Infrastructure.Migrations
 {
@@ -358,34 +358,6 @@ namespace SAED.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AvaliacaoDistrito",
-                columns: table => new
-                {
-                    AvaliacaoId = table.Column<int>(nullable: false),
-                    DistritoId = table.Column<int>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AvaliacaoDistrito", x => new { x.AvaliacaoId, x.DistritoId });
-                    table.ForeignKey(
-                        name: "FK_AvaliacaoDistrito_Avaliacoes_AvaliacaoId",
-                        column: x => x.AvaliacaoId,
-                        principalTable: "Avaliacoes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_AvaliacaoDistrito_Distritos_DistritoId",
-                        column: x => x.DistritoId,
-                        principalTable: "Distritos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Escolas",
                 columns: table => new
                 {
@@ -528,34 +500,6 @@ namespace SAED.Infrastructure.Migrations
                         principalTable: "Etapas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EtapaDescritor",
-                columns: table => new
-                {
-                    EtapaId = table.Column<int>(nullable: false),
-                    DescritorId = table.Column<int>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EtapaDescritor", x => new { x.EtapaId, x.DescritorId });
-                    table.ForeignKey(
-                        name: "FK_EtapaDescritor_Descritores_DescritorId",
-                        column: x => x.DescritorId,
-                        principalTable: "Descritores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EtapaDescritor_Etapas_EtapaId",
-                        column: x => x.EtapaId,
-                        principalTable: "Etapas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -839,11 +783,6 @@ namespace SAED.Infrastructure.Migrations
                 column: "EtapaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoDistrito_DistritoId",
-                table: "AvaliacaoDistrito",
-                column: "DistritoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AvaliacaoQuestoes_QuestaoId",
                 table: "AvaliacaoQuestoes",
                 column: "QuestaoId");
@@ -862,11 +801,6 @@ namespace SAED.Infrastructure.Migrations
                 name: "IX_Escolas_MatrizId",
                 table: "Escolas",
                 column: "MatrizId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EtapaDescritor_DescritorId",
-                table: "EtapaDescritor",
-                column: "DescritorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Etapas_SegmentoId",
@@ -966,13 +900,7 @@ namespace SAED.Infrastructure.Migrations
                 name: "AvaliacaoDisciplinasEtapas");
 
             migrationBuilder.DropTable(
-                name: "AvaliacaoDistrito");
-
-            migrationBuilder.DropTable(
                 name: "AvaliacaoQuestoes");
-
-            migrationBuilder.DropTable(
-                name: "EtapaDescritor");
 
             migrationBuilder.DropTable(
                 name: "RespostaAluno");
