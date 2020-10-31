@@ -12,9 +12,9 @@ namespace SAED.Api.Services
     {
         private readonly AppConfiguration _appConfiguration;
 
-        public TokenService(IOptionsMonitor<AppConfiguration> options)
+        public TokenService(IOptionsMonitor<AppConfiguration> appConfiguration)
         {
-            _appConfiguration = options.Get("AppConfiguration");
+            _appConfiguration = appConfiguration.CurrentValue;
         }
 
         string ITokenService.GenerateJWTToken(ClaimsIdentity claimsIdentity)

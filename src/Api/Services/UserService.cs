@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using SAED.Api.Entities.Dto;
+using SAED.Api.Entities.Responses;
 using SAED.Api.Interfaces;
 using SAED.ApplicationCore.Interfaces;
 using SAED.Infrastructure.Data;
@@ -8,6 +8,7 @@ using SAED.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
@@ -37,40 +38,40 @@ namespace SAED.Api.Services
             _mapper = mapper;
         }
 
-        public async Task<UserRequest> AuthenticateAsync(string username, string password, bool remember)
+        public async Task<UserResponse> AuthenticateAsync(string username, string password, bool remember = false)
         {
             var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent: remember, lockoutOnFailure: false);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                var user = await _userManager.FindByNameAsync(username);
-                var userClaims = await _userManager.GetClaimsAsync(user);
-                var roles = await _userManager.GetRolesAsync(user);
+                throw new AuthenticationException("Usuário e/ou Senha inválido(s)");
+            }
 
-                var claimsIdentity = new ClaimsIdentity(new Claim[]
-                    {
+            var user = await _userManager.FindByNameAsync(username);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var claimsIdentity = new ClaimsIdentity(new Claim[]
+                {
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(Remember, remember.ToString().ToLower())
-                    });
+                });
 
-                claimsIdentity.AddClaims(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-                var token = _tokenService.GenerateJWTToken(claimsIdentity);
+            claimsIdentity.AddClaims(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            var token = _tokenService.GenerateJWTToken(claimsIdentity);
 
-                AddUserClaims(claimsIdentity, userClaims, roles);
+            AddUserClaims(claimsIdentity, userClaims, roles);
 
-                user.LastLogin = DateTime.Now;
-                await _context.SaveChangesAsync();
+            user.LastLogin = DateTime.Now;
+            await _context.SaveChangesAsync();
 
-                var userDto = _mapper.Map<UserRequest>(user);
+            var userResponse = _mapper.Map<UserResponse>(user);
 
-                userDto.Roles = roles;
-                userDto.Token = token;
+            userResponse.Roles = roles;
+            userResponse.Token = token;
 
-                return userDto.WithoutPassword();
-            }
-
-            return null;
+            return userResponse;
         }
 
         private void AddUserClaims(ClaimsIdentity claimsIdentity, IList<Claim> userClaims, IList<string> roles)

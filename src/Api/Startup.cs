@@ -33,7 +33,6 @@ namespace SAED.Api
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ITokenService, TokenService>();
@@ -48,23 +47,27 @@ namespace SAED.Api
 
             services.AddCustomCors(DefaultCorsPolicyName);
 
-            services.AddControllers()
-                .AddFluentValidation(configureExpression => configureExpression.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddControllers().AddFluentValidation(configureExpression => configureExpression.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
-            services.AddJwtSecurity(Configuration);
+            services.AddJwtSecurity();
 
             services.AddProblemDetails();
-
-            services.AddAuthorization();
 
             services.AddIdentityCore<ApplicationUser>(options =>
             {
                 options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
 
-                options.SignIn.RequireConfirmedEmail = false;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = false;
+
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
             })
                 .AddErrorDescriber<PortugueseIdentityErrorDescriber>()
                 .AddRoles<ApplicationRole>()
@@ -72,22 +75,22 @@ namespace SAED.Api
                 .AddDefaultTokenProviders()
                 .AddSignInManager();
 
+            services.AddRouting(options => options.LowercaseUrls = true);
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddSwagger();
-
-            services.AddRouting(options =>
-            {
-                options.LowercaseUrls = true;
-            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseProblemDetails();
@@ -113,7 +116,7 @@ namespace SAED.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers().RequireAuthorization();
+                endpoints.MapControllers();
             });
         }
     }

@@ -31,17 +31,14 @@ namespace SAED.Api.Controllers
         {
             var user = await _userService.AuthenticateAsync(authenticationRequest.Username, authenticationRequest.Password, authenticationRequest.Remember);
 
-            if (user is null)
-            {
-                return ValidationProblem("Usuário ou Senha Inválido(s)");
-            }
-
-            return Ok(new AuthenticationResponse
+            var response = new AuthenticationResponse
             {
                 Success = true,
-                Message = "User logged!",
-                User = _mapper.Map<UserResponse>(user)
-            });
+                Message = "Usuário conectado com sucesso!",
+                User = user
+            };
+
+            return Ok(response);
         }
 
         [Authorize(Roles = AuthorizationConstants.Roles.Superuser)]

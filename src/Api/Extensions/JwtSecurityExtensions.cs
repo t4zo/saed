@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SAED.Api.Configurations;
 
@@ -9,17 +9,10 @@ namespace SAED.Api.Extensions
 {
     public static class JwtSecurityExtensions
     {
-        public static IServiceCollection AddJwtSecurity(
-            this IServiceCollection services,
-            IConfiguration configuration
-            )
+        public static IServiceCollection AddJwtSecurity(this IServiceCollection services)
         {
-            // configure strongly typed settings objects
-            var appConfigurationSection = configuration.GetSection("AppConfiguration");
-            services.Configure<AppConfiguration>("AppConfiguration", appConfigurationSection);
-
-            // configure jwt authentication
-            var appConfiguration = appConfigurationSection.Get<AppConfiguration>();
+            var serviceProvider = services.BuildServiceProvider();
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
 
             services.AddAuthentication(options =>
             {

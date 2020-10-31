@@ -9,8 +9,8 @@ namespace SAED.Api
     {
         public MappingProfile()
         {
-            CreateMap<ApplicationUser, UserRequest>();
-            CreateMap<UserRequest, UserResponse>();
+            CreateMap<ApplicationUser, UserRequest>().ReverseMap();
+            CreateMap<ApplicationUser, UserResponse>().ReverseMap();
         }
     }
 }

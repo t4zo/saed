@@ -18,11 +18,11 @@ namespace SAED.Web.Extensions
         public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>();
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
 
             if (!await roleManager.Roles.AnyAsync())
             {
-                foreach (var role in appConfiguration.Value.Roles)
+                foreach (var role in appConfiguration.Roles)
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                     {

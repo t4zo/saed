@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace SAED.Api.Controllers
 {
-    [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
     public class AvaliacoesController : ApiControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -19,12 +18,14 @@ namespace SAED.Api.Controllers
             _context = context;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Avaliacao>>> GetAll()
         {
             return Ok(await _context.Avaliacoes.ToListAsync());
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
         [HttpGet("{id}")]
         public async Task<ActionResult<Avaliacao>> Get(int id)
         {

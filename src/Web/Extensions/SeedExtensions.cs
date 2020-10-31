@@ -366,14 +366,14 @@ namespace SAED.Web.Extensions
 
             new EntitySeed<Alternativa>(context, configuration).Load(alternativas, "Alternativas");
 
-            //var avaliacaoDisciplinas = new List<AvaliacaoDisciplina>
-            //{
-            //    new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 1 },
-            //    new AvaliacaoDisciplina { AvaliacaoId = 1, DisciplinaId = 2 },
-            //    new AvaliacaoDisciplina { AvaliacaoId = 2, DisciplinaId = 3 }
-            //};
+            var avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
+            {
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11 },
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11 },
+                new AvaliacaoDisciplinaEtapa { AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11 }
+            };
 
-            //new EntitySeed<AvaliacaoDisciplina>(context, configuration).Load(avaliacaoDisciplinas, "AvaliacaoDisciplinas");
+            new EntitySeed<AvaliacaoDisciplinaEtapa>(context, configuration).Load(avaliacaoDisciplinaEtapas, "AvaliacaoDisciplinasEtapas");
 
             var turmaAlunos = new List<TurmaAluno>
             {
@@ -393,13 +393,13 @@ namespace SAED.Web.Extensions
 
             new EntitySeed<RespostaAluno>(context, configuration).Load(respostaAlunos, "");
 
-            var questaoAvaliacoes = new List<AvaliacaoQuestao>
+            var avaliacaoQuestoes = new List<AvaliacaoQuestao>
             {
                 new AvaliacaoQuestao { QuestaoId = 1, AvaliacaoId = 1 },
                 new AvaliacaoQuestao { QuestaoId = 2, AvaliacaoId = 1 }
             };
 
-            new EntitySeed<AvaliacaoQuestao>(context, configuration).Load(questaoAvaliacoes, "");
+            new EntitySeed<AvaliacaoQuestao>(context, configuration).Load(avaliacaoQuestoes, "AvaliacaoQuestoes");
 
             return app;
         }

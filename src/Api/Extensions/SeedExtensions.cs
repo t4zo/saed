@@ -186,7 +186,7 @@ namespace SAED.Api.Extensions
                 new Curso { Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA" }
             };
 
-            new EntitySeed<Curso>(context, configuration).Load(cursos, "");
+            new EntitySeed<Curso>(context, configuration).Load(cursos, "Cursos");
 
             var segmentos = new List<Segmento>
             {
@@ -199,7 +199,7 @@ namespace SAED.Api.Extensions
                 new Segmento { Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF" }
             };
 
-            new EntitySeed<Segmento>(context, configuration).Load(segmentos, "");
+            new EntitySeed<Segmento>(context, configuration).Load(segmentos, "Segmentos");
 
             var etapas = new List<Etapa>
             {
@@ -227,7 +227,7 @@ namespace SAED.Api.Extensions
                 new Etapa { Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1}
             };
 
-            new EntitySeed<Etapa>(context, configuration).Load(etapas, "");
+            new EntitySeed<Etapa>(context, configuration).Load(etapas, "Etapas");
 
             var turnos = new List<Turno>
             {
@@ -325,17 +325,17 @@ namespace SAED.Api.Extensions
 
             var questoes = new List<Questao>
             {
-                new Questao { Id = 1, DescritorId = 1, Item = "P01", Enunciado = "Questao 01 - Descritor 1" },
-                new Questao { Id = 2, DescritorId = 1, Item = "P02", Enunciado = "Questao 02 - Descritor 1" },
-                new Questao { Id = 3, DescritorId = 1, Item = "P03", Enunciado = "Questao 03 - Descritor 1" },
-                new Questao { Id = 4, DescritorId = 1, Item = "P04", Enunciado = "Questao 04 - Descritor 1" },
-                new Questao { Id = 5, DescritorId = 2, Item = "P01", Enunciado = "Questao 01 - Descritor 2" },
-                new Questao { Id = 6, DescritorId = 2, Item = "P02", Enunciado = "Questao 02 - Descritor 2" },
-                new Questao { Id = 7, DescritorId = 3, Item = "P01", Enunciado = "Questao 01 - Descritor 3" },
-                new Questao { Id = 8, DescritorId = 4, Item = "P01", Enunciado = "Questao 01 - Descritor 4" },
-                new Questao { Id = 9, DescritorId = 4, Item = "P02", Enunciado = "Questao 02 - Descritor 4" },
-                new Questao { Id = 10, DescritorId = 2, Item = "P01", Enunciado = "Teste" },
-                new Questao { Id = 11, DescritorId = 3, Item = "P02", Enunciado = "Teste2" }
+                new Questao { Id = 1, DescritorId = 1, EtapaId = 11, Item = "P01", Enunciado = "Questao 01 - Descritor 1" },
+                new Questao { Id = 2, DescritorId = 1, EtapaId = 11, Item = "P02", Enunciado = "Questao 02 - Descritor 1" },
+                new Questao { Id = 3, DescritorId = 1, EtapaId = 11, Item = "P03", Enunciado = "Questao 03 - Descritor 1" },
+                new Questao { Id = 4, DescritorId = 1, EtapaId = 11, Item = "P04", Enunciado = "Questao 04 - Descritor 1" },
+                new Questao { Id = 5, DescritorId = 2, EtapaId = 11, Item = "P01", Enunciado = "Questao 01 - Descritor 2" },
+                new Questao { Id = 6, DescritorId = 2, EtapaId = 11, Item = "P02", Enunciado = "Questao 02 - Descritor 2" },
+                new Questao { Id = 7, DescritorId = 3, EtapaId = 11, Item = "P01", Enunciado = "Questao 01 - Descritor 3" },
+                new Questao { Id = 8, DescritorId = 4, EtapaId = 11, Item = "P01", Enunciado = "Questao 01 - Descritor 4" },
+                new Questao { Id = 9, DescritorId = 4, EtapaId = 11, Item = "P02", Enunciado = "Questao 02 - Descritor 4" },
+                new Questao { Id = 10, DescritorId = 2, EtapaId = 11, Item = "P01", Enunciado = "Teste" },
+                new Questao { Id = 11, DescritorId = 3, EtapaId = 11, Item = "P02", Enunciado = "Teste2" }
             };
 
             new EntitySeed<Questao>(context, configuration).Load(questoes, "Questoes");
@@ -366,14 +366,14 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Alternativa>(context, configuration).Load(alternativas, "Alternativas");
 
-            var avaliacaoDisciplinas = new List<AvaliacaoDisciplinaEtapa>
+            var avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
             {
                 new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11 },
                 new AvaliacaoDisciplinaEtapa { AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11 },
                 new AvaliacaoDisciplinaEtapa { AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11 }
             };
 
-            new EntitySeed<AvaliacaoDisciplinaEtapa>(context, configuration).Load(avaliacaoDisciplinas, "");
+            new EntitySeed<AvaliacaoDisciplinaEtapa>(context, configuration).Load(avaliacaoDisciplinaEtapas, "AvaliacaoDisciplinasEtapas");
 
             var turmaAlunos = new List<TurmaAluno>
             {
@@ -393,13 +393,13 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<RespostaAluno>(context, configuration).Load(respostaAlunos, "");
 
-            var questaoAvaliacoes = new List<AvaliacaoQuestao>
+            var avaliacaoQuestoes = new List<AvaliacaoQuestao>
             {
                 new AvaliacaoQuestao { QuestaoId = 1, AvaliacaoId = 1 },
                 new AvaliacaoQuestao { QuestaoId = 2, AvaliacaoId = 1 }
             };
 
-            new EntitySeed<AvaliacaoQuestao>(context, configuration).Load(questaoAvaliacoes, "");
+            new EntitySeed<AvaliacaoQuestao>(context, configuration).Load(avaliacaoQuestoes, "AvaliacaoQuestoes");
 
             return app;
         }

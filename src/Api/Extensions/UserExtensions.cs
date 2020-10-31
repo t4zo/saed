@@ -22,28 +22,28 @@ namespace SAED.Api.Extensions
             var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>();
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
 
             if (!await context.Users.AnyAsync())
             {
-                foreach (var _user in appConfiguration.Value.Users)
+                foreach (var user in appConfiguration.Users)
                 {
-                    var user = new ApplicationUser { Email = _user.Email, UserName = _user.UserName };
-                    var result = await userManager.CreateAsync(user, _user.Password);
+                    var applicationUser = new ApplicationUser { Email = user.Email, UserName = user.UserName };
+                    var result = await userManager.CreateAsync(applicationUser, user.Password);
 
                     if (result.Succeeded)
                     {
-                        foreach (var role in _user.Roles)
+                        foreach (var role in user.Roles)
                         {
-                            await userManager.AddToRoleAsync(user, role);
+                            await userManager.AddToRoleAsync(applicationUser, role);
 
-                            await SeedUserClaims(userManager, user, role);
+                            await SeedUserClaims(userManager, applicationUser, role);
 
                             await SeedRoleClaims(roleManager, role);
                         };
                     }
 
-                    await AddUsuarioTurmaAvaliacao(userManager, user, context);
+                    await AddUsuarioTurmaAvaliacao(userManager, applicationUser, context);
 
                     await context.SaveChangesAsync();
                 };
