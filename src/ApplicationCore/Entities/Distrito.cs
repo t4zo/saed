@@ -5,12 +5,12 @@ namespace SAED.ApplicationCore.Entities
     public class Distrito : BaseEntity
     {
         public string Nome { get; set; }
-        public ZonaEnum Zona { get; set; }
+        public Zona Zona { get; set; }
         public int Distancia { get; set; }
         public ICollection<Escola> Escolas { get; set; }
     }
 
-    public enum ZonaEnum
+    public enum Zona
     {
         Urbana,
         Rural

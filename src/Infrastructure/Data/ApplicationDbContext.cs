@@ -26,7 +26,7 @@ namespace SAED.Infrastructure.Data
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
-            _databaseProvider = configuration[DatabaseConstants.DATABASE];
+            _databaseProvider = configuration[DatabaseConstants.Database];
         }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }

@@ -21,7 +21,7 @@ namespace SAED.Infrastructure.Data.Seed
         public virtual void Load(IEnumerable<TEntity> entities, string tableName)
         {
             var dbSet = _context.Set<TEntity>();
-            var databaseProvider = _configuration[DatabaseConstants.DATABASE];
+            var databaseProvider = _configuration[DatabaseConstants.Database];
 
             if (!dbSet.Any())
             {

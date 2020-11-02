@@ -6,7 +6,7 @@
 
         public const string DefaultPassword = "123qwe";
 
-        public const string DATABASE = "DATABASE";
+        public const string Database = "Database";
 
         public const string Postgres = "Postgres";
 
