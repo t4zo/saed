@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Escolas.Create)]
         public async Task<IActionResult> Create()
         {
-            var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
+            var distritos = await _context.Distritos.AsNoTracking().Include(x => x.Escolas).ToListAsync();
 
             ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome");
             ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Nome");
@@ -44,23 +44,24 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _context.AddAsync(escola);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome", escola.DistritoId);
+                ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
+
+                return View(escola);
             }
 
-            ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome", escola.DistritoId);
-            ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
+            await _context.AddAsync(escola);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
-            return View(escola);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Escolas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
+            var distritos = await _context.Distritos.AsNoTracking().Include(x => x.Escolas).ToListAsync();
             var escola = distritos.FirstOrDefault(x => x.Escolas.Any(y => y.Id == id)).Escolas.First();
 
             if (escola is null)
@@ -86,33 +87,33 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             var distritos = await _context.Distritos.Include(x => x.Escolas).ToListAsync();
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(escola);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    var entity = await _context.Escolas.FindAsync(id);
-                    if (entity is null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome", escola.DistritoId);
+                ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
 
-                return RedirectToAction(nameof(Index));
+                return View(escola);
             }
 
-            ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome", escola.DistritoId);
-            ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
+            try
+            {
+                _context.Update(escola);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var entity = await _context.Escolas.FindAsync(id);
+                if (entity is null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return View(escola);
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Escolas.Delete)]
@@ -134,6 +135,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var escola = await _context.Escolas.FindAsync(id);
+
+            if (escola is null)
+            {
+                return NotFound();
+            }
+
             _context.Remove(escola);
             await _context.SaveChangesAsync();
 

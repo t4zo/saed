@@ -50,7 +50,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Descritores.Create)]
-        public IActionResult CreateAsync()
+        public IActionResult Create()
         {
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
@@ -66,20 +66,21 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 ModelState.AddModelError("Tema", "Tema Inválido");
                 ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+
                 return View(descritor);
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _context.AddAsync(descritor);
-                await _context.SaveChangesAsync();
+                ViewData["TemaId"] = new SelectList(_context.Temas, "Id", "Nome", descritor.TemaId);
 
-                return RedirectToAction(nameof(Index));
+                return View(descritor);
             }
 
-            ViewData["TemaId"] = new SelectList(_context.Temas, "Id", "Nome", descritor.TemaId);
+            await _context.AddAsync(descritor);
+            await _context.SaveChangesAsync();
 
-            return View(descritor);
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Descritores.Update)]
@@ -118,27 +119,27 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(descritor);
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(descritor);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    var entity = await _context.Descritores.FindAsync(id);
-                    if (entity is null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
                 return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                _context.Update(descritor);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var entity = await _context.Descritores.FindAsync(id);
+                if (entity is null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id", "Nome", descritor.TemaId);
@@ -167,6 +168,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var descritor = await _context.Descritores.FindAsync(id);
+
+            if (descritor is null)
+            {
+                return NotFound();
+            }
+
             _context.Remove(descritor);
             await _context.SaveChangesAsync();
 

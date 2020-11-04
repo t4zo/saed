@@ -248,52 +248,53 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
 
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var questao = _mapper.Map<Questao>(questaoViewModel);
+                ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
 
-                try
-                {
-                    _context.Update(questao);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    var entity = await _context.Questoes.FindAsync(id);
-                    if (entity is null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                return View(questaoViewModel);
+            }
 
-                var avaliacaoQuestao = await _context.AvaliacaoQuestoes.Include(x => x.Questao).FirstOrDefaultAsync(x => x.AvaliacaoId == avaliacao.Id && x.QuestaoId == questao.Id);
+            var questao = _mapper.Map<Questao>(questaoViewModel);
 
-                if (avaliacaoQuestao is null)
+            try
+            {
+                _context.Update(questao);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var entity = await _context.Questoes.FindAsync(id);
+                if (entity is null)
                 {
-                    if (questao.Habilitada)
-                    {
-                        await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao { AvaliacaoId = avaliacao.Id, QuestaoId = questao.Id });
-                    }
+                    return NotFound();
                 }
                 else
                 {
-                    if (!questao.Habilitada)
-                    {
-                        _context.Remove(avaliacaoQuestao);
-                    }
+                    throw;
                 }
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
+            var avaliacaoQuestao = await _context.AvaliacaoQuestoes.Include(x => x.Questao).FirstOrDefaultAsync(x => x.AvaliacaoId == avaliacao.Id && x.QuestaoId == questao.Id);
 
-            return View(questaoViewModel);
+            if (avaliacaoQuestao is null)
+            {
+                if (questao.Habilitada)
+                {
+                    await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao { AvaliacaoId = avaliacao.Id, QuestaoId = questao.Id });
+                }
+            }
+            else
+            {
+                if (!questao.Habilitada)
+                {
+                    _context.Remove(avaliacaoQuestao);
+                }
+            }
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Delete)]
@@ -315,6 +316,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var questao = await _context.Questoes.FindAsync(id);
+
+            if (questao is null)
+            {
+                return NotFound();
+            }
+
             _context.Remove(questao);
             await _context.SaveChangesAsync();
 

@@ -116,7 +116,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
+
+            if(role is null)
+            {
+                return NotFound();
+            }
+
             await _roleManager.DeleteAsync(role);
+
             return RedirectToAction(nameof(Index));
         }
     }

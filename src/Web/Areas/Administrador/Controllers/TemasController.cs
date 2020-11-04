@@ -23,8 +23,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.View)]
         public async Task<IActionResult> Index()
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
-
             var temas = await _context.Temas
                 .AsNoTracking()
                 .Include(x => x.Disciplina)
@@ -46,17 +44,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Tema tema)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _context.Temas.AddAsync(tema);
-                await _context.SaveChangesAsync();
+                ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", tema.DisciplinaId);
 
-                return RedirectToAction(nameof(Index));
+                return View(tema);
             }
 
-            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", tema.DisciplinaId);
+            await _context.AddAsync(tema);
+            await _context.SaveChangesAsync();
 
-            return View(tema);
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Temas.Update)]
@@ -84,32 +82,32 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(tema);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    var entity = await _context.Temas.FindAsync(id);
-                    if (entity is null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", tema.DisciplinaId);
 
-                return RedirectToAction(nameof(Index));
+                return View(tema);
             }
 
-            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", tema.DisciplinaId);
+            try
+            {
+                _context.Update(tema);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var entity = await _context.Temas.FindAsync(id);
+                if (entity is null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return View(tema);
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Temas.Delete)]
@@ -131,6 +129,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var tema = await _context.Temas.FindAsync(id);
+
+            if (tema is null)
+            {
+                return NotFound();
+            }
+
             _context.Remove(tema);
             await _context.SaveChangesAsync();
 

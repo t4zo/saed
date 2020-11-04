@@ -23,6 +23,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
             var avaliacaoDisciplinasEtapas = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
                 .Include(x => x.Avaliacao)
                 .Include(x => x.Disciplina)
                 .Include(x => x.Etapa)
@@ -46,20 +47,18 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction(nameof(Create));
-            }
-
-            var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(
-                x => x.AvaliacaoId == avaliacao.Id &&
-                x.DisciplinaId == avaliacaoDisciplinaEtapa.DisciplinaId &&
-                x.EtapaId == avaliacaoDisciplinaEtapa.EtapaId);
+            var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
+                .AnyAsync(
+                    x => x.AvaliacaoId == avaliacao.Id &&
+                    x.DisciplinaId == avaliacaoDisciplinaEtapa.DisciplinaId &&
+                    x.EtapaId == avaliacaoDisciplinaEtapa.EtapaId
+                );
 
             if (!avaliacaoDisciplinaEtapaExists)
             {
                 avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
-                _context.Add(avaliacaoDisciplinaEtapa);
+                await _context.AddAsync(avaliacaoDisciplinaEtapa);
             }
 
             await _context.SaveChangesAsync();
@@ -75,9 +74,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Include(x => x.Disciplina)
                 .Include(x => x.Etapa)
                 .FirstOrDefaultAsync(
-                x => x.AvaliacaoId == avaliacao.Id &&
-                x.DisciplinaId == disciplinaId &&
-                x.EtapaId == etapaId);
+                    x => x.AvaliacaoId == avaliacao.Id &&
+                    x.DisciplinaId == disciplinaId &&
+                    x.EtapaId == etapaId
+                );
 
             if (avaliacaoDisciplinaEtapa is null)
             {
@@ -96,56 +96,51 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Edit(int disciplinaId, int etapaId, AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
 
-            if (ModelState.IsValid)
+            try
             {
-                avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
-                try
-                {
-                    _context.Update(avaliacaoDisciplinaEtapa);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    var avaliacaoDisciplinaEtapaExists = _context.AvaliacaoDisciplinasEtapas.Any(
-                        x => x.AvaliacaoId == avaliacao.Id &&
-                        x.DisciplinaId == disciplinaId &&
-                        x.EtapaId == etapaId);
+                _context.Update(avaliacaoDisciplinaEtapa);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var avaliacaoDisciplinaEtapaExists = _context.AvaliacaoDisciplinasEtapas.Any(
+                    x => x.AvaliacaoId == avaliacao.Id &&
+                    x.DisciplinaId == disciplinaId &&
+                    x.EtapaId == etapaId);
 
-                    if (!avaliacaoDisciplinaEtapaExists)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                if (!avaliacaoDisciplinaEtapaExists)
+                {
+                    return NotFound();
                 }
-
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    throw;
+                }
             }
 
-            ViewData["AvaliacaoId"] = new SelectList(_context.Avaliacoes, "Id", "Codigo", avaliacaoDisciplinaEtapa.AvaliacaoId);
-            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", avaliacaoDisciplinaEtapa.DisciplinaId);
-
-            return View(avaliacaoDisciplinaEtapa);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int disciplinaId, int etapaId)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
-            var avaliacaoDisciplina = await _context.AvaliacaoDisciplinasEtapas.FirstOrDefaultAsync(
-                x => x.AvaliacaoId == avaliacao.Id &&
-                x.DisciplinaId == disciplinaId &&
-                x.EtapaId == etapaId);
+            var avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
+                .FirstOrDefaultAsync(
+                    x => x.AvaliacaoId == avaliacao.Id &&
+                    x.DisciplinaId == disciplinaId &&
+                    x.EtapaId == etapaId
+                );
 
-            if (avaliacaoDisciplina is null)
+            if (avaliacaoDisciplinaEtapa is null)
             {
                 return NotFound();
             }
 
-            return View(avaliacaoDisciplina);
+            return View(avaliacaoDisciplinaEtapa);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -154,12 +149,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
 
-            var avaliacaoDisciplina = await _context.AvaliacaoDisciplinasEtapas.FirstOrDefaultAsync(
+            var avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas.FirstOrDefaultAsync(
                 x => x.AvaliacaoId == avaliacao.Id &&
                 x.DisciplinaId == disciplinaId &&
-                x.EtapaId == etapaId);
+                x.EtapaId == etapaId
+            );
 
-            _context.AvaliacaoDisciplinasEtapas.Remove(avaliacaoDisciplina);
+            _context.Remove(avaliacaoDisciplinaEtapa);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

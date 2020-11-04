@@ -35,14 +35,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Avaliacao avaliacao)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _context.Avaliacoes.AddAsync(avaliacao);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(avaliacao);
             }
 
-            return View(avaliacao);
+            await _context.AddAsync(avaliacao);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
@@ -68,30 +68,30 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(avaliacao);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    var entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
-                    if (entity.Id != id)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return RedirectToAction(nameof(Index));
+                return View(avaliacao);
             }
 
-            return View(avaliacao);
+            try
+            {
+                _context.Update(avaliacao);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
+                if (entity.Id != id)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
@@ -113,6 +113,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            
+            if (avaliacao is null)
+            {
+                return NotFound();
+            }
+
             _context.Remove(avaliacao);
 
             await _context.SaveChangesAsync();

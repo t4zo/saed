@@ -36,15 +36,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Disciplina disciplina)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(disciplina);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
+                return View(disciplina);
             }
 
-            return View(disciplina);
+            await _context.AddAsync(disciplina);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Update)]
@@ -70,29 +71,30 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(disciplina);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Disciplinas.Any(e => e.Id == id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return RedirectToAction(nameof(Index));
+                return View(disciplina);
             }
 
-            return View(disciplina);
+            try
+            {
+                _context.Update(disciplina);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Disciplinas.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Delete)]
@@ -114,7 +116,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var disciplina = await _context.Disciplinas.FindAsync(id);
-            _context.Disciplinas.Remove(disciplina);
+            
+            if (disciplina is null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(disciplina);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
