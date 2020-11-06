@@ -63,7 +63,7 @@ namespace SAED.Web.Extensions
             {
                 foreach (var permission in permissions)
                 {
-                    if (permission.Contains("View") && !(permission.Contains("Grupos") || permission.Contains("Usuarios")))
+                    if ((permission.Contains("View") || permission.Contains("Selecao")) && !(permission.Contains("Grupos") || permission.Contains("Usuarios")))
                     {
                         await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(), new Claim(CustomClaimTypes.Permission, permission));
                     }

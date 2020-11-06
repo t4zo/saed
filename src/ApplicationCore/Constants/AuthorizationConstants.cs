@@ -14,6 +14,7 @@
         public static class Areas
         {
             public const string Administrador = "Administrador";
+            public const string Aplicador = "Aplicador";
         }
 
         public static class CustomClaimTypes
@@ -127,6 +128,14 @@
                 public const string Create = "Permissions.Descritores.Create";
                 public const string Update = "Permissions.Descritores.Update";
                 public const string Delete = "Permissions.Descritores.Delete";
+            }
+
+            public static class Selecao
+            {
+                public const string View = "Permissions.Selecao.View";
+                public const string Create = "Permissions.Selecao.Create";
+                public const string Update = "Permissions.Selecao.Update";
+                public const string Delete = "Permissions.Selecao.Delete";
             }
 
             public static class Questoes

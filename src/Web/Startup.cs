@@ -153,6 +153,12 @@ namespace SAED.Web
                 ).RequireAuthorization();
 
                 endpoints.MapAreaControllerRoute(
+                    name: "aplicador",
+                    areaName: "Aplicador",
+                    pattern: "{area=Aplicador}/{controller=Home}/{action=Index}/{id?}"
+                ).RequireAuthorization();
+
+                endpoints.MapAreaControllerRoute(
                     name: "api",
                     areaName: "Api",
                     pattern: "{area=Api}/{controller=Home}/{action=Index}/{id?}"

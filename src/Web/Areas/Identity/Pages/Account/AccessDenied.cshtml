@@ -1,11 +1,16 @@
 ﻿@page
 @model AccessDeniedModel
 @{
-    Layout = "~/Views/Shared/Layouts/_AdministradorLayout.cshtml";
-    ViewData["Title"] = "Acesso Negado";
+    Layout = null;
+    //Layout = "~/Views/Shared/Layouts/_AdministradorLayout.cshtml";
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
+<html>
+<head>
+    <title>Acesso Negado</title>
+</head>
+<body>
+    <h1 class="text-danger">Acesso Negado</h1>
     <p class="text-danger">Você não possui as permissões necessárias para acessar este recurso.</p>
-</header>
+</body>
+</html>
