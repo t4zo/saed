@@ -7,15 +7,16 @@ namespace SAED.Api.Extensions
 {
     public static class CorsExtensions
     {
-        public static IServiceCollection AddCustomCors(this IServiceCollection services, string _defaultCorsPolicyName)
+        public static IServiceCollection AddCustomCors(this IServiceCollection services, string defaultCorsPolicyName)
         {
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
             var allowedOrigins = configuration.GetSection("AllowedOrigins").Get<string[]>();
+            allowedOrigins ??= new string[] { };
 
             services.AddCors(setupAction =>
             {
-                setupAction.AddPolicy(_defaultCorsPolicyName, configurePolicy =>
+                setupAction.AddPolicy(defaultCorsPolicyName, configurePolicy =>
                 {
                     configurePolicy
                         .WithOrigins(allowedOrigins)
