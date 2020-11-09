@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,7 +15,6 @@ using SAED.Web.Configurations;
 using SAED.Web.Extensions;
 using SAED.Web.Services;
 using System;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web
 {
@@ -38,32 +36,29 @@ namespace SAED.Web
 
             services.AddScoped<UserService>();
 
-            services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
+            //services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
+            services.AddOptions<AppConfiguration>().Bind(Configuration.GetSection(nameof(AppConfiguration)));
 
             services.AddDbContext<ApplicationDbContext>();
 
-            services.AddCustomCors(DefaultCorsPolicyName);
+            services.AddDefaultIdentity<ApplicationUser>(configureOptions =>
+            {
+                configureOptions.Password.RequireDigit = true;
+                configureOptions.Password.RequireLowercase = true;
+                configureOptions.Password.RequireNonAlphanumeric = false;
+                configureOptions.Password.RequireUppercase = false;
+                configureOptions.Password.RequiredLength = 6;
+                configureOptions.Password.RequiredUniqueChars = 1;
 
-            services.AddDefaultIdentity<ApplicationUser>()
+                configureOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                configureOptions.Lockout.MaxFailedAccessAttempts = 10;
+                configureOptions.Lockout.AllowedForNewUsers = false;
+
+                configureOptions.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                configureOptions.User.RequireUniqueEmail = true;
+            })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
-
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 10;
-                options.Lockout.AllowedForNewUsers = false;
-
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;
-            });
 
             services.AddSession(options =>
             {
@@ -136,7 +131,6 @@ namespace SAED.Web
 
             app.UseRouting();
             // app.UseRequestLocalization();
-            app.UseCors(DefaultCorsPolicyName);
 
             app.UseAuthentication();
             app.UseAuthorization();

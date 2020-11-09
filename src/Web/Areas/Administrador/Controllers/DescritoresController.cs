@@ -34,8 +34,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 descritores = descritores.Where(d => d.Tema.DisciplinaId == disciplinaId.Value).ToList();
 
-                //var temas = descritores.Select(x => x.Tema).Distinct();
-                var temas = await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == disciplinaId.Value).Distinct().ToListAsync();
+                var temas = descritores.Select(x => x.Tema).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
 
                 if (temaId.HasValue)

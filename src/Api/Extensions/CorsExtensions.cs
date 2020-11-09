@@ -1,23 +1,30 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 
 namespace SAED.Api.Extensions
 {
     public static class CorsExtensions
     {
-        public static IServiceCollection AddCustomCors(this IServiceCollection service, string _defaultCorsPolicyName)
+        public static IServiceCollection AddCustomCors(this IServiceCollection services, string _defaultCorsPolicyName)
         {
-            service.AddCors(options =>
+            var serviceProvider = services.BuildServiceProvider();
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            var allowedOrigins = configuration.GetSection("AllowedOrigins").Get<string[]>();
+
+            services.AddCors(setupAction =>
             {
-                options.AddPolicy(_defaultCorsPolicyName, configurePolicy =>
+                setupAction.AddPolicy(_defaultCorsPolicyName, configurePolicy =>
                 {
                     configurePolicy
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .WithOrigins(allowedOrigins)
+                        .WithHeaders(HeaderNames.Authorization)
+                        .WithMethods(new string[] { HttpMethods.Get, HttpMethods.Post, HttpMethods.Put, HttpMethods.Delete });
                 });
             });
 
-            return service;
+            return services;
         }
     }
 }

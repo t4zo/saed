@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Interfaces;
 using System.Collections.Generic;
@@ -10,18 +9,17 @@ namespace SAED.Infrastructure.Data.Seed
     public class EntitySeed<TEntity> : IEntitySeed<TEntity> where TEntity : class
     {
         protected readonly ApplicationDbContext _context;
-        private readonly IConfiguration _configuration;
+        private readonly string _databaseProvider;
 
-        public EntitySeed(ApplicationDbContext context, IConfiguration configuration)
+        public EntitySeed(ApplicationDbContext context, string databaseProvider)
         {
             _context = context;
-            _configuration = configuration;
+            _databaseProvider = databaseProvider;
         }
 
         public virtual void Load(IEnumerable<TEntity> entities, string tableName)
         {
             var dbSet = _context.Set<TEntity>();
-            var databaseProvider = _configuration[DatabaseConstants.Database];
 
             if (!dbSet.Any())
             {
@@ -36,7 +34,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                 foreach (var entity in entities)
                 {
-                    if (databaseProvider != DatabaseConstants.Postgres)
+                    if (_databaseProvider != DatabaseConstants.Postgres)
                     {
                         if (!(entity is IManyToMany))
                         {
@@ -46,7 +44,7 @@ namespace SAED.Infrastructure.Data.Seed
 
                     _context.SaveChanges();
 
-                    if (databaseProvider != DatabaseConstants.Postgres)
+                    if (_databaseProvider != DatabaseConstants.Postgres)
                     {
                         if (!(entity is IManyToMany))
                         {

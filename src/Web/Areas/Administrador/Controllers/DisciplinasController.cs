@@ -116,7 +116,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var disciplina = await _context.Disciplinas.FindAsync(id);
-            
+
             if (disciplina is null)
             {
                 return NotFound();

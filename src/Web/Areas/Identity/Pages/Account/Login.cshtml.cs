@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
-using SAED.Web.Extensions;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -91,14 +89,6 @@ namespace SAED.Web.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
-
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user != null)
-                {
-                    HttpContext.Session.Set("SaveChangesLogin", true);
-                    user.LastLogin = DateTime.Now;
-                    await _context.SaveChangesAsync();
-                }
 
                 return LocalRedirect(returnUrl);
             }

@@ -113,7 +113,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var avaliacao = await _context.Avaliacoes.FindAsync(id);
-            
+
             if (avaliacao is null)
             {
                 return NotFound();

@@ -32,40 +32,20 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
             var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
-            IEnumerable<Questao> questoes;
-
-            if (etapaId.HasValue)
-            {
-                questoes = await _context.Questoes
-                .AsNoTracking()
-                .Include("Descritor.Tema.Disciplina")
-                .Include(x => x.Etapa)
-                .Where(x => x.EtapaId == etapaId)
-                .ToListAsync();
-            }
-            else
-            {
-                questoes = await _context.Questoes
-                .AsNoTracking()
-                .Include("Descritor.Tema.Disciplina")
-                .Include(x => x.Etapa)
-                .ToListAsync();
-            }
+            var questoes = await GetQuestoesAsync(etapaId);
 
             if (disciplinaId.HasValue)
             {
                 questoes = questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplinaId.Value).ToList();
 
-                //var temas = questoes.Select(x => x.Descritor.Tema).Distinct();
-                var temas = await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == disciplinaId.Value).Distinct().ToListAsync();
+                var temas = questoes.Select(x => x.Descritor.Tema).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
 
                 if (temaId.HasValue)
                 {
                     questoes = questoes.Where(x => x.Descritor.TemaId == temaId.Value).ToList();
 
-                    //var descritores = questoes.Select(x => x.Descritor).Distinct();
-                    var descritores = await _context.Descritores.AsNoTracking().Where(x => x.TemaId == temaId.Value).Distinct().ToListAsync();
+                    var descritores = questoes.Select(x => x.Descritor).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                     ViewBag.Descritores = new SelectList(descritores, "Id", "Nome", descritorId);
 
                     if (descritorId.HasValue)
@@ -79,6 +59,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
                 .ToListAsync();
 
+            // Another way to do it
             //var etapas = await _context.AvaliacaoDisciplinasEtapas.Include(x => x.Etapa)
             //    .Where(x => x.AvaliacaoId == avaliacao.Id)
             //    .Select(x => x.Etapa)
@@ -90,6 +71,25 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             return View(questoes);
 
+        }
+
+        private async Task<IEnumerable<Questao>> GetQuestoesAsync(int? etapaId)
+        {
+            if (etapaId.HasValue)
+            {
+                return await _context.Questoes
+                 .AsNoTracking()
+                 .Include("Descritor.Tema.Disciplina")
+                 .Include(x => x.Etapa)
+                 .Where(x => x.EtapaId == etapaId)
+                 .ToListAsync();
+            }
+
+            return await _context.Questoes
+            .AsNoTracking()
+            .Include("Descritor.Tema.Disciplina")
+            .Include(x => x.Etapa)
+            .ToListAsync();
         }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]

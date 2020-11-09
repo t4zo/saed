@@ -115,7 +115,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var distrito = await _context.Distritos.FindAsync(id);
-            
+
             if (distrito is null)
             {
                 return NotFound();

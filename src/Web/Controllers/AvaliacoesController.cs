@@ -37,7 +37,7 @@ namespace SAED.Web.Controllers
                 return Redirect(Url.RouteUrl(new { controller = "Dashboard", action = "Index", area = "Administrador" }));
             }
 
-            if(User.IsInRole(Roles.Aplicador))
+            if (User.IsInRole(Roles.Aplicador))
             {
                 return Redirect(Url.RouteUrl(new { controller = "Selecao", action = "Index", area = "Aplicador" }));
             }

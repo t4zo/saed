@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using SAED.Web.Extensions;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
