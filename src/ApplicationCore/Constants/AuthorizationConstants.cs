@@ -155,8 +155,6 @@
             }
         }
 
-        public const string DefaultCorsPolicyName = "localhost";
-
         public const string Remember = "rmb";
     }
 }

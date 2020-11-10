@@ -20,7 +20,6 @@ using SAED.Infrastructure.i18n;
 using SAED.Infrastructure.Identity;
 using System;
 using System.Reflection;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Api
 {
@@ -41,11 +40,12 @@ namespace SAED.Api
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
-            services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
+            //services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
+            services.AddOptions<AppConfiguration>().Bind(Configuration.GetSection(nameof(AppConfiguration)));
 
             services.AddDbContext<ApplicationDbContext>();
 
-            services.AddCustomCors(DefaultCorsPolicyName);
+            services.AddCustomCors();
 
             services.AddControllers().AddFluentValidation(configureExpression => configureExpression.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
@@ -109,7 +109,7 @@ namespace SAED.Api
             app.UseConfiguredSwagger();
 
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

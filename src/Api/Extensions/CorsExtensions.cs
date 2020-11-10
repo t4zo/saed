@@ -7,7 +7,7 @@ namespace SAED.Api.Extensions
 {
     public static class CorsExtensions
     {
-        public static IServiceCollection AddCustomCors(this IServiceCollection services, string defaultCorsPolicyName)
+        public static IServiceCollection AddCustomCors(this IServiceCollection services)
         {
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -16,7 +16,7 @@ namespace SAED.Api.Extensions
 
             services.AddCors(setupAction =>
             {
-                setupAction.AddPolicy(defaultCorsPolicyName, configurePolicy =>
+                setupAction.AddDefaultPolicy(configurePolicy =>
                 {
                     configurePolicy
                         .WithOrigins(allowedOrigins)
