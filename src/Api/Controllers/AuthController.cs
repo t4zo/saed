@@ -15,13 +15,11 @@ namespace SAED.Api.Controllers
     public class AuthController : ApiControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public AuthController(UserManager<ApplicationUser> userManager, IMapper mapper, IUserService userService)
+        public AuthController(UserManager<ApplicationUser> userManager, IUserService userService)
         {
             _userManager = userManager;
-            _mapper = mapper;
             _userService = userService;
         }
 

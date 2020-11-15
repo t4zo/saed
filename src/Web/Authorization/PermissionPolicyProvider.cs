@@ -8,7 +8,7 @@ namespace SAED.Web.Authorization
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
     {
-        public DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
+        private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
 
         public PermissionPolicyProvider(IOptions<AuthorizationOptions> options)
         {
@@ -26,7 +26,7 @@ namespace SAED.Web.Authorization
         // O nome da política deve corresponder à permissão necessária.
         public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            if (policyName.StartsWith(CustomClaimTypes.Permission, StringComparison.OrdinalIgnoreCase))
+            if (policyName.StartsWith(CustomClaimTypes.Permissions, StringComparison.OrdinalIgnoreCase))
             {
                 var policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));

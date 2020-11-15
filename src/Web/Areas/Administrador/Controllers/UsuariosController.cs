@@ -72,7 +72,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (viewModel.PermissoesEscolhidas != null)
             {
-                var claims = viewModel.PermissoesEscolhidas.Select(x => new Claim(CustomClaimTypes.Permission, x)).ToList();
+                var claims = viewModel.PermissoesEscolhidas.Select(x => new Claim(CustomClaimTypes.Permissions, x)).ToList();
                 await _userManager.AddClaimsAsync(user, claims);
             }
 
@@ -149,7 +149,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (viewModel.PermissoesEscolhidas != null)
             {
-                var claims = viewModel.PermissoesEscolhidas.Select(x => new Claim(CustomClaimTypes.Permission, x)).ToList();
+                var claims = viewModel.PermissoesEscolhidas.Select(x => new Claim(CustomClaimTypes.Permissions, x)).ToList();
                 await _userManager.AddClaimsAsync(user, claims);
             }
 

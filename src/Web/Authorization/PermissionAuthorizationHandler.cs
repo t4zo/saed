@@ -37,7 +37,7 @@ namespace SAED.Web.Authorization
 
             var userClaims = await _userManager.GetClaimsAsync(user);
             var userPermissions = userClaims.Where(x =>
-                    x.Type == CustomClaimTypes.Permission &&
+                    x.Type == CustomClaimTypes.Permissions &&
                     x.Value == requirement.Permission &&
                     x.Issuer == "LOCAL AUTHORITY"
                 ).Select(x => x.Value);
@@ -57,7 +57,7 @@ namespace SAED.Web.Authorization
                 var roleClaims = await _roleManager.GetClaimsAsync(role);
 
                 var rolePermissions = roleClaims.Where(x =>
-                    x.Type == CustomClaimTypes.Permission &&
+                    x.Type == CustomClaimTypes.Permissions &&
                     x.Value == requirement.Permission &&
                     x.Issuer == "LOCAL AUTHORITY"
                 ).Select(x => x.Value);

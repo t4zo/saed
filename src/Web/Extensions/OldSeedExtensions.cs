@@ -7,7 +7,7 @@
         //    IServiceProvider serviceProvider
         //    )
         //{
-        //var context = serviceProvider.GetRequiredService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+        //var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
         //await new AvaliacoesSeed(context).LoadAsync();
 

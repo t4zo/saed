@@ -44,7 +44,7 @@ namespace SAED.Api.Extensions
             {
                 foreach (var permission in permissions)
                 {
-                    await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(), new Claim(CustomClaimTypes.Permission, permission));
+                    await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(), new Claim(CustomClaimTypes.Permissions, permission));
                 }
             }
 
@@ -54,7 +54,7 @@ namespace SAED.Api.Extensions
                 {
                     if (!permission.Contains("Grupos") && !permission.Contains("Usuarios"))
                     {
-                        await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(), new Claim(CustomClaimTypes.Permission, permission));
+                        await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(), new Claim(CustomClaimTypes.Permissions, permission));
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace SAED.Api.Extensions
                 {
                     if (permission.Contains("View") && !(permission.Contains("Grupos") || permission.Contains("Usuarios")))
                     {
-                        await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(), new Claim(CustomClaimTypes.Permission, permission));
+                        await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(), new Claim(CustomClaimTypes.Permissions, permission));
                     }
                 }
             }

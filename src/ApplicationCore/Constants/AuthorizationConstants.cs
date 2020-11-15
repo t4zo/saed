@@ -2,6 +2,10 @@
 {
     public static class AuthorizationConstants
     {
+        public const string AllowedOrigins = "AllowedOrigins";
+
+        public const string Remember = "rmb";
+
         public static class Roles
         {
             public const string Superuser = "Superuser";
@@ -19,7 +23,7 @@
 
         public static class CustomClaimTypes
         {
-            public const string Permission = "Permission";
+            public const string Permissions = "Permissions";
         }
 
         public static class Permissions
@@ -154,7 +158,5 @@
                 public const string Delete = "Permissions.Alternativas.Delete";
             }
         }
-
-        public const string Remember = "rmb";
     }
 }

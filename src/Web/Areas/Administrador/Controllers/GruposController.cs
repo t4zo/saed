@@ -59,7 +59,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
                 {
-                    await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                    await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permissions, permissaoEscolhida));
                 }
             }
 
@@ -101,7 +101,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
                 {
-                    await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permissaoEscolhida));
+                    await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permissions, permissaoEscolhida));
                 }
             }
 

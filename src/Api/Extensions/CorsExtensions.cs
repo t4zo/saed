@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
+using SAED.ApplicationCore.Constants;
+using System;
 
 namespace SAED.Api.Extensions
 {
@@ -11,8 +13,8 @@ namespace SAED.Api.Extensions
         {
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var allowedOrigins = configuration.GetSection("AllowedOrigins").Get<string[]>();
-            allowedOrigins ??= new string[] { };
+            var allowedOrigins = configuration.GetSection(AuthorizationConstants.AllowedOrigins).Get<string[]>();
+            allowedOrigins ??= Array.Empty<string>();
 
             services.AddCors(setupAction =>
             {
