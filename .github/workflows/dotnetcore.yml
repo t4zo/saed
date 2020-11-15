@@ -16,7 +16,9 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.100
-      - name: Build with dotnet
+      - name: Restore
+        run: dotnet restore ./src/Web/SAED.Web.csproj
+      - name: Build
         run: dotnet build --configuration Release --no-restore ./src/Web/SAED.Web.csproj
-      - name: Test with dotnet
+      - name: Test
         run: dotnet test --configuration Release ./src/Api/SAED.Api.csproj
