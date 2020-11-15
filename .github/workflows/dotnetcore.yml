@@ -15,8 +15,8 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0
+          dotnet-version: 5.0.100
       - name: Build with dotnet
-        run: dotnet build --configuration Release ./src/Web/SAED.Web.csproj
+        run: dotnet build --configuration Release --no-restore ./src/Web/SAED.Web.csproj
       - name: Test with dotnet
         run: dotnet test --configuration Release ./src/Api/SAED.Api.csproj

@@ -18,7 +18,7 @@ namespace SAED.Api
                 {
                     if (Environment.GetEnvironmentVariable(ProvidersConstants.Provider) == ProvidersConstants.DigitalOcean)
                     {
-                        webBuilder.UseStartup<Startup>().UseUrls("https://localhost:5101");
+                        webBuilder.UseStartup<Startup>().UseUrls("http://localhost:5100");
                     }
                     else
                     {
