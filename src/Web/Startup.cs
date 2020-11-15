@@ -89,6 +89,8 @@ namespace SAED.Web
             // services.AddResponseCaching();
             // services.AddResponseCompression();
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews();
@@ -101,7 +103,7 @@ namespace SAED.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
