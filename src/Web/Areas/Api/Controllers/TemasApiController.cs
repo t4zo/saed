@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAED.Infrastructure.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SAED.ApplicationCore.Entities;
+using SAED.Infrastructure.Data;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
@@ -19,7 +21,7 @@ namespace SAED.Web.Areas.Api.Controllers
         [HttpGet]
         public async Task<ActionResult> Get(int id)
         {
-            var temas = await _context.Temas.Where(x => x.DisciplinaId == id).ToListAsync();
+            List<Tema> temas = await _context.Temas.Where(x => x.DisciplinaId == id).ToListAsync();
 
             if (temas is null)
             {

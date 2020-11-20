@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.Infrastructure.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Api.Controllers
 {

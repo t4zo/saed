@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -14,18 +15,17 @@ using SAED.Web.Authorization;
 using SAED.Web.Configurations;
 using SAED.Web.Extensions;
 using SAED.Web.Services;
-using System;
 
 namespace SAED.Web
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -42,21 +42,22 @@ namespace SAED.Web
             services.AddDbContext<ApplicationDbContext>();
 
             services.AddDefaultIdentity<ApplicationUser>(configureOptions =>
-            {
-                configureOptions.Password.RequireDigit = true;
-                configureOptions.Password.RequireLowercase = true;
-                configureOptions.Password.RequireNonAlphanumeric = false;
-                configureOptions.Password.RequireUppercase = false;
-                configureOptions.Password.RequiredLength = 6;
-                configureOptions.Password.RequiredUniqueChars = 1;
+                {
+                    configureOptions.Password.RequireDigit = true;
+                    configureOptions.Password.RequireLowercase = true;
+                    configureOptions.Password.RequireNonAlphanumeric = false;
+                    configureOptions.Password.RequireUppercase = false;
+                    configureOptions.Password.RequiredLength = 6;
+                    configureOptions.Password.RequiredUniqueChars = 1;
 
-                configureOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                configureOptions.Lockout.MaxFailedAccessAttempts = 10;
-                configureOptions.Lockout.AllowedForNewUsers = false;
+                    configureOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    configureOptions.Lockout.MaxFailedAccessAttempts = 10;
+                    configureOptions.Lockout.AllowedForNewUsers = false;
 
-                configureOptions.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                configureOptions.User.RequireUniqueEmail = true;
-            })
+                    configureOptions.User.AllowedUserNameCharacters =
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    configureOptions.User.RequireUniqueEmail = true;
+                })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -121,8 +122,8 @@ namespace SAED.Web
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            var supportedCultures = new[] { "pt-BR" };
-            var localizationOptions = new RequestLocalizationOptions()
+            string[] supportedCultures = new[] {"pt-BR"};
+            RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
@@ -143,26 +144,26 @@ namespace SAED.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(
-                    name: "administrador",
-                    areaName: "Administrador",
-                    pattern: "{area=Administrador}/{controller=Home}/{action=Index}/{id?}"
+                    "administrador",
+                    "Administrador",
+                    "{area=Administrador}/{controller=Home}/{action=Index}/{id?}"
                 ).RequireAuthorization();
 
                 endpoints.MapAreaControllerRoute(
-                    name: "aplicador",
-                    areaName: "Aplicador",
-                    pattern: "{area=Aplicador}/{controller=Home}/{action=Index}/{id?}"
+                    "aplicador",
+                    "Aplicador",
+                    "{area=Aplicador}/{controller=Home}/{action=Index}/{id?}"
                 ).RequireAuthorization();
 
                 endpoints.MapAreaControllerRoute(
-                    name: "api",
-                    areaName: "Api",
-                    pattern: "{area=Api}/{controller=Home}/{action=Index}/{id?}"
+                    "api",
+                    "Api",
+                    "{area=Api}/{controller=Home}/{action=Index}/{id?}"
                 ).RequireAuthorization();
 
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapRazorPages();
             });

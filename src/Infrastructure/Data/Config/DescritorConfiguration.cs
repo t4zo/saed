@@ -18,7 +18,6 @@ namespace SAED.Infrastructure.Data.Config
                 .WithMany(tema => tema.Descritores)
                 .HasForeignKey(descritor => descritor.TemaId)
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

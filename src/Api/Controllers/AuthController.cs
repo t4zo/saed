@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,6 @@ using SAED.Api.Entities.Responses;
 using SAED.Api.Interfaces;
 using SAED.ApplicationCore.Constants;
 using SAED.Infrastructure.Identity;
-using System.Threading.Tasks;
 
 namespace SAED.Api.Controllers
 {
@@ -26,13 +26,12 @@ namespace SAED.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Authenticate(AuthenticationRequest authenticationRequest)
         {
-            var user = await _userService.AuthenticateAsync(authenticationRequest.Username, authenticationRequest.Password, authenticationRequest.Remember);
+            UserResponse user = await _userService.AuthenticateAsync(authenticationRequest.Username,
+                authenticationRequest.Password, authenticationRequest.Remember);
 
-            var response = new AuthenticationResponse
+            AuthenticationResponse response = new AuthenticationResponse
             {
-                Success = true,
-                Message = "Usuário conectado com sucesso!",
-                User = user
+                Success = true, Message = "Usuário conectado com sucesso!", User = user
             };
 
             return Ok(response);

@@ -21,7 +21,6 @@ namespace SAED.Infrastructure.Data.Config
                 .WithMany(segmento => segmento.Etapas)
                 .HasForeignKey(etapa => etapa.SegmentoId)
                 .OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

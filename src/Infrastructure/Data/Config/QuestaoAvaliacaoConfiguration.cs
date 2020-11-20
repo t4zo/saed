@@ -18,7 +18,7 @@ namespace SAED.Infrastructure.Data.Config
                 .HasForeignKey(QuestaoAvaliacao => QuestaoAvaliacao.QuestaoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasKey(questaoAvaliacao => new { questaoAvaliacao.AvaliacaoId, questaoAvaliacao.QuestaoId });
+            builder.HasKey(questaoAvaliacao => new {questaoAvaliacao.AvaliacaoId, questaoAvaliacao.QuestaoId});
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
@@ -22,16 +23,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.View)]
         public async Task<IActionResult> Index()
         {
-            var temas = await _context.Temas
-                .AsNoTracking()
+            List<Tema> temas = await _context.Temas
                 .Include(x => x.Disciplina)
+                .AsNoTracking()
                 .ToListAsync();
 
             return View(temas);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Temas.Create)]
-        public IActionResult CreateAsync()
+        public IActionResult Create()
         {
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
@@ -59,7 +60,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var tema = await _context.Temas.FindAsync(id);
+            Tema tema = await _context.Temas.FindAsync(id);
 
             if (tema is null)
             {
@@ -95,39 +96,38 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                var entity = await _context.Temas.FindAsync(id);
+                Tema entity = await _context.Temas.FindAsync(id);
                 if (entity is null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return RedirectToAction(nameof(Index));
         }
 
+        // [Authorize(AuthorizationConstants.Permissions.Temas.Delete)]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var tema = await _context.Temas.FindAsync(id);
+        //
+        //     if (tema is null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     return View(tema);
+        // }
+
         [Authorize(AuthorizationConstants.Permissions.Temas.Delete)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var tema = await _context.Temas.FindAsync(id);
-
-            if (tema is null)
-            {
-                return NotFound();
-            }
-
-            return View(tema);
-        }
-
-        [Authorize(AuthorizationConstants.Permissions.Temas.Delete)]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tema = await _context.Temas.FindAsync(id);
+            Tema tema = await _context.Temas.FindAsync(id);
 
             if (tema is null)
             {

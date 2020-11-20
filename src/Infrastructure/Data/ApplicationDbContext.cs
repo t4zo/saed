@@ -1,27 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
-using SAED.Infrastructure.Identity;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
+using SAED.ApplicationCore.Constants;
+using SAED.ApplicationCore.Entities;
+using SAED.ApplicationCore.Interfaces;
+using SAED.Infrastructure.Identity;
 
 namespace SAED.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly string _databaseProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration,
+            IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
             _configuration = configuration;
@@ -46,9 +50,9 @@ namespace SAED.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            var entities = builder.Model.GetEntityTypes();
+            IEnumerable<IMutableEntityType> entities = builder.Model.GetEntityTypes();
 
-            foreach (var entity in entities)
+            foreach (IMutableEntityType entity in entities)
             {
                 if (_databaseProvider == DatabaseConstants.Postgres && !(entity is IManyToMany))
                 {
@@ -82,20 +86,22 @@ namespace SAED.Infrastructure.Data
 
         public override int SaveChanges()
         {
-            var entries = ChangeTracker
+            IEnumerable<EntityEntry> entries = ChangeTracker
                 .Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
             try
             {
-                foreach (var entityEntry in entries)
+                foreach (EntityEntry entityEntry in entries)
                 {
-                    entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                    entityEntry.Property("UpdatedBy").CurrentValue =
+                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                     entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                     if (entityEntry.State == EntityState.Added)
                     {
-                        entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                        entityEntry.Property("CreatedBy").CurrentValue =
+                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                         entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                     }
                 }
@@ -105,22 +111,25 @@ namespace SAED.Infrastructure.Data
             return base.SaveChanges();
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
         {
-            var entries = ChangeTracker
+            IEnumerable<EntityEntry> entries = ChangeTracker
                 .Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
             try
             {
-                foreach (var entityEntry in entries)
+                foreach (EntityEntry entityEntry in entries)
                 {
-                    entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                    entityEntry.Property("UpdatedBy").CurrentValue =
+                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                     entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                     if (entityEntry.State == EntityState.Added)
                     {
-                        entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                        entityEntry.Property("CreatedBy").CurrentValue =
+                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
                         entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                     }
                 }

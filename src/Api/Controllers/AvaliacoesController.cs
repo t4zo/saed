@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SAED.Api.Controllers
 {
@@ -29,7 +29,7 @@ namespace SAED.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Avaliacao>> Get(int id)
         {
-            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -46,7 +46,7 @@ namespace SAED.Api.Controllers
             await _context.AddAsync(avaliacao);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Get), new { id = avaliacao.Id }, avaliacao);
+            return CreatedAtAction(nameof(Get), new {id = avaliacao.Id}, avaliacao);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
@@ -60,14 +60,7 @@ namespace SAED.Api.Controllers
 
             _context.Update(avaliacao);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw;
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -76,7 +69,7 @@ namespace SAED.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Avaliacao>> Delete(int id)
         {
-            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao == null)
             {

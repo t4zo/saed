@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SAED.Infrastructure.Identity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using SAED.Infrastructure.Identity;
 
 namespace SAED.Web.Services
 {
@@ -17,10 +17,10 @@ namespace SAED.Web.Services
 
         public async Task<IEnumerable<IdentityError>> ValidatePasswordAsync(string password)
         {
-            var passwordErrors = new List<IdentityError>();
-            foreach (var passwordValidator in _userManager.PasswordValidators)
+            List<IdentityError> passwordErrors = new List<IdentityError>();
+            foreach (IPasswordValidator<ApplicationUser> passwordValidator in _userManager.PasswordValidators)
             {
-                var validationResult = await passwordValidator.ValidateAsync(_userManager, null, password);
+                IdentityResult validationResult = await passwordValidator.ValidateAsync(_userManager, null, password);
                 if (!validationResult.Succeeded)
                 {
                     passwordErrors = validationResult.Errors.ToList();

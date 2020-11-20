@@ -12,21 +12,19 @@ namespace SAED.Api.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "SAED API",
-                    Description = "Endpoints to v1 SAED API"
-                });
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo {Version = "v1", Title = "SAED API", Description = "Endpoints to v1 SAED API"});
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Name = HeaderNames.Authorization,
-                    Description = @"JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] token",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = JwtBearerDefaults.AuthenticationScheme
-                });
+                c.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Name = HeaderNames.Authorization,
+                        Description =
+                            @"JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] token",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = JwtBearerDefaults.AuthenticationScheme
+                    });
             });
 
             return services;

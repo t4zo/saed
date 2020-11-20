@@ -1,5 +1,5 @@
-﻿using SAED.Api.Entities.Responses;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using SAED.Api.Entities.Responses;
 
 namespace SAED.Api.Interfaces
 {

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAED.Infrastructure.Data;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SAED.ApplicationCore.Entities;
+using SAED.Infrastructure.Data;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
@@ -17,7 +19,7 @@ namespace SAED.Web.Areas.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var distritos = await _context.Distritos.ToListAsync();
+            List<Distrito> distritos = await _context.Distritos.ToListAsync();
 
             if (distritos is null)
             {

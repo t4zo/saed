@@ -25,9 +25,7 @@ namespace SAED.Infrastructure.Data.Config
 
             builder.HasKey(respostaAluno => new
             {
-                respostaAluno.AvaliacaoId,
-                respostaAluno.AlunoId,
-                respostaAluno.AlternativaId
+                respostaAluno.AvaliacaoId, respostaAluno.AlunoId, respostaAluno.AlternativaId
             });
         }
     }

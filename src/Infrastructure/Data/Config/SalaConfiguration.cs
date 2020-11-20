@@ -16,7 +16,6 @@ namespace SAED.Infrastructure.Data.Config
             builder.HasOne(sala => sala.Escola)
                 .WithMany(escola => escola.Salas)
                 .HasForeignKey(sala => sala.EscolaId);
-
         }
     }
 }

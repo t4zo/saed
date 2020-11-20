@@ -10,7 +10,7 @@
         <span class="uk-card-title uk-text-uppercase uk-text-center">Editar Distrito</span>
         <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="document.querySelector('.form').submit();"></button>
     </div>
-    <hr class="uk-list-divider" />
+    <hr class="uk-list-divider"/>
     <form class="uk-grid-row-small form" uk-grid asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="uk-uk-text-danger"></div>
         <div class="uk-width-1-3">
@@ -28,6 +28,6 @@
             <input asp-for="Distancia" class="uk-input"/>
             <span asp-validation-for="Distancia" class="uk-text-danger"></span>
         </div>
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Id"/>
     </form>
 </main>

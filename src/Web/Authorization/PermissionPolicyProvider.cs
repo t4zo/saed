@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
     {
-        private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
-
         public PermissionPolicyProvider(IOptions<AuthorizationOptions> options)
         {
             // Só pode haver um provedor de políticas no ASP.NET Core.
             // Apenas lidamos com políticas relacionadas a permissões, para o resto, usaremos o provedor padrão.
             _fallbackPolicyProvider = new DefaultAuthorizationPolicyProvider(options);
         }
+
+        private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
 
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
@@ -28,7 +28,7 @@ namespace SAED.Web.Authorization
         {
             if (policyName.StartsWith(CustomClaimTypes.Permissions, StringComparison.OrdinalIgnoreCase))
             {
-                var policy = new AuthorizationPolicyBuilder();
+                AuthorizationPolicyBuilder policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));
                 return Task.FromResult(policy.Build());
             }

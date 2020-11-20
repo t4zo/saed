@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
@@ -48,7 +48,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -80,15 +80,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                var entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
+                Avaliacao entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
                 if (entity.Id != id)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return RedirectToAction(nameof(Index));
@@ -97,7 +95,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -108,11 +106,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {

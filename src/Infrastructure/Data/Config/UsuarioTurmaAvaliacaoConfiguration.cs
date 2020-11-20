@@ -8,7 +8,6 @@ namespace SAED.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<UsuarioTurmaAvaliacao> builder)
         {
-
             builder
                 .HasOne(pessoaTurmaAvaliacao => pessoaTurmaAvaliacao.Turma)
                 .WithMany(escola => escola.UsuarioTurmaAvaliacao)

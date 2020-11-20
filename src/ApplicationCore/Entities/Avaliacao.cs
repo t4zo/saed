@@ -15,13 +15,10 @@ namespace SAED.ApplicationCore.Entities
 
     public enum StatusAvaliacao
     {
-        [Display(Name = "A Realizar")]
-        ARealizar,
+        [Display(Name = "A Realizar")] ARealizar,
 
-        [Display(Name = "Em Andamento")]
-        EmAndamento,
+        [Display(Name = "Em Andamento")] EmAndamento,
 
-        [Display(Name = "Finalizada")]
-        Finalizada,
+        [Display(Name = "Finalizada")] Finalizada
     }
 }

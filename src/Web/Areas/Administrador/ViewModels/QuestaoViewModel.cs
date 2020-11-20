@@ -1,5 +1,5 @@
-﻿using SAED.ApplicationCore.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using SAED.ApplicationCore.Entities;
 
 namespace SAED.Web.Areas.Administrador.ViewModels
 {

@@ -9,6 +9,5 @@ namespace SAED.ApplicationCore.Entities
 
     public abstract class BaseEntity : BaseEntity<int>
     {
-
     }
 }

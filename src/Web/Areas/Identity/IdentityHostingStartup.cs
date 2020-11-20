@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using SAED.Web.Areas.Identity;
 
-[assembly: HostingStartup(typeof(SAED.Web.Areas.Identity.IdentityHostingStartup))]
+[assembly: HostingStartup(typeof(IdentityHostingStartup))]
+
 namespace SAED.Web.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup

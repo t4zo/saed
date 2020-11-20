@@ -1,7 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using SAED.ApplicationCore.Constants;
-using System;
 
 namespace SAED.Api
 {
@@ -12,11 +12,13 @@ namespace SAED.Api
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    if (Environment.GetEnvironmentVariable(ProvidersConstants.Provider) == ProvidersConstants.DigitalOcean)
+                    if (Environment.GetEnvironmentVariable(ProvidersConstants.Provider) ==
+                        ProvidersConstants.DigitalOcean)
                     {
                         webBuilder.UseStartup<Startup>().UseUrls("http://localhost:5100");
                     }
@@ -25,5 +27,6 @@ namespace SAED.Api
                         webBuilder.UseStartup<Startup>();
                     }
                 });
+        }
     }
 }

@@ -1,26 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using SAED.Infrastructure.Identity;
-using System.Linq;
-using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PermissionAuthorizationHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public PermissionAuthorizationHandler(UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
+            PermissionRequirement requirement)
         {
-            var user = await _userManager.GetUserAsync(context.User);
+            ApplicationUser user = await _userManager.GetUserAsync(context.User);
 
             // Se não estiver logado retorna não autorizado
             if (user is null)
@@ -35,12 +39,12 @@ namespace SAED.Web.Authorization
                 return;
             }
 
-            var userClaims = await _userManager.GetClaimsAsync(user);
-            var userPermissions = userClaims.Where(x =>
-                    x.Type == CustomClaimTypes.Permissions &&
-                    x.Value == requirement.Permission &&
-                    x.Issuer == "LOCAL AUTHORITY"
-                ).Select(x => x.Value);
+            IList<Claim> userClaims = await _userManager.GetClaimsAsync(user);
+            IEnumerable<string> userPermissions = userClaims.Where(x =>
+                x.Type == CustomClaimTypes.Permissions &&
+                x.Value == requirement.Permission &&
+                x.Issuer == "LOCAL AUTHORITY"
+            ).Select(x => x.Value);
 
             // Autoriza se o usuário possuir a permissão requerida
             if (userPermissions.Any())
@@ -49,14 +53,14 @@ namespace SAED.Web.Authorization
                 return;
             }
 
-            var userRoleNames = await _userManager.GetRolesAsync(user);
-            var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name));
+            IList<string> userRoleNames = await _userManager.GetRolesAsync(user);
+            IQueryable<ApplicationRole> userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name));
 
-            foreach (var role in userRoles)
+            foreach (ApplicationRole role in userRoles)
             {
-                var roleClaims = await _roleManager.GetClaimsAsync(role);
+                IList<Claim> roleClaims = await _roleManager.GetClaimsAsync(role);
 
-                var rolePermissions = roleClaims.Where(x =>
+                IEnumerable<string> rolePermissions = roleClaims.Where(x =>
                     x.Type == CustomClaimTypes.Permissions &&
                     x.Value == requirement.Permission &&
                     x.Issuer == "LOCAL AUTHORITY"

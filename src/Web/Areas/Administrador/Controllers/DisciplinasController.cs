@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
@@ -45,13 +45,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
-
         }
 
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var disciplina = await _context.Disciplinas.FindAsync(id);
+            Disciplina disciplina = await _context.Disciplinas.FindAsync(id);
 
             if (disciplina is null)
             {
@@ -87,35 +86,33 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return RedirectToAction(nameof(Index));
-
         }
 
+        // [Authorize(AuthorizationConstants.Permissions.Disciplinas.Delete)]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var disciplina = await _context.Disciplinas.FindAsync(id);
+        //
+        //     if (disciplina is null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     return View(disciplina);
+        // }
+
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Delete)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var disciplina = await _context.Disciplinas.FindAsync(id);
-
-            if (disciplina is null)
-            {
-                return NotFound();
-            }
-
-            return View(disciplina);
-        }
-
-        [Authorize(AuthorizationConstants.Permissions.Disciplinas.Delete)]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var disciplina = await _context.Disciplinas.FindAsync(id);
+            Disciplina disciplina = await _context.Disciplinas.FindAsync(id);
 
             if (disciplina is null)
             {

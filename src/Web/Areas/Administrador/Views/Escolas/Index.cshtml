@@ -1,40 +1,40 @@
-﻿@model IEnumerable<SAED.ApplicationCore.Entities.Escola>
+﻿@model IEnumerable<Escola>
 
 @{
     ViewData["Title"] = "Escolas";
 }
 
 <main class="uk-card uk-card-default uk-card-body">
-    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Escolas", Controller = "Escolas", Action = "Escolas" });}
+    @{ await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader {Header = "Escolas", Controller = "Escolas", Action = "Escolas"}); }
     <div class="uk-overflow-auto">
         <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
             <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Distrito)</th>
-                    <th>Escola</th>
-                    <th>@Html.DisplayNameFor(model => model.Email)</th>
-                    <th class="uk-text-center">Ações</th>
-                </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Distrito)</th>
+                <th>Escola</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th class="uk-text-center">Ações</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Distrito.Nome)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                        <td class="uk-flex uk-flex-around">
-                            @if (User.HasClaim(x => x.Value == Permissions.Escolas.Update))
-                            {
-                                <a uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                            }
-                            @if (User.HasClaim(x => x.Value == Permissions.Escolas.Delete))
-                            {
-                                <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
-                            }
-                            </td>
-                    </tr>
-                }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Distrito.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td class="uk-flex uk-flex-around">
+                        @if (User.HasClaim(x => x.Value == Permissions.Escolas.Update))
+                        {
+                            <a uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                        }
+                        @if (User.HasClaim(x => x.Value == Permissions.Escolas.Delete))
+                        {
+                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                        }
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Api.Authorization
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
     {
-        private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
-
         public PermissionPolicyProvider(IOptions<AuthorizationOptions> options)
         {
             // Só pode haver um provedor de políticas no ASP.NET Core.
@@ -17,7 +15,12 @@ namespace SAED.Api.Authorization
             _fallbackPolicyProvider = new DefaultAuthorizationPolicyProvider(options);
         }
 
-        public Task<AuthorizationPolicy> GetDefaultPolicyAsync() => _fallbackPolicyProvider.GetDefaultPolicyAsync();
+        private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
+
+        public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
+        {
+            return _fallbackPolicyProvider.GetDefaultPolicyAsync();
+        }
 
 
         // Cria dinamicamente uma política com um requisito que contém a permissão.
@@ -26,7 +29,7 @@ namespace SAED.Api.Authorization
         {
             if (policyName.StartsWith(CustomClaimTypes.Permissions, StringComparison.OrdinalIgnoreCase))
             {
-                var policy = new AuthorizationPolicyBuilder();
+                AuthorizationPolicyBuilder policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));
                 return Task.FromResult(policy.Build());
             }
@@ -35,6 +38,9 @@ namespace SAED.Api.Authorization
             return _fallbackPolicyProvider.GetPolicyAsync(policyName);
         }
 
-        public Task<AuthorizationPolicy> GetFallbackPolicyAsync() => _fallbackPolicyProvider.GetFallbackPolicyAsync();
+        public Task<AuthorizationPolicy> GetFallbackPolicyAsync()
+        {
+            return _fallbackPolicyProvider.GetFallbackPolicyAsync();
+        }
     }
 }

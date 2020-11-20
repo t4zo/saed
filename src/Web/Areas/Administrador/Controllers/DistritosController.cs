@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
@@ -50,7 +50,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Distritos.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var distrito = await _context.Distritos.FindAsync(id);
+            Distrito distrito = await _context.Distritos.FindAsync(id);
 
             if (distrito is null)
             {
@@ -87,34 +87,33 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return RedirectToAction(nameof(Index));
         }
 
+        // [Authorize(AuthorizationConstants.Permissions.Distritos.Delete)]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var distrito = await _context.Distritos.FindAsync(id);
+        //
+        //     if (distrito is null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     return View(distrito);
+        // }
+
         [Authorize(AuthorizationConstants.Permissions.Distritos.Delete)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var distrito = await _context.Distritos.FindAsync(id);
-
-            if (distrito is null)
-            {
-                return NotFound();
-            }
-
-            return View(distrito);
-        }
-
-        [Authorize(AuthorizationConstants.Permissions.Distritos.Delete)]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var distrito = await _context.Distritos.FindAsync(id);
+            Distrito distrito = await _context.Distritos.FindAsync(id);
 
             if (distrito is null)
             {

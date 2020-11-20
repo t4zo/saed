@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.ApplicationCore.Constants;
 using SAED.ApplicationCore.Entities;
 using SAED.Infrastructure.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
@@ -23,9 +24,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Descritores.View)]
         public async Task<IActionResult> Index(int? disciplinaId, int? temaId)
         {
-            var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
+            List<Disciplina> disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
-            var descritores = await _context.Descritores
+            List<Descritor> descritores = await _context.Descritores
                 .AsNoTracking()
                 .Include("Tema.Disciplina")
                 .ToListAsync();
@@ -34,7 +35,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 descritores = descritores.Where(d => d.Tema.DisciplinaId == disciplinaId.Value).ToList();
 
-                var temas = descritores.Select(x => x.Tema).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                List<Tema> temas = descritores.Select(x => x.Tema).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
 
                 if (temaId.HasValue)
@@ -85,7 +86,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Descritores.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var descritor = await _context.Descritores
+            Descritor descritor = await _context.Descritores
                 .AsNoTracking()
                 .Include("Tema.Disciplina")
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -96,7 +97,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
 
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", descritor.Tema.DisciplinaId);
-            ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == descritor.Tema.DisciplinaId).ToListAsync(), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] =
+                new SelectList(
+                    await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == descritor.Tema.DisciplinaId)
+                        .ToListAsync(), "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -130,43 +134,44 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                var entity = await _context.Descritores.FindAsync(id);
+                Descritor entity = await _context.Descritores.FindAsync(id);
                 if (entity is null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
-            ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] =
+                new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id",
+                    "Nome", descritor.TemaId);
 
             return View(descritor);
         }
 
+        // [Authorize(AuthorizationConstants.Permissions.Descritores.Delete)]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var descritor = await _context.Descritores.FindAsync(id);
+        //
+        //     if (descritor is null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id", "Nome", descritor.TemaId);
+        //
+        //     return View(descritor);
+        // }
+
         [Authorize(AuthorizationConstants.Permissions.Descritores.Delete)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var descritor = await _context.Descritores.FindAsync(id);
-
-            if (descritor is null)
-            {
-                return NotFound();
-            }
-
-            ViewData["TemaId"] = new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id", "Nome", descritor.TemaId);
-
-            return View(descritor);
-        }
-
-        [Authorize(AuthorizationConstants.Permissions.Descritores.Delete)]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var descritor = await _context.Descritores.FindAsync(id);
+            Descritor descritor = await _context.Descritores.FindAsync(id);
 
             if (descritor is null)
             {

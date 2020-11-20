@@ -20,7 +20,7 @@ namespace SAED.Infrastructure.Data.Config
                 .HasForeignKey(turmaAluno => turmaAluno.AlunoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasKey(turmaAluno => new { turmaAluno.TurmaId, turmaAluno.AlunoId });
+            builder.HasKey(turmaAluno => new {turmaAluno.TurmaId, turmaAluno.AlunoId});
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SAED.Api.Configurations;
 using SAED.ApplicationCore.Interfaces;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace SAED.Api.Services
 {
@@ -19,9 +19,9 @@ namespace SAED.Api.Services
 
         string ITokenService.GenerateJWTToken(ClaimsIdentity claimsIdentity)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = claimsIdentity,
                 Issuer = _appConfiguration.Token.Issuer,
@@ -31,7 +31,7 @@ namespace SAED.Api.Services
                 SigningCredentials = _appConfiguration.Token.SigningCredentials
             };
 
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            SecurityToken securityToken = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(securityToken);
         }

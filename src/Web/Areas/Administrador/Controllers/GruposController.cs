@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +12,6 @@ using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using static SAED.ApplicationCore.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Administrador.Controllers
@@ -47,17 +48,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(GrupoViewModel viewModel)
         {
-            var result = await _roleManager.CreateAsync(new ApplicationRole { Name = viewModel.Nome });
+            IdentityResult result = await _roleManager.CreateAsync(new ApplicationRole {Name = viewModel.Nome});
             if (!result.Succeeded)
             {
                 return RedirectToAction(nameof(Create));
             }
 
-            var role = await _roleManager.FindByNameAsync(viewModel.Nome);
+            ApplicationRole role = await _roleManager.FindByNameAsync(viewModel.Nome);
 
-            if (viewModel.PermissoesEscolhidas != null)
+            if (viewModel.PermissoesEscolhidas is not null)
             {
-                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                foreach (string permissaoEscolhida in viewModel.PermissoesEscolhidas)
                 {
                     await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permissions, permissaoEscolhida));
                 }
@@ -71,35 +72,37 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(Permissions.Grupos.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            ApplicationRole role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             HttpContext.Session.Set("Role", role.Name);
 
-            var roleClaims = await _context.RoleClaims.AsNoTracking().Where(x => x.RoleId == role.Id).Select(x => x.ClaimValue).ToListAsync();
+            List<string> roleClaims = await _context.RoleClaims.AsNoTracking().Where(x => x.RoleId == role.Id)
+                .Select(x => x.ClaimValue).ToListAsync();
             ViewBag.Role = role;
-            ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>().Where(permission => !roleClaims.Contains(permission)).ToList();
+            ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
+                .Where(permission => !roleClaims.Contains(permission)).ToList();
 
-            return View(new GrupoViewModel { Nome = role.Name, PermissoesEscolhidas = roleClaims });
+            return View(new GrupoViewModel {Nome = role.Name, PermissoesEscolhidas = roleClaims});
         }
 
         [Authorize(Permissions.Grupos.Update)]
         [HttpPost]
         public async Task<IActionResult> Edit(GrupoViewModel viewModel)
         {
-            var role = await _roleManager.FindByNameAsync(HttpContext.Session.Get<string>("Role"));
+            ApplicationRole role = await _roleManager.FindByNameAsync(HttpContext.Session.Get<string>("Role"));
             //var role = await _roleManager.FindByIdAsync(Role.Id.ToString());
             //_context.Entry(role).State = EntityState.Detached;
             role.Name = viewModel.Nome;
 
-            var claims = await _roleManager.GetClaimsAsync(role);
+            IList<Claim> claims = await _roleManager.GetClaimsAsync(role);
 
-            foreach (var claim in claims)
+            foreach (Claim claim in claims)
             {
                 await _roleManager.RemoveClaimAsync(role, claim);
             }
 
             if (viewModel.PermissoesEscolhidas != null)
             {
-                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                foreach (string permissaoEscolhida in viewModel.PermissoesEscolhidas)
                 {
                     await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permissions, permissaoEscolhida));
                 }
@@ -111,11 +114,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         }
 
         [Authorize(Permissions.Grupos.Delete)]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var role = await _roleManager.FindByIdAsync(id);
+            ApplicationRole role = await _roleManager.FindByIdAsync(id);
 
             if (role is null)
             {

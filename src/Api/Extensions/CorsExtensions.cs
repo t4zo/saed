@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using SAED.ApplicationCore.Constants;
-using System;
 
 namespace SAED.Api.Extensions
 {
@@ -11,9 +11,9 @@ namespace SAED.Api.Extensions
     {
         public static IServiceCollection AddCustomCors(this IServiceCollection services)
         {
-            var serviceProvider = services.BuildServiceProvider();
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var allowedOrigins = configuration.GetSection(AuthorizationConstants.AllowedOrigins).Get<string[]>();
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+            IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            string[] allowedOrigins = configuration.GetSection(AuthorizationConstants.AllowedOrigins).Get<string[]>();
             allowedOrigins ??= Array.Empty<string>();
 
             services.AddCors(setupAction =>
@@ -23,7 +23,7 @@ namespace SAED.Api.Extensions
                     configurePolicy
                         .WithOrigins(allowedOrigins)
                         .WithHeaders(HeaderNames.Authorization)
-                        .WithMethods(new string[] { HttpMethods.Get, HttpMethods.Post, HttpMethods.Put, HttpMethods.Delete });
+                        .WithMethods(HttpMethods.Get, HttpMethods.Post, HttpMethods.Put, HttpMethods.Delete);
                 });
             });
 

@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SAED.Infrastructure.Identity;
-using System.Threading.Tasks;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
@@ -23,17 +24,18 @@ namespace SAED.Web.Areas.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Index([FromBody] ApiAuthDto user)
         {
-            if (!ModelState.IsValid) return BadRequest();
-
-            var result = await _signInManager.PasswordSignInAsync(user.Username, user.Password, isPersistent: false, lockoutOnFailure: false);
-            if (!result.Succeeded) return BadRequest();
-
-            return Ok(new
+            if (!ModelState.IsValid)
             {
-                success = true,
-                message = "User logged!",
-                user
-            });
+                return BadRequest();
+            }
+
+            SignInResult result = await _signInManager.PasswordSignInAsync(user.Username, user.Password, false, false);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            return Ok(new {success = true, message = "User logged!", user});
         }
     }
 }

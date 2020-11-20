@@ -27,7 +27,12 @@ namespace SAED.Infrastructure.Data.Config
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasKey(avaliacaoDisciplinaEtapa =>
-            new { avaliacaoDisciplinaEtapa.DisciplinaId, avaliacaoDisciplinaEtapa.AvaliacaoId, avaliacaoDisciplinaEtapa.EtapaId });
+                new
+                {
+                    avaliacaoDisciplinaEtapa.DisciplinaId,
+                    avaliacaoDisciplinaEtapa.AvaliacaoId,
+                    avaliacaoDisciplinaEtapa.EtapaId
+                });
         }
     }
 }

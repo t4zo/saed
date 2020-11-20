@@ -11,36 +11,37 @@ namespace SAED.Api.Extensions
     {
         public static IServiceCollection AddJwtSecurity(this IServiceCollection services)
         {
-            var serviceProvider = services.BuildServiceProvider();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+            AppConfiguration appConfiguration =
+                serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
 
             services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // The signing key must match!
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = appConfiguration.Token.Key,
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // The signing key must match!
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = appConfiguration.Token.Key,
 
-                    // Validate the JWT Issuer (iss) claim
-                    ValidateIssuer = true,
-                    ValidIssuer = appConfiguration.Token.Issuer,
+                        // Validate the JWT Issuer (iss) claim
+                        ValidateIssuer = true,
+                        ValidIssuer = appConfiguration.Token.Issuer,
 
-                    // Validate the JWT Audience (aud) claim
-                    ValidateAudience = false,
-                    ValidAudience = appConfiguration.Token.Audience,
+                        // Validate the JWT Audience (aud) claim
+                        ValidateAudience = false,
+                        ValidAudience = appConfiguration.Token.Audience,
 
-                    // Validate the token expiry
-                    ValidateLifetime = true,
-                };
-            }).AddCookie(IdentityConstants.ApplicationScheme);
+                        // Validate the token expiry
+                        ValidateLifetime = true
+                    };
+                }).AddCookie(IdentityConstants.ApplicationScheme);
 
             return services;
         }
