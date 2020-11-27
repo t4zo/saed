@@ -95,13 +95,13 @@ namespace SAED.Infrastructure.Data
                 foreach (EntityEntry entityEntry in entries)
                 {
                     entityEntry.Property("UpdatedBy").CurrentValue =
-                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                     entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                     if (entityEntry.State == EntityState.Added)
                     {
                         entityEntry.Property("CreatedBy").CurrentValue =
-                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                         entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                     }
                 }
@@ -123,13 +123,13 @@ namespace SAED.Infrastructure.Data
                 foreach (EntityEntry entityEntry in entries)
                 {
                     entityEntry.Property("UpdatedBy").CurrentValue =
-                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                     entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                     if (entityEntry.State == EntityState.Added)
                     {
                         entityEntry.Property("CreatedBy").CurrentValue =
-                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name).Value ?? "Desconhecido";
+                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                         entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                     }
                 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
@@ -26,6 +27,20 @@ namespace SAED.Api.Extensions
                         Scheme = JwtBearerDefaults.AuthenticationScheme
                     });
             });
+            
+            // services.AddOpenApiDocument(configure =>
+            // {
+            //     configure.Title = "CleanArchitecture API";
+            //     configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            //     {
+            //         Type = OpenApiSecuritySchemeType.ApiKey,
+            //         Name = "Authorization",
+            //         In = OpenApiSecurityApiKeyLocation.Header,
+            //         Description = "Type into the textbox: Bearer {your JWT token}."
+            //     });
+            //
+            //     configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            // });
 
             return services;
         }
