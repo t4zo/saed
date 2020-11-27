@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Tema>
+
+@{
+    ViewData["Title"] = "Temas";
+}
+
+<main class="uk-card uk-card-default uk-card-body">
+    @{ await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader {Header = "Temas", Controller = "Temas", Action = "Temas"}); }
+    <div class="uk-overflow-auto">
+        <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+            <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Disciplina)</th>
+                <th>Tema</th>
+                <th class="uk-text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Disciplina.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td class="uk-flex uk-flex-center">
+                        @if (User.HasClaim(x => x.Value == Permissions.Temas.Update))
+                        {
+                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id" style="align-self: flex-end"></a>
+                        }
+                        @if (User.HasClaim(x => x.Value == Permissions.Temas.Delete))
+                        {
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
+                                <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="~/scripts/removeItem.js"></script>
+}

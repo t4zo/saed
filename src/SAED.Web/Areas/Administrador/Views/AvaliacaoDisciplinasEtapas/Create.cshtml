@@ -1,0 +1,25 @@
+﻿@model SAED.ApplicationCore.Entities.AvaliacaoDisciplinaEtapa
+
+@{
+    ViewData["Title"] = "Adicionar Avaliação";
+}
+
+<main class="uk-card uk-card-default uk-card-body">
+    <div class="uk-flex uk-flex-between uk-flex-bottom">
+        <a class="uk-icon-button uk-button-default" asp-action="Index" uk-icon="arrow-left"></a>
+        <span class="uk-card-title uk-text-uppercase uk-text-center">Adicionar Avaliacão</span>
+        <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="document.querySelector('.form').submit();"></button>
+    </div>
+    <hr class="uk-list-divider"/>
+    <form class="uk-grid-row-small form" uk-grid asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
+        <div class="uk-width-1-3">
+            <label asp-for="DisciplinaId" class="uk-form-label">Disciplina</label>
+            <select asp-for="DisciplinaId" class="uk-select" asp-items="ViewBag.DisciplinaId"></select>
+        </div>
+        <div class="uk-width-1-3">
+            <label asp-for="EtapaId" class="uk-form-label">Etapa</label>
+            <select asp-for="EtapaId" class="uk-select" asp-items="ViewBag.EtapaId"></select>
+        </div>
+    </form>
+</main>
