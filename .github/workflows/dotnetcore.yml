@@ -16,15 +16,15 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.100
-      - name: Restore Web
+      - name: Restore SAED.Web
         run: dotnet restore ./src/SAED.Web/SAED.Web.csproj
-      - name: Build Web
+      - name: Build SAED.Web
         run: dotnet build --configuration Release --no-restore ./src/SAED.Web/SAED.Web.csproj
-      - name: Test Web
+      - name: Test SAED.Web
         run: dotnet test --configuration Release ./src/SAED.Web/SAED.Web.csproj
-      - name: Restore Api
+      - name: Restore SAED.Api
         run: dotnet restore ./src/SAED.Api/SAED.Api.csproj
-      - name: Build Api
+      - name: Build SAED.Api
         run: dotnet build --configuration Release --no-restore ./src/SAED.Api/SAED.Api.csproj
-      - name: Test Api
+      - name: Test SAED.Api
         run: dotnet test --configuration Release ./src/SAED.Api/SAED.Api.csproj

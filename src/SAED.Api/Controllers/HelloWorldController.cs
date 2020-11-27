@@ -6,7 +6,7 @@ namespace SAED.Api.Controllers
     [AllowAnonymous]
     public class HelloWorldController : ApiControllerBase
     {
-        [HttpGet]
+        [HttpGet("/hello")]
         public ActionResult<string> GetAll()
         {
             return Ok("Hello, World!");
