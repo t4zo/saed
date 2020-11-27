@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>SAED.Core</AssemblyName>
+    <RootNamespace>SAED.Core</RootNamespace>
     <!--<Nullable>enable</Nullable>-->
   </PropertyGroup>
   

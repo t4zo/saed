@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.UnitTests", "tests\Uni
 		{C18E0B08-8F8C-4A31-9ABD-43578414A10B} = {C18E0B08-8F8C-4A31-9ABD-43578414A10B}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.ApplicationCore", "src\SAED.ApplicationCore\SAED.ApplicationCore.csproj", "{DFD67295-DD83-4ADE-92A7-65B9B35FF132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.Core", "src\SAED.Core\SAED.Core.csproj", "{DFD67295-DD83-4ADE-92A7-65B9B35FF132}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAED.Infrastructure", "src\SAED.Infrastructure\SAED.Infrastructure.csproj", "{E2113DAE-76D5-47AB-8648-431C44C63E39}"
 	ProjectSection(ProjectDependencies) = postProject

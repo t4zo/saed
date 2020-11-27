@@ -113,9 +113,9 @@ namespace SAED.Web
                 app.UseHsts();
             }
 
-            //app.CreateRolesAsync(serviceProvider).GetAwaiter().GetResult();
-            //app.CreateUsersAsync(serviceProvider).GetAwaiter().GetResult();
-            //app.SeedDatabase(serviceProvider);
+            app.CreateRolesAsync(serviceProvider).GetAwaiter().GetResult();
+            app.CreateUsersAsync(serviceProvider).GetAwaiter().GetResult();
+            app.SeedDatabase(serviceProvider);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

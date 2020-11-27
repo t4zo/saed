@@ -186,7 +186,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("AspNetUserTokens");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Alternativa", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Alternativa", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -223,7 +223,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Alternativas");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Aluno", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Aluno", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -256,7 +256,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Aluno");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Avaliacao", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Avaliacao", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -288,7 +288,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Avaliacoes");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplinaEtapa", b =>
+            modelBuilder.Entity("SAED.Core.Entities.AvaliacaoDisciplinaEtapa", b =>
             {
                 b.Property<int>("DisciplinaId")
                     .HasColumnType("int");
@@ -320,7 +320,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("AvaliacaoDisciplinasEtapas");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoQuestao", b =>
+            modelBuilder.Entity("SAED.Core.Entities.AvaliacaoQuestao", b =>
             {
                 b.Property<int>("AvaliacaoId")
                     .HasColumnType("int");
@@ -347,7 +347,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("AvaliacaoQuestoes");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Curso", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Curso", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -382,7 +382,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Cursos");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Descritor", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Descritor", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -417,7 +417,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Descritores");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Disciplina", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Disciplina", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -452,7 +452,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Disciplinas");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Distrito", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Distrito", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -488,7 +488,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Distritos");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Escola", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Escola", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -551,7 +551,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Escolas");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Etapa", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Etapa", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -589,7 +589,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Etapas");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Forma", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Forma", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -619,7 +619,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Forma");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Questao", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Questao", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -669,7 +669,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Questoes");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.RespostaAluno", b =>
+            modelBuilder.Entity("SAED.Core.Entities.RespostaAluno", b =>
             {
                 b.Property<int>("AvaliacaoId")
                     .HasColumnType("int");
@@ -702,7 +702,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("RespostaAluno");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Sala", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Sala", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -735,7 +735,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Sala");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Segmento", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Segmento", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -775,7 +775,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Segmentos");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Tema", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Tema", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -810,7 +810,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Temas");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Turma", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Turma", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -866,7 +866,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Turma");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.TurmaAluno", b =>
+            modelBuilder.Entity("SAED.Core.Entities.TurmaAluno", b =>
             {
                 b.Property<int>("TurmaId")
                     .HasColumnType("int");
@@ -893,7 +893,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("TurmaAluno");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Turno", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Turno", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -923,7 +923,7 @@ namespace SAED.Infrastructure.Migrations
                 b.ToTable("Turno");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.UsuarioTurmaAvaliacao", b =>
+            modelBuilder.Entity("SAED.Core.Entities.UsuarioTurmaAvaliacao", b =>
             {
                 b.Property<int>("ApplicationUserId")
                     .HasColumnType("int");
@@ -1131,196 +1131,196 @@ namespace SAED.Infrastructure.Migrations
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Alternativa", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Alternativa", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Questao", "Questao")
+                b.HasOne("SAED.Core.Entities.Questao", "Questao")
                     .WithMany("Alternativas")
                     .HasForeignKey("QuestaoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoDisciplinaEtapa", b =>
+            modelBuilder.Entity("SAED.Core.Entities.AvaliacaoDisciplinaEtapa", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                b.HasOne("SAED.Core.Entities.Avaliacao", "Avaliacao")
                     .WithMany("AvaliacaoDisciplinasEtapas")
                     .HasForeignKey("AvaliacaoId")
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Disciplina", "Disciplina")
+                b.HasOne("SAED.Core.Entities.Disciplina", "Disciplina")
                     .WithMany("AvaliacaoDisciplinasEtapas")
                     .HasForeignKey("DisciplinaId")
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
+                b.HasOne("SAED.Core.Entities.Etapa", "Etapa")
                     .WithMany("AvaliacaoDisciplinasEtapas")
                     .HasForeignKey("EtapaId")
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.AvaliacaoQuestao", b =>
+            modelBuilder.Entity("SAED.Core.Entities.AvaliacaoQuestao", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                b.HasOne("SAED.Core.Entities.Avaliacao", "Avaliacao")
                     .WithMany("AvaliacaoQuestoes")
                     .HasForeignKey("AvaliacaoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Questao", "Questao")
+                b.HasOne("SAED.Core.Entities.Questao", "Questao")
                     .WithMany("AvaliacaoQuestoes")
                     .HasForeignKey("QuestaoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Descritor", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Descritor", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Tema", "Tema")
+                b.HasOne("SAED.Core.Entities.Tema", "Tema")
                     .WithMany("Descritores")
                     .HasForeignKey("TemaId")
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Escola", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Escola", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Distrito", "Distrito")
+                b.HasOne("SAED.Core.Entities.Distrito", "Distrito")
                     .WithMany("Escolas")
                     .HasForeignKey("DistritoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Escola", "Matriz")
+                b.HasOne("SAED.Core.Entities.Escola", "Matriz")
                     .WithMany()
                     .HasForeignKey("MatrizId");
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Etapa", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Etapa", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Segmento", "Segmento")
+                b.HasOne("SAED.Core.Entities.Segmento", "Segmento")
                     .WithMany("Etapas")
                     .HasForeignKey("SegmentoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Questao", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Questao", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Descritor", "Descritor")
+                b.HasOne("SAED.Core.Entities.Descritor", "Descritor")
                     .WithMany("Questoes")
                     .HasForeignKey("DescritorId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
+                b.HasOne("SAED.Core.Entities.Etapa", "Etapa")
                     .WithMany("Questoes")
                     .HasForeignKey("EtapaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.RespostaAluno", b =>
+            modelBuilder.Entity("SAED.Core.Entities.RespostaAluno", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Alternativa", "Alternativa")
+                b.HasOne("SAED.Core.Entities.Alternativa", "Alternativa")
                     .WithOne("RespostaAluno")
-                    .HasForeignKey("SAED.ApplicationCore.Entities.RespostaAluno", "AlternativaId")
+                    .HasForeignKey("SAED.Core.Entities.RespostaAluno", "AlternativaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Aluno", "Aluno")
+                b.HasOne("SAED.Core.Entities.Aluno", "Aluno")
                     .WithMany("RespostaAlunos")
                     .HasForeignKey("AlunoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                b.HasOne("SAED.Core.Entities.Avaliacao", "Avaliacao")
                     .WithMany("RespostaAlunos")
                     .HasForeignKey("AvaliacaoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Sala", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Sala", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Escola", "Escola")
+                b.HasOne("SAED.Core.Entities.Escola", "Escola")
                     .WithMany("Salas")
                     .HasForeignKey("EscolaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Segmento", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Segmento", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Curso", "Curso")
+                b.HasOne("SAED.Core.Entities.Curso", "Curso")
                     .WithMany("Segmentos")
                     .HasForeignKey("CursoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Tema", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Tema", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Disciplina", "Disciplina")
+                b.HasOne("SAED.Core.Entities.Disciplina", "Disciplina")
                     .WithMany("Temas")
                     .HasForeignKey("DisciplinaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.Turma", b =>
+            modelBuilder.Entity("SAED.Core.Entities.Turma", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Etapa", "Etapa")
+                b.HasOne("SAED.Core.Entities.Etapa", "Etapa")
                     .WithMany("Turmas")
                     .HasForeignKey("EtapaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Forma", "Forma")
+                b.HasOne("SAED.Core.Entities.Forma", "Forma")
                     .WithMany("Turmas")
                     .HasForeignKey("FormaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Sala", "Sala")
+                b.HasOne("SAED.Core.Entities.Sala", "Sala")
                     .WithMany("Turmas")
                     .HasForeignKey("SalaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Turno", "Turno")
+                b.HasOne("SAED.Core.Entities.Turno", "Turno")
                     .WithMany("Turmas")
                     .HasForeignKey("TurnoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.TurmaAluno", b =>
+            modelBuilder.Entity("SAED.Core.Entities.TurmaAluno", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Aluno", "Aluno")
+                b.HasOne("SAED.Core.Entities.Aluno", "Aluno")
                     .WithMany("TurmaAlunos")
                     .HasForeignKey("AlunoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Turma", "Turma")
+                b.HasOne("SAED.Core.Entities.Turma", "Turma")
                     .WithMany("TurmaAlunos")
                     .HasForeignKey("TurmaId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-            modelBuilder.Entity("SAED.ApplicationCore.Entities.UsuarioTurmaAvaliacao", b =>
+            modelBuilder.Entity("SAED.Core.Entities.UsuarioTurmaAvaliacao", b =>
             {
-                b.HasOne("SAED.ApplicationCore.Entities.Avaliacao", "Avaliacao")
+                b.HasOne("SAED.Core.Entities.Avaliacao", "Avaliacao")
                     .WithMany("UsuarioTurmaAvaliacao")
                     .HasForeignKey("AvaliacaoId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("SAED.ApplicationCore.Entities.Turma", "Turma")
+                b.HasOne("SAED.Core.Entities.Turma", "Turma")
                     .WithMany("UsuarioTurmaAvaliacao")
                     .HasForeignKey("TurmaId")
                     .OnDelete(DeleteBehavior.Cascade)
