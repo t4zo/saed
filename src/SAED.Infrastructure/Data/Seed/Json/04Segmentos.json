@@ -1,0 +1,44 @@
+[
+  {
+    "Id": 1,
+    "CursoId": 1,
+    "Nome": "Creche",
+    "Sigla": "CR"
+  },
+  {
+    "Id": 2,
+    "CursoId": 1,
+    "Nome": "Pré-Escola",
+    "Sigla": "PE"
+  },
+  {
+    "Id": 3,
+    "CursoId": 2,
+    "Nome": "Ensino Fundamental I",
+    "Sigla": "EF I"
+  },
+  {
+    "Id": 4,
+    "CursoId": 2,
+    "Nome": "Ensino Fundamental II",
+    "Sigla": "EF II"
+  },
+  {
+    "Id": 5,
+    "CursoId": 3,
+    "Nome": "Educação de Jovens e Adultos I",
+    "Sigla": "EJA I"
+  },
+  {
+    "Id": 6,
+    "CursoId": 3,
+    "Nome": "Educação de Jovens e Adultos II",
+    "Sigla": "EJA II"
+  },
+  {
+    "Id": 7,
+    "CursoId": 2,
+    "Nome": "Correção de Fluxo",
+    "Sigla": "CF"
+  }
+]

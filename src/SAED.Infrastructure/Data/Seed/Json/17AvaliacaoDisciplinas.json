@@ -1,0 +1,14 @@
+[
+  {
+    "AvaliacaoId": 1,
+    "DisciplinaId": 1
+  },
+  {
+    "AvaliacaoId": 1,
+    "DisciplinaId": 2
+  },
+  {
+    "AvaliacaoId": 2,
+    "DisciplinaId": 3
+  }
+]

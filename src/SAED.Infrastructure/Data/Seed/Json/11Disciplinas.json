@@ -1,0 +1,17 @@
+[
+  {
+    "Id": 1,
+    "Nome": "Português",
+    "Sigla": "Port"
+  },
+  {
+    "Id": 2,
+    "Nome": "Matemática",
+    "Sigla": "Mat"
+  },
+  {
+    "Id": 3,
+    "Nome": "Ciências",
+    "Sigla": "Cie"
+  }
+]

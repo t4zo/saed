@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Descritor>
+
+@{
+    ViewData["Title"] = "Descritores";
+}
+
+<form id="form-filter" class="uk-card uk-card-default uk-margin-bottom" style="padding: 20px 0;" method="get" action="">
+    <div class="uk-grid uk-flex-around" uk-grid>
+        <section class="uk-width-1-3@s uk-margin-remove-first-child">
+            <label class="uk-form-label">Disciplinas</label>
+            <select class="uk-select" id="disciplinaId" name="disciplinaId" asp-items="ViewBag.Disciplinas">
+                <option disabled selected value=""> -- Selecione a Disciplina -- </option>
+            </select>
+        </section>
+        <section class="uk-width-1-3@s">
+            <label class="uk-form-label">Temas</label>
+            <select class="uk-select" id="temaId" name="temaId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Temas" disabled="@(ViewBag.Temas == null)">
+                <option disabled selected value=""> -- Selecione o Tema -- </option>
+            </select>
+        </section>
+    </div>
+</form>
+
+<main class="uk-card uk-card-default uk-card-body">
+    @{ await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader {Header = "Descritores", Controller = "Descritores", Action = "Descritores"}); }
+    <div class="uk-overflow-auto">
+        <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+            <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Tema.Disciplina)</th>
+                <th>@Html.DisplayNameFor(model => model.Tema)</th>
+                <th>Descritor</th>
+                <th class="uk-text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Tema.Disciplina.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Tema.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td class="uk-flex uk-flex-center">
+                        @if (User.HasClaim(x => x.Value == Permissions.Descritores.Update))
+                        {
+                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id" style="align-self: flex-end"></a>
+                        }
+                        @if (User.HasClaim(x => x.Value == Permissions.Descritores.Delete))
+                        {
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="form-delete-@item.Id">
+                                <a href="javascript:removeItem(@item.Id);" uk-icon="trash" title="Remover"></a>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        document.querySelector("#disciplinaId").addEventListener("change", () => {
+            const form = document.querySelector('#form-filter');
+            document.querySelector("#temaId").selectedIndex = -1;
+
+            form.action = removeUrlParam("temaId", window.location.href);
+            form.submit();
+        });
+    </script>
+    <script src="~/scripts/removeItem.js"></script>
+}

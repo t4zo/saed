@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: 'saedapi'
+    image: 't4zo/saedapi:0.0.2'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+      - 5001:5001
+    depends_on:
+      - postgres
+    environment:
+      DOCKER: 'True'
+      ConnectionStrings__DefaultConnection: 'Host=postgres;Database=saedapiapidb;User ID=postgres;Port=5432;Password=582789sc'
+      ASPNETCORE_ENVIRONMENT: 'Production'
+      ASPNETCORE_HTTPS_PORT: '5001'
+      ASPNETCORE_URLS: 'https://+:5001;http://+:5000'
+      ASPNETCORE_Kestrel__Certificates__Default__Path: '/https/aspnetapp.pfx'
+      ASPNETCORE_Kestrel__Certificates__Default__Password: 'password'
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - saedapi-network
+
+  postgres:
+    container_name: 'postgres'
+    image: postgres:10
+    environment:
+      POSTGRES_DB: 'saedapiapidb'
+      POSTGRES_PASSWORD: '582789sc'
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    networks:
+      - saedapi-network
+
+volumes:
+  db_volume:
+
+networks:
+  saedapi-network:
+    driver: bridge

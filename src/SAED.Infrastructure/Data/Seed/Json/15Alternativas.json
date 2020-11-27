@@ -1,0 +1,122 @@
+[
+  {
+    "Id": 1,
+    "QuestaoId": 1,
+    "Descricao": "20",
+    "Correta": "true"
+  },
+  {
+    "Id": 2,
+    "QuestaoId": 1,
+    "Descricao": "15",
+    "Correta": "false"
+  },
+  {
+    "Id": 3,
+    "QuestaoId": 1,
+    "Descricao": "12",
+    "Correta": "false"
+  },
+  {
+    "Id": 4,
+    "QuestaoId": 1,
+    "Descricao": "17",
+    "Correta": "false"
+  },
+  {
+    "Id": 5,
+    "QuestaoId": 2,
+    "Descricao": "Pedro",
+    "Correta": "false"
+  },
+  {
+    "Id": 6,
+    "QuestaoId": 2,
+    "Descricao": "Carlos",
+    "Correta": "true"
+  },
+  {
+    "Id": 7,
+    "QuestaoId": 2,
+    "Descricao": "José",
+    "Correta": "false"
+  },
+  {
+    "Id": 8,
+    "QuestaoId": 2,
+    "Descricao": "Maria",
+    "Correta": "false"
+  },
+  {
+    "Id": 9,
+    "QuestaoId": 3,
+    "Descricao": "1,5",
+    "Correta": "false"
+  },
+  {
+    "Id": 10,
+    "QuestaoId": 3,
+    "Descricao": "2,9",
+    "Correta": "false"
+  },
+  {
+    "Id": 11,
+    "QuestaoId": 3,
+    "Descricao": "5,4",
+    "Correta": "true"
+  },
+  {
+    "Id": 12,
+    "QuestaoId": 3,
+    "Descricao": "4,2",
+    "Correta": "false"
+  },
+  {
+    "Id": 13,
+    "QuestaoId": 4,
+    "Descricao": "Ronaldo",
+    "Correta": "false"
+  },
+  {
+    "Id": 14,
+    "QuestaoId": 4,
+    "Descricao": "Adriana",
+    "Correta": "false"
+  },
+  {
+    "Id": 15,
+    "QuestaoId": 4,
+    "Descricao": "Marcelo",
+    "Correta": "false"
+  },
+  {
+    "Id": 16,
+    "QuestaoId": 4,
+    "Descricao": "Simone",
+    "Correta": "true"
+  },
+  {
+    "Id": 17,
+    "QuestaoId": 5,
+    "Descricao": "20",
+    "Correta": "false"
+  },
+  {
+    "Id": 18,
+    "QuestaoId": 5,
+    "Descricao": "10",
+    "Correta": "true"
+  },
+  {
+    "Id": 19,
+    "QuestaoId": 5,
+    "Descricao": "30",
+    "Correta": "false"
+  },
+  {
+    "Id": 20,
+    "QuestaoId": 5,
+    "Descricao": "40",
+    "Correta": "false"
+  }
+]
