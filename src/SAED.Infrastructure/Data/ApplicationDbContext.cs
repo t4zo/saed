@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
+using SAED.Core.Constants;
+using SAED.Core.Entities;
+using SAED.Core.Interfaces;
 using SAED.Infrastructure.Identity;
 
 namespace SAED.Infrastructure.Data
@@ -47,6 +47,12 @@ namespace SAED.Infrastructure.Data
         public DbSet<Alternativa> Alternativas { get; set; }
         public DbSet<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
 
+        public DbSet<Forma> Formas { get; set; }
+        public DbSet<Turma> Turmas { get; set; }
+        public DbSet<Sala> Salas { get; set; }
+        public DbSet<Aluno> Alunos { get; set; }
+        public DbSet<Turno> Turnos { get; set; }
+        public DbSet<RespostaAluno> RespostaAlunos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -74,7 +80,7 @@ namespace SAED.Infrastructure.Data
         {
             if (_databaseProvider == DatabaseConstants.Postgres)
             {
-                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection"));
+                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection")).LogTo(Console.WriteLine);
             }
             else
             {

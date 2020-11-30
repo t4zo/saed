@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SAED.Api.Configurations;
-using SAED.ApplicationCore.Extensions;
+using SAED.Core.Extensions;
 using SAED.Infrastructure.Identity;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Api.Extensions
 {

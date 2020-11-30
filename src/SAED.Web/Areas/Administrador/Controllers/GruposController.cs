@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Extensions;
+using SAED.Core.Constants;
+using SAED.Core.Extensions;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {

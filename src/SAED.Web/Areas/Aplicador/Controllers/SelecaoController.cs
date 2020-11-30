@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SAED.ApplicationCore.Constants;
+using SAED.Core.Constants;
 using SAED.Infrastructure.Data;
 
 namespace SAED.Web.Areas.Aplicador.Controllers

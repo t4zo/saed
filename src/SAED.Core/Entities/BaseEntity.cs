@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SAED.ApplicationCore.Entities
+namespace SAED.Core.Entities
 {
     public abstract class BaseEntity<TKey> where TKey : IEquatable<TKey>
     {

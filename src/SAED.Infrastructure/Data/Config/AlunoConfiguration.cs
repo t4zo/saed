@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Entities;
 
 namespace SAED.Infrastructure.Data.Config
 {
@@ -9,6 +9,10 @@ namespace SAED.Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Aluno> builder)
         {
             builder.HasKey(x => x.Id);
+
+            builder.HasOne(x => x.Turma)
+                .WithMany(x => x.Alunos)
+                .HasForeignKey(x => x.TurmaId);
 
             builder.Property(x => x.Nome)
                 .HasMaxLength(256)

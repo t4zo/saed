@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SAED.ApplicationCore.Constants;
+using SAED.Core.Constants;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {

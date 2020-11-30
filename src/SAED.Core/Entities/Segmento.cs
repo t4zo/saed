@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SAED.ApplicationCore.Entities
+namespace SAED.Core.Entities
 {
     public class Segmento : BaseEntity
     {

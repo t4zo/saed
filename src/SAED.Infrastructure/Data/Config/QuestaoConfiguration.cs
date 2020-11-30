@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Entities;
 
 namespace SAED.Infrastructure.Data.Config
 {

@@ -1,4 +1,4 @@
-﻿namespace SAED.ApplicationCore.Interfaces
+﻿namespace SAED.Core.Interfaces
 {
     public interface IManyToMany
     {

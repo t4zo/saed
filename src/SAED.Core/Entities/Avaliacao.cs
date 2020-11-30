@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SAED.ApplicationCore.Entities
+namespace SAED.Core.Entities
 {
     public class Avaliacao : BaseEntity
     {

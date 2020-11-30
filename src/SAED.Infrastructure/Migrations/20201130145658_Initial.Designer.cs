@@ -10,23 +10,23 @@ using SAED.Infrastructure.Data;
 namespace SAED.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201030190017_Initial")]
+    [Migration("20201130145658_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -61,7 +61,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -94,12 +94,12 @@ namespace SAED.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -159,12 +159,12 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -191,7 +191,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<bool>("Correta")
                         .HasColumnType("bit");
@@ -227,7 +227,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -240,8 +240,11 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("TurmaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -251,7 +254,9 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Aluno");
+                    b.HasIndex("TurmaId");
+
+                    b.ToTable("Alunos");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Avaliacao", b =>
@@ -259,7 +264,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -349,7 +354,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -359,13 +364,13 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Sigla")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)")
-                        .HasMaxLength(8);
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -383,7 +388,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -393,8 +398,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("TemaId")
                         .HasColumnType("int");
@@ -417,7 +422,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -427,13 +432,13 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Sigla")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)")
-                        .HasMaxLength(8);
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -451,7 +456,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -464,8 +469,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -486,11 +491,11 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Bairro")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -503,8 +508,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int?>("Inep")
                         .HasColumnType("int");
@@ -514,19 +519,19 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int?>("Numero")
                         .HasColumnType("int");
 
                     b.Property<string>("Rua")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Telefone")
-                        .HasColumnType("nvarchar(11)")
-                        .HasMaxLength(11);
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -548,7 +553,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -558,8 +563,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int>("Normativa")
                         .HasColumnType("int");
@@ -585,7 +590,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -595,8 +600,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -606,7 +611,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Forma");
+                    b.ToTable("Formas");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Questao", b =>
@@ -614,7 +619,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -640,8 +645,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Item")
                         .IsRequired()
-                        .HasColumnType("nvarchar(8)")
-                        .HasMaxLength(8);
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -688,7 +693,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasIndex("AlunoId");
 
-                    b.ToTable("RespostaAluno");
+                    b.ToTable("RespostaAlunos");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Sala", b =>
@@ -696,7 +701,13 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
+
+                    b.Property<double>("Area")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Capacidade")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -707,8 +718,9 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("EscolaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -720,7 +732,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasIndex("EscolaId");
 
-                    b.ToTable("Sala");
+                    b.ToTable("Salas");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Segmento", b =>
@@ -728,7 +740,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -741,13 +753,13 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Sigla")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -767,7 +779,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -780,8 +792,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -801,7 +813,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -820,8 +832,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<int>("QtdAlunos")
                         .HasColumnType("int");
@@ -848,34 +860,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasIndex("TurnoId");
 
-                    b.ToTable("Turma");
-                });
-
-            modelBuilder.Entity("SAED.Core.Entities.TurmaAluno", b =>
-                {
-                    b.Property<int>("TurmaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AlunoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("TurmaId", "AlunoId");
-
-                    b.HasIndex("AlunoId");
-
-                    b.ToTable("TurmaAluno");
+                    b.ToTable("Turmas");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Turno", b =>
@@ -883,7 +868,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -893,8 +878,8 @@ namespace SAED.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -904,7 +889,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Turno");
+                    b.ToTable("Turnos");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.UsuarioTurmaAvaliacao", b =>
@@ -944,7 +929,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -957,12 +942,12 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -974,7 +959,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -985,7 +970,7 @@ namespace SAED.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -1001,8 +986,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -1017,12 +1002,12 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -1046,17 +1031,17 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
@@ -1120,6 +1105,19 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("QuestaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Questao");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Aluno", b =>
+                {
+                    b.HasOne("SAED.Core.Entities.Turma", "Turma")
+                        .WithMany("Alunos")
+                        .HasForeignKey("TurmaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Turma");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.AvaliacaoDisciplinaEtapa", b =>
@@ -1141,6 +1139,12 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("EtapaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Avaliacao");
+
+                    b.Navigation("Disciplina");
+
+                    b.Navigation("Etapa");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.AvaliacaoQuestao", b =>
@@ -1156,6 +1160,10 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("QuestaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Avaliacao");
+
+                    b.Navigation("Questao");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Descritor", b =>
@@ -1165,6 +1173,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("TemaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Tema");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Escola", b =>
@@ -1178,6 +1188,10 @@ namespace SAED.Infrastructure.Migrations
                     b.HasOne("SAED.Core.Entities.Escola", "Matriz")
                         .WithMany()
                         .HasForeignKey("MatrizId");
+
+                    b.Navigation("Distrito");
+
+                    b.Navigation("Matriz");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Etapa", b =>
@@ -1187,6 +1201,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("SegmentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Segmento");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Questao", b =>
@@ -1202,6 +1218,10 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("EtapaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Descritor");
+
+                    b.Navigation("Etapa");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.RespostaAluno", b =>
@@ -1209,20 +1229,26 @@ namespace SAED.Infrastructure.Migrations
                     b.HasOne("SAED.Core.Entities.Alternativa", "Alternativa")
                         .WithOne("RespostaAluno")
                         .HasForeignKey("SAED.Core.Entities.RespostaAluno", "AlternativaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SAED.Core.Entities.Aluno", "Aluno")
                         .WithMany("RespostaAlunos")
                         .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SAED.Core.Entities.Avaliacao", "Avaliacao")
                         .WithMany("RespostaAlunos")
                         .HasForeignKey("AvaliacaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Alternativa");
+
+                    b.Navigation("Aluno");
+
+                    b.Navigation("Avaliacao");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Sala", b =>
@@ -1232,6 +1258,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("EscolaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Escola");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Segmento", b =>
@@ -1241,6 +1269,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("CursoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Curso");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Tema", b =>
@@ -1250,6 +1280,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("DisciplinaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Disciplina");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Turma", b =>
@@ -1277,21 +1309,14 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("TurnoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("SAED.Core.Entities.TurmaAluno", b =>
-                {
-                    b.HasOne("SAED.Core.Entities.Aluno", "Aluno")
-                        .WithMany("TurmaAlunos")
-                        .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Etapa");
 
-                    b.HasOne("SAED.Core.Entities.Turma", "Turma")
-                        .WithMany("TurmaAlunos")
-                        .HasForeignKey("TurmaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Forma");
+
+                    b.Navigation("Sala");
+
+                    b.Navigation("Turno");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.UsuarioTurmaAvaliacao", b =>
@@ -1307,6 +1332,106 @@ namespace SAED.Infrastructure.Migrations
                         .HasForeignKey("TurmaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Avaliacao");
+
+                    b.Navigation("Turma");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Alternativa", b =>
+                {
+                    b.Navigation("RespostaAluno");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Aluno", b =>
+                {
+                    b.Navigation("RespostaAlunos");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Avaliacao", b =>
+                {
+                    b.Navigation("AvaliacaoDisciplinasEtapas");
+
+                    b.Navigation("AvaliacaoQuestoes");
+
+                    b.Navigation("RespostaAlunos");
+
+                    b.Navigation("UsuarioTurmaAvaliacao");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Curso", b =>
+                {
+                    b.Navigation("Segmentos");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Descritor", b =>
+                {
+                    b.Navigation("Questoes");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Disciplina", b =>
+                {
+                    b.Navigation("AvaliacaoDisciplinasEtapas");
+
+                    b.Navigation("Temas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Distrito", b =>
+                {
+                    b.Navigation("Escolas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Escola", b =>
+                {
+                    b.Navigation("Salas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Etapa", b =>
+                {
+                    b.Navigation("AvaliacaoDisciplinasEtapas");
+
+                    b.Navigation("Questoes");
+
+                    b.Navigation("Turmas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Forma", b =>
+                {
+                    b.Navigation("Turmas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Questao", b =>
+                {
+                    b.Navigation("Alternativas");
+
+                    b.Navigation("AvaliacaoQuestoes");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Sala", b =>
+                {
+                    b.Navigation("Turmas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Segmento", b =>
+                {
+                    b.Navigation("Etapas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Tema", b =>
+                {
+                    b.Navigation("Descritores");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Turma", b =>
+                {
+                    b.Navigation("Alunos");
+
+                    b.Navigation("UsuarioTurmaAvaliacao");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Turno", b =>
+                {
+                    b.Navigation("Turmas");
                 });
 #pragma warning restore 612, 618
         }

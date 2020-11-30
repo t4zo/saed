@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Api.Authorization
 {

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace SAED.ApplicationCore.Interfaces
+namespace SAED.Core.Interfaces
 {
     public interface ITokenService
     {

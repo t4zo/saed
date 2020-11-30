@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Constants;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 
 namespace SAED.Web.Areas.Administrador.Controllers

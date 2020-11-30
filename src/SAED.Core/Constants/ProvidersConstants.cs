@@ -1,4 +1,4 @@
-﻿namespace SAED.ApplicationCore.Constants
+﻿namespace SAED.Core.Constants
 {
     public static class ProvidersConstants
     {

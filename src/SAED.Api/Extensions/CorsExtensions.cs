@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
-using SAED.ApplicationCore.Constants;
+using SAED.Core.Constants;
 
 namespace SAED.Api.Extensions
 {

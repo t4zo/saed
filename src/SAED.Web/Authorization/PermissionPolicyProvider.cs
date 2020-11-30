@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization
 {
@@ -26,7 +26,7 @@ namespace SAED.Web.Authorization
         // O nome da política deve corresponder à permissão necessária.
         public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            if (policyName.StartsWith(CustomClaimTypes.Permissions, StringComparison.OrdinalIgnoreCase))
+            if (policyName.StartsWith(CustomClaimTypes.Permission, StringComparison.OrdinalIgnoreCase))
             {
                 AuthorizationPolicyBuilder policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));

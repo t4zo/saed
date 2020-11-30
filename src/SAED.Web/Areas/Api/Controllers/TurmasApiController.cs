@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -10,38 +9,38 @@ using SAED.Web.Extensions;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
-    public class TemasApiController : BaseApiController
+    public class TurmasApiController : BaseApiController
     {
         private readonly ApplicationDbContext _context;
 
-        public TemasApiController(ApplicationDbContext context)
+        public TurmasApiController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
         public async Task<ActionResult> Get(int id)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
-            
-            var temas = await _context.Temas.AsNoTracking()
-                .Include(x => x.Disciplina)
+
+            var turmas = await _context.Turmas
+                .AsNoTracking()
+                .Include(x => x.Etapa)
                     .ThenInclude(x => x.AvaliacaoDisciplinasEtapas
-                    .Where(y => y.AvaliacaoId == avaliacao.Id))
-                .Where(x => x.DisciplinaId == id)
+                    .Where(ade => ade.AvaliacaoId == avaliacao.Id))
+                .Where(x => x.EtapaId == id)
                 .ToListAsync();
 
-            if (temas is null)
+            if (turmas is null)
             {
-                return NotFound();
+                return BadRequest();
             }
             
-            foreach (var tema in temas)
+            foreach (var turma in turmas)
             {
-                tema.Disciplina = null;
+                turma.Etapa = null;
             }
 
-            return Ok(JsonSerializer.Serialize(temas));
+            return Ok(JsonSerializer.Serialize(turmas));
         }
     }
 }

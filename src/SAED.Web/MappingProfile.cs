@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Entities;
 using SAED.Web.Areas.Administrador.ViewModels;
 
 namespace SAED.Web

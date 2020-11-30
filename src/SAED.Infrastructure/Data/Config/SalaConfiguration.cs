@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Entities;
 
 namespace SAED.Infrastructure.Data.Config
 {
@@ -10,8 +10,11 @@ namespace SAED.Infrastructure.Data.Config
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Numero)
-                .IsRequired();
+            builder.Property(x => x.Nome).IsRequired();
+            
+            builder.Property(x => x.Capacidade).IsRequired();
+            
+            builder.Property(x => x.Area);
 
             builder.HasOne(sala => sala.Escola)
                 .WithMany(escola => escola.Salas)

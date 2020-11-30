@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Constants;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
 
@@ -23,8 +23,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
-            List<AvaliacaoDisciplinaEtapa> avaliacaoDisciplinasEtapas = await _context.AvaliacaoDisciplinasEtapas
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacaoDisciplinasEtapas = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
                 .Include(x => x.Avaliacao)
                 .Include(x => x.Disciplina)
@@ -47,9 +47,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa)
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 
-            bool avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas
+            var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
                 .AnyAsync(
                     x => x.AvaliacaoId == avaliacao.Id &&
@@ -70,9 +70,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public async Task<IActionResult> Edit(int disciplinaId, int etapaId)
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 
-            AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas
+            var avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas
                 .Include(x => x.Disciplina)
                 .Include(x => x.Etapa)
                 .FirstOrDefaultAsync(
@@ -100,7 +100,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Edit(int disciplinaId, int etapaId,
             AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa)
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
             avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
 
             try
@@ -128,7 +128,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         // public async Task<IActionResult> Delete(int disciplinaId, int etapaId)
         // {
-        //     var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+        //     var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
         //
         //     var avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas
         //         .AsNoTracking()
@@ -151,9 +151,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int disciplinaId, int etapaId)
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 
-            AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa =
+            var avaliacaoDisciplinaEtapa =
                 await _context.AvaliacaoDisciplinasEtapas.FirstOrDefaultAsync(
                     x => x.AvaliacaoId == avaliacao.Id &&
                          x.DisciplinaId == disciplinaId &&

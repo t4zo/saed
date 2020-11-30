@@ -1,6 +1,6 @@
-﻿using SAED.ApplicationCore.Interfaces;
+﻿using SAED.Core.Interfaces;
 
-namespace SAED.ApplicationCore.Entities
+namespace SAED.Core.Entities
 {
     public class RespostaAluno : IManyToMany
     {

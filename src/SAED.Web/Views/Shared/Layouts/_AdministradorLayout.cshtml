@@ -1,11 +1,11 @@
-﻿@using static SAED.ApplicationCore.Constants.AuthorizationConstants
+﻿@using static SAED.Core.Constants.AuthorizationConstants
 @using SAED.Web.Extensions
 @using Microsoft.AspNetCore.Http
-@using SAED.ApplicationCore.Entities
+@using SAED.Core.Entities
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    var avaliacao = HttpContextAccessor.HttpContext?.Session.Get<Avaliacao>("avaliacao");
+    var avaliacao = HttpContextAccessor.HttpContext?.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 }
 
 <!DOCTYPE html>
@@ -153,6 +153,13 @@
                 <li class="uk-nav-header">Básico</li>
             }
 
+            @if (User.HasClaim(x => x.Value == Permissions.Avaliacoes.View))
+            {
+                <li>
+                    <a asp-area="@Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Avaliações</a>
+                </li>
+            }
+
             @if (User.HasClaim(x => x.Value == Permissions.Distritos.View))
             {
                 <li>
@@ -164,13 +171,6 @@
             {
                 <li>
                     <a asp-area="@Areas.Administrador" asp-controller="Escolas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Escolas</a>
-                </li>
-            }
-
-            @if (User.HasClaim(x => x.Value == Permissions.Avaliacoes.View))
-            {
-                <li>
-                    <a asp-area="@Areas.Administrador" asp-controller="Avaliacoes" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Avaliações</a>
                 </li>
             }
 

@@ -6,8 +6,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Entities;
-using SAED.ApplicationCore.Interfaces;
+using SAED.Core.Entities;
+using SAED.Core.Interfaces;
 
 namespace SAED.Infrastructure.Data.Seed
 {

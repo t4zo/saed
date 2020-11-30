@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SAED.ApplicationCore.Entities
+namespace SAED.Core.Entities
 {
     public class Turma : BaseEntity
     {
@@ -16,6 +16,6 @@ namespace SAED.ApplicationCore.Entities
         public int QtdAlunos { get; set; }
         public bool Extinta { get; set; }
         public ICollection<UsuarioTurmaAvaliacao> UsuarioTurmaAvaliacao { get; set; }
-        public ICollection<TurmaAluno> TurmaAlunos { get; set; }
+        public ICollection<Aluno> Alunos { get; set; }
     }
 }

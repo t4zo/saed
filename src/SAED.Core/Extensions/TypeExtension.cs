@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SAED.ApplicationCore.Extensions
+namespace SAED.Core.Extensions
 {
     public static class TypeExtensions
     {

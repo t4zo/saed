@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SAED.ApplicationCore.Interfaces
+namespace SAED.Core.Interfaces
 {
     public interface IEntitySeed<TEntity> where TEntity : class
     {

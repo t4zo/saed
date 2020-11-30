@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Constants;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
         public async Task<IActionResult> Index(int? disciplinaId, int? temaId, int? descritorId, int? etapaId)
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
             List<Disciplina> disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
             IEnumerable<Questao> questoes = await GetQuestoesAsync(etapaId);
@@ -94,20 +94,20 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .ToListAsync();
         }
 
-        // [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
-        // public async Task<IActionResult> CreateAsync()
-        // {
-        //     var avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
-        //
-        //     var etapas = await _context.Etapas
-        //         .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
-        //         .ToListAsync();
-        //
-        //     ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
-        //     ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
-        //
-        //     return View();
-        // }
+        [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
+        public async Task<IActionResult> Create()
+        {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+        
+            var etapas = await _context.Etapas
+                .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                .ToListAsync();
+        
+            ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+        
+            return View();
+        }
 
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         [HttpPost]
@@ -116,7 +116,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+                Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 
                 Descritor descritor = await _context.Descritores.Include("Tema.Disciplina")
                     .FirstOrDefaultAsync(x => x.Id == questaoViewModel.DescritorId);
@@ -178,7 +178,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 
             Questao questao = await _context.Questoes
                 .AsNoTracking()
@@ -224,7 +224,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>("avaliacao");
+            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 
             Descritor descritor = await _context.Descritores.Include("Tema.Disciplina")
                 .FirstOrDefaultAsync(x => x.Id == questaoViewModel.DescritorId);

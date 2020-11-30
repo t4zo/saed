@@ -2,8 +2,8 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Interfaces;
+using SAED.Core.Constants;
+using SAED.Core.Interfaces;
 
 namespace SAED.Infrastructure.Data.Seed
 {

@@ -4,7 +4,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SAED.Api.Configurations;
-using SAED.ApplicationCore.Interfaces;
+using SAED.Core.Interfaces;
 
 namespace SAED.Api.Services
 {

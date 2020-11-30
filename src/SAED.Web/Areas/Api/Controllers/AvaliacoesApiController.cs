@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.Infrastructure.Data;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Api.Controllers
 {

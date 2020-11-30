@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
+using SAED.Web.Extensions;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
@@ -24,7 +27,21 @@ namespace SAED.Web.Areas.Api.Controllers
         [HttpGet]
         public async Task<ActionResult> Get(int id)
         {
-            return Ok(await _context.Disciplinas.Where(x => x.Id == id).ToListAsync());
+            // var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            
+            // var disciplinas = await _context.Disciplinas
+            //     .AsNoTracking()
+            //     .Include(x => x.AvaliacaoDisciplinasEtapas
+            //         .Where(y => y.AvaliacaoId == avaliacao.Id))
+            //     .Where(x => x.Id == id)
+            //     .ToListAsync();
+            
+            var disciplinas = await _context.Disciplinas
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .ToListAsync();
+
+            return Ok(disciplinas);
         }
     }
 }

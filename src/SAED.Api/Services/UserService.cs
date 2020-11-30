@@ -8,10 +8,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using SAED.Api.Entities.Responses;
 using SAED.Api.Interfaces;
-using SAED.ApplicationCore.Interfaces;
+using SAED.Core.Interfaces;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Api.Services
 {

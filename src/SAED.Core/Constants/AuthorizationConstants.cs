@@ -1,4 +1,4 @@
-﻿namespace SAED.ApplicationCore.Constants
+﻿namespace SAED.Core.Constants
 {
     public static class AuthorizationConstants
     {
@@ -24,6 +24,7 @@
         public static class CustomClaimTypes
         {
             public const string Permissions = "Permissions";
+            public const string Permission = "Permission";
         }
 
         public static class Permissions

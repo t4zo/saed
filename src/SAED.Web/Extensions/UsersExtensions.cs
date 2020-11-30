@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Configurations;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
 {

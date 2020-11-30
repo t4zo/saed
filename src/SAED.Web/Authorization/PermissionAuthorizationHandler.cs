@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using SAED.Infrastructure.Identity;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization
 {
@@ -61,7 +61,7 @@ namespace SAED.Web.Authorization
                 IList<Claim> roleClaims = await _roleManager.GetClaimsAsync(role);
 
                 IEnumerable<string> rolePermissions = roleClaims.Where(x =>
-                    x.Type == CustomClaimTypes.Permissions &&
+                    x.Type == CustomClaimTypes.Permission &&
                     x.Value == requirement.Permission &&
                     x.Issuer == "LOCAL AUTHORITY"
                 ).Select(x => x.Value);

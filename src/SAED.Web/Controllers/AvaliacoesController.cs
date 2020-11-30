@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
-using static SAED.ApplicationCore.Constants.AuthorizationConstants;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Controllers
 {
@@ -31,7 +31,7 @@ namespace SAED.Web.Controllers
         {
             Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
 
-            HttpContext.Session.Set("avaliacao", avaliacao);
+            HttpContext.Session.Set(nameof(Avaliacao).ToLower(), avaliacao);
 
             if (User.IsInRole(Roles.Superuser) || User.IsInRole(Roles.Administrador))
             {

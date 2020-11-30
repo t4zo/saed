@@ -42,23 +42,25 @@
             <div class="uk-grid uk-grid-row-small" uk-grid>
                 <div class="uk-width-1-1">
                     <label class="uk-form-label">Escola</label>
-                    <select class="uk-select" asp-items="ViewBag.EscolaId"></select>
+                    <select id="escolas" class="uk-select" asp-items="ViewBag.EscolaId">
+                        <option value="">---------</option>
+                    </select>
                 </div>
                 <div class="uk-width-1-1">
                     <label class="uk-form-label">Etapa</label>
-                    <select class="uk-select" disabled>
+                    <select id="etapas" class="uk-select" disabled>
                         <option value="">---------</option>
                     </select>
                 </div>
                 <div class="uk-width-1-1">
                     <label class="uk-form-label">Turma</label>
-                    <select class="uk-select" disabled>
+                    <select id="turmas" class="uk-select" disabled>
                         <option value="">---------</option>
                     </select>
                 </div>
                 <div class="uk-width-1-1">
                     <label class="uk-form-label">Aluno</label>
-                    <select class="uk-select" disabled>
+                    <select id="alunos" class="uk-select" disabled>
                         <option value="">---------</option>
                     </select>
                 </div>
@@ -75,5 +77,34 @@
         </form>
     </div>
 </main>
+
+<script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const escolaField = document.querySelector("#escolas");
+            const etapaField = document.querySelector("#etapas");
+            const turmaField = document.querySelector("#turmas");
+            const alunoField = document.querySelector("#alunos");
+            
+            escolaField.addEventListener("change", () => {
+                filterNestedFields(escolaField.value, "/api/v1/etapasapi?id", "#etapas");
+                etapaField.selectedIndex = 0;
+                etapaField.disabled = true;
+            });
+            
+            etapaField.addEventListener("change", () => {
+                filterNestedFields(etapaField.value, "/api/v1/turmasapi?id", "#turmas");
+                turmaField.selectedIndex = 0;
+                turmaField.disabled = true;
+            });
+            
+            turmaField.addEventListener("change", () => {
+                filterNestedFields(turmaField.value, "/api/v1/alunosapi?id", "#alunos");
+                alunoField.selectedIndex = 0;
+                alunoField.disabled = true;
+            });
+        });
+    </script>
+
 </body>
 </html>

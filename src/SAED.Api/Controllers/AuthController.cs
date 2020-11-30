@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using SAED.Api.Entities.Dto;
 using SAED.Api.Entities.Responses;
 using SAED.Api.Interfaces;
-using SAED.ApplicationCore.Constants;
+using SAED.Core.Constants;
 using SAED.Infrastructure.Identity;
 
 namespace SAED.Api.Controllers

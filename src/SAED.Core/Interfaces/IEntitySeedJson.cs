@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SAED.ApplicationCore.Interfaces
+namespace SAED.Core.Interfaces
 {
     public interface IEntitySeedJson
     {

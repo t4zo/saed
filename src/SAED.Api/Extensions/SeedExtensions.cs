@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SAED.ApplicationCore.Constants;
-using SAED.ApplicationCore.Entities;
+using SAED.Core.Constants;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Data.Seed;
 
@@ -18,7 +18,7 @@ namespace SAED.Api.Extensions
             IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
             string databaseProvider = configuration[DatabaseConstants.Database];
 
-            List<Avaliacao> avaliacoes = new List<Avaliacao>
+            var avaliacoes = new List<Avaliacao>
             {
                 new Avaliacao {Id = 1, Codigo = "2020", Status = StatusAvaliacao.EmAndamento},
                 new Avaliacao {Id = 2, Codigo = "2021", Status = StatusAvaliacao.ARealizar}
@@ -26,7 +26,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Avaliacao>(context, databaseProvider).Load(avaliacoes, "Avaliacoes");
 
-            List<Distrito> distritos = new List<Distrito>
+            var distritos = new List<Distrito>
             {
                 new Distrito {Id = 1, Nome = "Sede", Zona = Zona.Urbana, Distancia = 0},
                 new Distrito {Id = 2, Nome = "Abóbora", Zona = Zona.Rural, Distancia = 110},
@@ -42,7 +42,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Distrito>(context, databaseProvider).Load(distritos, "Distritos");
 
-            List<Escola> escolas = new List<Escola>
+            var escolas = new List<Escola>
             {
                 new Escola
                 {
@@ -1245,7 +1245,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Escola>(context, databaseProvider).Load(escolas, "Escolas");
 
-            List<Curso> cursos = new List<Curso>
+            var cursos = new List<Curso>
             {
                 new Curso {Id = 1, Nome = "Educação Infantil", Sigla = "EI"},
                 new Curso {Id = 2, Nome = "Ensino Fundamental", Sigla = "EF"},
@@ -1254,7 +1254,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Curso>(context, databaseProvider).Load(cursos, "Cursos");
 
-            List<Segmento> segmentos = new List<Segmento>
+            var segmentos = new List<Segmento>
             {
                 new Segmento {Id = 1, CursoId = 1, Nome = "Creche", Sigla = "CR"},
                 new Segmento {Id = 2, CursoId = 1, Nome = "Pré-Escola", Sigla = "PE"},
@@ -1267,7 +1267,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Segmento>(context, databaseProvider).Load(segmentos, "Segmentos");
 
-            List<Etapa> etapas = new List<Etapa>
+            var etapas = new List<Etapa>
             {
                 new Etapa {Id = 1, SegmentoId = 1, Nome = "Berçário", Normativa = 1},
                 new Etapa {Id = 2, SegmentoId = 1, Nome = "Infantil I", Normativa = 1},
@@ -1295,7 +1295,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Etapa>(context, databaseProvider).Load(etapas, "Etapas");
 
-            List<Turno> turnos = new List<Turno>
+            var turnos = new List<Turno>
             {
                 new Turno {Id = 1, Nome = "Manhã"},
                 new Turno {Id = 2, Nome = "Tarde"},
@@ -1304,25 +1304,25 @@ namespace SAED.Api.Extensions
                 new Turno {Id = 5, Nome = "Não Informado"}
             };
 
-            new EntitySeed<Turno>(context, databaseProvider).Load(turnos, "");
+            new EntitySeed<Turno>(context, databaseProvider).Load(turnos, "Turnos");
 
-            List<Forma> formas = new List<Forma>
+            var formas = new List<Forma>
             {
                 new Forma {Id = 1, Nome = "Seriada"}, new Forma {Id = 2, Nome = "Multi"}
             };
 
-            new EntitySeed<Forma>(context, databaseProvider).Load(formas, "");
+            new EntitySeed<Forma>(context, databaseProvider).Load(formas, "Formas");
 
-            List<Sala> salas = new List<Sala>
+            var salas = new List<Sala>
             {
-                new Sala {Id = 1, EscolaId = 1, Numero = 1},
-                new Sala {Id = 2, EscolaId = 1, Numero = 2},
-                new Sala {Id = 3, EscolaId = 1, Numero = 1}
+                new Sala {Id = 1, EscolaId = 1, Nome = "SALA 01", Capacidade = 10},
+                new Sala {Id = 2, EscolaId = 1, Nome = "SALA 02", Capacidade = 20},
+                new Sala {Id = 3, EscolaId = 1, Nome = "SALA 01", Capacidade = 30}
             };
 
-            new EntitySeed<Sala>(context, databaseProvider).Load(salas, "");
+            new EntitySeed<Sala>(context, databaseProvider).Load(salas, "Salas");
 
-            List<Turma> turmas = new List<Turma>
+            var turmas = new List<Turma>
             {
                 new Turma
                 {
@@ -1337,17 +1337,17 @@ namespace SAED.Api.Extensions
                 }
             };
 
-            new EntitySeed<Turma>(context, databaseProvider).Load(turmas, "");
+            new EntitySeed<Turma>(context, databaseProvider).Load(turmas, "Turmas");
 
-            List<Aluno> alunos = new List<Aluno>
+            var alunos = new List<Aluno>
             {
-                new Aluno {Id = 1, Nome = "Maria Luz", Nascimento = new DateTime(day: 10, month: 08, year: 2002)},
-                new Aluno {Id = 2, Nome = "João carlos", Nascimento = new DateTime(day: 09, month: 09, year: 1999)}
+                new Aluno {Id = 1, Nome = "Maria Luz", Nascimento = new DateTime(day: 10, month: 08, year: 2002), TurmaId = 1},
+                new Aluno {Id = 2, Nome = "João carlos", Nascimento = new DateTime(day: 09, month: 09, year: 1999), TurmaId = 1}
             };
 
-            new EntitySeed<Aluno>(context, databaseProvider).Load(alunos, "");
+            new EntitySeed<Aluno>(context, databaseProvider).Load(alunos, "Alunos");
 
-            List<Disciplina> disciplinas = new List<Disciplina>
+            var disciplinas = new List<Disciplina>
             {
                 new Disciplina {Id = 1, Nome = "Português", Sigla = "Port"},
                 new Disciplina {Id = 2, Nome = "Matemática", Sigla = "Mat"},
@@ -1356,7 +1356,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Disciplina>(context, databaseProvider).Load(disciplinas, "Disciplinas");
 
-            List<Tema> temas = new List<Tema>
+            var temas = new List<Tema>
             {
                 new Tema {Id = 1, DisciplinaId = 1, Nome = "Tema 01 - Disciplina Port"},
                 new Tema {Id = 2, DisciplinaId = 1, Nome = "Tema 02 - Disciplina Port"},
@@ -1377,7 +1377,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Tema>(context, databaseProvider).Load(temas, "Temas");
 
-            List<Descritor> descritores = new List<Descritor>
+            var descritores = new List<Descritor>
             {
                 new Descritor {Id = 1, TemaId = 1, Nome = "Descritor 01 - Tema 1"},
                 new Descritor {Id = 2, TemaId = 1, Nome = "Descritor 02 - Tema 1"},
@@ -1398,7 +1398,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Descritor>(context, databaseProvider).Load(descritores, "Descritores");
 
-            List<Questao> questoes = new List<Questao>
+            var questoes = new List<Questao>
             {
                 new Questao
                 {
@@ -1492,7 +1492,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Questao>(context, databaseProvider).Load(questoes, "Questoes");
 
-            List<Alternativa> alternativas = new List<Alternativa>
+            var alternativas = new List<Alternativa>
             {
                 new Alternativa {Id = 1, QuestaoId = 1, Descricao = "20", Correta = true},
                 new Alternativa {Id = 2, QuestaoId = 1, Descricao = "15", Correta = false},
@@ -1518,7 +1518,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Alternativa>(context, databaseProvider).Load(alternativas, "Alternativas");
 
-            List<AvaliacaoDisciplinaEtapa> avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
+            var avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
             {
                 new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11},
                 new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11},
@@ -1528,14 +1528,7 @@ namespace SAED.Api.Extensions
             new EntitySeed<AvaliacaoDisciplinaEtapa>(context, databaseProvider).Load(avaliacaoDisciplinaEtapas,
                 "AvaliacaoDisciplinasEtapas");
 
-            List<TurmaAluno> turmaAlunos = new List<TurmaAluno>
-            {
-                new TurmaAluno {TurmaId = 1, AlunoId = 1}, new TurmaAluno {TurmaId = 1, AlunoId = 2}
-            };
-
-            new EntitySeed<TurmaAluno>(context, databaseProvider).Load(turmaAlunos, "");
-
-            List<RespostaAluno> respostaAlunos = new List<RespostaAluno>
+            var respostaAlunos = new List<RespostaAluno>
             {
                 new RespostaAluno {AvaliacaoId = 1, AlunoId = 1, AlternativaId = 5},
                 new RespostaAluno {AvaliacaoId = 1, AlunoId = 1, AlternativaId = 11},
@@ -1543,9 +1536,9 @@ namespace SAED.Api.Extensions
                 new RespostaAluno {AvaliacaoId = 1, AlunoId = 2, AlternativaId = 10}
             };
 
-            new EntitySeed<RespostaAluno>(context, databaseProvider).Load(respostaAlunos, "");
+            new EntitySeed<RespostaAluno>(context, databaseProvider).Load(respostaAlunos, "RespostaAlunos");
 
-            List<AvaliacaoQuestao> avaliacaoQuestoes = new List<AvaliacaoQuestao>
+            var avaliacaoQuestoes = new List<AvaliacaoQuestao>
             {
                 new AvaliacaoQuestao {QuestaoId = 1, AvaliacaoId = 1},
                 new AvaliacaoQuestao {QuestaoId = 2, AvaliacaoId = 1}

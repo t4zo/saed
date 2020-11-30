@@ -16,7 +16,7 @@ using SAED.Api.Configurations;
 using SAED.Api.Extensions;
 using SAED.Api.Interfaces;
 using SAED.Api.Services;
-using SAED.ApplicationCore.Interfaces;
+using SAED.Core.Interfaces;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.i18n;
 using SAED.Infrastructure.Identity;
