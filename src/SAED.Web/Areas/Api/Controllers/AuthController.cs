@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Api.Controllers
                 return BadRequest();
             }
 
-            SignInResult result = await _signInManager.PasswordSignInAsync(user.Username, user.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(user.Username, user.Password, false, false);
             if (!result.Succeeded)
             {
                 return BadRequest();

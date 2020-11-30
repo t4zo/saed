@@ -56,16 +56,15 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UsuarioViewModel viewModel)
         {
-            IEnumerable<IdentityError> errors = await _userService.ValidatePasswordAsync(viewModel.Password);
+            var errors = await _userService.ValidatePasswordAsync(viewModel.Password);
 
             if (errors.Any())
             {
                 return RedirectToAction(nameof(Create));
             }
 
-            ApplicationUser user =
-                new ApplicationUser {UserName = viewModel.Usuario.UserName, Email = viewModel.Usuario.Email};
-            IdentityResult result = await _userManager.CreateAsync(user, viewModel.Password);
+            var user = new ApplicationUser {UserName = viewModel.Usuario.UserName, Email = viewModel.Usuario.Email};
+            var result = await _userManager.CreateAsync(user, viewModel.Password);
 
             if (!result.Succeeded)
             {
@@ -91,26 +90,35 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(Permissions.Usuarios.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            ApplicationUser user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             if (user is null)
             {
                 return NotFound();
             }
 
-            IQueryable<IdentityUserRole<int>> userRoles = _context.UserRoles.Where(x => x.UserId == user.Id);
-            List<string> roles = _context.Roles
+            var userRoles = _context.UserRoles.Where(x => x.UserId == user.Id);
+            var roles = _context.Roles
                 .Where(role => userRoles.Select(userRole => userRole.RoleId).Contains(role.Id))
-                .Select(x => x.Name).ToList();
-            ViewBag.AllRoles = _context.Roles.Where(role => !roles.Contains(role.Name)).Select(role => role.Name)
+                .Select(x => x.Name)
+                .ToList();
+            
+            ViewBag.AllRoles = _context.Roles
+                .Where(role => !roles.Contains(role.Name))
+                .Select(role => role.Name)
                 .ToList();
 
-            IQueryable<string> userPermissions =
-                _context.UserClaims.Where(x => x.UserId == user.Id).Select(x => x.ClaimValue);
-            List<string> permissions = typeof(Permissions).GetAllPublicConstantValues<string>()
-                .Where(permission => userPermissions.Contains(permission)).ToList();
+            var userPermissions = _context.UserClaims
+                .Where(x => x.UserId == user.Id)
+                .Select(x => x.ClaimValue);
+            
+            var permissions = typeof(Permissions).GetAllPublicConstantValues<string>()
+                .Where(permission => userPermissions.Contains(permission))
+                .ToList();
+            
             ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
-                .Where(permission => !permissions.Contains(permission)).ToList();
+                .Where(permission => !permissions.Contains(permission))
+                .ToList();
 
             return View(new UsuarioViewModel
             {
@@ -130,7 +138,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (viewModel.Password is not null)
             {
-                IEnumerable<IdentityError> errors = await _userService.ValidatePasswordAsync(viewModel.Password);
+                var errors = await _userService.ValidatePasswordAsync(viewModel.Password);
 
                 if (errors.Any())
                 {
@@ -138,7 +146,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 }
             }
 
-            ApplicationUser user = await _context.Users.FirstOrDefaultAsync(x => x.Id == viewModel.Usuario.Id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == viewModel.Usuario.Id);
 
             if (user.Email != viewModel.Usuario.Email)
             {
@@ -157,10 +165,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             await _userManager.UpdateAsync(user);
 
-            IList<string> userRoles = await _userManager.GetRolesAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
             await _userManager.RemoveFromRolesAsync(user, userRoles);
 
-            IList<Claim> userClaims = await _userManager.GetClaimsAsync(user);
+            var userClaims = await _userManager.GetClaimsAsync(user);
             await _userManager.RemoveClaimsAsync(user, userClaims);
 
             if (viewModel.RolesEscolhidas is not null)
@@ -170,9 +178,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (viewModel.PermissoesEscolhidas is not null)
             {
-                List<Claim> claims = viewModel.PermissoesEscolhidas
+                var claims = viewModel.PermissoesEscolhidas
                     .Select(x => new Claim(CustomClaimTypes.Permissions, x))
                     .ToList();
+                
                 await _userManager.AddClaimsAsync(user, claims);
             }
 
@@ -185,7 +194,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user is null)
             {
                 return RedirectToAction(nameof(Index));

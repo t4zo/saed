@@ -20,24 +20,14 @@ namespace SAED.Web.Areas.Api.Controllers
 
         public async Task<ActionResult> Get(int id)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
-
             var turmas = await _context.Turmas
                 .AsNoTracking()
-                .Include(x => x.Etapa)
-                    .ThenInclude(x => x.AvaliacaoDisciplinasEtapas
-                    .Where(ade => ade.AvaliacaoId == avaliacao.Id))
                 .Where(x => x.EtapaId == id)
                 .ToListAsync();
 
             if (turmas is null)
             {
                 return BadRequest();
-            }
-            
-            foreach (var turma in turmas)
-            {
-                turma.Etapa = null;
             }
 
             return Ok(JsonSerializer.Serialize(turmas));

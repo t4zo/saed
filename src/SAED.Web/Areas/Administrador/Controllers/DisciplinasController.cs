@@ -50,7 +50,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            Disciplina disciplina = await _context.Disciplinas.FindAsync(id);
+            var disciplina = await _context.Disciplinas.FindAsync(id);
 
             if (disciplina is null)
             {
@@ -112,7 +112,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Disciplina disciplina = await _context.Disciplinas.FindAsync(id);
+            var disciplina = await _context.Disciplinas.FindAsync(id);
 
             if (disciplina is null)
             {

@@ -24,9 +24,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Descritores.View)]
         public async Task<IActionResult> Index(int? disciplinaId, int? temaId)
         {
-            List<Disciplina> disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
+            var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
-            List<Descritor> descritores = await _context.Descritores
+            var descritores = await _context.Descritores
                 .AsNoTracking()
                 .Include("Tema.Disciplina")
                 .ToListAsync();
@@ -86,7 +86,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Descritores.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            Descritor descritor = await _context.Descritores
+            var descritor = await _context.Descritores
                 .AsNoTracking()
                 .Include("Tema.Disciplina")
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -96,11 +96,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
+            var temas = await _context.Temas
+                .AsNoTracking()
+                .Where(x => x.DisciplinaId == descritor.Tema.DisciplinaId)
+                .ToListAsync();
+
             ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", descritor.Tema.DisciplinaId);
-            ViewData["TemaId"] =
-                new SelectList(
-                    await _context.Temas.AsNoTracking().Where(x => x.DisciplinaId == descritor.Tema.DisciplinaId)
-                        .ToListAsync(), "Id", "Nome", descritor.TemaId);
+            ViewData["TemaId"] = new SelectList(temas, "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -134,7 +136,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                Descritor entity = await _context.Descritores.FindAsync(id);
+                var entity = await _context.Descritores.FindAsync(id);
                 if (entity is null)
                 {
                     return NotFound();
@@ -143,9 +145,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 throw;
             }
 
-            ViewData["TemaId"] =
-                new SelectList(await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync(), "Id",
-                    "Nome", descritor.TemaId);
+            var temas = await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync();
+            ViewData["TemaId"] = new SelectList(temas, "Id", "Nome", descritor.TemaId);
 
             return View(descritor);
         }
@@ -171,7 +172,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Descritor descritor = await _context.Descritores.FindAsync(id);
+            var descritor = await _context.Descritores.FindAsync(id);
 
             if (descritor is null)
             {

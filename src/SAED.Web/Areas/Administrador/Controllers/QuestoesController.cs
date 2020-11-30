@@ -29,8 +29,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
         public async Task<IActionResult> Index(int? disciplinaId, int? temaId, int? descritorId, int? etapaId)
         {
-            Avaliacao avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
-            List<Disciplina> disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
             IEnumerable<Questao> questoes = await GetQuestoesAsync(etapaId);
 
@@ -57,17 +57,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     }
                 }
             }
-
-            List<Etapa> etapas = await _context.Etapas
-                .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+            
+            var etapas = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
+                .Include(x => x.Etapa)
+                .Where(x => x.AvaliacaoId == avaliacao.Id)
+                .Select(x => x.Etapa)
+                .Distinct()
                 .ToListAsync();
-
-            // Another way to do it
-            //var etapas = await _context.AvaliacaoDisciplinasEtapas.Include(x => x.Etapa)
-            //    .Where(x => x.AvaliacaoId == avaliacao.Id)
-            //    .Select(x => x.Etapa)
-            //    .Distinct()
-            //    .ToListAsync();
 
             ViewBag.Etapas = new SelectList(etapas, "Id", "Nome", etapaId);
             ViewBag.Disciplinas = new SelectList(disciplinas, "Id", "Nome", disciplinaId);
@@ -99,8 +96,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
         
-            var etapas = await _context.Etapas
-                .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+            var etapas = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
+                .Include(x => x.Etapa)
+                .Where(x => x.AvaliacaoId == avaliacao.Id)
+                .Select(x => x.Etapa)
+                .Distinct()
                 .ToListAsync();
         
             ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
@@ -125,8 +126,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 {
                     ModelState.AddModelError("Descritor", "Descritor inválido");
 
-                    List<Etapa> etapas = await _context.Etapas
-                        .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                    var etapas = await _context.AvaliacaoDisciplinasEtapas
+                        .AsNoTracking()
+                        .Include(x => x.Etapa)
+                        .Where(x => x.AvaliacaoId == avaliacao.Id)
+                        .Select(x => x.Etapa)
+                        .Distinct()
                         .ToListAsync();
 
                     ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
@@ -135,16 +140,22 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     return View(questaoViewModel);
                 }
 
-                bool avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x =>
-                    x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId &&
+                var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas
+                    .AnyAsync(x =>
+                    x.AvaliacaoId == avaliacao.Id && 
+                    x.DisciplinaId == descritor.Tema.DisciplinaId &&
                     x.EtapaId == questaoViewModel.EtapaId);
                 if (!avaliacaoDisciplinaEtapaExists)
                 {
                     ModelState.AddModelError("", "Etapa e/ou Disciplina inválida(s)");
                     ModelState.AddModelError("EtapaDisciplina", "Etapa e/ou Disciplina inválida(s)");
 
-                    List<Etapa> etapas = await _context.Etapas
-                        .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                    var etapas = await _context.AvaliacaoDisciplinasEtapas
+                        .AsNoTracking()
+                        .Include(x => x.Etapa)
+                        .Where(x => x.AvaliacaoId == avaliacao.Id)
+                        .Select(x => x.Etapa)
+                        .Distinct()
                         .ToListAsync();
 
                     ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);
@@ -201,8 +212,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             IEnumerable<Descritor> descritores =
                 temas.Where(x => x.Id == temaId).SelectMany(x => x.Descritores).Distinct();
 
-            List<Etapa> etapas = await _context.Etapas
-                .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+            var etapas = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
+                .Include(x => x.Etapa)
+                .Where(x => x.AvaliacaoId == avaliacao.Id)
+                .Select(x => x.Etapa)
+                .Distinct()
                 .ToListAsync();
 
             ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
@@ -233,8 +248,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 ModelState.AddModelError("Descritor", "Descritor inválido");
 
-                List<Etapa> etapas = await _context.Etapas
-                    .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                var etapas = await _context.AvaliacaoDisciplinasEtapas
+                    .AsNoTracking()
+                    .Include(x => x.Etapa)
+                    .Where(x => x.AvaliacaoId == avaliacao.Id)
+                    .Select(x => x.Etapa)
+                    .Distinct()
                     .ToListAsync();
 
                 ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);
@@ -243,16 +262,22 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(questaoViewModel);
             }
 
-            bool avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas.AnyAsync(x =>
-                x.AvaliacaoId == avaliacao.Id && x.DisciplinaId == descritor.Tema.DisciplinaId &&
+            bool avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas
+                .AnyAsync(x =>
+                x.AvaliacaoId == avaliacao.Id && 
+                x.DisciplinaId == descritor.Tema.DisciplinaId &&
                 x.EtapaId == questaoViewModel.EtapaId);
             if (!avaliacaoDisciplinaEtapaExists)
             {
                 ModelState.AddModelError("", "Etapa e/ou Disciplina inválida(s)");
                 ModelState.AddModelError("EtapaDisciplina", "Etapa e/ou Disciplina inválida(s)");
 
-                List<Etapa> etapas = await _context.Etapas
-                    .Where(x => x.AvaliacaoDisciplinasEtapas.Any(avd => avd.AvaliacaoId == avaliacao.Id))
+                var etapas = await _context.AvaliacaoDisciplinasEtapas
+                    .AsNoTracking()
+                    .Include(x => x.Etapa)
+                    .Where(x => x.AvaliacaoId == avaliacao.Id)
+                    .Select(x => x.Etapa)
+                    .Distinct()
                     .ToListAsync();
 
                 ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);

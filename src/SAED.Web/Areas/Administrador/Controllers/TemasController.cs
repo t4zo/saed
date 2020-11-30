@@ -23,7 +23,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.View)]
         public async Task<IActionResult> Index()
         {
-            List<Tema> temas = await _context.Temas
+            var temas = await _context.Temas
                 .Include(x => x.Disciplina)
                 .AsNoTracking()
                 .ToListAsync();
@@ -60,7 +60,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Temas.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            Tema tema = await _context.Temas.FindAsync(id);
+            var tema = await _context.Temas.FindAsync(id);
 
             if (tema is null)
             {
@@ -127,7 +127,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Tema tema = await _context.Temas.FindAsync(id);
+            var tema = await _context.Temas.FindAsync(id);
 
             if (tema is null)
             {

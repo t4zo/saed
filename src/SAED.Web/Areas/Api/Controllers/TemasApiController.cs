@@ -22,12 +22,8 @@ namespace SAED.Web.Areas.Api.Controllers
         [HttpGet]
         public async Task<ActionResult> Get(int id)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
-            
-            var temas = await _context.Temas.AsNoTracking()
-                .Include(x => x.Disciplina)
-                    .ThenInclude(x => x.AvaliacaoDisciplinasEtapas
-                    .Where(y => y.AvaliacaoId == avaliacao.Id))
+            var temas = await _context.Temas
+                .AsNoTracking()
                 .Where(x => x.DisciplinaId == id)
                 .ToListAsync();
 

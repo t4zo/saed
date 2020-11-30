@@ -1,4 +1,4 @@
-﻿@model SAED.Web.Areas.Aplicador.ViewModels.ChooseAlunoRequest
+﻿@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
 
 @section Styles {
     <style>
@@ -14,7 +14,12 @@
         <h2 class="uk-card-title uk-text-center">@Model.Escola.Nome</h2>
 
         <hr class="uk-list-divider"/>
-
+        
+        @foreach (var disciplina in Model.Disciplinas)
+        {
+            <p>@disciplina.Nome</p>
+        }
+        
         <form method="post">
             <p class="uk-text-lead uk-text-small">Olá @Model.Aluno.Nome, por favor, selecione uma disciplina!</p>
             <div class="uk-grid uk-grid-row-small" uk-grid>

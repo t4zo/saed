@@ -48,13 +48,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(GrupoViewModel viewModel)
         {
-            IdentityResult result = await _roleManager.CreateAsync(new ApplicationRole {Name = viewModel.Nome});
+            var result = await _roleManager.CreateAsync(new ApplicationRole {Name = viewModel.Nome});
             if (!result.Succeeded)
             {
                 return RedirectToAction(nameof(Create));
             }
 
-            ApplicationRole role = await _roleManager.FindByNameAsync(viewModel.Nome);
+            var role = await _roleManager.FindByNameAsync(viewModel.Nome);
 
             if (viewModel.PermissoesEscolhidas is not null)
             {
@@ -72,12 +72,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(Permissions.Grupos.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            ApplicationRole role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             HttpContext.Session.Set("Role", role.Name);
-
-            List<string> roleClaims = await _context.RoleClaims.AsNoTracking().Where(x => x.RoleId == role.Id)
-                .Select(x => x.ClaimValue).ToListAsync();
             ViewBag.Role = role;
+            
+            var roleClaims = await _context.RoleClaims
+                .AsNoTracking()
+                .Where(x => x.RoleId == role.Id)
+                .Select(x => x.ClaimValue)
+                .ToListAsync();
+            
             ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
                 .Where(permission => !roleClaims.Contains(permission)).ToList();
 
@@ -88,12 +92,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(GrupoViewModel viewModel)
         {
-            ApplicationRole role = await _roleManager.FindByNameAsync(HttpContext.Session.Get<string>("Role"));
+            var role = await _roleManager.FindByNameAsync(HttpContext.Session.Get<string>("Role"));
             //var role = await _roleManager.FindByIdAsync(Role.Id.ToString());
             //_context.Entry(role).State = EntityState.Detached;
             role.Name = viewModel.Nome;
 
-            IList<Claim> claims = await _roleManager.GetClaimsAsync(role);
+            var claims = await _roleManager.GetClaimsAsync(role);
 
             foreach (Claim claim in claims)
             {
@@ -119,7 +123,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            ApplicationRole role = await _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
 
             if (role is null)
             {

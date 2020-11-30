@@ -1,8 +1,9 @@
-﻿using SAED.Core.Entities;
+﻿using System.Collections.Generic;
+using SAED.Core.Entities;
 
 namespace SAED.Web.Areas.Aplicador.ViewModels
 {
-    public class ChooseAlunoRequest
+    public class DashboardAplicadorViewModel
     {
         public int EscolaId { get; set; }
         public Escola Escola { get; set; }
@@ -12,5 +13,7 @@ namespace SAED.Web.Areas.Aplicador.ViewModels
         public Turma Turma { get; set; }
         public int AlunoId { get; set; }
         public Aluno Aluno { get; set; }
+        
+        public ICollection<Disciplina> Disciplinas { get; set; }
     }
 }

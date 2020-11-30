@@ -50,7 +50,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Distritos.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            Distrito distrito = await _context.Distritos.FindAsync(id);
+            var distrito = await _context.Distritos.FindAsync(id);
 
             if (distrito is null)
             {
@@ -113,7 +113,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Distrito distrito = await _context.Distritos.FindAsync(id);
+            var distrito = await _context.Distritos.FindAsync(id);
 
             if (distrito is null)
             {

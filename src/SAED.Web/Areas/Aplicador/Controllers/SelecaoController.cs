@@ -28,24 +28,24 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
         [Authorize(AuthorizationConstants.Permissions.Selecao.View)]
         [HttpPost]
-        public async Task<IActionResult> Index(ChooseAlunoRequest chooseAlunoRequest)
+        public async Task<IActionResult> Index(DashboardAplicadorViewModel dashboardAplicadorViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            chooseAlunoRequest.Escola = await _context.Escolas.FindAsync(chooseAlunoRequest.EscolaId);
-            chooseAlunoRequest.Etapa = await _context.Etapas.FindAsync(chooseAlunoRequest.EtapaId);
-            chooseAlunoRequest.Turma = await _context.Turmas.FindAsync(chooseAlunoRequest.TurmaId);
-            chooseAlunoRequest.Aluno = await _context.Alunos.FindAsync(chooseAlunoRequest.AlunoId);
+            dashboardAplicadorViewModel.Escola = await _context.Escolas.FindAsync(dashboardAplicadorViewModel.EscolaId);
+            dashboardAplicadorViewModel.Etapa = await _context.Etapas.FindAsync(dashboardAplicadorViewModel.EtapaId);
+            dashboardAplicadorViewModel.Turma = await _context.Turmas.FindAsync(dashboardAplicadorViewModel.TurmaId);
+            dashboardAplicadorViewModel.Aluno = await _context.Alunos.FindAsync(dashboardAplicadorViewModel.AlunoId);
 
-            chooseAlunoRequest.Aluno.Turma = null;
-            chooseAlunoRequest.Etapa.Turmas = null;
-            chooseAlunoRequest.Turma.Alunos = null;
-            chooseAlunoRequest.Turma.Etapa = null;
+            dashboardAplicadorViewModel.Aluno.Turma = null;
+            dashboardAplicadorViewModel.Etapa.Turmas = null;
+            dashboardAplicadorViewModel.Turma.Alunos = null;
+            dashboardAplicadorViewModel.Turma.Etapa = null;
             
-            HttpContext.Session.Set("alunoMetadata", chooseAlunoRequest);
+            HttpContext.Session.Set("alunoMetadata", dashboardAplicadorViewModel);
             
             return RedirectToAction(nameof(Index), "Dashboard");
         }

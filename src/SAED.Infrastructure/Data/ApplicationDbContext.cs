@@ -80,12 +80,15 @@ namespace SAED.Infrastructure.Data
         {
             if (_databaseProvider == DatabaseConstants.Postgres)
             {
-                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection")).LogTo(Console.WriteLine);
+                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection"))
+                    .LogTo(Console.WriteLine);
             }
             else
             {
-                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
+                    .LogTo(Console.WriteLine);
             }
+
 
             base.OnConfiguring(optionsBuilder);
         }
