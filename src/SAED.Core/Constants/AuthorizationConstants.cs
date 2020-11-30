@@ -45,14 +45,20 @@
                 public const string Delete = "Permissions.Usuarios.Delete";
             }
 
-            public static class Users
-            {
-                public const string View = "Permissions.Users.View";
-            }
-
             public static class Dashboard
             {
                 public const string View = "Permissions.Dashboard.View";
+                public const string Create = "Permissions.Dashboard.Create";
+                public const string Update = "Permissions.Dashboard.Update";
+                public const string Delete = "Permissions.Dashboard.Delete";
+            }
+            
+            public static class DashboardAplicador
+            {
+                public const string View = "Permissions.DashboardAplicador.View";
+                public const string Create = "Permissions.DashboardAplicador.Create";
+                public const string Update = "Permissions.DashboardAplicador.Update";
+                public const string Delete = "Permissions.DashboardAplicador.Delete";
             }
 
             public static class Avaliacoes

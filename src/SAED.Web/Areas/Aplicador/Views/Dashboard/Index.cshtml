@@ -4,20 +4,19 @@
     <style>
         .uk-card {
             width: 100%;
-            max-width: 480px;
+            max-width: 720px;
         }
     </style>
 }
 
-<body>
 <main class="uk-height-viewport uk-flex uk-flex-1 uk-flex-center uk-flex-middle">
     <div class="uk-card uk-card-default uk-card-body">
-        <h2 class="uk-card-title uk-text-center">Selecionar Aluno</h2>
+        <h2 class="uk-card-title uk-text-center">@Model.Escola.Nome</h2>
 
         <hr class="uk-list-divider"/>
 
-        <form asp-controller="Selecao" method="post">
-            <p class="uk-text-lead uk-text-small">Olá @User.Identity?.Name, por favor, selecione uma escola!</p>
+        <form method="post">
+            <p class="uk-text-lead uk-text-small">Olá @Model.Aluno.Nome, por favor, selecione uma disciplina!</p>
             <div class="uk-grid uk-grid-row-small" uk-grid>
                 <div class="uk-width-1-1">
                     <label class="uk-form-label">Escola</label>
@@ -56,35 +55,3 @@
         </form>
     </div>
 </main>
-
-@section Scripts {
-    <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const escolaField = document.querySelector("#EscolaId");
-            const etapaField = document.querySelector("#EtapaId");
-            const turmaField = document.querySelector("#TurmaId");
-            const alunoField = document.querySelector("#AlunoId");
-            
-            escolaField.addEventListener("change", () => {
-                filterNestedFields(escolaField.value, "/api/v1/etapasapi?id", "#EtapaId");
-                etapaField.selectedIndex = 0;
-                etapaField.disabled = true;
-            });
-            
-            etapaField.addEventListener("change", () => {
-                filterNestedFields(etapaField.value, "/api/v1/turmasapi?id", "#TurmaId");
-                turmaField.selectedIndex = 0;
-                turmaField.disabled = true;
-            });
-            
-            turmaField.addEventListener("change", () => {
-                filterNestedFields(turmaField.value, "/api/v1/alunosapi?id", "#AlunoId");
-                alunoField.selectedIndex = 0;
-                alunoField.disabled = true;
-            });
-        });
-    </script>
-}
-
-</body>

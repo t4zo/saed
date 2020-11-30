@@ -85,43 +85,43 @@ namespace SAED.Web.Extensions
             if (role.Equals(Roles.Administrador))
             {
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Dashboard.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Avaliacoes.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Avaliacoes.Create));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Avaliacoes.Update));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Avaliacoes.Delete));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Escolas.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Escolas.Create));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Create));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Escolas.Update));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Update));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Escolas.Delete));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Delete));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Disciplinas.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Disciplinas.Create));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Create));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Disciplinas.Update));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Update));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Disciplinas.Delete));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Delete));
             }
 
             if (role.Equals(Roles.Aplicador))
             {
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Avaliacoes.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Escolas.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Disciplinas.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
                 await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permissions, Permissions.Selecao.View));
+                    new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View));
             }
         }
 

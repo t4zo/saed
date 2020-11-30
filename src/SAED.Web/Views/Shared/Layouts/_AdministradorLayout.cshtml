@@ -212,13 +212,6 @@
                 </li>
             }
 
-            @*             @if (User.HasClaim(x => x.Value == Permissions.Alternativas.View)) *@
-            @*             { *@
-            @*                 <li> *@
-            @*                     <a asp-area="@Areas.Administrador" asp-controller="Alternativas" asp-action="Index"><span class="uk-margin-small-right" uk-icon="thumbnails"></span> Alternativas</a> *@
-            @*                 </li> *@
-            @*             } *@
-
             @if (User.HasClaim(x => x.Value == Permissions.Disciplinas.View) || User.HasClaim(x => x.Value == Permissions.Temas.View) || User.HasClaim(x => x.Value == Permissions.Descritores.View) || User.HasClaim(x => x.Value == Permissions.Questoes.View) || User.HasClaim(x => x.Value == Permissions.Alternativas.View))
             {
                 <li class="uk-nav-divider"></li>
@@ -314,6 +307,6 @@
         }
     </script>
 
-@await RenderSectionAsync("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

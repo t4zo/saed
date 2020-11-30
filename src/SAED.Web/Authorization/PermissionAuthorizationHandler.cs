@@ -41,7 +41,7 @@ namespace SAED.Web.Authorization
 
             IList<Claim> userClaims = await _userManager.GetClaimsAsync(user);
             IEnumerable<string> userPermissions = userClaims.Where(x =>
-                x.Type == CustomClaimTypes.Permissions &&
+                x.Type == CustomClaimTypes.Permission &&
                 x.Value == requirement.Permission &&
                 x.Issuer == "LOCAL AUTHORITY"
             ).Select(x => x.Value);
