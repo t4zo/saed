@@ -4,7 +4,7 @@
     <style>
         .uk-card {
             width: 100%;
-            max-width: 720px;
+            max-width: 960px;
         }
     </style>
 }
@@ -13,50 +13,76 @@
     <div class="uk-card uk-card-default uk-card-body">
         <h2 class="uk-card-title uk-text-center">@Model.Escola.Nome</h2>
 
+        <hr class="uk-list-divider uk-divider-icon"/>
+
+        <div class="uk-grid" uk-grid>
+            <div class="uk-width-1-3">
+                <dl class="uk-description-list">
+                    <dt>Nome</dt>
+                    <dd>@Model.Aluno.Nome</dd>
+                </dl>
+            </div>
+            <div class="uk-width-1-3">
+                <dl class="uk-description-list">
+                    <dt>Etapa</dt>
+                    <dd>@Model.Etapa.Nome</dd>
+                </dl>
+            </div>
+            <div class="uk-width-1-3">
+                <dl class="uk-description-list">
+                    <dt>Turma</dt>
+                    <dd>@Model.Turma.Nome</dd>
+                </dl>
+            </div>
+            <div class="uk-width-1-3">
+                <dl class="uk-description-list">
+                    <dt>Turno</dt>
+                    <dd>@Model.Turma.Turno.Nome</dd>
+                </dl>
+            </div>
+        </div>
+
         <hr class="uk-list-divider"/>
-        
-        @foreach (var disciplina in Model.Disciplinas)
-        {
-            <p>@disciplina.Nome</p>
-        }
-        
+
+        <div class="uk-flex uk-flex-around uk-flex-middle uk-flex-wrap">
+            @foreach (var disciplina in Model.Disciplinas)
+            {
+                <button class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">@disciplina.Nome</button>
+            }
+        </div>
+
+        <hr class="uk-list-divider uk-divider-icon"/>
+
         <form method="post">
-            <p class="uk-text-lead uk-text-small">Olá @Model.Aluno.Nome, por favor, selecione uma disciplina!</p>
-            <div class="uk-grid uk-grid-row-small" uk-grid>
-                <div class="uk-width-1-1">
-                    <label class="uk-form-label">Escola</label>
-                    <select asp-for="EscolaId" class="uk-select" asp-items="ViewBag.EscolaId">
-                        <option value="">---------</option>
-                    </select>
-                </div>
-                <div class="uk-width-1-1">
-                    <label class="uk-form-label">Etapa</label>
-                    <select asp-for="EtapaId" class="uk-select" disabled>
-                        <option value="">---------</option>
-                    </select>
-                </div>
-                <div class="uk-width-1-1">
-                    <label class="uk-form-label">Turma</label>
-                    <select asp-for="TurmaId" class="uk-select" disabled>
-                        <option value="">---------</option>
-                    </select>
-                </div>
-                <div class="uk-width-1-1">
-                    <label class="uk-form-label">Aluno</label>
-                    <select asp-for="AlunoId" class="uk-select" disabled>
-                        <option value="">---------</option>
-                    </select>
-                </div>
+            <div class="uk-column-1-@Model.Disciplinas.Count uk-column-divider">
+                @foreach (var disciplina in Model.Disciplinas)
+                {
+                    <h4 class="uk-text-center">@disciplina.Nome</h4>
+                    <dl class="uk-description-list">
+                        <dt>
+                            <div class="uk-grid-small" uk-grid>
+                                <div class="uk-width-expand" uk-leader>Questão 01</div>
+                                <div>A</div>
+                            </div>
+                        </dt>
+                        <input asp-for="EscolaId" class="uk-select" type="hidden"/>
+                    </dl>
+                    <dl class="uk-description-list">
+                        <dt>
+                            <div class="uk-grid-small" uk-grid>
+                                <div class="uk-width-expand" uk-leader>Questão 02</div>
+                                <div>B</div>
+                            </div>
+                        </dt>
+                        <input asp-for="EscolaId" class="uk-select" type="hidden"/>
+                    </dl>
+                }
             </div>
-            <div class="uk-flex uk-flex-center uk-margin-top">
-                <a class="uk-button uk-button-default" onclick="document.querySelector('.logout-form').submit();">Sair</a>
-                <button class="uk-button uk-button-primary uk-flex-1">Entrar</button>
+
+            <div class="uk-flex uk-flex-around uk-margin-large-top">
+                <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
+                <button class="uk-button uk-button-primary">Confirmar</button>
             </div>
-        </form>
-        <form class="logout-form"
-              asp-area="Identity"
-              asp-page="/Account/Logout"
-              asp-route-returnUrl="@Url.Action($"Index", $"Home", new {area = ""}) ">
         </form>
     </div>
 </main>
