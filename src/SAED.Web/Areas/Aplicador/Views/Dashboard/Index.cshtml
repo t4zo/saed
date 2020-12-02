@@ -1,5 +1,10 @@
 ﻿@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
 
+@{
+    var disciplinas = @Model.Questoes.Select(x => x.Descritor.Tema.Disciplina).Distinct().ToList();
+}
+
+
 @section Styles {
     <style>
         .uk-card {
@@ -45,36 +50,30 @@
         <hr class="uk-list-divider"/>
 
         <div class="uk-flex uk-flex-around uk-flex-middle uk-flex-wrap">
-            @foreach (var disciplina in Model.Disciplinas)
+            @foreach (var disciplina in @disciplinas)
             {
-                <button class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">@disciplina.Nome</button>
+                <a class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">@disciplina.Nome</a>
             }
         </div>
 
         <hr class="uk-list-divider uk-divider-icon"/>
 
         <form method="post">
-            <div class="uk-column-1-@Model.Disciplinas.Count uk-column-divider">
-                @foreach (var disciplina in Model.Disciplinas)
+            <div class="uk-column-1-@disciplinas.Count uk-column-divider">
+                @foreach (var disciplina in disciplinas)
                 {
                     <h4 class="uk-text-center">@disciplina.Nome</h4>
                     <dl class="uk-description-list">
-                        <dt>
-                            <div class="uk-grid-small" uk-grid>
-                                <div class="uk-width-expand" uk-leader>Questão 01</div>
-                                <div>A</div>
-                            </div>
-                        </dt>
-                        <input asp-for="EscolaId" class="uk-select" type="hidden"/>
-                    </dl>
-                    <dl class="uk-description-list">
-                        <dt>
-                            <div class="uk-grid-small" uk-grid>
-                                <div class="uk-width-expand" uk-leader>Questão 02</div>
-                                <div>B</div>
-                            </div>
-                        </dt>
-                        <input asp-for="EscolaId" class="uk-select" type="hidden"/>
+                        @foreach (var questao in @Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
+                        {
+                            <dt>
+                                <div class="uk-grid-small" uk-grid>
+                                    <div class="uk-width-expand" uk-leader>@questao.Descricao</div>
+                                    <div>A</div>
+                                </div>
+                            </dt>
+                            <input asp-for="EscolaId" class="uk-select" type="hidden"/>   
+                        }
                     </dl>
                 }
             </div>

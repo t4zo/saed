@@ -14,6 +14,6 @@ namespace SAED.Web.Areas.Aplicador.ViewModels
         public int AlunoId { get; set; }
         public Aluno Aluno { get; set; }
         
-        public ICollection<Disciplina> Disciplinas { get; set; }
+        public ICollection<Questao> Questoes { get; set; }
     }
 }
