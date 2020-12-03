@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -19,11 +19,9 @@ namespace SAED.Web.Extensions
         public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app,
             IServiceProvider serviceProvider)
         {
-            RoleManager<ApplicationRole> roleManager =
-                serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            AppConfiguration appConfiguration =
-                serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
-
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            
             if (!await roleManager.Roles.AnyAsync())
             {
                 foreach (string role in appConfiguration.Roles)
@@ -41,42 +39,40 @@ namespace SAED.Web.Extensions
             return app;
         }
 
-        private static async Task SeedRoleClaims(RoleManager<ApplicationRole> roleManager, string role)
+        private static async Task SeedRoleClaims(RoleManager<ApplicationRole> roleManager, string roleName)
         {
-            List<string> permissions = typeof(Permissions).GetAllPublicConstantValues<string>();
+            var permissions = typeof(Permissions).GetAllPublicConstantValues<string>();
+            var role = await roleManager.FindByNameAsync(roleName);
 
-            if (role.Equals(Roles.Superuser))
+            if (role.Name.Equals(Roles.Superuser))
             {
                 foreach (string permission in permissions)
                 {
-                    await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(),
-                        new Claim(CustomClaimTypes.Permission, permission));
+                    await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permission));
                 }
             }
 
-            if (role.Equals(Roles.Administrador))
+            if (role.Name.Equals(Roles.Administrador))
             {
                 foreach (string permission in permissions)
                 {
                     if (!permission.Contains("Grupos") && !permission.Contains("Usuarios"))
                     {
-                        await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(),
-                            new Claim(CustomClaimTypes.Permission, permission));
+                        await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permission));
                     }
                 }
             }
 
-            if (role.Equals(Roles.Aplicador))
+            if (role.Name.Equals(Roles.Aplicador))
             {
-                foreach (string permission in permissions)
-                {
-                    if ((permission.Contains("View") || permission.Contains("Selecao")) &&
-                        !(permission.Contains("Grupos") || permission.Contains("Usuarios")))
-                    {
-                        await roleManager.AddClaimAsync(roleManager.FindByNameAsync(role).GetAwaiter().GetResult(),
-                            new Claim(CustomClaimTypes.Permission, permission));
-                    }
-                }
+                await roleManager.AddClaimAsync(role,
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
+                
+                await roleManager.AddClaimAsync(role,
+                    new Claim(CustomClaimTypes.Permission, Permissions.DashboardAplicador.View));
+                
+                await roleManager.AddClaimAsync(role,
+                    new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View));
             }
         }
     }
