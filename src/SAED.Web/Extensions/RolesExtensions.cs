@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -28,8 +27,7 @@ namespace SAED.Web.Extensions
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                     {
-                        await roleManager.CreateAsync(
-                            new ApplicationRole {Name = role, NormalizedName = role.ToUpper()});
+                        await roleManager.CreateAsync(new ApplicationRole {Name = role, NormalizedName = role.ToUpper()});
                     }
 
                     await SeedRoleClaims(roleManager, role);

@@ -43,8 +43,6 @@ namespace SAED.Web.Extensions
 
                             await SeedRoleClaims(roleManager, role);
                         }
-
-                        ;
                     }
 
                     await AddUsuarioTurmaAvaliacao(userManager, applicationUser, context);

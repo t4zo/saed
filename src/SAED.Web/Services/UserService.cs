@@ -17,10 +17,10 @@ namespace SAED.Web.Services
 
         public async Task<IEnumerable<IdentityError>> ValidatePasswordAsync(string password)
         {
-            List<IdentityError> passwordErrors = new List<IdentityError>();
-            foreach (IPasswordValidator<ApplicationUser> passwordValidator in _userManager.PasswordValidators)
+            var passwordErrors = new List<IdentityError>();
+            foreach (var passwordValidator in _userManager.PasswordValidators)
             {
-                IdentityResult validationResult = await passwordValidator.ValidateAsync(_userManager, null, password);
+                var validationResult = await passwordValidator.ValidateAsync(_userManager, null, password);
                 if (!validationResult.Succeeded)
                 {
                     passwordErrors = validationResult.Errors.ToList();

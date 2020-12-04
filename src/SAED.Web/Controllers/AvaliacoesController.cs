@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
@@ -20,16 +19,16 @@ namespace SAED.Web.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            ViewBag.Avaliacoes = new SelectList(await _context.Avaliacoes.ToListAsync(), "Id", "Codigo");
+            ViewBag.Avaliacoes = new SelectList(_context.Avaliacoes, "Id", "Codigo");
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(int id)
         {
-            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             HttpContext.Session.Set(nameof(Avaliacao).ToLower(), avaliacao);
 
