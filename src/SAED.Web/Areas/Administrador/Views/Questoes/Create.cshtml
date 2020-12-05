@@ -9,13 +9,9 @@
     <link href="~/libs/quill/quill.snow.min.css" rel="stylesheet">
 
     <style>
-        #enunciadoEditor {
-            height: 170px;
-        }
+        #enunciadoEditor { height: 170px; }
 
-        .alternativas .ql-container {
-            height: 45px;
-        }
+        .alternativas .ql-container { height: 45px; }
     </style>
 }
 
@@ -26,7 +22,7 @@
             <span class="uk-card-title uk-text-uppercase uk-text-center">Adicionar Questão</span>
             <span class="uk-margin-small-left uk-margin-small-right">|</span>
             <span class="uk-text-center">
-                <input class="uk-checkbox checkbox-habilitada" type="checkbox" asp-for="Habilitada" style="width: 22px; height: 22px;" onclick="changeQuestaoHabilitada()"/>
+                <input class="uk-checkbox checkbox-habilitada" type="checkbox" asp-for="Habilitada" style="height: 22px; width: 22px;" onclick="changeQuestaoHabilitada()"/>
                 <label asp-for="Habilitada" class="uk-form-label"></label>
             </span>
         </div>
@@ -108,24 +104,27 @@
     <script>
         const alternativas = [];
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const disciplinaField = document.querySelector("#Disciplinas");
-            const temaField = document.querySelector("#Temas");
-            const descritorField = document.querySelector("#DescritorId");
+        document.addEventListener("DOMContentLoaded",
+            () => {
+                const disciplinaField = document.querySelector("#Disciplinas");
+                const temaField = document.querySelector("#Temas");
+                const descritorField = document.querySelector("#DescritorId");
 
-            disciplinaField.addEventListener("change", () => {
-                filterNestedFields(disciplinaField.value, "/api/v1/temasapi?id", "#Temas");
-                temaField.selectedIndex = 0;
-                temaField.disabled = true;
+                disciplinaField.addEventListener("change",
+                    () => {
+                        filterNestedFields(`@ApiConstants.BaseUrl/temas?disciplinaId=${disciplinaField.value}`, "#Temas");
+                        temaField.selectedIndex = 0;
+                        temaField.disabled = true;
+                    });
+
+                temaField.addEventListener("change",
+                    () => {
+                        filterNestedFields(`@ApiConstants.BaseUrl/descritores?temaId=${temaField.value}`, "#DescritorId");
+                        descritorField.selectedIndex = 0;
+                        descritorField.disabled = true;
+                    });
+
             });
-
-            temaField.addEventListener("change", () => {
-                filterNestedFields(temaField.value, "/api/v1/descritoresapi?id", "#DescritorId");
-                descritorField.selectedIndex = 0;
-                descritorField.disabled = true;
-            });
-
-        });
 
         const quillEnunciadoEditor = createExpandedQuill("#enunciadoEditor");
         bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
@@ -165,7 +164,7 @@
         function bindDeltaToInput(selector, quill) {
             let deltaOps = document.querySelector(selector).value;
             if (deltaOps === "") {
-                deltaOps = "{}"
+                deltaOps = "{}";
             }
             quill.setContents(JSON.parse(deltaOps));
         }

@@ -14,9 +14,9 @@ namespace SAED.Api.Extensions
     {
         public static IApplicationBuilder SeedDatabase(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            ApplicationDbContext context = serviceProvider.GetRequiredService<ApplicationDbContext>();
-            IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            string databaseProvider = configuration[DatabaseConstants.Database];
+            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            var databaseProvider = configuration[DatabaseConstants.Database];
 
             var avaliacoes = new List<Avaliacao>
             {
@@ -1306,10 +1306,7 @@ namespace SAED.Api.Extensions
 
             new EntitySeed<Turno>(context, databaseProvider).Load(turnos, "Turnos");
 
-            var formas = new List<Forma>
-            {
-                new Forma {Id = 1, Nome = "Seriada"}, new Forma {Id = 2, Nome = "Multi"}
-            };
+            var formas = new List<Forma> {new Forma {Id = 1, Nome = "Seriada"}, new Forma {Id = 2, Nome = "Multi"}};
 
             new EntitySeed<Forma>(context, databaseProvider).Load(formas, "Formas");
 
@@ -1341,8 +1338,20 @@ namespace SAED.Api.Extensions
 
             var alunos = new List<Aluno>
             {
-                new Aluno {Id = 1, Nome = "Maria Luz", Nascimento = new DateTime(day: 10, month: 08, year: 2002), TurmaId = 1},
-                new Aluno {Id = 2, Nome = "João carlos", Nascimento = new DateTime(day: 09, month: 09, year: 1999), TurmaId = 1}
+                new Aluno
+                {
+                    Id = 1,
+                    Nome = "Maria Luz",
+                    Nascimento = new DateTime(day: 10, month: 08, year: 2002),
+                    TurmaId = 1
+                },
+                new Aluno
+                {
+                    Id = 2,
+                    Nome = "João carlos",
+                    Nascimento = new DateTime(day: 09, month: 09, year: 1999),
+                    TurmaId = 1
+                }
             };
 
             new EntitySeed<Aluno>(context, databaseProvider).Load(alunos, "Alunos");
@@ -1393,133 +1402,15 @@ namespace SAED.Api.Extensions
                 new Descritor {Id = 12, TemaId = 3, Nome = "Descritor 02 - Tema 3"},
                 new Descritor {Id = 13, TemaId = 3, Nome = "Descritor 03 - Tema 3"},
                 new Descritor {Id = 14, TemaId = 3, Nome = "Descritor 04 - Tema 3"},
-                new Descritor {Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3"}
+                new Descritor {Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3"},
+                new Descritor {Id = 16, TemaId = 6, Nome = "Descritor 05 - Tema 3"}
             };
 
             new EntitySeed<Descritor>(context, databaseProvider).Load(descritores, "Descritores");
 
-            var questoes = new List<Questao>
-            {
-                new Questao
-                {
-                    Id = 1,
-                    DescritorId = 1,
-                    EtapaId = 11,
-                    Item = "P01",
-                    Enunciado = "Questao 01 - Descritor 1"
-                },
-                new Questao
-                {
-                    Id = 2,
-                    DescritorId = 1,
-                    EtapaId = 11,
-                    Item = "P02",
-                    Enunciado = "Questao 02 - Descritor 1"
-                },
-                new Questao
-                {
-                    Id = 3,
-                    DescritorId = 1,
-                    EtapaId = 11,
-                    Item = "P03",
-                    Enunciado = "Questao 03 - Descritor 1"
-                },
-                new Questao
-                {
-                    Id = 4,
-                    DescritorId = 1,
-                    EtapaId = 11,
-                    Item = "P04",
-                    Enunciado = "Questao 04 - Descritor 1"
-                },
-                new Questao
-                {
-                    Id = 5,
-                    DescritorId = 2,
-                    EtapaId = 11,
-                    Item = "P01",
-                    Enunciado = "Questao 01 - Descritor 2"
-                },
-                new Questao
-                {
-                    Id = 6,
-                    DescritorId = 2,
-                    EtapaId = 11,
-                    Item = "P02",
-                    Enunciado = "Questao 02 - Descritor 2"
-                },
-                new Questao
-                {
-                    Id = 7,
-                    DescritorId = 3,
-                    EtapaId = 11,
-                    Item = "P01",
-                    Enunciado = "Questao 01 - Descritor 3"
-                },
-                new Questao
-                {
-                    Id = 8,
-                    DescritorId = 4,
-                    EtapaId = 11,
-                    Item = "P01",
-                    Enunciado = "Questao 01 - Descritor 4"
-                },
-                new Questao
-                {
-                    Id = 9,
-                    DescritorId = 4,
-                    EtapaId = 11,
-                    Item = "P02",
-                    Enunciado = "Questao 02 - Descritor 4"
-                },
-                new Questao
-                {
-                    Id = 10,
-                    DescritorId = 2,
-                    EtapaId = 11,
-                    Item = "P01",
-                    Enunciado = "Teste"
-                },
-                new Questao
-                {
-                    Id = 11,
-                    DescritorId = 3,
-                    EtapaId = 11,
-                    Item = "P02",
-                    Enunciado = "Teste2"
-                }
-            };
-
-            new EntitySeed<Questao>(context, databaseProvider).Load(questoes, "Questoes");
-
-            var alternativas = new List<Alternativa>
-            {
-                new Alternativa {Id = 1, QuestaoId = 1, Descricao = "20", Correta = true},
-                new Alternativa {Id = 2, QuestaoId = 1, Descricao = "15", Correta = false},
-                new Alternativa {Id = 3, QuestaoId = 1, Descricao = "12", Correta = false},
-                new Alternativa {Id = 4, QuestaoId = 1, Descricao = "17", Correta = false},
-                new Alternativa {Id = 5, QuestaoId = 2, Descricao = "Pedro", Correta = false},
-                new Alternativa {Id = 6, QuestaoId = 2, Descricao = "Carlos", Correta = true},
-                new Alternativa {Id = 7, QuestaoId = 2, Descricao = "José", Correta = false},
-                new Alternativa {Id = 8, QuestaoId = 2, Descricao = "Maria", Correta = false},
-                new Alternativa {Id = 9, QuestaoId = 3, Descricao = "1,5", Correta = false},
-                new Alternativa {Id = 10, QuestaoId = 3, Descricao = "2,9", Correta = false},
-                new Alternativa {Id = 11, QuestaoId = 3, Descricao = "5,4", Correta = true},
-                new Alternativa {Id = 12, QuestaoId = 3, Descricao = "4,2", Correta = false},
-                new Alternativa {Id = 13, QuestaoId = 4, Descricao = "Ronaldo", Correta = false},
-                new Alternativa {Id = 14, QuestaoId = 4, Descricao = "Adriana", Correta = false},
-                new Alternativa {Id = 15, QuestaoId = 4, Descricao = "Marcelo", Correta = false},
-                new Alternativa {Id = 16, QuestaoId = 4, Descricao = "Simone", Correta = true},
-                new Alternativa {Id = 17, QuestaoId = 5, Descricao = "20", Correta = false},
-                new Alternativa {Id = 18, QuestaoId = 5, Descricao = "10", Correta = true},
-                new Alternativa {Id = 19, QuestaoId = 5, Descricao = "30", Correta = false},
-                new Alternativa {Id = 20, QuestaoId = 5, Descricao = "40", Correta = false}
-            };
-
-            new EntitySeed<Alternativa>(context, databaseProvider).Load(alternativas, "Alternativas");
-
             var avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
             {
+                new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 10},
                 new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11},
                 new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11},
                 new AvaliacaoDisciplinaEtapa {AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11}
@@ -1528,23 +1419,144 @@ namespace SAED.Api.Extensions
             new EntitySeed<AvaliacaoDisciplinaEtapa>(context, databaseProvider).Load(avaliacaoDisciplinaEtapas,
                 "AvaliacaoDisciplinasEtapas");
 
-            var respostaAlunos = new List<RespostaAluno>
-            {
-                new RespostaAluno {AvaliacaoId = 1, AlunoId = 1, AlternativaId = 5},
-                new RespostaAluno {AvaliacaoId = 1, AlunoId = 1, AlternativaId = 11},
-                new RespostaAluno {AvaliacaoId = 1, AlunoId = 2, AlternativaId = 7},
-                new RespostaAluno {AvaliacaoId = 1, AlunoId = 2, AlternativaId = 10}
-            };
-
-            new EntitySeed<RespostaAluno>(context, databaseProvider).Load(respostaAlunos, "RespostaAlunos");
-
-            var avaliacaoQuestoes = new List<AvaliacaoQuestao>
-            {
-                new AvaliacaoQuestao {QuestaoId = 1, AvaliacaoId = 1},
-                new AvaliacaoQuestao {QuestaoId = 2, AvaliacaoId = 1}
-            };
-
-            new EntitySeed<AvaliacaoQuestao>(context, databaseProvider).Load(avaliacaoQuestoes, "AvaliacaoQuestoes");
+            // var questoes = new List<Questao>
+            // {
+            //     new Questao
+            //     {
+            //         Id = 1,
+            //         DescritorId = 1,
+            //         EtapaId = 11,
+            //         Item = "P01",
+            //         Enunciado = "Questao 01 - Descritor 1"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 2,
+            //         DescritorId = 1,
+            //         EtapaId = 11,
+            //         Item = "P02",
+            //         Enunciado = "Questao 02 - Descritor 1"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 3,
+            //         DescritorId = 1,
+            //         EtapaId = 11,
+            //         Item = "P03",
+            //         Enunciado = "Questao 03 - Descritor 1"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 4,
+            //         DescritorId = 1,
+            //         EtapaId = 11,
+            //         Item = "P04",
+            //         Enunciado = "Questao 04 - Descritor 1"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 5,
+            //         DescritorId = 2,
+            //         EtapaId = 11,
+            //         Item = "P01",
+            //         Enunciado = "Questao 01 - Descritor 2"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 6,
+            //         DescritorId = 2,
+            //         EtapaId = 11,
+            //         Item = "P02",
+            //         Enunciado = "Questao 02 - Descritor 2"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 7,
+            //         DescritorId = 3,
+            //         EtapaId = 11,
+            //         Item = "P01",
+            //         Enunciado = "Questao 01 - Descritor 3"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 8,
+            //         DescritorId = 4,
+            //         EtapaId = 11,
+            //         Item = "P01",
+            //         Enunciado = "Questao 01 - Descritor 4"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 9,
+            //         DescritorId = 4,
+            //         EtapaId = 11,
+            //         Item = "P02",
+            //         Enunciado = "Questao 02 - Descritor 4"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 10,
+            //         DescritorId = 2,
+            //         EtapaId = 11,
+            //         Item = "P01",
+            //         Enunciado = "Teste"
+            //     },
+            //     new Questao
+            //     {
+            //         Id = 11,
+            //         DescritorId = 3,
+            //         EtapaId = 11,
+            //         Item = "P02",
+            //         Enunciado = "Teste2"
+            //     }
+            // };
+            //
+            // new EntitySeed<Questao>(context, databaseProvider).Load(questoes, "Questoes");
+            //
+            // var alternativas = new List<Alternativa>
+            // {
+            //     new Alternativa {Id = 1, QuestaoId = 1, Descricao = "20", Correta = true},
+            //     new Alternativa {Id = 2, QuestaoId = 1, Descricao = "15", Correta = false},
+            //     new Alternativa {Id = 3, QuestaoId = 1, Descricao = "12", Correta = false},
+            //     new Alternativa {Id = 4, QuestaoId = 1, Descricao = "17", Correta = false},
+            //     new Alternativa {Id = 5, QuestaoId = 2, Descricao = "Pedro", Correta = false},
+            //     new Alternativa {Id = 6, QuestaoId = 2, Descricao = "Carlos", Correta = true},
+            //     new Alternativa {Id = 7, QuestaoId = 2, Descricao = "José", Correta = false},
+            //     new Alternativa {Id = 8, QuestaoId = 2, Descricao = "Maria", Correta = false},
+            //     new Alternativa {Id = 9, QuestaoId = 3, Descricao = "1,5", Correta = false},
+            //     new Alternativa {Id = 10, QuestaoId = 3, Descricao = "2,9", Correta = false},
+            //     new Alternativa {Id = 11, QuestaoId = 3, Descricao = "5,4", Correta = true},
+            //     new Alternativa {Id = 12, QuestaoId = 3, Descricao = "4,2", Correta = false},
+            //     new Alternativa {Id = 13, QuestaoId = 4, Descricao = "Ronaldo", Correta = false},
+            //     new Alternativa {Id = 14, QuestaoId = 4, Descricao = "Adriana", Correta = false},
+            //     new Alternativa {Id = 15, QuestaoId = 4, Descricao = "Marcelo", Correta = false},
+            //     new Alternativa {Id = 16, QuestaoId = 4, Descricao = "Simone", Correta = true},
+            //     new Alternativa {Id = 17, QuestaoId = 5, Descricao = "20", Correta = false},
+            //     new Alternativa {Id = 18, QuestaoId = 5, Descricao = "10", Correta = true},
+            //     new Alternativa {Id = 19, QuestaoId = 5, Descricao = "30", Correta = false},
+            //     new Alternativa {Id = 20, QuestaoId = 5, Descricao = "40", Correta = false}
+            // };
+            //
+            // new EntitySeed<Alternativa>(context, databaseProvider).Load(alternativas, "Alternativas");
+            //
+            //
+            // var respostaAlunos = new List<RespostaAluno>
+            // {
+            //     new RespostaAluno {AvaliacaoId = 1, AlunoId = 1, AlternativaId = 5},
+            //     new RespostaAluno {AvaliacaoId = 1, AlunoId = 1, AlternativaId = 11},
+            //     new RespostaAluno {AvaliacaoId = 1, AlunoId = 2, AlternativaId = 7},
+            //     new RespostaAluno {AvaliacaoId = 1, AlunoId = 2, AlternativaId = 10}
+            // };
+            //
+            // new EntitySeed<RespostaAluno>(context, databaseProvider).Load(respostaAlunos, "RespostaAlunos");
+            //
+            // var avaliacaoQuestoes = new List<AvaliacaoQuestao>
+            // {
+            //     new AvaliacaoQuestao {QuestaoId = 1, AvaliacaoId = 1},
+            //     new AvaliacaoQuestao {QuestaoId = 2, AvaliacaoId = 1}
+            // };
+            //
+            // new EntitySeed<AvaliacaoQuestao>(context, databaseProvider).Load(avaliacaoQuestoes, "AvaliacaoQuestoes");
 
             return app;
         }

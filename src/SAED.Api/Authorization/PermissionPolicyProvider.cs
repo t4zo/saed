@@ -29,7 +29,7 @@ namespace SAED.Api.Authorization
         {
             if (policyName.StartsWith(CustomClaimTypes.Permissions, StringComparison.OrdinalIgnoreCase))
             {
-                AuthorizationPolicyBuilder policy = new AuthorizationPolicyBuilder();
+                var policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));
                 return Task.FromResult(policy.Build());
             }

@@ -29,7 +29,7 @@ namespace SAED.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Avaliacao>> Get(int id)
         {
-            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -69,7 +69,7 @@ namespace SAED.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Avaliacao>> Delete(int id)
         {
-            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao == null)
             {

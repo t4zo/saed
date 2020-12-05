@@ -122,8 +122,8 @@ namespace SAED.Web
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            string[] supportedCultures = new[] {"pt-BR"};
-            RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions()
+            string[] supportedCultures = {"pt-BR"};
+            var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);

@@ -11,9 +11,8 @@ namespace SAED.Api.Extensions
     {
         public static IServiceCollection AddJwtSecurity(this IServiceCollection services)
         {
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            AppConfiguration appConfiguration =
-                serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            var serviceProvider = services.BuildServiceProvider();
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
 
             services.AddAuthentication(options =>
                 {

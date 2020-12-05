@@ -134,6 +134,7 @@
     <script>
         smartSelect({ available: @Html.Raw(JsonSerializer.Serialize(ViewBag.AllRoles)), chosen: @Html.Raw(JsonSerializer.Serialize(Model.RolesEscolhidas)), mountNode: '#smartSelectGroup' });
         smartSelect({ available: @Html.Raw(JsonSerializer.Serialize(ViewBag.AllPermissions)), chosen: @Html.Raw(JsonSerializer.Serialize(Model.PermissoesEscolhidas)), mountNode: '#smartSelectPermission' });
+
         function sendForm() {
             const rolesChosenSelectedOptions = document.querySelectorAll('.rolesChosenSelected option');
             rolesChosenSelectedOptions.forEach(option => option.selected = true);

@@ -1,28 +1,31 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
-using SAED.Web.Extensions;
+using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Api.Controllers
 {
-    public class TurmasApiController : BaseApiController
+    public class TurmasController : BaseApiController
     {
         private readonly ApplicationDbContext _context;
 
-        public TurmasApiController(ApplicationDbContext context)
+        public TurmasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<ActionResult> Get(int id)
+        [Authorize(Permissions.Selecao.View)]
+        public async Task<ActionResult<IEnumerable<Turma>>> Get(int etapaId)
         {
             var turmas = await _context.Turmas
                 .AsNoTracking()
-                .Where(x => x.EtapaId == id)
+                .Where(x => x.EtapaId == etapaId)
                 .ToListAsync();
 
             if (turmas is null)

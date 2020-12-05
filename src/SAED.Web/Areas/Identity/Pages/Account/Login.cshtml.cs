@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace SAED.Web.Areas.Identity.Pages.Account
 {
@@ -71,7 +70,7 @@ namespace SAED.Web.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            SignInResult result =
+            var result =
                 await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, false);
             if (result.Succeeded)
             {

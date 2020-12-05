@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
@@ -27,7 +26,7 @@ namespace SAED.Api.Extensions
                         Scheme = JwtBearerDefaults.AuthenticationScheme
                     });
             });
-            
+
             // services.AddOpenApiDocument(configure =>
             // {
             //     configure.Title = "CleanArchitecture API";
@@ -50,10 +49,7 @@ namespace SAED.Api.Extensions
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SAED API V1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "SAED API V1"); });
 
             return app;
         }

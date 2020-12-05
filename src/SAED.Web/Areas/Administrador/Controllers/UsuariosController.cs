@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -23,8 +22,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly UserService _userService;
 
-        public UsuariosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
-            UserService userService)
+        public UsuariosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, UserService userService)
         {
             _context = context;
             _userManager = userManager;
@@ -78,9 +76,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (viewModel.PermissoesEscolhidas is not null)
             {
-                List<Claim> claims = viewModel.PermissoesEscolhidas
+                var claims = viewModel.PermissoesEscolhidas
                     .Select(x => new Claim(CustomClaimTypes.Permissions, x))
                     .ToList();
+
                 await _userManager.AddClaimsAsync(user, claims);
             }
 
@@ -102,7 +101,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Where(role => userRoles.Select(userRole => userRole.RoleId).Contains(role.Id))
                 .Select(x => x.Name)
                 .ToList();
-            
+
             ViewBag.AllRoles = _context.Roles
                 .Where(role => !roles.Contains(role.Name))
                 .Select(role => role.Name)
@@ -111,11 +110,11 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var userPermissions = _context.UserClaims
                 .Where(x => x.UserId == user.Id)
                 .Select(x => x.ClaimValue);
-            
+
             var permissions = typeof(Permissions).GetAllPublicConstantValues<string>()
                 .Where(permission => userPermissions.Contains(permission))
                 .ToList();
-            
+
             ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
                 .Where(permission => !permissions.Contains(permission))
                 .ToList();
@@ -181,7 +180,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 var claims = viewModel.PermissoesEscolhidas
                     .Select(x => new Claim(CustomClaimTypes.Permissions, x))
                     .ToList();
-                
+
                 await _userManager.AddClaimsAsync(user, claims);
             }
 

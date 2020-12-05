@@ -39,40 +39,32 @@
 
     <style>
         .grid {
-            display: grid;
-            grid-template: auto minmax(calc(100vh - 162px), 1fr) auto / 1fr 4fr;
-            grid-template-areas: "aside header header" "aside content content" "aside footer footer";
             background-color: #ebedef;
+            display: grid;
+            grid-template: auto minmax(calc(100vh - 162px), 1fr) auto/1fr 4fr;
+            grid-template-areas: "aside header header" "aside content content" "aside footer footer";
         }
 
         .aside {
+            box-sizing: border-box;
             grid-area: aside;
+            height: 100vh;
             position: sticky;
             top: 0;
-            height: 100vh;
-            box-sizing: border-box;
         }
 
-        .header {
-            grid-area: header;
-        }
+        .header { grid-area: header; }
 
-        .content {
-            grid-area: content;
-        }
+        .content { grid-area: content; }
 
-        .footer {
-            grid-area: footer;
-        }
+        .footer { grid-area: footer; }
 
-        .logout-form > a:hover {
-            text-decoration: none;
-        }
+        .logout-form > a:hover { text-decoration: none; }
 
         @@media only screen and (max-width: 960px) {
             .grid {
                 display: grid;
-                grid-template: auto minmax(calc(100vh - 162px), 1fr) auto / 1fr;
+                grid-template: auto minmax(calc(100vh - 162px), 1fr) auto/1fr;
                 grid-template-areas: "header header" "content content" "footer footer";
             }
         }
@@ -231,7 +223,7 @@
             <li class="uk-nav-divider"></li>
 
             <li class="uk-margin-top uk-margin-bottom">
-                <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action($"Index", $"Home", new {area = ""})">
+                <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
                     <a class="uk-text-danger" onclick="document.querySelector('.logout-form').submit();"><span class="uk-margin-small-right" uk-icon="arrow-left"></span> Sair</a>
                 </form>
             </li>
@@ -266,14 +258,16 @@
 </div>
 
 <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded',
+        () => {
             configureVanillaDataTable();
         });
 
-        function configureVanillaDataTable() {
-            const myTable = document.querySelector("#dataTable");
-            if (myTable) {
-                new DataTable(myTable, {
+    function configureVanillaDataTable() {
+        const myTable = document.querySelector("#dataTable");
+        if (myTable) {
+            new DataTable(myTable,
+                {
                     layout: {
                         top: "",
                         bottom: "{select}{pager}"
@@ -285,28 +279,28 @@
                         info: "{start} à {end} de {rows} registros",
                     },
                 });
-            }
         }
+    }
 
-        function removeUrlParam(key, sourceURL) {
-            let rtn = sourceURL.split("?")[0],
-                param,
-                params_arr = [],
-                queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
-            if (queryString !== "") {
-                params_arr = queryString.split("&");
-                for (let i = params_arr.length - 1; i >= 0; i -= 1) {
-                    param = params_arr[i].split("=")[0];
-                    if (param === key) {
-                        params_arr.splice(i, 1);
-                    }
+    function removeUrlParam(key, sourceURL) {
+        let rtn = sourceURL.split("?")[0],
+            param,
+            params_arr = [],
+            queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+        if (queryString !== "") {
+            params_arr = queryString.split("&");
+            for (let i = params_arr.length - 1; i >= 0; i -= 1) {
+                param = params_arr[i].split("=")[0];
+                if (param === key) {
+                    params_arr.splice(i, 1);
                 }
-                rtn = rtn + "?" + params_arr.join("&");
             }
-            return rtn;
+            rtn = rtn + "?" + params_arr.join("&");
         }
-    </script>
+        return rtn;
+    }
+</script>
 
-    @await RenderSectionAsync("Scripts", false)
+@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

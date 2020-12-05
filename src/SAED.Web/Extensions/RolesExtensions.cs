@@ -15,19 +15,19 @@ namespace SAED.Web.Extensions
 {
     public static class RolesExtensions
     {
-        public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app,
-            IServiceProvider serviceProvider)
+        public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
-            
+
             if (!await roleManager.Roles.AnyAsync())
             {
-                foreach (string role in appConfiguration.Roles)
+                foreach (var role in appConfiguration.Roles)
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                     {
-                        await roleManager.CreateAsync(new ApplicationRole {Name = role, NormalizedName = role.ToUpper()});
+                        var newRole = new ApplicationRole {Name = role, NormalizedName = role.ToUpper()};
+                        await roleManager.CreateAsync(newRole);
                     }
 
                     await SeedRoleClaims(roleManager, role);
@@ -44,7 +44,7 @@ namespace SAED.Web.Extensions
 
             if (role.Name.Equals(Roles.Superuser))
             {
-                foreach (string permission in permissions)
+                foreach (var permission in permissions)
                 {
                     await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permission));
                 }
@@ -52,7 +52,7 @@ namespace SAED.Web.Extensions
 
             if (role.Name.Equals(Roles.Administrador))
             {
-                foreach (string permission in permissions)
+                foreach (var permission in permissions)
                 {
                     if (!permission.Contains("Grupos") && !permission.Contains("Usuarios"))
                     {
@@ -63,14 +63,9 @@ namespace SAED.Web.Extensions
 
             if (role.Name.Equals(Roles.Aplicador))
             {
-                await roleManager.AddClaimAsync(role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
-                
-                await roleManager.AddClaimAsync(role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.DashboardAplicador.View));
-                
-                await roleManager.AddClaimAsync(role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.DashboardAplicador.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View));
             }
         }
     }

@@ -12,8 +12,9 @@ namespace SAED.Core.Extensions
             return type
                 .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
                 .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(T))
-                .Select(x => (T)x.GetRawConstantValue())
-                .Concat(type.GetNestedTypes(BindingFlags.Public).SelectMany(GetAllPublicConstantValues<T>)).ToList();
+                .Select(x => (T) x.GetRawConstantValue())
+                .Concat(type.GetNestedTypes(BindingFlags.Public).SelectMany(GetAllPublicConstantValues<T>))
+                .ToList();
         }
     }
 }

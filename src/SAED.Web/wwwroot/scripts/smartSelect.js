@@ -1,20 +1,20 @@
 ﻿function smartSelect({
     available,
     chosen = [],
-    mountNode = '#smartSelect'
+    mountNode = "#smartSelect"
 }) {
     const app = Vue.createApp({
         data() {
             return {
-                searchAvailableField: '',
-                searchChosenField: '',
+                searchAvailableField: "",
+                searchChosenField: "",
                 available,
                 availableSearch: [],
                 availableSelected: [],
                 chosen,
                 chosenSelected: [],
                 chosenSearch: [],
-            }
+            };
         },
         methods: {
             searchAvailable(event = null, value) {
@@ -27,7 +27,8 @@
                 const availableSearchLowerCase = this.availableSearch.map(availSearch => availSearch.toLowerCase());
 
                 this.availableSearch = this.available
-                    .filter(avail => avail.toLowerCase().includes(this.searchAvailableField) && !availableSearchLowerCase.includes(this.searchAvailableField));
+                    .filter(avail => avail.toLowerCase().includes(this.searchAvailableField) &&
+                        !availableSearchLowerCase.includes(this.searchAvailableField));
             },
             searchChosen(event = null, value) {
                 if (event) {
@@ -38,7 +39,8 @@
                 const chosenSearchLowerCase = this.chosenSearch.map(chosSearch => chosSearch.toLowerCase());
 
                 this.chosenSearch = this.chosen
-                    .filter(chos => chos.toLowerCase().includes(this.searchChosenField) && !chosenSearchLowerCase.includes(this.searchChosenField));
+                    .filter(chos => chos.toLowerCase().includes(this.searchChosenField) &&
+                        !chosenSearchLowerCase.includes(this.searchChosenField));
             },
             add() {
                 if (this.availableSelected.length >= 1) {

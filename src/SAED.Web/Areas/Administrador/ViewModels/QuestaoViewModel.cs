@@ -14,6 +14,6 @@ namespace SAED.Web.Areas.Administrador.ViewModels
         public string Enunciado { get; set; }
         public bool Habilitada { get; set; }
         public IList<Alternativa> Alternativas { get; set; }
-        public IEnumerable<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
+        public ICollection<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
     }
 }

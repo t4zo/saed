@@ -39,15 +39,15 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             dashboardAplicadorViewModel.Escola = await _context.Escolas
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == dashboardAplicadorViewModel.EscolaId);
-            
+
             dashboardAplicadorViewModel.Etapa = await _context.Etapas
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == dashboardAplicadorViewModel.EtapaId);
-            
+
             dashboardAplicadorViewModel.Turma = await _context.Turmas
                 .AsNoTracking().Include(x => x.Turno)
                 .FirstOrDefaultAsync(x => x.Id == dashboardAplicadorViewModel.TurmaId);
-            
+
             dashboardAplicadorViewModel.Aluno = await _context.Alunos
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == dashboardAplicadorViewModel.AlunoId);
@@ -57,9 +57,9 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             dashboardAplicadorViewModel.Turma.Alunos = null;
             dashboardAplicadorViewModel.Turma.Etapa = null;
             dashboardAplicadorViewModel.Turma.Turno.Turmas = null;
-            
+
             HttpContext.Session.Set("alunoMetadata", dashboardAplicadorViewModel);
-            
+
             return RedirectToAction(nameof(Index), "Dashboard");
         }
     }

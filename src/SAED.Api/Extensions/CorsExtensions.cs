@@ -11,9 +11,9 @@ namespace SAED.Api.Extensions
     {
         public static IServiceCollection AddCustomCors(this IServiceCollection services)
         {
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            string[] allowedOrigins = configuration.GetSection(AuthorizationConstants.AllowedOrigins).Get<string[]>();
+            var serviceProvider = services.BuildServiceProvider();
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            var allowedOrigins = configuration.GetSection(AuthorizationConstants.AllowedOrigins).Get<string[]>();
             allowedOrigins ??= Array.Empty<string>();
 
             services.AddCors(setupAction =>

@@ -52,7 +52,7 @@
                 public const string Update = "Permissions.Dashboard.Update";
                 public const string Delete = "Permissions.Dashboard.Delete";
             }
-            
+
             public static class DashboardAplicador
             {
                 public const string View = "Permissions.DashboardAplicador.View";
@@ -99,6 +99,22 @@
                 public const string Create = "Permissions.Etapas.Create";
                 public const string Update = "Permissions.Etapas.Update";
                 public const string Delete = "Permissions.Etapas.Delete";
+            }
+
+            public static class Turmas
+            {
+                public const string View = "Permissions.Turmas.View";
+                public const string Create = "Permissions.Turmas.Create";
+                public const string Update = "Permissions.Turmas.Update";
+                public const string Delete = "Permissions.Turmas.Delete";
+            }
+
+            public static class Alunos
+            {
+                public const string View = "Permissions.Alunos.View";
+                public const string Create = "Permissions.Alunos.Create";
+                public const string Update = "Permissions.Alunos.Update";
+                public const string Delete = "Permissions.Alunos.Delete";
             }
 
             public static class Distritos

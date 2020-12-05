@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using SAED.Core.Entities;
 using SAED.Core.Interfaces;
 
@@ -25,17 +24,17 @@ namespace SAED.Infrastructure.Data.Seed
 
         public virtual async Task LoadAsync()
         {
-            DbSet<TEntity> dbSet = _context.Set<TEntity>();
+            var dbSet = _context.Set<TEntity>();
 
             if (!dbSet.Any())
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
+                var assembly = Assembly.GetExecutingAssembly();
 
                 await using var stream = assembly.GetManifestResourceStream(_ressourceName);
-                using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                using var reader = new StreamReader(stream, Encoding.UTF8);
 
-                string json = await reader.ReadToEndAsync();
-                List<TEntity> entities = JsonSerializer.Deserialize<List<TEntity>>(json);
+                var json = await reader.ReadToEndAsync();
+                var entities = JsonSerializer.Deserialize<List<TEntity>>(json);
 
                 await dbSet.AddRangeAsync(entities);
 

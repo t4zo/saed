@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using SAED.Core.Constants;
 using SAED.Core.Interfaces;
 
@@ -20,20 +19,20 @@ namespace SAED.Infrastructure.Data.Seed
 
         public virtual void Load(IEnumerable<TEntity> entities, string tableName)
         {
-            DbSet<TEntity> dbSet = _context.Set<TEntity>();
+            var dbSet = _context.Set<TEntity>();
 
             if (!dbSet.Any())
             {
                 dbSet.AddRange(entities);
 
-                using IDbContextTransaction transaction = _context.Database.BeginTransaction();
+                using var transaction = _context.Database.BeginTransaction();
 
                 if (string.IsNullOrEmpty(tableName))
                 {
                     tableName = typeof(TEntity).Name;
                 }
 
-                foreach (TEntity entity in entities)
+                foreach (var entity in entities)
                 {
                     if (_databaseProvider != DatabaseConstants.Postgres)
                     {

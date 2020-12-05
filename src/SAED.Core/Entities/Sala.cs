@@ -6,7 +6,7 @@ namespace SAED.Core.Entities
     {
         public int EscolaId { get; set; }
         public Escola Escola { get; set; }
-        
+
         public string Nome { get; set; }
         public int Capacidade { get; set; }
         public double Area { get; set; }

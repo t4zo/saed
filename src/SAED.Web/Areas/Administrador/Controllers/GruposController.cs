@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -58,7 +57,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (viewModel.PermissoesEscolhidas is not null)
             {
-                foreach (string permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
                 {
                     await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permissions, permissaoEscolhida));
                 }
@@ -75,13 +74,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             HttpContext.Session.Set("Role", role.Name);
             ViewBag.Role = role;
-            
+
             var roleClaims = await _context.RoleClaims
                 .AsNoTracking()
                 .Where(x => x.RoleId == role.Id)
                 .Select(x => x.ClaimValue)
                 .ToListAsync();
-            
+
             ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
                 .Where(permission => !roleClaims.Contains(permission)).ToList();
 
@@ -99,14 +98,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             var claims = await _roleManager.GetClaimsAsync(role);
 
-            foreach (Claim claim in claims)
+            foreach (var claim in claims)
             {
                 await _roleManager.RemoveClaimAsync(role, claim);
             }
 
             if (viewModel.PermissoesEscolhidas != null)
             {
-                foreach (string permissaoEscolhida in viewModel.PermissoesEscolhidas)
+                foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
                 {
                     await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permissions, permissaoEscolhida));
                 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,14 +48,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (!ModelState.IsValid)
             {
                 ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome", escola.DistritoId);
-                ViewData["MatrizId"] =
-                    new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
+                ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
 
                 return View(escola);
             }
 
             await _context.AddAsync(escola);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -92,8 +91,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (!ModelState.IsValid)
             {
                 ViewData["DistritoId"] = new SelectList(distritos, "Id", "Nome", escola.DistritoId);
-                ViewData["MatrizId"] =
-                    new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
+                ViewData["MatrizId"] = new SelectList(distritos.SelectMany(x => x.Escolas), "Id", "Email", escola.MatrizId);
 
                 return View(escola);
             }
@@ -105,7 +103,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                Escola entity = await _context.Escolas.FindAsync(id);
+                var entity = await _context.Escolas.FindAsync(id);
                 if (entity is null)
                 {
                     return NotFound();

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +34,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 descritores = descritores.Where(d => d.Tema.DisciplinaId == disciplinaId.Value).ToList();
 
-                List<Tema> temas = descritores.Select(x => x.Tema).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                var temas = descritores.Select(x => x.Tema).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
 
                 if (temaId.HasValue)

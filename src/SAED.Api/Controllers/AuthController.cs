@@ -26,10 +26,9 @@ namespace SAED.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Authenticate(AuthenticationRequest authenticationRequest)
         {
-            UserResponse user = await _userService.AuthenticateAsync(authenticationRequest.Username,
-                authenticationRequest.Password, authenticationRequest.Remember);
+            var user = await _userService.AuthenticateAsync(authenticationRequest.Username, authenticationRequest.Password, authenticationRequest.Remember);
 
-            AuthenticationResponse response = new AuthenticationResponse
+            var response = new AuthenticationResponse
             {
                 Success = true, Message = "Usuário conectado com sucesso!", User = user
             };

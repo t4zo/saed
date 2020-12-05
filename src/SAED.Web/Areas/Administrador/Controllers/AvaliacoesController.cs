@@ -48,7 +48,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -80,7 +80,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                Avaliacao entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
+                var entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
                 if (entity.Id != id)
                 {
                     return NotFound();
@@ -95,7 +95,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {
@@ -111,7 +111,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Avaliacao avaliacao = await _context.Avaliacoes.FindAsync(id);
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
             if (avaliacao is null)
             {

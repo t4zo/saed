@@ -1,15 +1,15 @@
 ﻿@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
 
 @{
-    var disciplinas = @Model.Questoes.Select(x => x.Descritor.Tema.Disciplina).Distinct().ToList();
+    var disciplinas = Model.Questoes.Select(x => x.Descritor.Tema.Disciplina).Distinct().ToList();
 }
 
 
 @section Styles {
     <style>
         .uk-card {
-            width: 100%;
             max-width: 960px;
+            width: 100%;
         }
     </style>
 }
@@ -50,7 +50,7 @@
         <hr class="uk-list-divider"/>
 
         <div class="uk-flex uk-flex-around uk-flex-middle uk-flex-wrap">
-            @foreach (var disciplina in @disciplinas)
+            @foreach (var disciplina in disciplinas)
             {
                 <a class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">@disciplina.Nome</a>
             }
@@ -64,7 +64,7 @@
                 {
                     <h4 class="uk-text-center">@disciplina.Nome</h4>
                     <dl class="uk-description-list">
-                        @foreach (var questao in @Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
+                        @foreach (var questao in Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
                         {
                             <dt>
                                 <div class="uk-grid-small" uk-grid>
@@ -72,7 +72,7 @@
                                     <div>A</div>
                                 </div>
                             </dt>
-                            <input asp-for="EscolaId" class="uk-select" type="hidden"/>   
+                            <input asp-for="EscolaId" class="uk-select" type="hidden"/>
                         }
                     </dl>
                 }

@@ -13,7 +13,7 @@ namespace SAED.Web.Areas.Aplicador.ViewModels
         public Turma Turma { get; set; }
         public int AlunoId { get; set; }
         public Aluno Aluno { get; set; }
-        
+
         public ICollection<Questao> Questoes { get; set; }
     }
 }

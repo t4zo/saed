@@ -40,32 +40,32 @@ namespace SAED.Api.Services
 
         public async Task<UserResponse> AuthenticateAsync(string username, string password, bool remember = false)
         {
-            SignInResult result = await _signInManager.PasswordSignInAsync(username, password, remember, false);
+            var result = await _signInManager.PasswordSignInAsync(username, password, remember, false);
 
             if (!result.Succeeded)
             {
                 throw new AuthenticationException("Usuário e/ou Senha inválido(s)");
             }
 
-            ApplicationUser user = await _userManager.FindByNameAsync(username);
-            IList<Claim> userClaims = await _userManager.GetClaimsAsync(user);
-            IList<string> roles = await _userManager.GetRolesAsync(user);
+            var user = await _userManager.FindByNameAsync(username);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
 
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
+            var claimsIdentity = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Name, user.UserName), new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(Remember, remember.ToString().ToLower())
             });
 
             claimsIdentity.AddClaims(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-            string token = _tokenService.GenerateJWTToken(claimsIdentity);
+            var token = _tokenService.GenerateJWTToken(claimsIdentity);
 
             AddUserClaims(claimsIdentity, userClaims, roles);
 
             user.LastLogin = DateTime.Now;
             await _context.SaveChangesAsync();
 
-            UserResponse userResponse = _mapper.Map<UserResponse>(user);
+            var userResponse = _mapper.Map<UserResponse>(user);
 
             userResponse.Roles = roles;
             userResponse.Token = token;
@@ -73,13 +73,13 @@ namespace SAED.Api.Services
             return userResponse;
         }
 
-        private void AddUserClaims(ClaimsIdentity claimsIdentity, IList<Claim> userClaims, IList<string> roles)
+        private void AddUserClaims(ClaimsIdentity claimsIdentity, IEnumerable<Claim> userClaims, IEnumerable<string> roles)
         {
-            foreach (string role in roles)
+            foreach (var role in roles)
             {
                 if (role.Equals(Roles.Administrador))
                 {
-                    foreach (Claim userClaim in userClaims)
+                    foreach (var userClaim in userClaims)
                     {
                         claimsIdentity.AddClaim(new Claim(userClaim.Type, userClaim.Value));
                     }
@@ -87,7 +87,7 @@ namespace SAED.Api.Services
 
                 if (role.Equals(Roles.Aplicador))
                 {
-                    foreach (Claim userClaim in userClaims)
+                    foreach (var userClaim in userClaims)
                     {
                         claimsIdentity.AddClaim(new Claim(userClaim.Type, userClaim.Value));
                     }

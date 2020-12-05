@@ -61,13 +61,14 @@
 
 @section Scripts {
     <script>
-        document.querySelector("#disciplinaId").addEventListener("change", () => {
-            const form = document.querySelector('#form-filter');
-            document.querySelector("#temaId").selectedIndex = -1;
+        document.querySelector("#disciplinaId").addEventListener("change",
+            () => {
+                const form = document.querySelector('#form-filter');
+                document.querySelector("#temaId").selectedIndex = -1;
 
-            form.action = removeUrlParam("temaId", window.location.href);
-            form.submit();
-        });
+                form.action = removeUrlParam("temaId", window.location.href);
+                form.submit();
+            });
     </script>
     <script src="~/scripts/removeItem.js"></script>
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,8 +12,7 @@ namespace SAED.Api.Authorization
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public PermissionAuthorizationHandler(UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager)
+        public PermissionAuthorizationHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -25,7 +22,7 @@ namespace SAED.Api.Authorization
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
             PermissionRequirement requirement)
         {
-            ApplicationUser user = await _userManager.GetUserAsync(context.User);
+            var user = await _userManager.GetUserAsync(context.User);
 
             // Se não estiver logado retorna não autorizado
             if (user is null)
@@ -40,8 +37,8 @@ namespace SAED.Api.Authorization
                 return;
             }
 
-            IList<Claim> userClaims = await _userManager.GetClaimsAsync(user);
-            IEnumerable<string> userPermissions = userClaims.Where(x =>
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var userPermissions = userClaims.Where(x =>
                 x.Type == CustomClaimTypes.Permissions &&
                 x.Value == requirement.Permission &&
                 x.Issuer == "LOCAL AUTHORITY"
@@ -54,14 +51,14 @@ namespace SAED.Api.Authorization
                 return;
             }
 
-            IList<string> userRoleNames = await _userManager.GetRolesAsync(user);
-            IQueryable<ApplicationRole> userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name));
+            var userRoleNames = await _userManager.GetRolesAsync(user);
+            var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name));
 
-            foreach (ApplicationRole role in userRoles)
+            foreach (var role in userRoles)
             {
-                IList<Claim> roleClaims = await _roleManager.GetClaimsAsync(role);
+                var roleClaims = await _roleManager.GetClaimsAsync(role);
 
-                IEnumerable<string> rolePermissions = roleClaims.Where(x =>
+                var rolePermissions = roleClaims.Where(x =>
                     x.Type == CustomClaimTypes.Permissions &&
                     x.Value == requirement.Permission &&
                     x.Issuer == "LOCAL AUTHORITY"

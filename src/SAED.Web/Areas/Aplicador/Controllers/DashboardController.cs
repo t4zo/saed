@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +48,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             var disciplinas = questoes.Select(x => x.Descritor.Tema.Disciplina)
                 .Distinct()
                 .ToList();
-            
+
             // var disciplinasGroup = questoes.Select(x => x.Descritor.Tema.Disciplina)
             //     .GroupBy(x => x.Id)
             //     .Select(x => x.First())

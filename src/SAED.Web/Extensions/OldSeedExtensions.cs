@@ -2,10 +2,7 @@
 {
     public static class OldSeedExtensions
     {
-        //public static async Task<IApplicationBuilder> SeedDatabaseAsync(
-        //    this IApplicationBuilder app,
-        //    IServiceProvider serviceProvider
-        //    )
+        //public static async Task<IApplicationBuilder> SeedDatabaseAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         //{
         //var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 

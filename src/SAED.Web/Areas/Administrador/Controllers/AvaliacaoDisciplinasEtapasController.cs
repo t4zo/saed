@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -86,10 +85,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            ViewData["AvaliacaoId"] =
-                new SelectList(_context.Avaliacoes, "Id", "Codigo", avaliacaoDisciplinaEtapa.AvaliacaoId);
-            ViewData["DisciplinaId"] =
-                new SelectList(_context.Disciplinas, "Id", "Nome", avaliacaoDisciplinaEtapa.DisciplinaId);
+            ViewData["AvaliacaoId"] = new SelectList(_context.Avaliacoes, "Id", "Codigo", avaliacaoDisciplinaEtapa.AvaliacaoId);
+            ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome", avaliacaoDisciplinaEtapa.DisciplinaId);
             ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome", avaliacaoDisciplinaEtapa.EtapaId);
 
             return View(avaliacaoDisciplinaEtapa);
@@ -97,8 +94,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int disciplinaId, int etapaId,
-            AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa)
+        public async Task<IActionResult> Edit(int disciplinaId, int etapaId, AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
             avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
@@ -110,10 +106,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                bool avaliacaoDisciplinaEtapaExists = _context.AvaliacaoDisciplinasEtapas.Any(
-                    x => x.AvaliacaoId == avaliacao.Id &&
-                         x.DisciplinaId == disciplinaId &&
-                         x.EtapaId == etapaId);
+                var avaliacaoDisciplinaEtapaExists = _context.AvaliacaoDisciplinasEtapas
+                    .Any(
+                        x => x.AvaliacaoId == avaliacao.Id &&
+                             x.DisciplinaId == disciplinaId &&
+                             x.EtapaId == etapaId
+                    );
 
                 if (!avaliacaoDisciplinaEtapaExists)
                 {

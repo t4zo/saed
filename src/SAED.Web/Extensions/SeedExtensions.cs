@@ -14,9 +14,9 @@ namespace SAED.Web.Extensions
     {
         public static IApplicationBuilder SeedDatabase(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            ApplicationDbContext context = serviceProvider.GetRequiredService<ApplicationDbContext>();
-            IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            string databaseProvider = configuration[DatabaseConstants.Database];
+            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            var databaseProvider = configuration[DatabaseConstants.Database];
 
             var avaliacoes = new List<Avaliacao>
             {

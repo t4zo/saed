@@ -22,7 +22,8 @@ namespace SAED.Core.Entities
                 return true;
             }
 
-            return Nome == other.Nome && Sigla == other.Sigla && Equals(Temas, other.Temas) && Equals(AvaliacaoDisciplinasEtapas, other.AvaliacaoDisciplinasEtapas);
+            return Nome == other.Nome && Sigla == other.Sigla && Equals(Temas, other.Temas) &&
+                   Equals(AvaliacaoDisciplinasEtapas, other.AvaliacaoDisciplinasEtapas);
         }
 
         public override bool Equals(object obj)
@@ -37,7 +38,7 @@ namespace SAED.Core.Entities
                 return true;
             }
 
-            if (obj.GetType() != this.GetType())
+            if (obj.GetType() != GetType())
             {
                 return false;
             }

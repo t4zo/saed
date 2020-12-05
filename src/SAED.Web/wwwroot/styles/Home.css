@@ -1,14 +1,19 @@
-﻿body {
-  margin: 0; }
-  body .aside {
-    max-width: 60vw; }
-  body .aside--image {
+﻿body { margin: 0; }
+
+body .aside { max-width: 60vw; }
+
+body .aside--image {
     max-height: 100vh;
     /*object-fit: fill;*/
-    /*background-size: contain;*/ }
-  body .section {
+    /*background-size: contain;*/
+}
+
+body .section {
+    border-left: 1px solid black;
     max-height: 100vh;
-    border-left: 1px solid black; }
-    body .section .section--form {
-      width: 70%;
-      margin: auto; }
+}
+
+body .section .section--form {
+    margin: auto;
+    width: 70%;
+}

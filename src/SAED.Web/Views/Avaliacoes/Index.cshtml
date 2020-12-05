@@ -21,8 +21,8 @@
 
     <style>
         .uk-card {
-            width: 100%;
             max-width: 480px;
+            width: 100%;
         }
     </style>
 </head>
@@ -45,7 +45,7 @@
         <form class="logout-form"
               asp-area="Identity"
               asp-page="/Account/Logout"
-              asp-route-returnUrl="@Url.Action($"Index", $"Home", new {area = ""})">
+              asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
         </form>
     </div>
 </main>

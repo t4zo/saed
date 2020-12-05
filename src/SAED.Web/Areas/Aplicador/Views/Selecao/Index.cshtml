@@ -3,8 +3,8 @@
 @section Styles {
     <style>
         .uk-card {
-            width: 100%;
             max-width: 480px;
+            width: 100%;
         }
     </style>
 }
@@ -52,7 +52,7 @@
         <form class="logout-form"
               asp-area="Identity"
               asp-page="/Account/Logout"
-              asp-route-returnUrl="@Url.Action($"Index", $"Home", new {area = ""}) ">
+              asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""}) ">
         </form>
     </div>
 </main>
@@ -60,30 +60,34 @@
 @section Scripts {
     <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const escolaField = document.querySelector("#EscolaId");
-            const etapaField = document.querySelector("#EtapaId");
-            const turmaField = document.querySelector("#TurmaId");
-            const alunoField = document.querySelector("#AlunoId");
-            
-            escolaField.addEventListener("change", () => {
-                filterNestedFields(escolaField.value, "/api/v1/etapasapi?id", "#EtapaId");
-                etapaField.selectedIndex = 0;
-                etapaField.disabled = true;
+        document.addEventListener("DOMContentLoaded",
+            () => {
+                const escolaField = document.querySelector("#EscolaId");
+                const etapaField = document.querySelector("#EtapaId");
+                const turmaField = document.querySelector("#TurmaId");
+                const alunoField = document.querySelector("#AlunoId");
+
+                escolaField.addEventListener("change",
+                    () => {
+                        filterNestedFields(`@ApiConstants.BaseUrl/etapas?escolaId=${escolaField.value}`, "#EtapaId");
+                        etapaField.selectedIndex = 0;
+                        etapaField.disabled = true;
+                    });
+
+                etapaField.addEventListener("change",
+                    () => {
+                        filterNestedFields(`@ApiConstants.BaseUrl/turmas?etapaId=${etapaField.value}`, "#TurmaId");
+                        turmaField.selectedIndex = 0;
+                        turmaField.disabled = true;
+                    });
+
+                turmaField.addEventListener("change",
+                    () => {
+                        filterNestedFields(`@ApiConstants.BaseUrl/alunos?turmaId=${turmaField.value}`, "#AlunoId");
+                        alunoField.selectedIndex = 0;
+                        alunoField.disabled = true;
+                    });
             });
-            
-            etapaField.addEventListener("change", () => {
-                filterNestedFields(etapaField.value, "/api/v1/turmasapi?id", "#TurmaId");
-                turmaField.selectedIndex = 0;
-                turmaField.disabled = true;
-            });
-            
-            turmaField.addEventListener("change", () => {
-                filterNestedFields(turmaField.value, "/api/v1/alunosapi?id", "#AlunoId");
-                alunoField.selectedIndex = 0;
-                alunoField.disabled = true;
-            });
-        });
     </script>
 }
 

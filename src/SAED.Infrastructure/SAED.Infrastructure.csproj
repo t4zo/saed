@@ -19,5 +19,9 @@
   <ItemGroup>
     <ProjectReference Include="..\SAED.Core\SAED.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
   
 </Project>

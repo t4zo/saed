@@ -36,14 +36,16 @@
 @section Scripts {
     <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const disciplinaField = document.querySelector("#disciplinas");
-            const temaField = document.querySelector("#TemaId");
-            disciplinaField.addEventListener("change", () => {
-                filterNestedFields(disciplinaField.value, "/api/v1/temasapi?id", "#TemaId");
-                temaField.selectedIndex = 0;
-                temaField.disabled = true;
+        document.addEventListener("DOMContentLoaded",
+            () => {
+                const disciplinaField = document.querySelector("#disciplinas");
+                const temaField = document.querySelector("#TemaId");
+                disciplinaField.addEventListener("change",
+                    () => {
+                        filterNestedFields(`@ApiConstants.BaseUrl/temas?disciplinaId=${disciplinaField.value}`, "#TemaId");
+                        temaField.selectedIndex = 0;
+                        temaField.disabled = true;
+                    });
             });
-        });
     </script>
 }

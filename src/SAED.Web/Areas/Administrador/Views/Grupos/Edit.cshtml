@@ -72,6 +72,7 @@
     <script src="~/scripts/smartSelect.js"></script>
     <script>
         smartSelect({ available: @Html.Raw(JsonSerializer.Serialize(ViewBag.AllPermissions)), chosen: @Html.Raw(JsonSerializer.Serialize(Model.PermissoesEscolhidas)) });
+
         function sendForm() {
             const chosenSelectedOptions = document.querySelectorAll('.chosenSelected option');
             chosenSelectedOptions.forEach(option => option.selected = true);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
@@ -8,8 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
@@ -24,9 +21,7 @@ namespace SAED.Infrastructure.Data
         private readonly string _databaseProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration,
-            IHttpContextAccessor httpContextAccessor)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(options)
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
@@ -46,7 +41,6 @@ namespace SAED.Infrastructure.Data
         public DbSet<Questao> Questoes { get; set; }
         public DbSet<Alternativa> Alternativas { get; set; }
         public DbSet<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
-
         public DbSet<Forma> Formas { get; set; }
         public DbSet<Turma> Turmas { get; set; }
         public DbSet<Sala> Salas { get; set; }
@@ -56,9 +50,11 @@ namespace SAED.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            IEnumerable<IMutableEntityType> entities = builder.Model.GetEntityTypes();
+            base.OnModelCreating(builder);
 
-            foreach (IMutableEntityType entity in entities)
+            var entities = builder.Model.GetEntityTypes();
+
+            foreach (var entity in entities)
             {
                 if (_databaseProvider == DatabaseConstants.Postgres && !(entity is IManyToMany))
                 {
@@ -72,78 +68,69 @@ namespace SAED.Infrastructure.Data
             }
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            base.OnModelCreating(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            base.OnConfiguring(optionsBuilder);
+
             if (_databaseProvider == DatabaseConstants.Postgres)
             {
-                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection"))
-                    .LogTo(Console.WriteLine);
+                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection")).LogTo(Console.WriteLine);
             }
             else
             {
-                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
-                    .LogTo(Console.WriteLine);
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")).LogTo(Console.WriteLine);
             }
-
-
-            base.OnConfiguring(optionsBuilder);
         }
 
         public override int SaveChanges()
         {
-            IEnumerable<EntityEntry> entries = ChangeTracker
-                .Entries()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
             try
             {
-                foreach (EntityEntry entityEntry in entries)
+                foreach (var entityEntry in entries)
                 {
-                    entityEntry.Property("UpdatedBy").CurrentValue =
-                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
+                    entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                     entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                     if (entityEntry.State == EntityState.Added)
                     {
-                        entityEntry.Property("CreatedBy").CurrentValue =
-                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
+                        entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                         entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                     }
                 }
             }
-            catch { }
+            catch
+            {
+            }
 
             return base.SaveChanges();
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = default)
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            IEnumerable<EntityEntry> entries = ChangeTracker
-                .Entries()
+            var entries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
             try
             {
-                foreach (EntityEntry entityEntry in entries)
+                foreach (var entityEntry in entries)
                 {
-                    entityEntry.Property("UpdatedBy").CurrentValue =
-                        _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
+                    entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                     entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
 
                     if (entityEntry.State == EntityState.Added)
                     {
-                        entityEntry.Property("CreatedBy").CurrentValue =
-                            _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
+                        entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Desconhecido";
                         entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                     }
                 }
             }
-            catch { }
+            catch
+            {
+            }
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }

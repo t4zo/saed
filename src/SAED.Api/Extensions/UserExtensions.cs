@@ -16,155 +16,120 @@ using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Api.Extensions
 {
-    public static class UsersExtension
+    public static class UsersExtensions
     {
-        public static async Task<IApplicationBuilder> CreateUsers(this IApplicationBuilder app,
-            IServiceProvider serviceProvider)
+        public static async Task<IApplicationBuilder> CreateUsersAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            ApplicationDbContext context = serviceProvider.GetRequiredService<ApplicationDbContext>();
-            UserManager<ApplicationUser> userManager =
-                serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            RoleManager<ApplicationRole> roleManager =
-                serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            AppConfiguration appConfiguration =
-                serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
 
             if (!await context.Users.AnyAsync())
             {
-                foreach (UserConfiguration user in appConfiguration.Users)
+                foreach (var user in appConfiguration.Users)
                 {
-                    ApplicationUser applicationUser =
-                        new ApplicationUser {Email = user.Email, UserName = user.UserName};
-                    IdentityResult result = await userManager.CreateAsync(applicationUser, user.Password);
+                    var applicationUser = new ApplicationUser {Email = user.Email, UserName = user.UserName};
+                    var result = await userManager.CreateAsync(applicationUser, user.Password);
 
                     if (result.Succeeded)
                     {
-                        foreach (string role in user.Roles)
+                        foreach (var role in user.Roles)
                         {
                             await userManager.AddToRoleAsync(applicationUser, role);
-
                             await SeedUserClaims(userManager, applicationUser, role);
-
                             await SeedRoleClaims(roleManager, role);
                         }
-
-                        ;
                     }
 
                     await AddUsuarioTurmaAvaliacao(userManager, applicationUser, context);
 
                     await context.SaveChangesAsync();
                 }
-
-                ;
             }
 
             return app;
         }
 
-        private static async Task AddUsuarioTurmaAvaliacao(UserManager<ApplicationUser> userManager,
-            ApplicationUser user, ApplicationDbContext context)
+        private static async Task AddUsuarioTurmaAvaliacao(UserManager<ApplicationUser> userManager, ApplicationUser user, ApplicationDbContext context)
         {
             if (await userManager.IsInRoleAsync(user, Roles.Aplicador))
             {
-                List<Avaliacao> avaliacoes =
-                    await context.Avaliacoes.Where(a => a.Status == StatusAvaliacao.EmAndamento).ToListAsync();
-                foreach (Avaliacao avaliacao in avaliacoes)
+                var avaliacoes = await context.Avaliacoes.Where(a => a.Status == StatusAvaliacao.EmAndamento).ToListAsync();
+
+                foreach (var avaliacao in avaliacoes)
                 {
                     context.Add(new UsuarioTurmaAvaliacao
                     {
-                        ApplicationUserId = user.Id, AvaliacaoId = avaliacao.Id, TurmaId = 1
+                        ApplicationUserId = user.Id,
+                        AvaliacaoId = avaliacao.Id,
+                        TurmaId = 1
                     });
                 }
             }
         }
 
-        private static async Task SeedUserClaims(UserManager<ApplicationUser> userManager, ApplicationUser user,
-            string role)
+        private static async Task SeedUserClaims(UserManager<ApplicationUser> userManager, ApplicationUser user, string roleName)
         {
-            if (role.Equals(Roles.Administrador))
+            if (roleName.Equals(Roles.Administrador))
             {
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Create));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Update));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Delete));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Create));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Update));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Delete));
+                await userManager.AddClaimsAsync(user, new List<Claim>
+                {
+                    new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Create),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Update),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Delete),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Create),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Update),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Delete)
+                });
             }
 
-            if (role.Equals(Roles.Aplicador))
+            if (roleName.Equals(Roles.Aplicador))
             {
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
-                await userManager.AddClaimAsync(user,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
+                await userManager.AddClaimsAsync(user, new List<Claim>
+                {
+                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View),
+                    new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View)
+                });
             }
         }
 
-        private static async Task SeedRoleClaims(RoleManager<ApplicationRole> roleManager, string role)
+        private static async Task SeedRoleClaims(RoleManager<ApplicationRole> roleManager, string roleName)
         {
-            if (role.Equals(Roles.Administrador))
+            var role = await roleManager.FindByNameAsync(roleName);
+
+            if (roleName.Equals(Roles.Administrador))
             {
-                ApplicationRole _role = await roleManager.FindByNameAsync(role);
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Create));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Update));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Delete));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Create));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Update));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Delete));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Create));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Update));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Delete));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Create));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Update));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Delete));
             }
 
-            if (role.Equals(Roles.Aplicador))
+            if (roleName.Equals(Roles.Aplicador))
             {
-                ApplicationRole _role = await roleManager.FindByNameAsync(role);
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
-                await roleManager.AddClaimAsync(_role,
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View));
             }
         }
     }
