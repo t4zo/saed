@@ -97,8 +97,8 @@ namespace SAED.Api
 
             app.UseProblemDetails();
 
-            app.CreateRoles(serviceProvider).GetAwaiter().GetResult();
-            app.CreateUsers(serviceProvider).GetAwaiter().GetResult();
+            app.CreateRolesAsync(serviceProvider).GetAwaiter().GetResult();
+            app.CreateUsersAsync(serviceProvider).GetAwaiter().GetResult();
             app.SeedDatabase(serviceProvider);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
