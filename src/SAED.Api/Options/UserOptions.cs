@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace SAED.Api.Configurations
+namespace SAED.Api.Options
 {
-    public class UserConfiguration
+    public class UserOptions
     {
         public string Email { get; set; }
         public string UserName { get; set; }

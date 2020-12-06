@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SAED.Api.Configurations;
+using SAED.Api.Options;
 using SAED.Core.Extensions;
 using SAED.Infrastructure.Identity;
 using static SAED.Core.Constants.AuthorizationConstants;
@@ -18,7 +18,7 @@ namespace SAED.Api.Extensions
         public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
 
             if (!await roleManager.Roles.AnyAsync())
             {

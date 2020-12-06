@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
-using SAED.Web.Configurations;
+using SAED.Web.Options;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
@@ -23,7 +23,7 @@ namespace SAED.Web.Extensions
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
 
             if (!await context.Users.AnyAsync())
             {

@@ -3,18 +3,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SAED.Api.Configurations;
+using SAED.Api.Options;
 using SAED.Core.Interfaces;
 
 namespace SAED.Api.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly AppConfiguration _appConfiguration;
+        private readonly AppOptions _appOptions;
 
-        public TokenService(IOptionsMonitor<AppConfiguration> appConfiguration)
+        public TokenService(IOptionsMonitor<AppOptions> appConfiguration)
         {
-            _appConfiguration = appConfiguration.CurrentValue;
+            _appOptions = appConfiguration.CurrentValue;
         }
 
         string ITokenService.GenerateJWTToken(ClaimsIdentity claimsIdentity)
@@ -24,11 +24,11 @@ namespace SAED.Api.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = claimsIdentity,
-                Issuer = _appConfiguration.Token.Issuer,
-                Audience = _appConfiguration.Token.Audience,
+                Issuer = _appOptions.Token.Issuer,
+                Audience = _appOptions.Token.Audience,
                 IssuedAt = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddHours(_appConfiguration.Token.Expiration),
-                SigningCredentials = _appConfiguration.Token.SigningCredentials
+                Expires = DateTime.UtcNow.AddHours(_appOptions.Token.Expiration),
+                SigningCredentials = _appOptions.Token.SigningCredentials
             };
 
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);

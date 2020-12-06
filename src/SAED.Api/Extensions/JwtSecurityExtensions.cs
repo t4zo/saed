@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SAED.Api.Configurations;
+using SAED.Api.Options;
 
 namespace SAED.Api.Extensions
 {
@@ -12,7 +12,7 @@ namespace SAED.Api.Extensions
         public static IServiceCollection AddJwtSecurity(this IServiceCollection services)
         {
             var serviceProvider = services.BuildServiceProvider();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
 
             services.AddAuthentication(options =>
                 {

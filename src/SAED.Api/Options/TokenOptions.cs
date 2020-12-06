@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace SAED.Api.Configurations
+namespace SAED.Api.Options
 {
-    public class TokenConfiguration
+    public class TokenOptions
     {
         public string Issuer { get; set; }
         public string Audience { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SAED.Api.Configurations;
+using SAED.Api.Options;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
@@ -23,7 +23,7 @@ namespace SAED.Api.Extensions
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
 
             if (!await context.Users.AnyAsync())
             {

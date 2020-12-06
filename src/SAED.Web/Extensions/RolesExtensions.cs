@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SAED.Core.Extensions;
 using SAED.Infrastructure.Identity;
-using SAED.Web.Configurations;
+using SAED.Web.Options;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
@@ -18,7 +18,7 @@ namespace SAED.Web.Extensions
         public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppConfiguration>>().Value;
+            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
 
             if (!await roleManager.Roles.AnyAsync())
             {

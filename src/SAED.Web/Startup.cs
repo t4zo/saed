@@ -12,8 +12,8 @@ using Microsoft.Extensions.Hosting;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Authorization;
-using SAED.Web.Configurations;
 using SAED.Web.Extensions;
+using SAED.Web.Options;
 using SAED.Web.Services;
 
 namespace SAED.Web
@@ -36,8 +36,8 @@ namespace SAED.Web
 
             services.AddScoped<UserService>();
 
-            //services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
-            services.AddOptions<AppConfiguration>().Bind(Configuration.GetSection(nameof(AppConfiguration)));
+            //services.Configure<AppOptions>(Configuration.GetSection(nameof(AppOptions)));
+            services.AddOptions<AppOptions>().Bind(Configuration.GetSection(nameof(AppOptions)));
 
             services.AddDbContext<ApplicationDbContext>();
 

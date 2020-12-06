@@ -12,9 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SAED.Api.Authorization;
-using SAED.Api.Configurations;
 using SAED.Api.Extensions;
 using SAED.Api.Interfaces;
+using SAED.Api.Options;
 using SAED.Api.Services;
 using SAED.Core.Interfaces;
 using SAED.Infrastructure.Data;
@@ -40,8 +40,8 @@ namespace SAED.Api
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
-            //services.Configure<AppConfiguration>(Configuration.GetSection(nameof(AppConfiguration)));
-            services.AddOptions<AppConfiguration>().Bind(Configuration.GetSection(nameof(AppConfiguration)));
+            //services.Configure<AppOptions>(Configuration.GetSection(nameof(AppOptions)));
+            services.AddOptions<AppOptions>().Bind(Configuration.GetSection(nameof(AppOptions)));
 
             services.AddDbContext<ApplicationDbContext>();
 
