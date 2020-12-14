@@ -45,15 +45,6 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 questao.Descritor.Tema.Disciplina.Temas = null;
             }
 
-            var disciplinas = questoes.Select(x => x.Descritor.Tema.Disciplina)
-                .Distinct()
-                .ToList();
-
-            // var disciplinasGroup = questoes.Select(x => x.Descritor.Tema.Disciplina)
-            //     .GroupBy(x => x.Id)
-            //     .Select(x => x.First())
-            //     .ToList();
-
             dashboardAplicadorViewModel.Questoes = questoes;
 
             return View(dashboardAplicadorViewModel);

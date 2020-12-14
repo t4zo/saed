@@ -222,20 +222,22 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
 
-            var descritor = await _context.Descritores.Include("Tema.Disciplina")
+            var etapas = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
+                .Include(x => x.Etapa)
+                .Where(x => x.AvaliacaoId == avaliacao.Id)
+                .Select(x => x.Etapa)
+                .Distinct()
+                .ToListAsync();
+
+            var descritor = await _context.Descritores
+                .Include(x => x.Tema)
+                .ThenInclude(x => x.Disciplina)
                 .FirstOrDefaultAsync(x => x.Id == questaoViewModel.DescritorId);
 
             if (descritor is null)
             {
                 ModelState.AddModelError("Descritor", "Descritor inválido");
-
-                var etapas = await _context.AvaliacaoDisciplinasEtapas
-                    .AsNoTracking()
-                    .Include(x => x.Etapa)
-                    .Where(x => x.AvaliacaoId == avaliacao.Id)
-                    .Select(x => x.Etapa)
-                    .Distinct()
-                    .ToListAsync();
 
                 ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);
                 ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
@@ -253,14 +255,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 ModelState.AddModelError("", "Etapa e/ou Disciplina inválida(s)");
                 ModelState.AddModelError("EtapaDisciplina", "Etapa e/ou Disciplina inválida(s)");
 
-                var etapas = await _context.AvaliacaoDisciplinasEtapas
-                    .AsNoTracking()
-                    .Include(x => x.Etapa)
-                    .Where(x => x.AvaliacaoId == avaliacao.Id)
-                    .Select(x => x.Etapa)
-                    .Distinct()
-                    .ToListAsync();
-
                 ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome", questaoViewModel.EtapaId);
                 ViewData["DisciplinaId"] = new SelectList(_context.Disciplinas, "Id", "Nome");
 
@@ -270,8 +264,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewData["DescritorId"] =
-                    new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
+                ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
 
                 return View(questaoViewModel);
             }
@@ -294,7 +287,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 throw;
             }
 
-            var avaliacaoQuestao = await _context.AvaliacaoQuestoes.Include(x => x.Questao)
+            var avaliacaoQuestao = await _context.AvaliacaoQuestoes
+                .Include(x => x.Questao)
                 .FirstOrDefaultAsync(x => x.AvaliacaoId == avaliacao.Id && x.QuestaoId == questao.Id);
 
             if (avaliacaoQuestao is null)
@@ -323,7 +317,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
-            var questao = await _context.Questoes.Include("Descritor.Tema.Disciplina")
+            var questao = await _context.Questoes
+                .Include(x => x.Descritor)
+                .ThenInclude(x => x.Tema)
+                .ThenInclude(x => x.Disciplina)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (questao is null)

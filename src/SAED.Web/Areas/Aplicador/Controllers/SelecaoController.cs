@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Aplicador.ViewModels;
 using SAED.Web.Extensions;
+using System.Linq;
 
 namespace SAED.Web.Areas.Aplicador.Controllers
 {
@@ -42,21 +44,46 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             dashboardAplicadorViewModel.Etapa = await _context.Etapas
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == dashboardAplicadorViewModel.EtapaId);
+                .Where(x => x.Id == dashboardAplicadorViewModel.EtapaId)
+                .Select(x => new Etapa
+                {
+                    Id = x.Id,
+                    Nome = x.Nome,
+                    Normativa = x.Normativa,
+                    SegmentoId = x.SegmentoId,
+                    Segmento = x.Segmento
+                })
+                .FirstOrDefaultAsync();
 
             dashboardAplicadorViewModel.Turma = await _context.Turmas
-                .AsNoTracking().Include(x => x.Turno)
-                .FirstOrDefaultAsync(x => x.Id == dashboardAplicadorViewModel.TurmaId);
+                .AsNoTracking()
+                .Include(x => x.Turno)
+                .Where(x => x.Id == dashboardAplicadorViewModel.TurmaId)
+                .Select(x => new Turma
+                {
+                    Id = x.Id,
+                    Nome = x.Nome,
+                    EtapaId = x.EtapaId,
+                    FormaId = x.FormaId,
+                    SalaId = x.SalaId,
+                    TurnoId = x.TurnoId,
+                    Turno = x.Turno,
+                    Extinta = x.Extinta,
+                    QtdAlunos = x.QtdAlunos
+                })
+                .FirstOrDefaultAsync();
 
             dashboardAplicadorViewModel.Aluno = await _context.Alunos
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == dashboardAplicadorViewModel.AlunoId);
-
-            dashboardAplicadorViewModel.Aluno.Turma = null;
-            dashboardAplicadorViewModel.Etapa.Turmas = null;
-            dashboardAplicadorViewModel.Turma.Alunos = null;
-            dashboardAplicadorViewModel.Turma.Etapa = null;
-            dashboardAplicadorViewModel.Turma.Turno.Turmas = null;
+                .Where(x => x.Id == dashboardAplicadorViewModel.AlunoId)
+                .Select(x => new Aluno
+                {
+                    Id = x.Id,
+                    Nome = x.Nome,
+                    Nascimento = x.Nascimento,
+                    TurmaId = x.TurmaId
+                })
+                .FirstOrDefaultAsync();
 
             HttpContext.Session.Set("alunoMetadata", dashboardAplicadorViewModel);
 
