@@ -95,7 +95,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+                var avaliacaoSession = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+                var avaliacao = await _context.Avaliacoes.FindAsync(avaliacaoSession.Id);
 
                 var etapas = await _context.AvaliacaoDisciplinasEtapas
                     .AsNoTracking()
@@ -138,16 +139,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 }
 
                 var questao = _mapper.Map<Questao>(questaoViewModel);
-                await _context.Questoes.AddAsync(questao);
-                await _context.SaveChangesAsync();
+                questao.Avaliacoes = new List<Avaliacao>();
 
                 if (questao.Habilitada)
                 {
-                    await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao
-                    {
-                        AvaliacaoId = avaliacao.Id, QuestaoId = questao.Id
-                    });
+                    questao.Avaliacoes.Add(avaliacao);
                 }
+
+                await _context.Questoes.AddAsync(questao);
 
                 await _context.SaveChangesAsync();
 
@@ -219,8 +218,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 return NotFound();
             }
+            
+            if (!ModelState.IsValid)
+            {
+                ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
 
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+                return View(questaoViewModel);
+            }
+
+            var avaliacaoSession = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = await _context.Avaliacoes.FindAsync(avaliacaoSession.Id);
 
             var etapas = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
@@ -261,19 +268,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(questaoViewModel);
             }
 
-
-            if (!ModelState.IsValid)
-            {
-                ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
-
-                return View(questaoViewModel);
-            }
-
-            var questao = _mapper.Map<Questao>(questaoViewModel);
-
             try
             {
-                _context.Update(questao);
+                _context.Update(_mapper.Map<Questao>(questaoViewModel));
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -287,25 +284,27 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 throw;
             }
 
-            var avaliacaoQuestao = await _context.AvaliacaoQuestoes
-                .Include(x => x.Questao)
-                .FirstOrDefaultAsync(x => x.AvaliacaoId == avaliacao.Id && x.QuestaoId == questao.Id);
+            var questao = await _context.Questoes
+                .Include(x => x.Avaliacoes)
+                .FirstOrDefaultAsync(x => x.Id == questaoViewModel.Id);
+            
+            var avaliacaoQuestao = await _context.Questoes
+                .Include(x => x.Avaliacoes)
+                .Where(x => x.Id == questao.Id)
+                .FirstOrDefaultAsync(x => x.Avaliacoes.Any(y => y.Id == avaliacao.Id));
 
-            if (avaliacaoQuestao is null)
+            if (questao.Habilitada)
             {
-                if (questao.Habilitada)
+                if (avaliacaoQuestao is null)
                 {
-                    await _context.AvaliacaoQuestoes.AddAsync(new AvaliacaoQuestao
-                    {
-                        AvaliacaoId = avaliacao.Id, QuestaoId = questao.Id
-                    });
+                    questao.Avaliacoes.Add(avaliacao);
                 }
             }
             else
             {
-                if (!questao.Habilitada)
+                if (avaliacaoQuestao is not null)
                 {
-                    _context.Remove(avaliacaoQuestao);
+                    questao.Avaliacoes.Remove(avaliacao);
                 }
             }
 

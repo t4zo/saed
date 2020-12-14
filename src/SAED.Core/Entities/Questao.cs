@@ -14,7 +14,7 @@ namespace SAED.Core.Entities
         public string Descricao { get; set; }
         public string Enunciado { get; set; }
         public bool Habilitada { get; set; }
+        public ICollection<Avaliacao> Avaliacoes { get; set; }
         public ICollection<Alternativa> Alternativas { get; set; }
-        public ICollection<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
     }
 }

@@ -25,17 +25,13 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         public async Task<IActionResult> Index()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
-
-            var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>("alunoMetadata");
-
-            var questoes = await _context.AvaliacaoQuestoes
+            
+            var questoes = await _context.Questoes
                 .AsNoTracking()
-                .Include(x => x.Questao)
-                .ThenInclude(x => x.Descritor)
+                .Include(x => x.Descritor)
                 .ThenInclude(x => x.Tema)
                 .ThenInclude(x => x.Disciplina)
-                .Where(x => x.AvaliacaoId == avaliacao.Id)
-                .Select(x => x.Questao)
+                .Where(x => x.Avaliacoes.Any(y => y.Id == avaliacao.Id))
                 .ToListAsync();
 
             foreach (var questao in questoes)
@@ -44,6 +40,8 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 questao.Descritor.Tema.Descritores = null;
                 questao.Descritor.Tema.Disciplina.Temas = null;
             }
+            
+            var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>("alunoMetadata");
 
             dashboardAplicadorViewModel.Questoes = questoes;
 

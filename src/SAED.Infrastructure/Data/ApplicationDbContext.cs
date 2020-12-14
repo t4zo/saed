@@ -40,7 +40,6 @@ namespace SAED.Infrastructure.Data
         public DbSet<Descritor> Descritores { get; set; }
         public DbSet<Questao> Questoes { get; set; }
         public DbSet<Alternativa> Alternativas { get; set; }
-        public DbSet<AvaliacaoQuestao> AvaliacaoQuestoes { get; set; }
         public DbSet<Forma> Formas { get; set; }
         public DbSet<Turma> Turmas { get; set; }
         public DbSet<Sala> Salas { get; set; }

@@ -23,11 +23,11 @@ namespace SAED.Api.Extensions
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-            var appConfiguration = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
+            var appOptions = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
 
             if (!await context.Users.AnyAsync())
             {
-                foreach (var user in appConfiguration.Users)
+                foreach (var user in appOptions.Users)
                 {
                     var applicationUser = new ApplicationUser {Email = user.Email, UserName = user.UserName};
                     var result = await userManager.CreateAsync(applicationUser, user.Password);
