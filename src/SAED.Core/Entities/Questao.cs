@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Questao : BaseEntity
+    public class Questao : IBaseEntity
     {
+        public int Id { get; set; }
         public int DescritorId { get; set; }
         public Descritor Descritor { get; set; }
         public int EtapaId { get; set; }

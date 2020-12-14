@@ -27,14 +27,15 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             var descritores = await _context.Descritores
                 .AsNoTracking()
-                .Include("Tema.Disciplina")
+                .Include(x => x.Tema)
+                .ThenInclude(x => x.Disciplina)
                 .ToListAsync();
 
             if (disciplinaId.HasValue)
             {
                 descritores = descritores.Where(d => d.Tema.DisciplinaId == disciplinaId.Value).ToList();
 
-                var temas = descritores.Select(x => x.Tema).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                var temas = descritores.Select(x => x.Tema).Distinct().ToList();
                 ViewBag.Temas = new SelectList(temas, "Id", "Nome", temaId);
 
                 if (temaId.HasValue)
@@ -87,7 +88,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var descritor = await _context.Descritores
                 .AsNoTracking()
-                .Include("Tema.Disciplina")
+                .Include(x => x.Tema)
+                .ThenInclude(x => x.Disciplina)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (descritor is null)
@@ -144,7 +146,10 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 throw;
             }
 
-            var temas = await _context.Temas.AsNoTracking().Include("Tema.Disciplina").ToListAsync();
+            var temas = await _context.Temas
+                .AsNoTracking()
+                .Include(x => x.Disciplina)
+                .ToListAsync();
             ViewData["TemaId"] = new SelectList(temas, "Id", "Nome", descritor.TemaId);
 
             return View(descritor);

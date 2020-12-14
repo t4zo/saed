@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Etapa : BaseEntity
+    public class Etapa : IBaseEntity, IEquatable<Etapa>
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public int SegmentoId { get; set; }
         public Segmento Segmento { get; set; }
@@ -11,5 +14,25 @@ namespace SAED.Core.Entities
         public ICollection<Turma> Turmas { get; set; }
         public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
         public ICollection<Questao> Questoes { get; set; }
+
+        public bool Equals(Etapa other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id == other.Id && Nome == other.Nome && SegmentoId == other.SegmentoId && Normativa == other.Normativa;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Etapa) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Nome, SegmentoId, Normativa);
+        }
     }
 }

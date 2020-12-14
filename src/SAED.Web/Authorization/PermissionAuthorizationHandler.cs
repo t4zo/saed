@@ -12,15 +12,13 @@ namespace SAED.Web.Authorization
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public PermissionAuthorizationHandler(UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager)
+        public PermissionAuthorizationHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
-            PermissionRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             var user = await _userManager.GetUserAsync(context.User);
 

@@ -22,7 +22,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.View)]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Disciplinas.ToListAsync());
+            var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
+            return View(disciplinas);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Disciplinas.Create)]
@@ -82,7 +83,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Disciplinas.Any(e => e.Id == id))
+                var entity = await _context.Disciplinas.FindAsync(id);
+                if (entity is null)
                 {
                     return NotFound();
                 }

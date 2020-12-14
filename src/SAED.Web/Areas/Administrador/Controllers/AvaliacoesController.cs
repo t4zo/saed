@@ -21,7 +21,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.View)]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Avaliacoes.ToListAsync());
+            var avaliacoes = await _context.Avaliacoes.AsNoTracking().ToListAsync();
+            return View(avaliacoes);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Create)]
@@ -42,6 +43,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             await _context.AddAsync(avaliacao);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -81,7 +83,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 var entity = await _context.Avaliacoes.FindAsync(avaliacao.Id);
-                if (entity.Id != id)
+                if (entity is null)
                 {
                     return NotFound();
                 }
@@ -119,8 +121,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
 
             _context.Remove(avaliacao);
-
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

@@ -106,14 +106,14 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                var avaliacaoDisciplinaEtapaExists = _context.AvaliacaoDisciplinasEtapas
-                    .Any(
+                var entity = await _context.AvaliacaoDisciplinasEtapas
+                    .FirstOrDefaultAsync(
                         x => x.AvaliacaoId == avaliacao.Id &&
                              x.DisciplinaId == disciplinaId &&
                              x.EtapaId == etapaId
                     );
 
-                if (!avaliacaoDisciplinaEtapaExists)
+                if (entity is null)
                 {
                     return NotFound();
                 }
@@ -159,8 +159,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 );
 
             _context.Remove(avaliacaoDisciplinaEtapa);
-
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

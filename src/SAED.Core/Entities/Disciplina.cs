@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Disciplina : BaseEntity, IEquatable<Disciplina>
+    public class Disciplina : IBaseEntity, IEquatable<Disciplina>
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public string Sigla { get; set; }
         public ICollection<Tema> Temas { get; set; }

@@ -22,7 +22,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Distritos.View)]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Distritos.ToListAsync());
+            var distritos = await _context.Distritos.AsNoTracking().ToListAsync();
+            return View(distritos);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Distritos.Create)]
@@ -83,7 +84,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Distritos.Any(e => e.Id == id))
+                var entity = await _context.Distritos.FindAsync(id);
+                if (entity is null)
                 {
                     return NotFound();
                 }

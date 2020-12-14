@@ -23,8 +23,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Index()
         {
             var temas = await _context.Temas
-                .Include(x => x.Disciplina)
                 .AsNoTracking()
+                .Include(x => x.Disciplina)
                 .ToListAsync();
 
             return View(temas);

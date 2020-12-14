@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Turma : BaseEntity
+    public class Turma : IBaseEntity
     {
+        public int Id { get; set; }
         public int SalaId { get; set; }
         public Sala Sala { get; set; }
         public int EtapaId { get; set; }

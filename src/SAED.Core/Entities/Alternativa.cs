@@ -1,7 +1,10 @@
-﻿namespace SAED.Core.Entities
+﻿using SAED.Core.Interfaces;
+
+namespace SAED.Core.Entities
 {
-    public class Alternativa : BaseEntity
+    public class Alternativa : IBaseEntity
     {
+        public int Id { get; set; }
         public string Descricao { get; set; }
         public bool Correta { get; set; }
         public int QuestaoId { get; set; }

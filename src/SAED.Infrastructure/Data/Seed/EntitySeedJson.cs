@@ -10,7 +10,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Infrastructure.Data.Seed
 {
-    public abstract class EntitySeedJson<TEntity> : IEntitySeedJson where TEntity : BaseEntity
+    public abstract class EntitySeedJson<TEntity> : IEntitySeedJson where TEntity : class
     {
         protected readonly ApplicationDbContext _context;
 

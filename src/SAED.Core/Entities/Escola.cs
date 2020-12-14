@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Escola : BaseEntity
+    public class Escola : IBaseEntity
     {
+        public int Id { get; set; }
         public int? Inep { get; set; }
         public int? MatrizId { get; set; }
         public Escola Matriz { get; set; }
