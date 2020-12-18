@@ -24,24 +24,32 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         [Authorize(AuthorizationConstants.Permissions.DashboardAplicador.View)]
         public async Task<IActionResult> Index()
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
             
             var questoes = await _context.Questoes
                 .AsNoTracking()
                 .Include(x => x.Descritor)
                 .ThenInclude(x => x.Tema)
                 .ThenInclude(x => x.Disciplina)
+                .Include(x => x.Alternativas)
                 .Where(x => x.Avaliacoes.Any(y => y.Id == avaliacao.Id))
                 .ToListAsync();
-
+            
             foreach (var questao in questoes)
             {
                 questao.Descritor.Questoes = null;
                 questao.Descritor.Tema.Descritores = null;
                 questao.Descritor.Tema.Disciplina.Temas = null;
+
+                foreach (var alternativa in questao.Alternativas)
+                {
+                    alternativa.Questao = null;
+                }
             }
             
-            var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>("alunoMetadata");
+            HttpContext.Session.Set(SessionConstants.Questoes, questoes);
+
+            var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);
 
             dashboardAplicadorViewModel.Questoes = questoes;
 

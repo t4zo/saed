@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.View)]
         public async Task<IActionResult> Index(int? disciplinaId, int? temaId, int? descritorId, int? etapaId)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
             var disciplinas = await _context.Disciplinas.AsNoTracking().ToListAsync();
 
             var questoes = await GetQuestoesAsync(etapaId).ToListAsync();
@@ -72,7 +72,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Create)]
         public async Task<IActionResult> Create()
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
             var etapas = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
@@ -95,7 +95,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                var avaliacaoSession = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+                var avaliacaoSession = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
                 var avaliacao = await _context.Avaliacoes.FindAsync(avaliacaoSession.Id);
 
                 var etapas = await _context.AvaliacaoDisciplinasEtapas
@@ -161,7 +161,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Questoes.Update)]
         public async Task<IActionResult> Edit(int id)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
             var questao = await _context.Questoes
                 .AsNoTracking()
@@ -226,7 +226,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(questaoViewModel);
             }
 
-            var avaliacaoSession = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacaoSession = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
             var avaliacao = await _context.Avaliacoes.FindAsync(avaliacaoSession.Id);
 
             var etapas = await _context.AvaliacaoDisciplinasEtapas

@@ -1,0 +1,101 @@
+﻿@model QuestaoViewModel
+
+@{
+    var qtdAlternativas = Model.Alternativas.Count;
+}
+
+
+@section Styles {
+    <link href="~/libs/quill/quill.snow.min.css" rel="stylesheet">
+
+    <style>
+        .uk-card {
+            max-width: 960px;
+            width: 100%;
+        }
+
+        #enunciadoEditor {
+            height: 170px;
+        }
+
+        .alternativas .ql-container {
+            height: 45px;
+        }
+    </style>
+}
+
+<main class="uk-height-viewport uk-flex uk-flex-1 uk-flex-center uk-flex-middle">
+    <div class="uk-card uk-card-default uk-card-body">
+        <h2 class="uk-card-title uk-text-center">Item - @Model.Item</h2>
+
+        <hr class="uk-list-divider uk-divider-icon" />
+
+        <div id="enunciadoEditor"></div>
+        <input type="hidden" asp-for="Enunciado" />
+
+        <hr class="uk-list-divider uk-divider-icon" />
+
+        <section class="uk-margin-large-top uk-margin-bottom alternativas">
+            <h3 class="uk-text-center">Alternativas</h3>
+            <div class="uk-grid selectCheckboxAsRadio" uk-grid>
+                @for (var i = 0; i < @qtdAlternativas; i++)
+                {
+                    <div class="uk-width-1-2@s">
+                        <div class="uk-flex uk-flex-between">
+                            <p class="uk-text-center">@(i + 1)º Alternativa</p>
+                            <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[i].Correta" onchange="selectCheckboxAsRadio(@i)"></label>
+                        </div>
+                        <div id="alternativa@(i)Editor"></div>
+                        <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
+                        <input type="hidden" asp-for="Alternativas[i].Id" class="uk-input" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        @*<form method="post">
+                <div class="uk-column-1-@disciplinas.Count uk-column-divider">
+                    @foreach (var disciplina in disciplinas)
+                    {
+                        <h4 class="uk-text-center">@disciplina.Nome</h4>
+                        <dl class="uk-description-list">
+                            @foreach (var questao in Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
+                            {
+                                <dt>
+                                    <div class="uk-grid-small" uk-grid>
+                                        <div class="uk-width-expand" uk-leader>@questao.Descricao</div>
+                                        <div>A</div>
+                                    </div>
+                                </dt>
+                                <input asp-for="EscolaId" class="uk-select" type="hidden" />
+                            }
+                        </dl>
+                    }
+                </div>
+
+                <div class="uk-flex uk-flex-around uk-margin-large-top">
+                    <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
+                    <button class="uk-button uk-button-primary">Confirmar</button>
+                </div>
+            </form>*@
+    </div>
+</main>
+
+@section Scripts {
+    <script src="~/libs/quill/quill.min.js"></script>
+    <script type="text/javascript" src="~/scripts/quill.js"></script>
+
+    <script type="text/javascript" src="~/scripts/selectCheckboxAsRadio.js"></script>
+
+    <script defer>
+        const quillEnunciadoEditor = createEmptyQuill("#enunciadoEditor");
+        bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
+
+        const alternativas = [];
+
+        for (var i = 0; i < @qtdAlternativas; i++) {
+            alternativas.push(createEmptyQuill(`#alternativa${i}Editor`));
+            bindDeltaToInput(`#Alternativas_${i}__Descricao`, alternativas[i]);
+        }
+    </script>
+}

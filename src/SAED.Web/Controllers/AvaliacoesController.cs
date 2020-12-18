@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
@@ -30,16 +31,16 @@ namespace SAED.Web.Controllers
         {
             var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
-            HttpContext.Session.Set(nameof(Avaliacao).ToLower(), avaliacao);
+            HttpContext.Session.Set(SessionConstants.Avaliacao, avaliacao);
 
             if (User.IsInRole(Roles.Superuser) || User.IsInRole(Roles.Administrador))
             {
-                return Redirect(Url.RouteUrl(new {controller = "Dashboard", action = "Index", area = "Administrador"}));
+                return Redirect($"{AuthorizationConstants.Areas.Administrador}/Dashboard");
             }
 
             if (User.IsInRole(Roles.Aplicador))
             {
-                return Redirect(Url.RouteUrl(new {controller = "Selecao", action = "Index", area = "Aplicador"}));
+                return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao");
             }
 
             return RedirectToAction(nameof(Index));

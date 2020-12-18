@@ -22,7 +22,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
             var avaliacaoDisciplinasEtapas = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
                 .Include(x => x.Avaliacao)
@@ -46,7 +46,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
             var avaliacaoDisciplinaEtapaExists = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
@@ -69,7 +69,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public async Task<IActionResult> Edit(int disciplinaId, int etapaId)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
             var avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas
                 .Include(x => x.Disciplina)
@@ -96,7 +96,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int disciplinaId, int etapaId, AvaliacaoDisciplinaEtapa avaliacaoDisciplinaEtapa)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
             avaliacaoDisciplinaEtapa.AvaliacaoId = avaliacao.Id;
 
             try
@@ -126,7 +126,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         // public async Task<IActionResult> Delete(int disciplinaId, int etapaId)
         // {
-        //     var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+        //     var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
         //
         //     var avaliacaoDisciplinaEtapa = await _context.AvaliacaoDisciplinasEtapas
         //         .AsNoTracking()
@@ -149,7 +149,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int disciplinaId, int etapaId)
         {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
             var avaliacaoDisciplinaEtapa =
                 await _context.AvaliacaoDisciplinasEtapas.FirstOrDefaultAsync(

@@ -31,3 +31,15 @@
 function createTinyQuill(selector) {
     return new Quill(selector, { theme: "snow" });
 }
+
+function createEmptyQuill(selector) {
+    return new Quill(selector, { theme: "snow", modules: { toolbar: false } });
+}
+
+function bindDeltaToInput(selector, quill) {
+    const deltaOps = document.querySelector(selector).value;
+    if (deltaOps === "") {
+        deltaOps = "{}";
+    }
+    quill.setContents(JSON.parse(deltaOps));
+}

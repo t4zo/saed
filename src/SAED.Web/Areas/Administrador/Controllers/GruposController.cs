@@ -72,7 +72,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            HttpContext.Session.Set("Role", role.Name);
+            HttpContext.Session.Set(SessionConstants.Role, role.Name);
             ViewBag.Role = role;
 
             var roleClaims = await _context.RoleClaims
@@ -91,7 +91,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(GrupoViewModel viewModel)
         {
-            var role = await _roleManager.FindByNameAsync(HttpContext.Session.Get<string>("Role"));
+            var role = await _roleManager.FindByNameAsync(HttpContext.Session.Get<string>(SessionConstants.Role));
             //var role = await _roleManager.FindByIdAsync(Role.Id.ToString());
             //_context.Entry(role).State = EntityState.Detached;
             role.Name = viewModel.Nome;

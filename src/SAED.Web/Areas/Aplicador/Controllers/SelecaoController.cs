@@ -85,7 +85,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 })
                 .FirstOrDefaultAsync();
 
-            HttpContext.Session.Set("alunoMetadata", dashboardAplicadorViewModel);
+            HttpContext.Session.Set(SessionConstants.Aluno, dashboardAplicadorViewModel);
 
             return RedirectToAction(nameof(Index), "Dashboard");
         }
