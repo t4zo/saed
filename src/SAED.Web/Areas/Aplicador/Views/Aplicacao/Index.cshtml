@@ -1,4 +1,4 @@
-﻿@model QuestaoViewModel
+﻿@model RespostaQuestaoViewModel
 
 @{
     var qtdAlternativas = Model.Alternativas.Count;
@@ -15,11 +15,14 @@
         }
 
         #enunciadoEditor {
-            height: 170px;
+            min-height: 170px;
         }
 
-        .alternativas .ql-container {
-            height: 45px;
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+            margin-right: 10px;
         }
     </style>
 }
@@ -27,57 +30,39 @@
 <main class="uk-height-viewport uk-flex uk-flex-1 uk-flex-center uk-flex-middle">
     <div class="uk-card uk-card-default uk-card-body">
         <h2 class="uk-card-title uk-text-center">Item - @Model.Item</h2>
-
         <hr class="uk-list-divider uk-divider-icon" />
 
         <div id="enunciadoEditor"></div>
         <input type="hidden" asp-for="Enunciado" />
 
-        <hr class="uk-list-divider uk-divider-icon" />
-
-        <section class="uk-margin-large-top uk-margin-bottom alternativas">
-            <h3 class="uk-text-center">Alternativas</h3>
-            <div class="uk-grid selectCheckboxAsRadio" uk-grid>
-                @for (var i = 0; i < @qtdAlternativas; i++)
-                {
-                    <div class="uk-width-1-2@s">
-                        <div class="uk-flex uk-flex-between">
-                            <p class="uk-text-center">@(i + 1)º Alternativa</p>
-                            <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[i].Correta" onchange="selectCheckboxAsRadio(@i)"></label>
-                        </div>
-                        <div id="alternativa@(i)Editor"></div>
-                        <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
-                        <input type="hidden" asp-for="Alternativas[i].Id" class="uk-input" />
-                    </div>
-                }
-            </div>
-        </section>
-
-        @*<form method="post">
-                <div class="uk-column-1-@disciplinas.Count uk-column-divider">
-                    @foreach (var disciplina in disciplinas)
+        <form asp-area="Aplicador" asp-controller="Aplicacao" asp-action="Proximo" method="post">
+            <section class="uk-margin-large-top uk-margin-bottom alternativas">
+                <h3 class="uk-text-center">Alternativas</h3>
+                <hr class="uk-list-divider uk-divider-icon" />
+                <div class="uk-grid" uk-grid>
+                    @for (var i = 0; i < @qtdAlternativas; i++)
                     {
-                        <h4 class="uk-text-center">@disciplina.Nome</h4>
-                        <dl class="uk-description-list">
-                            @foreach (var questao in Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
-                            {
-                                <dt>
-                                    <div class="uk-grid-small" uk-grid>
-                                        <div class="uk-width-expand" uk-leader>@questao.Descricao</div>
-                                        <div>A</div>
-                                    </div>
-                                </dt>
-                                <input asp-for="EscolaId" class="uk-select" type="hidden" />
-                            }
-                        </dl>
+                        <ol type="A" class="uk-width-1-2@s">
+                            <li class="uk-flex uk-flex-between uk-flex-middle">
+                                <input type="radio" asp-for="AlternativaId" value="@Model.Alternativas[i].Id" />
+                                <div id="alternativa@(i)Editor"></div>
+                            </li>
+                            <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
+                            <input type="hidden" asp-for="Alternativas[i].Id" class="uk-input" />
+                        </ol>
                     }
                 </div>
+            </section>
 
-                <div class="uk-flex uk-flex-around uk-margin-large-top">
-                    <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
-                    <button class="uk-button uk-button-primary">Confirmar</button>
-                </div>
-            </form>*@
+            <section class="uk-flex uk-flex-around uk-margin-large-top">
+                <a class="uk-button uk-button-default" asp-controller="Dashboard" asp-action="Index">Voltar</a>
+                <button class="uk-button uk-button-primary">Confirmar</button>
+            </section>
+
+            <input type="hidden" asp-for="AlunoId" class="uk-input" />
+            <input type="hidden" asp-for="QuestaoId" class="uk-input" />
+            <input type="hidden" asp-for="AvaliacaoId" class="uk-input" />
+        </form>
     </div>
 </main>
 
@@ -94,7 +79,7 @@
         const alternativas = [];
 
         for (var i = 0; i < @qtdAlternativas; i++) {
-            alternativas.push(createEmptyQuill(`#alternativa${i}Editor`));
+            alternativas.push(createEmptyQuill(`#alternativa${i}Editor`, true));
             bindDeltaToInput(`#Alternativas_${i}__Descricao`, alternativas[i]);
         }
     </script>

@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Api.Controllers
@@ -38,10 +38,7 @@ namespace SAED.Web.Areas.Api.Controllers
         [Authorize(Permissions.Disciplinas.View)]
         public async Task<ActionResult<IEnumerable<Disciplina>>> Get(int id)
         {
-            var disciplinas = await _context.Disciplinas
-                .AsNoTracking()
-                .Where(x => x.Id == id)
-                .ToListAsync();
+            var disciplinas = await _context.Disciplinas.AsNoTracking().Where(x => x.Id == id).ToListAsync();
 
             if (disciplinas is null)
             {

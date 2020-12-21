@@ -12,6 +12,14 @@
         #enunciadoEditor { height: 170px; }
 
         .alternativas .ql-container { height: 45px; }
+
+        .checkbox-habilitada {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            margin-right: 5px;
+
+            transform: scale(1.5);
+        }
     </style>
 }
 
@@ -22,7 +30,7 @@
             <span class="uk-card-title uk-text-uppercase uk-text-center">Adicionar Questão</span>
             <span class="uk-margin-small-left uk-margin-small-right">|</span>
             <span class="uk-text-center">
-                <input class="uk-checkbox checkbox-habilitada" type="checkbox" asp-for="Habilitada" style="height: 22px; width: 22px;" onclick="changeQuestaoHabilitada()"/>
+                <input class="uk-checkbox checkbox-habilitada" type="checkbox" asp-for="Habilitada" onclick="changeQuestaoHabilitada()"/>
                 <label asp-for="Habilitada" class="uk-form-label"></label>
             </span>
         </div>

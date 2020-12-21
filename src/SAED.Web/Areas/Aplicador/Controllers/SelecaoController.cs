@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,7 @@ using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Aplicador.ViewModels;
 using SAED.Web.Extensions;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Aplicador.Controllers
 {

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
@@ -8,10 +6,13 @@ using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Aplicador.ViewModels;
 using SAED.Web.Extensions;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Aplicador.Controllers
 {
     [Area(AuthorizationConstants.Areas.Aplicador)]
+    [Route("[controller]")]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,7 +26,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         public async Task<IActionResult> Index()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
-            
+
             var questoes = await _context.Questoes
                 .AsNoTracking()
                 .Include(x => x.Descritor)
@@ -34,7 +35,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 .Include(x => x.Alternativas)
                 .Where(x => x.Avaliacoes.Any(y => y.Id == avaliacao.Id))
                 .ToListAsync();
-            
+
             foreach (var questao in questoes)
             {
                 questao.Descritor.Questoes = null;
@@ -46,7 +47,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                     alternativa.Questao = null;
                 }
             }
-            
+
             HttpContext.Session.Set(SessionConstants.Questoes, questoes);
 
             var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);

@@ -32,8 +32,8 @@ function createTinyQuill(selector) {
     return new Quill(selector, { theme: "snow" });
 }
 
-function createEmptyQuill(selector) {
-    return new Quill(selector, { theme: "snow", modules: { toolbar: false } });
+function createEmptyQuill(selector, readOnly = false) {
+    return new Quill(selector, { theme: "snow", modules: { toolbar: false }, readOnly });
 }
 
 function bindDeltaToInput(selector, quill) {

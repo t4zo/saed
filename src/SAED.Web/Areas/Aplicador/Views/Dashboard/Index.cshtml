@@ -18,7 +18,7 @@
     <div class="uk-card uk-card-default uk-card-body">
         <h2 class="uk-card-title uk-text-center">@Model.Escola.Nome</h2>
 
-        <hr class="uk-list-divider uk-divider-icon" />
+        <hr class="uk-list-divider uk-divider-icon"/>
 
         <div class="uk-grid" uk-grid>
             <div class="uk-width-1-3">
@@ -47,21 +47,22 @@
             </div>
         </div>
 
-        <hr class="uk-list-divider" />
+        <hr class="uk-list-divider"/>
 
         <div class="uk-flex uk-flex-around uk-flex-middle uk-flex-wrap">
             @foreach (var disciplina in disciplinas)
             {
-                <a 
-                    asp-controller="Aplicacao" 
-                    asp-route-questaoId="@Model.Questoes.FirstOrDefault(x => x.Descritor.Tema.DisciplinaId == disciplina.Id).Id" 
+                <a
+                    asp-area="Aplicador"
+                    asp-controller="Aplicacao"
+                    asp-route-questaoId="@Model.Questoes.FirstOrDefault(x => x.Descritor.Tema.DisciplinaId == disciplina.Id).Id"
                     class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">
                     @disciplina.Nome
                 </a>
             }
         </div>
 
-        <hr class="uk-list-divider uk-divider-icon" />
+        <hr class="uk-list-divider uk-divider-icon"/>
 
         <form method="post">
             <div class="uk-column-1-@disciplinas.Count uk-column-divider">
@@ -77,7 +78,7 @@
                                     <div>A</div>
                                 </div>
                             </dt>
-                            <input asp-for="EscolaId" class="uk-select" type="hidden" />
+                            <input asp-for="EscolaId" class="uk-select" type="hidden"/>
                         }
                     </dl>
                 }

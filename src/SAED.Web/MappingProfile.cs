@@ -9,6 +9,7 @@ namespace SAED.Web
         public MappingProfile()
         {
             CreateMap<Questao, QuestaoViewModel>().ReverseMap();
+            CreateMap<Questao, RespostaQuestaoViewModel>().ReverseMap();
         }
     }
 }
