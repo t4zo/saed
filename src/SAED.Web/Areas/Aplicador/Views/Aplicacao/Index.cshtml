@@ -28,9 +28,13 @@
             min-height: 170px;
         }
 
-        #alternativa0Editor:hover {
+        .lbl-alternativa:hover {
             cursor: pointer;
-        } 
+        }
+
+        .ql-editor *:hover {
+            cursor: pointer;
+        }
 
         input[type="radio"] {
             -ms-transform: scale(1.5); /* IE 9 */
@@ -59,7 +63,7 @@
                         {
                             <div class="uk-width-1-2@s">
                                 <li>
-                                    <label class="uk-flex uk-flex-between uk-flex-middle">
+                                    <label class="uk-flex uk-flex-between uk-flex-middle lbl-alternativa">
                                         <input type="radio" class="alternativa" asp-for="AlternativaEscolhidaId" value="@Model.Questao.Alternativas[i].Id" />
                                         <div id="alternativa@(i)Editor"></div>
                                     </label>
