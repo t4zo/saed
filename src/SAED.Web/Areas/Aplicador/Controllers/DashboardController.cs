@@ -56,7 +56,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             dashboardAplicadorViewModel.Questoes = questoes;
 
-            dashboardAplicadorViewModel.RespostasAlunoViewModel = HttpContext.Session.Get<RespostasAlunoViewModel>(SessionConstants.RespostasAluno);
+            dashboardAplicadorViewModel.RespostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
 
             return View(dashboardAplicadorViewModel);
         }

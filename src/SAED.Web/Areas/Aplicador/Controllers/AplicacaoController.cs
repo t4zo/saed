@@ -47,7 +47,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             questao.Descritor.Tema.Descritores = null;
             questao.Descritor.Tema.Disciplina.Temas = null;
 
-            var respostaQuestaoViewModel = _mapper.Map<RespostaQuestaoViewModel>(questao);
+            var respostaQuestaoViewModel = _mapper.Map<RespostaViewModel>(questao);
             respostaQuestaoViewModel.AvaliacaoId = avaliacao.Id;
             respostaQuestaoViewModel.AlunoId = aluno.Id;
             respostaQuestaoViewModel.Questao = questao;
@@ -56,7 +56,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         }
 
         [HttpPost]
-        public IActionResult Proximo(RespostaQuestaoViewModel respostaQuestaoViewModel)
+        public IActionResult Proximo(RespostaViewModel respostaViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -64,18 +64,22 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             }
 
             var questoes = HttpContext.Session.Get<List<Questao>>(SessionConstants.Questoes);
-            var questao = questoes.First(x => x.Id == respostaQuestaoViewModel.QuestaoId);
+            var questao = questoes.First(x => x.Id == respostaViewModel.QuestaoId);
             var disciplina = questao.Descritor.Tema.Disciplina;
             
-            var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
-            questaoViewModel.AlternativaEscolhida = questao.Alternativas.First(x => x.Id == respostaQuestaoViewModel.AlternativaId);
+            var respostas = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
+            var resposta = _mapper.Map<RespostaViewModel>(questao);
+            
+            resposta.QuestaoId = questao.Id;
+            resposta.AlternativaEscolhida = questao.Alternativas.First(x => x.Id == respostaViewModel.AlternativaEscolhidaId);
 
             var questoesPendentes = HttpContext.Session.Get<List<Questao>>(SessionConstants.QuestoesPendentes);
             var questoesPendentesDisciplina = questoes
                 .Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id)
                 .ToList();
-            var ultimaQuestaoDisciplina = questoesPendentesDisciplina.Last().Id == respostaQuestaoViewModel.QuestaoId;
-
+            
+            var ultimaQuestaoDisciplina = questoesPendentesDisciplina.Last().Id == respostaViewModel.QuestaoId;
+            
             if (questoesPendentes is null)
             {
                 questoesPendentes = questoesPendentesDisciplina.Where(x => x.Id != questao.Id).ToList();
@@ -88,33 +92,28 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 }
             }
 
-            var respostasAluno = HttpContext.Session.Get<RespostasAlunoViewModel>(SessionConstants.RespostasAluno);
-            
-            if (respostasAluno is null)
+            if (respostas is null)
             {
-                respostasAluno = new RespostasAlunoViewModel
+                respostas = new RespostasViewModel
                 {
-                    AvaliacaoId = respostaQuestaoViewModel.AvaliacaoId,
-                    AlunoId = respostaQuestaoViewModel.AlunoId,
-                    Questoes = new List<QuestaoViewModel> { questaoViewModel }
+                    AvaliacaoId = respostaViewModel.AvaliacaoId,
+                    AlunoId = respostaViewModel.AlunoId,
+                    Respostas = new List<RespostaViewModel> { resposta }
                 };
             }
             else
             {
-                if (respostasAluno.Questoes.Any(x => x.Id == questaoViewModel.Id))
+                if (respostas.Respostas.Any(x => x.QuestaoId == resposta.QuestaoId))
                 {
-                    respostasAluno.Questoes.Remove(questaoViewModel);
+                    respostas.Respostas.Remove(resposta);
                 }
                 
-                respostasAluno.Questoes.Add(questaoViewModel);
+                respostas.Respostas.Add(resposta);
             }
 
-
             HttpContext.Session.Set(SessionConstants.QuestoesPendentes, questoesPendentes);
-            HttpContext.Session.Set(SessionConstants.RespostasAluno, respostasAluno);
+            HttpContext.Session.Set(SessionConstants.RespostasAluno, respostas);
 
-            ViewBag.UltimaQuestaoDisciplina = ultimaQuestaoDisciplina;
-            
             if (ultimaQuestaoDisciplina)
             {
                 return RedirectToAction(nameof(Index), "Dashboard");

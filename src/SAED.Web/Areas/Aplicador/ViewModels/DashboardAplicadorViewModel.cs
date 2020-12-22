@@ -14,9 +14,8 @@ namespace SAED.Web.Areas.Aplicador.ViewModels
         public Turma Turma { get; set; }
         public int AlunoId { get; set; }
         public Aluno Aluno { get; set; }
-
-        public ICollection<Questao> Questoes { get; set; }
-        public ICollection<Questao> QuestoesRespondidas { get; set; }
-        public RespostasAlunoViewModel RespostasAlunoViewModel { get; set; }
+        
+        public IList<Questao> Questoes { get; set; }
+        public RespostasViewModel RespostasViewModel { get; set; }
     }
 }

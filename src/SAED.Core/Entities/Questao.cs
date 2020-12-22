@@ -15,8 +15,8 @@ namespace SAED.Core.Entities
         public string Descricao { get; set; }
         public string Enunciado { get; set; }
         public bool Habilitada { get; set; }
-        public ICollection<Avaliacao> Avaliacoes { get; set; }
-        public ICollection<Alternativa> Alternativas { get; set; }
+        public IList<Avaliacao> Avaliacoes { get; set; }
+        public IList<Alternativa> Alternativas { get; set; }
 
         public bool Equals(Questao other)
         {

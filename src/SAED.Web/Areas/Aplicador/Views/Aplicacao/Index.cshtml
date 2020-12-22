@@ -1,8 +1,8 @@
 ﻿@using SAED.Web.Extensions
-@model RespostaQuestaoViewModel
+@model SAED.Web.Areas.Aplicador.ViewModels.RespostaViewModel
 
 @{
-    var qtdAlternativas = Model.Alternativas.Count;
+    var qtdAlternativas = Model.Questao.Alternativas.Count;
     
     var questoes = Context.Session.Get<List<Questao>>(SessionConstants.Questoes);
     var disciplina = Model.Questao.Descritor.Tema.Disciplina;
@@ -43,11 +43,11 @@
 
 <main class="uk-height-viewport uk-flex uk-flex-1 uk-flex-center uk-flex-middle">
     <div class="uk-card uk-card-default uk-card-body">
-        <h2 class="uk-card-title uk-text-center">Item - @Model.Item</h2>
+        <h2 class="uk-card-title uk-text-center">Item - @Model.Questao.Item</h2>
         <hr class="uk-list-divider uk-divider-icon" />
 
         <div id="enunciadoEditor"></div>
-        <input type="hidden" asp-for="Enunciado" />
+        <input type="hidden" asp-for="Questao.Enunciado" class="enunciado" />
 
         <form asp-area="Aplicador" asp-controller="Aplicacao" asp-action="Proximo" method="post">
             <section class="uk-margin-large-top uk-margin-bottom alternativas">
@@ -60,12 +60,12 @@
                             <div class="uk-width-1-2@s">
                                 <li>
                                     <label class="uk-flex uk-flex-between uk-flex-middle">
-                                        <input type="radio" asp-for="AlternativaId" value="@Model.Alternativas[i].Id" />
+                                        <input type="radio" class="alternativa" asp-for="AlternativaEscolhidaId" value="@Model.Questao.Alternativas[i].Id" />
                                         <div id="alternativa@(i)Editor"></div>
                                     </label>
                                 </li>
-                                <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
-                                <input type="hidden" asp-for="Alternativas[i].Id" class="uk-input" />
+                                <input type="hidden" asp-for="Questao.Alternativas[i].Descricao" class="uk-input" />
+                                <input type="hidden" asp-for="Questao.Alternativas[i].Id" class="uk-input" />
                             </div>
                         }
                     </div>
@@ -104,7 +104,7 @@
 
         function initializeEnunciado() {
             const quillEnunciadoEditor = createEmptyQuill("#enunciadoEditor");
-            bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
+            bindDeltaToInput(".enunciado", quillEnunciadoEditor);
         }
 
         function initializeAlternativas() {
@@ -112,13 +112,13 @@
 
             for (var i = 0; i < @qtdAlternativas; i++) {
                 alternativas.push(createEmptyQuill(`#alternativa${i}Editor`, true));
-                bindDeltaToInput(`#Alternativas_${i}__Descricao`, alternativas[i]);
+                bindDeltaToInput(`#Questao_Alternativas_${i}__Descricao`, alternativas[i]);
             }
         }
 
         function validateConfirmButton() {
             const btn = document.querySelector(".btn-next");
-            const alternativas = document.querySelectorAll('#AlternativaId');
+            const alternativas = document.querySelectorAll('.alternativa');
             alternativas.forEach(alternativa => alternativa.addEventListener('change',
                 () => {
                     btn.removeAttribute('disabled');

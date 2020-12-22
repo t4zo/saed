@@ -64,7 +64,7 @@
         </div>
 
         <hr class="uk-list-divider uk-divider-icon" />
-        @if (Model.RespostasAlunoViewModel?.Questoes is not null)
+        @if (Model.RespostasViewModel?.Respostas is not null)
         {
             <form method="post">
                 <div class="uk-column-1-@disciplinas.Count uk-column-divider">
@@ -77,7 +77,7 @@
                                 <dt>
                                     <div class="uk-grid-small" uk-grid>
                                         <div class="uk-width-expand" uk-leader>@questao.Item</div>
-                                        @if (Model.RespostasAlunoViewModel?.Questoes?.FirstOrDefault(x => x.Id == questao.Id)?.AlternativaEscolhida is null)
+                                        @if (Model.RespostasViewModel?.Respostas?.FirstOrDefault(x => x.QuestaoId == questao.Id)?.AlternativaEscolhida is null)
                                         {
                                             <div>-</div>
                                         }
