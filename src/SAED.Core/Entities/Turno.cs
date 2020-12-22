@@ -3,7 +3,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Turno : IBaseEntity
+    public class Turno : IEntity
     {
         public int Id { get; set; }
         public string Nome { get; set; }

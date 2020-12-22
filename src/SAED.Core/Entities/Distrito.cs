@@ -4,7 +4,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Distrito : IBaseEntity, IEquatable<Distrito>
+    public class Distrito : IEntity, IEquatable<Distrito>
     {
         public int Id { get; set; }
         public string Nome { get; set; }
@@ -16,7 +16,7 @@ namespace SAED.Core.Entities
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id && Nome == other.Nome && Zona == other.Zona && Distancia == other.Distancia;
+            return Id == other.Id;
         }
 
         public override bool Equals(object obj)
@@ -29,7 +29,7 @@ namespace SAED.Core.Entities
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nome, (int) Zona, Distancia);
+            return Id;
         }
     }
 

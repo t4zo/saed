@@ -4,7 +4,7 @@ using System;
 
 namespace SAED.Core.Entities
 {
-    public class Questao : IBaseEntity, IEquatable<Questao>
+    public class Questao : IEntity, IEquatable<Questao>
     {
         public int Id { get; set; }
         public int DescritorId { get; set; }
@@ -18,11 +18,12 @@ namespace SAED.Core.Entities
         public IList<Avaliacao> Avaliacoes { get; set; }
         public IList<Alternativa> Alternativas { get; set; }
 
+
         public bool Equals(Questao other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id && DescritorId == other.DescritorId && EtapaId == other.EtapaId && Item == other.Item && Descricao == other.Descricao && Enunciado == other.Enunciado && Habilitada == other.Habilitada;
+            return Id == other.Id;
         }
 
         public override bool Equals(object obj)
@@ -35,7 +36,7 @@ namespace SAED.Core.Entities
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, DescritorId, EtapaId, Item, Descricao, Enunciado, Habilitada);
+            return Id;
         }
     }
 }

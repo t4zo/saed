@@ -3,7 +3,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Forma : IBaseEntity
+    public class Forma : IEntity
     {
         public int Id { get; set; }
         public string Nome { get; set; }

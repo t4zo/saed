@@ -4,7 +4,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Web.Areas.Administrador.ViewModels
 {
-    public class QuestaoViewModel : IBaseEntity
+    public class QuestaoViewModel : IEntity
     {
         public int Id { get; set; }
         public int DescritorId { get; set; }

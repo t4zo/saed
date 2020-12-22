@@ -3,7 +3,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Escola : IBaseEntity
+    public class Escola : IEntity
     {
         public int Id { get; set; }
         public int? Inep { get; set; }

@@ -4,7 +4,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Aluno : IBaseEntity
+    public class Aluno : IEntity
     {
         public int Id { get; set; }
         public int TurmaId { get; set; }

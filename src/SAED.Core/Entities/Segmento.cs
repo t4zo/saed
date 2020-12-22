@@ -3,7 +3,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Segmento : IBaseEntity
+    public class Segmento : IEntity
     {
         public int Id { get; set; }
         public string Nome { get; set; }

@@ -2,7 +2,7 @@
 
 namespace SAED.Core.Entities
 {
-    public class Alternativa : IBaseEntity
+    public class Alternativa : IEntity
     {
         public int Id { get; set; }
         public string Descricao { get; set; }

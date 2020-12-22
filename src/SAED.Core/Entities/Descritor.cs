@@ -4,7 +4,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Descritor : IBaseEntity, IEquatable<Descritor>
+    public class Descritor : IEntity, IEquatable<Descritor>
     {
         public int Id { get; set; }
         public int TemaId { get; set; }
@@ -12,11 +12,12 @@ namespace SAED.Core.Entities
         public string Nome { get; set; }
         public ICollection<Questao> Questoes { get; set; }
 
+
         public bool Equals(Descritor other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id && TemaId == other.TemaId && Nome == other.Nome;
+            return Id == other.Id;
         }
 
         public override bool Equals(object obj)
@@ -29,7 +30,7 @@ namespace SAED.Core.Entities
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, TemaId, Nome);
+            return Id;
         }
     }
 }

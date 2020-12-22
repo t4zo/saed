@@ -4,7 +4,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Etapa : IBaseEntity, IEquatable<Etapa>
+    public class Etapa : IEntity, IEquatable<Etapa>
     {
         public int Id { get; set; }
         public string Nome { get; set; }
@@ -15,11 +15,12 @@ namespace SAED.Core.Entities
         public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
         public ICollection<Questao> Questoes { get; set; }
 
+
         public bool Equals(Etapa other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id && Nome == other.Nome && SegmentoId == other.SegmentoId && Normativa == other.Normativa;
+            return Id == other.Id;
         }
 
         public override bool Equals(object obj)
@@ -32,7 +33,7 @@ namespace SAED.Core.Entities
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nome, SegmentoId, Normativa);
+            return Id;
         }
     }
 }

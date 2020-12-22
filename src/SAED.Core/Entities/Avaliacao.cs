@@ -4,7 +4,7 @@ using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Avaliacao : IBaseEntity
+    public class Avaliacao : IEntity
     {
         public int Id { get; set; }
         public string Codigo { get; set; } = "";
