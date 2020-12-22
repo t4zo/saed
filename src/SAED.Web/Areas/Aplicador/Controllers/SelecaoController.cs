@@ -25,6 +25,9 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         [Authorize(AuthorizationConstants.Permissions.Selecao.View)]
         public IActionResult Index()
         {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
+            HttpContext.Session.Clear();
+            HttpContext.Session.Set(SessionConstants.Avaliacao, avaliacao);
             ViewData["EscolaId"] = new SelectList(_context.Escolas, "Id", "Nome");
             return View();
         }

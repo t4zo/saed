@@ -1,7 +1,17 @@
-﻿@model RespostaQuestaoViewModel
+﻿@using SAED.Web.Extensions
+@model RespostaQuestaoViewModel
 
 @{
     var qtdAlternativas = Model.Alternativas.Count;
+    
+    var questoes = Context.Session.Get<List<Questao>>(SessionConstants.Questoes);
+    var disciplina = Model.Questao.Descritor.Tema.Disciplina;
+
+    var questoesPendentesDisciplina = questoes
+        .Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id)
+        .ToList();
+    
+    var ultimaQuestaoDisciplina = questoesPendentesDisciplina.Last().Id == Model.Questao.Id;
 }
 
 
@@ -17,6 +27,10 @@
         #enunciadoEditor {
             min-height: 170px;
         }
+
+        #alternativa0Editor:hover {
+            cursor: pointer;
+        } 
 
         input[type="radio"] {
             -ms-transform: scale(1.5); /* IE 9 */
@@ -39,24 +53,35 @@
             <section class="uk-margin-large-top uk-margin-bottom alternativas">
                 <h3 class="uk-text-center">Alternativas</h3>
                 <hr class="uk-list-divider uk-divider-icon" />
-                <div class="uk-grid" uk-grid>
-                    @for (var i = 0; i < @qtdAlternativas; i++)
-                    {
-                        <ol type="A" class="uk-width-1-2@s">
-                            <li class="uk-flex uk-flex-between uk-flex-middle">
-                                <input type="radio" asp-for="AlternativaId" value="@Model.Alternativas[i].Id" />
-                                <div id="alternativa@(i)Editor"></div>
-                            </li>
-                            <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
-                            <input type="hidden" asp-for="Alternativas[i].Id" class="uk-input" />
-                        </ol>
-                    }
-                </div>
+                <ol type="A">
+                    <div class="uk-grid" uk-grid>
+                        @for (var i = 0; i < @qtdAlternativas; i++)
+                        {
+                            <div class="uk-width-1-2@s">
+                                <li>
+                                    <label class="uk-flex uk-flex-between uk-flex-middle">
+                                        <input type="radio" asp-for="AlternativaId" value="@Model.Alternativas[i].Id" />
+                                        <div id="alternativa@(i)Editor"></div>
+                                    </label>
+                                </li>
+                                <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
+                                <input type="hidden" asp-for="Alternativas[i].Id" class="uk-input" />
+                            </div>
+                        }
+                    </div>
+                </ol>
             </section>
 
             <section class="uk-flex uk-flex-around uk-margin-large-top">
                 <a class="uk-button uk-button-default" asp-controller="Dashboard" asp-action="Index">Voltar</a>
-                <button class="uk-button uk-button-primary">Confirmar</button>
+                @if (ultimaQuestaoDisciplina)
+                {
+                    <button class="uk-button uk-button-danger btn-next" disabled>Finalizar</button>
+                }
+                else
+                {
+                    <button class="uk-button uk-button-primary btn-next" disabled>Confirmar</button>
+                }
             </section>
 
             <input type="hidden" asp-for="AlunoId" class="uk-input" />
@@ -73,14 +98,31 @@
     <script type="text/javascript" src="~/scripts/selectCheckboxAsRadio.js"></script>
 
     <script defer>
-        const quillEnunciadoEditor = createEmptyQuill("#enunciadoEditor");
-        bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
+        initializeEnunciado();
+        initializeAlternativas();
+        validateConfirmButton();
 
-        const alternativas = [];
+        function initializeEnunciado() {
+            const quillEnunciadoEditor = createEmptyQuill("#enunciadoEditor");
+            bindDeltaToInput("#Enunciado", quillEnunciadoEditor);
+        }
 
-        for (var i = 0; i < @qtdAlternativas; i++) {
-            alternativas.push(createEmptyQuill(`#alternativa${i}Editor`, true));
-            bindDeltaToInput(`#Alternativas_${i}__Descricao`, alternativas[i]);
+        function initializeAlternativas() {
+            const alternativas = [];
+
+            for (var i = 0; i < @qtdAlternativas; i++) {
+                alternativas.push(createEmptyQuill(`#alternativa${i}Editor`, true));
+                bindDeltaToInput(`#Alternativas_${i}__Descricao`, alternativas[i]);
+            }
+        }
+
+        function validateConfirmButton() {
+            const btn = document.querySelector(".btn-next");
+            const alternativas = document.querySelectorAll('#AlternativaId');
+            alternativas.forEach(alternativa => alternativa.addEventListener('change',
+                () => {
+                    btn.removeAttribute('disabled');
+                }));
         }
     </script>
 }

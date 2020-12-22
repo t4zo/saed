@@ -16,6 +16,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels
         public string Enunciado { get; set; }
         public bool Habilitada { get; set; }
         public IList<Alternativa> Alternativas { get; set; }
+        public Alternativa AlternativaEscolhida { get; set; }
         public ICollection<Avaliacao> Avaliacoes { get; set; }
     }
 }

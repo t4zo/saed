@@ -1,7 +1,9 @@
-﻿@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
+﻿@using SAED.Web.Extensions
+@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
 
 @{
     var disciplinas = Model.Questoes.Select(x => x.Descritor.Tema.Disciplina).Distinct().ToList();
+    var stateHasError = false;
 }
 
 
@@ -18,7 +20,7 @@
     <div class="uk-card uk-card-default uk-card-body">
         <h2 class="uk-card-title uk-text-center">@Model.Escola.Nome</h2>
 
-        <hr class="uk-list-divider uk-divider-icon"/>
+        <hr class="uk-list-divider uk-divider-icon" />
 
         <div class="uk-grid" uk-grid>
             <div class="uk-width-1-3">
@@ -47,47 +49,72 @@
             </div>
         </div>
 
-        <hr class="uk-list-divider"/>
+        <hr class="uk-list-divider" />
 
         <div class="uk-flex uk-flex-around uk-flex-middle uk-flex-wrap">
             @foreach (var disciplina in disciplinas)
             {
-                <a
-                    asp-area="Aplicador"
-                    asp-controller="Aplicacao"
-                    asp-route-questaoId="@Model.Questoes.FirstOrDefault(x => x.Descritor.Tema.DisciplinaId == disciplina.Id).Id"
-                    class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">
+                <a asp-area="Aplicador"
+                   asp-controller="Aplicacao"
+                   asp-route-questaoId="@Model.Questoes.FirstOrDefault(x => x.Descritor.Tema.DisciplinaId == disciplina.Id).Id"
+                   class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">
                     @disciplina.Nome
                 </a>
             }
         </div>
 
-        <hr class="uk-list-divider uk-divider-icon"/>
+        <hr class="uk-list-divider uk-divider-icon" />
+        @if (Model.RespostasAlunoViewModel?.Questoes is not null)
+        {
+            <form method="post">
+                <div class="uk-column-1-@disciplinas.Count uk-column-divider">
+                    @foreach (var disciplina in disciplinas)
+                    {
+                        <h4 class="uk-text-center">@disciplina.Nome</h4>
+                        <dl class="uk-description-list">
+                            @foreach (var questao in Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
+                            {
+                                <dt>
+                                    <div class="uk-grid-small" uk-grid>
+                                        <div class="uk-width-expand" uk-leader>@questao.Item</div>
+                                        @if (Model.RespostasAlunoViewModel?.Questoes?.FirstOrDefault(x => x.Id == questao.Id)?.AlternativaEscolhida is null)
+                                        {
+                                            <div>-</div>
+                                        }
+                                        else
+                                        {
+                                            <div>Ok</div>
+                                        }
+                                    </div>
+                                </dt>
+                                <input asp-for="EscolaId" class="uk-select" type="hidden" />
+                            }
+                        </dl>
+                    }
+                </div>
 
-        <form method="post">
-            <div class="uk-column-1-@disciplinas.Count uk-column-divider">
-                @foreach (var disciplina in disciplinas)
-                {
-                    <h4 class="uk-text-center">@disciplina.Nome</h4>
-                    <dl class="uk-description-list">
-                        @foreach (var questao in Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
-                        {
-                            <dt>
-                                <div class="uk-grid-small" uk-grid>
-                                    <div class="uk-width-expand" uk-leader>@questao.Descricao</div>
-                                    <div>A</div>
-                                </div>
-                            </dt>
-                            <input asp-for="EscolaId" class="uk-select" type="hidden"/>
-                        }
-                    </dl>
-                }
-            </div>
-
-            <div class="uk-flex uk-flex-around uk-margin-large-top">
-                <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
-                <button class="uk-button uk-button-primary">Confirmar</button>
-            </div>
-        </form>
+                <div class="uk-flex uk-flex-around uk-margin-large-top">
+                    <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
+                    <button class="uk-button uk-button-primary btn-confirm">Confirmar</button>
+                </div>
+            </form>
+        }
     </div>
 </main>
+
+@*@section Scripts
+{
+    <script>
+        validateConfirmButton();
+
+        function validateConfirmButton() {
+            const btn = document.querySelector(".btn-confirm");
+            const select = document.querySelectorAll('.uk-select#AlunoId');
+            select.addEventListener('change',
+                () => {
+                    btn.removeAttribute('disabled');
+                });
+        }
+    </script>
+}*@
+ 

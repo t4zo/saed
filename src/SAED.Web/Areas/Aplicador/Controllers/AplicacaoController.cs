@@ -50,6 +50,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             var respostaQuestaoViewModel = _mapper.Map<RespostaQuestaoViewModel>(questao);
             respostaQuestaoViewModel.AvaliacaoId = avaliacao.Id;
             respostaQuestaoViewModel.AlunoId = aluno.Id;
+            respostaQuestaoViewModel.Questao = questao;
 
             return View(respostaQuestaoViewModel);
         }
@@ -63,39 +64,63 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             }
 
             var questoes = HttpContext.Session.Get<List<Questao>>(SessionConstants.Questoes);
+            var questao = questoes.First(x => x.Id == respostaQuestaoViewModel.QuestaoId);
+            var disciplina = questao.Descritor.Tema.Disciplina;
+            
+            var questaoViewModel = _mapper.Map<QuestaoViewModel>(questao);
+            questaoViewModel.AlternativaEscolhida = questao.Alternativas.First(x => x.Id == respostaQuestaoViewModel.AlternativaId);
 
-            var questoesRespondidas = HttpContext.Session.Get<List<int>>(SessionConstants.QuestoesRespondidas);
-            if (questoesRespondidas is null)
+            var questoesPendentes = HttpContext.Session.Get<List<Questao>>(SessionConstants.QuestoesPendentes);
+            var questoesPendentesDisciplina = questoes
+                .Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id)
+                .ToList();
+            var ultimaQuestaoDisciplina = questoesPendentesDisciplina.Last().Id == respostaQuestaoViewModel.QuestaoId;
+
+            if (questoesPendentes is null)
             {
-                questoesRespondidas = new List<int> {respostaQuestaoViewModel.QuestaoId};
+                questoesPendentes = questoesPendentesDisciplina.Where(x => x.Id != questao.Id).ToList();
             }
             else
             {
-                questoesRespondidas.Add(respostaQuestaoViewModel.QuestaoId);
+                if (questoesPendentes.Any(x => x.Id == questao.Id))
+                {
+                    questoesPendentes.Remove(questao);
+                }
             }
 
             var respostasAluno = HttpContext.Session.Get<RespostasAlunoViewModel>(SessionConstants.RespostasAluno);
+            
             if (respostasAluno is null)
             {
                 respostasAluno = new RespostasAlunoViewModel
                 {
                     AvaliacaoId = respostaQuestaoViewModel.AvaliacaoId,
                     AlunoId = respostaQuestaoViewModel.AlunoId,
-                    AlternativasId = new List<int> {respostaQuestaoViewModel.AlternativaId}
+                    Questoes = new List<QuestaoViewModel> { questaoViewModel }
                 };
             }
             else
             {
-                respostasAluno.AlternativasId.Add(respostaQuestaoViewModel.AlternativaId);
+                if (respostasAluno.Questoes.Any(x => x.Id == questaoViewModel.Id))
+                {
+                    respostasAluno.Questoes.Remove(questaoViewModel);
+                }
+                
+                respostasAluno.Questoes.Add(questaoViewModel);
             }
 
-            var questoesPendentes = questoes.Where(x => questoesRespondidas.Any(questaoId => x.Id != questaoId)).Select(x => x.Id).ToList();
 
             HttpContext.Session.Set(SessionConstants.QuestoesPendentes, questoesPendentes);
-            HttpContext.Session.Set(SessionConstants.QuestoesRespondidas, questoesRespondidas);
             HttpContext.Session.Set(SessionConstants.RespostasAluno, respostasAluno);
 
-            return RedirectToAction(nameof(Index), new {questaoId = questoesPendentes.First()});
+            ViewBag.UltimaQuestaoDisciplina = ultimaQuestaoDisciplina;
+            
+            if (ultimaQuestaoDisciplina)
+            {
+                return RedirectToAction(nameof(Index), "Dashboard");
+            }
+            
+            return RedirectToAction(nameof(Index), new {questaoId = questoesPendentes.First().Id});
         }
     }
 }

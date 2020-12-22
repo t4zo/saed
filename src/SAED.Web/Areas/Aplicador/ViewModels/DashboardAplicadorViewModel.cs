@@ -1,4 +1,5 @@
 ﻿using SAED.Core.Entities;
+using SAED.Web.Areas.Administrador.ViewModels;
 using System.Collections.Generic;
 
 namespace SAED.Web.Areas.Aplicador.ViewModels
@@ -15,5 +16,7 @@ namespace SAED.Web.Areas.Aplicador.ViewModels
         public Aluno Aluno { get; set; }
 
         public ICollection<Questao> Questoes { get; set; }
+        public ICollection<Questao> QuestoesRespondidas { get; set; }
+        public RespostasAlunoViewModel RespostasAlunoViewModel { get; set; }
     }
 }

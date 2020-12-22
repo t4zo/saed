@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SAED.Core.Entities;
+using SAED.Web.Areas.Aplicador.ViewModels;
+using System.Collections.Generic;
 
 namespace SAED.Web.Areas.Administrador.ViewModels
 {
@@ -6,6 +8,6 @@ namespace SAED.Web.Areas.Administrador.ViewModels
     {
         public int AvaliacaoId { get; set; }
         public int AlunoId { get; set; }
-        public IList<int> AlternativasId { get; set; }
+        public IList<QuestaoViewModel> Questoes { get; set; }
     }
 }

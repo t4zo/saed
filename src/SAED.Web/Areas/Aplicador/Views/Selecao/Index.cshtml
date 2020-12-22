@@ -46,7 +46,7 @@
             </div>
             <div class="uk-flex uk-flex-center uk-margin-top">
                 <a class="uk-button uk-button-default" onclick="document.querySelector('.logout-form').submit();">Sair</a>
-                <button class="uk-button uk-button-primary uk-flex-1">Entrar</button>
+                <button class="uk-button uk-button-primary uk-flex-1 btn-confirm" disabled>Entrar</button>
             </div>
         </form>
         <form class="logout-form"
@@ -62,31 +62,47 @@
     <script>
         document.addEventListener("DOMContentLoaded",
             () => {
-                const escolaField = document.querySelector("#EscolaId");
-                const etapaField = document.querySelector("#EtapaId");
-                const turmaField = document.querySelector("#TurmaId");
-                const alunoField = document.querySelector("#AlunoId");
 
-                escolaField.addEventListener("change",
-                    () => {
-                        filterNestedFields(`@ApiConstants.BaseUrl/etapas?escolaId=${escolaField.value}`, "#EtapaId");
-                        etapaField.selectedIndex = 0;
-                        etapaField.disabled = true;
-                    });
+                addInputEventListeners();
+                validateConfirmButton();
 
-                etapaField.addEventListener("change",
-                    () => {
-                        filterNestedFields(`@ApiConstants.BaseUrl/turmas?etapaId=${etapaField.value}`, "#TurmaId");
-                        turmaField.selectedIndex = 0;
-                        turmaField.disabled = true;
-                    });
+                function addInputEventListeners() {
+                    const escolaField = document.querySelector("#EscolaId");
+                    const etapaField = document.querySelector("#EtapaId");
+                    const turmaField = document.querySelector("#TurmaId");
+                    const alunoField = document.querySelector("#AlunoId");
 
-                turmaField.addEventListener("change",
-                    () => {
-                        filterNestedFields(`@ApiConstants.BaseUrl/alunos?turmaId=${turmaField.value}`, "#AlunoId");
-                        alunoField.selectedIndex = 0;
-                        alunoField.disabled = true;
-                    });
+                    escolaField.addEventListener("change",
+                        () => {
+                            filterNestedFields(`@ApiConstants.BaseUrl/etapas?escolaId=${escolaField.value}`, "#EtapaId");
+                            etapaField.selectedIndex = 0;
+                            etapaField.disabled = true;
+                        });
+
+                    etapaField.addEventListener("change",
+                        () => {
+                            filterNestedFields(`@ApiConstants.BaseUrl/turmas?etapaId=${etapaField.value}`, "#TurmaId");
+                            turmaField.selectedIndex = 0;
+                            turmaField.disabled = true;
+                        });
+
+                    turmaField.addEventListener("change",
+                        () => {
+                            filterNestedFields(`@ApiConstants.BaseUrl/alunos?turmaId=${turmaField.value}`, "#AlunoId");
+                            alunoField.selectedIndex = 0;
+                            alunoField.disabled = true;
+                        });
+                }
+
+                function validateConfirmButton() {
+                    const btn = document.querySelector(".btn-confirm");
+                    const select = document.querySelector('.uk-select#AlunoId');
+
+                    select.addEventListener('change',
+                        () => {
+                            btn.removeAttribute('disabled');
+                        });
+                }
             });
     </script>
 }
