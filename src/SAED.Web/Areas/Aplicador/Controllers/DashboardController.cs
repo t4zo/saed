@@ -40,11 +40,11 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             foreach (var questao in questoes)
             {
-                questao.ClearReferenceLoop();
+                questao.ClearReferenceCycle();
 
                 foreach (var alternativa in questao.Alternativas)
                 {
-                    alternativa.ClearReferenceLoop();
+                    alternativa.ClearReferenceCycle();
                 }
             }
 

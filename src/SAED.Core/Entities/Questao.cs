@@ -19,7 +19,7 @@ namespace SAED.Core.Entities
         public IList<Alternativa> Alternativas { get; set; }
 
 
-        public void ClearReferenceLoop()
+        public void ClearReferenceCycle()
         {
             Descritor.Questoes = null;
             Descritor.Tema.Descritores = null;

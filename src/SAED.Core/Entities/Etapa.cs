@@ -15,7 +15,11 @@ namespace SAED.Core.Entities
         public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
         public ICollection<Questao> Questoes { get; set; }
 
-
+        public void ClearReferenceCycle()
+        {
+            Turmas = null;
+        }
+        
         public bool Equals(Etapa other)
         {
             if (ReferenceEquals(null, other)) return false;

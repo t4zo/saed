@@ -97,9 +97,10 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             }
             else
             {
-                if (respostas.Respostas.Any(x => x.QuestaoId == resposta.QuestaoId))
+                var oldResposta = respostas.Respostas.FirstOrDefault(x => x.QuestaoId == resposta.QuestaoId);
+                if (oldResposta is not null)
                 {
-                    respostas.Respostas.Remove(resposta);
+                    respostas.Respostas.Remove(oldResposta);
                 }
                 
                 respostas.Respostas.Add(resposta);

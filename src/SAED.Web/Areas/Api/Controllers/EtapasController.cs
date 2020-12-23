@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
+using SAED.Web.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -23,18 +26,22 @@ namespace SAED.Web.Areas.Api.Controllers
         [Authorize(Permissions.Selecao.View)]
         public async Task<ActionResult<IEnumerable<Etapa>>> Get(int escolaId)
         {
-            var etapas = await _context.Escolas
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
+
+            var allEtapas = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
-                .Include(x => x.Salas)
+                .Include(x => x.Etapa)
                 .ThenInclude(x => x.Turmas)
-                .ThenInclude(x => x.Etapa)
-                .Where(x => x.Id == escolaId)
-                .SelectMany(x => x.Salas.SelectMany(y => y.Turmas.Select(z => z.Etapa)))
+                .ThenInclude(x => x.Sala)
+                .Where(x => x.AvaliacaoId == avaliacao.Id)
+                .Select(x => x.Etapa)
                 .ToListAsync();
 
-            if (etapas is null)
+            var etapas = allEtapas.Distinct().ToList();
+
+            foreach (var etapa in etapas)
             {
-                return NotFound();
+                etapa.ClearReferenceCycle();
             }
 
             return Ok(JsonSerializer.Serialize(etapas));

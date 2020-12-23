@@ -84,7 +84,7 @@
                                     }
                                     else
                                     {
-                                        <div>Ok</div>
+                                        <div>@Model.RespostasViewModel.Respostas.FirstOrDefault(x => x.QuestaoId == questao.Id).AlternativaEscolhida.Descricao</div>
                                     }
                                 </dt>
                                 <input asp-for="EscolaId" class="uk-select" type="hidden" />

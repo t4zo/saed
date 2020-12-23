@@ -11,7 +11,7 @@ namespace SAED.Core.Entities
         public Questao Questao { get; set; }
         public RespostaAluno RespostaAluno { get; set; }
 
-        public void ClearReferenceLoop()
+        public void ClearReferenceCycle()
         {
             Questao = null;
         }
