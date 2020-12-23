@@ -56,7 +56,9 @@
             {
                 <a asp-area="Aplicador"
                    asp-controller="Aplicacao"
-                   asp-route-questaoId="@Model.Questoes.FirstOrDefault(x => x.Descritor.Tema.DisciplinaId == disciplina.Id).Id"
+                   asp-action="Index"
+                   asp-route-disciplinaId="@disciplina.Id"
+                   asp-route-verificacao="@Guid.NewGuid()"
                    class="uk-button uk-button-primary uk-flex-1 uk-button-large uk-margin-small-left uk-margin-small-right">
                     @disciplina.Nome
                 </a>
@@ -74,18 +76,16 @@
                         <dl class="uk-description-list">
                             @foreach (var questao in Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
                             {
-                                <dt>
-                                    <div class="uk-grid-small" uk-grid>
-                                        <div class="uk-width-expand" uk-leader>@questao.Item</div>
-                                        @if (Model.RespostasViewModel?.Respostas?.FirstOrDefault(x => x.QuestaoId == questao.Id)?.AlternativaEscolhida is null)
-                                        {
-                                            <div>-</div>
-                                        }
-                                        else
-                                        {
-                                            <div>Ok</div>
-                                        }
-                                    </div>
+                                <dt class="uk-grid-small" uk-grid>
+                                    <div class="uk-width-expand" uk-leader>@questao.Item</div>
+                                    @if (Model.RespostasViewModel?.Respostas?.FirstOrDefault(x => x.QuestaoId == questao.Id)?.AlternativaEscolhida is null)
+                                    {
+                                        <div>-</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Ok</div>
+                                    }
                                 </dt>
                                 <input asp-for="EscolaId" class="uk-select" type="hidden" />
                             }
@@ -103,18 +103,17 @@
 </main>
 
 @*@section Scripts
-{
-    <script>
-        validateConfirmButton();
+    {
+        <script>
+            validateConfirmButton();
 
-        function validateConfirmButton() {
-            const btn = document.querySelector(".btn-confirm");
-            const select = document.querySelectorAll('.uk-select#AlunoId');
-            select.addEventListener('change',
-                () => {
-                    btn.removeAttribute('disabled');
-                });
-        }
-    </script>
-}*@
- 
+            function validateConfirmButton() {
+                const btn = document.querySelector(".btn-confirm");
+                const select = document.querySelectorAll('.uk-select#AlunoId');
+                select.addEventListener('change',
+                    () => {
+                        btn.removeAttribute('disabled');
+                    });
+            }
+        </script>
+    }*@

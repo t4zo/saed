@@ -6,6 +6,7 @@ using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Areas.Aplicador.ViewModels;
 using SAED.Web.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,35 +25,35 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{questaoId}")]
-        public IActionResult Index(int questaoId)
+        [HttpGet("{disciplinaId}/{verificacao}")]
+        public IActionResult Index(int disciplinaId, string verificacao)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
             var questoes = HttpContext.Session.Get<List<Questao>>(SessionConstants.Questoes);
+            var questoesDisciplina = questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplinaId);
+            var questao = questoesDisciplina.First();
             var aluno = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno).Aluno;
 
-            if (questoes is null)
-            {
-                return BadRequest();
-            }
-
-            var questao = questoes.FirstOrDefault(x => x.Id == questaoId);
-
-            if (questao is null)
-            {
-                return BadRequest();
-            }
-
-            questao.Descritor.Questoes = null;
-            questao.Descritor.Tema.Descritores = null;
-            questao.Descritor.Tema.Disciplina.Temas = null;
-
+            HttpContext.Session.Remove(SessionConstants.QuestoesPendentesDisciplina);
+            
             var respostaQuestaoViewModel = _mapper.Map<RespostaViewModel>(questao);
-            respostaQuestaoViewModel.AvaliacaoId = avaliacao.Id;
-            respostaQuestaoViewModel.AlunoId = aluno.Id;
-            respostaQuestaoViewModel.Questao = questao;
+            respostaQuestaoViewModel.Populate(avaliacao.Id, aluno.Id, questao);
 
             return View(respostaQuestaoViewModel);
+        }
+        
+        [HttpGet("{questaoId}")]
+        public IActionResult Proximo(int questaoId)
+        {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
+            var questoes = HttpContext.Session.Get<List<Questao>>(SessionConstants.Questoes);
+            var questao = questoes.First(x => x.Id == questaoId);
+            var aluno = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno).Aluno;
+
+            var respostaQuestaoViewModel = _mapper.Map<RespostaViewModel>(questao);
+            respostaQuestaoViewModel.Populate(avaliacao.Id, aluno.Id, questao);
+
+            return View(nameof(Index), respostaQuestaoViewModel);
         }
 
         [HttpPost]
@@ -66,29 +67,22 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             var questoes = HttpContext.Session.Get<List<Questao>>(SessionConstants.Questoes);
             var questao = questoes.First(x => x.Id == respostaViewModel.QuestaoId);
             var disciplina = questao.Descritor.Tema.Disciplina;
-            
+
             var respostas = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
             var resposta = _mapper.Map<RespostaViewModel>(questao);
-            
-            resposta.QuestaoId = questao.Id;
             resposta.AlternativaEscolhida = questao.Alternativas.First(x => x.Id == respostaViewModel.AlternativaEscolhidaId);
 
-            var questoesPendentes = HttpContext.Session.Get<List<Questao>>(SessionConstants.QuestoesPendentes);
-            var questoesPendentesDisciplina = questoes
-                .Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id)
-                .ToList();
+            var questoesPendentesDisciplina = HttpContext.Session.Get<List<Questao>>(SessionConstants.QuestoesPendentesDisciplina);
             
-            var ultimaQuestaoDisciplina = questoesPendentesDisciplina.Last().Id == respostaViewModel.QuestaoId;
-            
-            if (questoesPendentes is null)
+            if (questoesPendentesDisciplina is null)
             {
-                questoesPendentes = questoesPendentesDisciplina.Where(x => x.Id != questao.Id).ToList();
+                questoesPendentesDisciplina = questoes.Where(x => x.Id != questao.Id && x.Descritor.Tema.DisciplinaId == disciplina.Id).ToList();
             }
             else
             {
-                if (questoesPendentes.Any(x => x.Id == questao.Id))
+                if (questoesPendentesDisciplina.Any(x => x.Id == questao.Id))
                 {
-                    questoesPendentes.Remove(questao);
+                    questoesPendentesDisciplina.Remove(questao);
                 }
             }
 
@@ -111,7 +105,17 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 respostas.Respostas.Add(resposta);
             }
 
-            HttpContext.Session.Set(SessionConstants.QuestoesPendentes, questoesPendentes);
+            bool ultimaQuestaoDisciplina;
+            if (questoesPendentesDisciplina.Count == 0)
+            {
+                ultimaQuestaoDisciplina = true;
+            }
+            else
+            {
+                ultimaQuestaoDisciplina = questoesPendentesDisciplina.Last().Id == respostaViewModel.QuestaoId;
+            }
+
+            HttpContext.Session.Set(SessionConstants.QuestoesPendentesDisciplina, questoesPendentesDisciplina);
             HttpContext.Session.Set(SessionConstants.RespostasAluno, respostas);
 
             if (ultimaQuestaoDisciplina)
@@ -119,7 +123,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 return RedirectToAction(nameof(Index), "Dashboard");
             }
             
-            return RedirectToAction(nameof(Index), new {questaoId = questoesPendentes.First().Id});
+            return RedirectToAction(nameof(Proximo), new {questaoId = questoesPendentesDisciplina.First().Id});
         }
     }
 }

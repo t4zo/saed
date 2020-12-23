@@ -7,11 +7,9 @@
     var questoes = Context.Session.Get<List<Questao>>(SessionConstants.Questoes);
     var disciplina = Model.Questao.Descritor.Tema.Disciplina;
 
-    var questoesPendentesDisciplina = questoes
-        .Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id)
-        .ToList();
+    var questaoPendente = questoes.Last(x => x.Descritor.Tema.DisciplinaId == disciplina.Id);
     
-    var ultimaQuestaoDisciplina = questoesPendentesDisciplina.Last().Id == Model.Questao.Id;
+    var ultimaQuestao = questaoPendente.Id == Model.Questao.Id;
 }
 
 
@@ -53,7 +51,7 @@
         <div id="enunciadoEditor"></div>
         <input type="hidden" asp-for="Questao.Enunciado" class="enunciado" />
 
-        <form asp-area="Aplicador" asp-controller="Aplicacao" asp-action="Proximo" method="post">
+        <form action="/aplicacao" method="post">
             <section class="uk-margin-large-top uk-margin-bottom alternativas">
                 <h3 class="uk-text-center">Alternativas</h3>
                 <hr class="uk-list-divider uk-divider-icon" />
@@ -78,7 +76,7 @@
 
             <section class="uk-flex uk-flex-around uk-margin-large-top">
                 <a class="uk-button uk-button-default" asp-controller="Dashboard" asp-action="Index">Voltar</a>
-                @if (ultimaQuestaoDisciplina)
+                @if (ultimaQuestao)
                 {
                     <button class="uk-button uk-button-danger btn-next" disabled>Finalizar</button>
                 }

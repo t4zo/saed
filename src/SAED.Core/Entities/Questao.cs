@@ -19,6 +19,13 @@ namespace SAED.Core.Entities
         public IList<Alternativa> Alternativas { get; set; }
 
 
+        public void ClearReferenceLoop()
+        {
+            Descritor.Questoes = null;
+            Descritor.Tema.Descritores = null;
+            Descritor.Tema.Disciplina.Temas = null;
+        }
+        
         public bool Equals(Questao other)
         {
             if (ReferenceEquals(null, other)) return false;

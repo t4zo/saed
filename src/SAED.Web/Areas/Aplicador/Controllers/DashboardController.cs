@@ -40,23 +40,21 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             foreach (var questao in questoes)
             {
-                questao.Descritor.Questoes = null;
-                questao.Descritor.Tema.Descritores = null;
-                questao.Descritor.Tema.Disciplina.Temas = null;
+                questao.ClearReferenceLoop();
 
                 foreach (var alternativa in questao.Alternativas)
                 {
-                    alternativa.Questao = null;
+                    alternativa.ClearReferenceLoop();
                 }
             }
 
             HttpContext.Session.Set(SessionConstants.Questoes, questoes);
 
             var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);
-
+            var respostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
+            
             dashboardAplicadorViewModel.Questoes = questoes;
-
-            dashboardAplicadorViewModel.RespostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
+            dashboardAplicadorViewModel.RespostasViewModel = respostasViewModel;
 
             return View(dashboardAplicadorViewModel);
         }

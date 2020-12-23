@@ -13,8 +13,8 @@ namespace SAED.Core.Constants
         public const string Avaliacao = "Avaliacao";
         public const string Role = "Role";
         
-        public const string QuestoesRespondidas = "QuestoesRespondidas";
         public const string QuestoesPendentes = "QuestoesPendentes";
+        public const string QuestoesPendentesDisciplina = "QuestoesPendentesDisciplina";
         public const string RespostasAluno = "RespostasAluno";
     }
 }
