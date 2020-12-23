@@ -23,12 +23,26 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Selecao.View)]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
+
+            var allEtapas = await _context.AvaliacaoDisciplinasEtapas
+                .AsNoTracking()
+                .Include(x => x.Etapa)
+                .ThenInclude(x => x.Turmas)
+                .ThenInclude(x => x.Sala)
+                .Where(x => x.AvaliacaoId == avaliacao.Id)
+                .Select(x => x.Etapa)
+                .ToListAsync();
+
+            var etapas = allEtapas.Distinct().ToList();
+            
             HttpContext.Session.Clear();
             HttpContext.Session.Set(SessionConstants.Avaliacao, avaliacao);
+            
             ViewData["EscolaId"] = new SelectList(_context.Escolas, "Id", "Nome");
+            ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
             return View();
         }
 

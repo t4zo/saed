@@ -21,13 +21,19 @@ namespace SAED.Web.Areas.Api.Controllers
         }
 
         [Authorize(Permissions.Selecao.View)]
-        public async Task<ActionResult<IEnumerable<Turma>>> Get(int etapaId)
+        public async Task<ActionResult<IEnumerable<Turma>>> Get(int escolaId, int etapaId)
         {
             var turmas = await _context.Turmas
                 .AsNoTracking()
                 .Where(x => x.EtapaId == etapaId)
                 .ToListAsync();
 
+            //var turmas = await _context.Turmas
+            //    .AsNoTracking()
+            //    .Include(x => x.Sala)
+            //    .Where(x => x.Sala.EscolaId == escolaId && x.EtapaId == etapaId)
+            //    .ToListAsync();
+            
             if (turmas is null)
             {
                 return BadRequest();
