@@ -58,5 +58,16 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             return View(dashboardAplicadorViewModel);
         }
+        
+        [Authorize(AuthorizationConstants.Permissions.DashboardAplicador.View)]
+        [HttpPost]
+        public async Task<IActionResult> Index(DashboardAplicadorViewModel dashboardAplicadorViewModel)
+        {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
+
+            
+
+            return View();
+        }
     }
 }

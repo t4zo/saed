@@ -66,9 +66,9 @@
         </div>
 
         <hr class="uk-list-divider uk-divider-icon" />
-        @if (Model.RespostasViewModel?.Respostas is not null)
-        {
-            <form method="post">
+        <form method="post">
+            @if (Model.RespostasViewModel?.Respostas is not null)
+            {
                 <div class="uk-column-1-@disciplinas.Count uk-column-divider">
                     @foreach (var disciplina in disciplinas)
                     {
@@ -87,18 +87,18 @@
                                         <div>@Model.RespostasViewModel.Respostas.FirstOrDefault(x => x.QuestaoId == questao.Id).AlternativaEscolhida.Descricao</div>
                                     }
                                 </dt>
-                                <input asp-for="EscolaId" class="uk-select" type="hidden" />
+                                <input asp-for="EscolaId" class="uk-input" type="hidden" />
                             }
                         </dl>
                     }
                 </div>
+            }
 
-                <div class="uk-flex uk-flex-around uk-margin-large-top">
-                    <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
-                    <button class="uk-button uk-button-primary btn-confirm">Confirmar</button>
-                </div>
-            </form>
-        }
+            <div class="uk-flex uk-flex-around uk-margin-large-top">
+                <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
+                <button class="uk-button uk-button-primary btn-confirm">Confirmar</button>
+            </div>
+        </form>
     </div>
 </main>
 

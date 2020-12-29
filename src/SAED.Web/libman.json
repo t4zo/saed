@@ -92,6 +92,44 @@
         "quill.snow.css",
         "quill.snow.min.css"
       ]
+    },
+    {
+      "library": "simple-datatables@2.1.13",
+      "destination": "wwwroot/libs/simple-datatables/",
+      "files": [
+        "dist/date-4abbfef1.js",
+        "dist/date-4abbfef1.js.map",
+        "dist/date-5b20bb7a.js",
+        "dist/date-5b20bb7a.js.map",
+        "dist/date-b0e12642.js",
+        "dist/date-b0e12642.js.map",
+        "dist/date-de9f08e1.js",
+        "dist/date-de9f08e1.js.map",
+        "dist/index.js",
+        "dist/index.js.map",
+        "dist/style.css",
+        "dist/module/date-2d6c131e.js",
+        "dist/module/date-2d6c131e.js.map",
+        "dist/module/date-5a025e78.js",
+        "dist/module/date-5a025e78.js.map",
+        "dist/module/date-78ebb1bf.js",
+        "dist/module/date-78ebb1bf.js.map",
+        "dist/module/date-cd80f82d.js",
+        "dist/module/date-cd80f82d.js.map",
+        "dist/module/index.js",
+        "dist/module/index.js.map",
+        "dist/nomodule/date-0a5d9327.js",
+        "dist/nomodule/date-0a5d9327.js.map",
+        "dist/nomodule/date-52d74a11.js",
+        "dist/nomodule/date-52d74a11.js.map",
+        "dist/nomodule/date-c0142339.js",
+        "dist/nomodule/date-c0142339.js.map",
+        "dist/nomodule/date-ccf7b97d.js",
+        "dist/nomodule/date-ccf7b97d.js.map",
+        "dist/nomodule/index.js",
+        "dist/nomodule/index.js.map",
+        "dist/umd/simple-datatables.js"
+      ]
     }
   ]
 }

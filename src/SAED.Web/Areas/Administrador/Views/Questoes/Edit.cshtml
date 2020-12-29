@@ -121,8 +121,12 @@
                 disciplinaField.addEventListener("change",
                     () => {
                         filterNestedFields(`@ApiConstants.BaseUrl/temas?disciplinaId=${disciplinaField.value}`, "#Temas");
+                        
                         temaField.selectedIndex = 0;
                         temaField.disabled = true;
+
+                        descritorField.selectedIndex = 0;
+                        descritorField.disabled = true;
                     });
 
                 temaField.addEventListener("change",
