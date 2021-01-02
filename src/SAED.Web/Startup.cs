@@ -135,7 +135,7 @@ namespace SAED.Web
             app.UseRouting();
             // app.UseRequestLocalization();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
             // app.UseResponseCaching();
