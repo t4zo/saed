@@ -28,3 +28,18 @@ jobs:
         run: dotnet build --configuration Release --no-restore ./src/SAED.Api/SAED.Api.csproj
       - name: Test SAED.Api
         run: dotnet test --configuration Release ./src/SAED.Api/SAED.Api.csproj
+
+      # - name: Invoke deployment hook
+      #   uses: distributhor/workflow-webhook@v1.0.5
+      #   env:
+      #     webhook_url: ${{ secrets.WEBHOOK_URL }}
+      #     webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+      #     webhook_auth: ${{ secrets.WEBHOOK_AUTH }}
+
+      # - name: Webhook Action
+      #   uses: joelwmale/webhook-action@2.0.2
+      #   with:
+      #     url: ${{ secrets.WEBHOOK_URL }}
+      #     headers: '{"repository": "tacio/saed"}'
+      #     body: '{"event": "deployment", "repository": "tacio/saed"}'
+      
