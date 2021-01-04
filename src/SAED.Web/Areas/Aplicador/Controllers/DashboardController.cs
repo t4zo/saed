@@ -29,6 +29,9 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
+            var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);
+            var respostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
+
             var questoes = await _context.Questoes
                 .AsNoTracking()
                 .Include(x => x.Descritor)
@@ -36,6 +39,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 .ThenInclude(x => x.Disciplina)
                 .Include(x => x.Alternativas)
                 .Where(x => x.Avaliacoes.Any(y => y.Id == avaliacao.Id))
+                .Where(x => x.EtapaId == dashboardAplicadorViewModel.EtapaId)
                 .ToListAsync();
 
             foreach (var questao in questoes)
@@ -50,9 +54,6 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             HttpContext.Session.Set(SessionConstants.Questoes, questoes);
 
-            var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);
-            var respostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
-            
             dashboardAplicadorViewModel.Questoes = questoes;
             dashboardAplicadorViewModel.RespostasViewModel = respostasViewModel;
 
@@ -61,13 +62,56 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         
         [Authorize(AuthorizationConstants.Permissions.DashboardAplicador.View)]
         [HttpPost]
-        public async Task<IActionResult> Index(DashboardAplicadorViewModel dashboardAplicadorViewModel)
+        public async Task<IActionResult> Index(string _)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
-            
+            var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);
+            var respostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
 
-            return View();
+            var questoes = await _context.Questoes
+                .AsNoTracking()
+                .Include(x => x.Descritor)
+                .ThenInclude(x => x.Tema)
+                .ThenInclude(x => x.Disciplina)
+                .Include(x => x.Alternativas)
+                .Where(x => x.Avaliacoes.Any(y => y.Id == avaliacao.Id))
+                .Where(x => x.EtapaId == dashboardAplicadorViewModel.EtapaId)
+                .ToListAsync();
+
+            foreach (var questao in questoes)
+            {
+                questao.ClearReferenceCycle();
+
+                foreach (var alternativa in questao.Alternativas)
+                {
+                    alternativa.ClearReferenceCycle();
+                }
+            }
+
+            HttpContext.Session.Set(SessionConstants.Questoes, questoes);
+
+            if (dashboardAplicadorViewModel.AlunoId != respostasViewModel.AlunoId || avaliacao.Id != respostasViewModel.AvaliacaoId)
+            {
+                return BadRequest();
+            }
+
+            dashboardAplicadorViewModel.Questoes = questoes;
+            dashboardAplicadorViewModel.RespostasViewModel = respostasViewModel;
+
+            foreach (var respostaViewModel in dashboardAplicadorViewModel.RespostasViewModel.Respostas)
+            {
+                _context.RespostaAlunos.Add(new RespostaAluno
+                {
+                    AvaliacaoId = avaliacao.Id,
+                    AlternativaId = respostaViewModel.AlternativaEscolhida.Id,
+                    AlunoId = dashboardAplicadorViewModel.AlunoId
+                });
+            }
+
+            _context.SaveChanges();
+
+            return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao");
         }
     }
 }
