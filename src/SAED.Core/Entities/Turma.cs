@@ -17,7 +17,6 @@ namespace SAED.Core.Entities
         public string Nome { get; set; }
         public int QtdAlunos { get; set; }
         public bool Extinta { get; set; }
-        public ICollection<UsuarioTurmaAvaliacao> UsuarioTurmaAvaliacao { get; set; }
         public ICollection<Aluno> Alunos { get; set; }
     }
 }

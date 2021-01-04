@@ -10,7 +10,6 @@ namespace SAED.Core.Entities
         public string Codigo { get; set; } = "";
         public StatusAvaliacao Status { get; set; }
         public ICollection<Questao> Questoes { get; set; }
-        public ICollection<UsuarioTurmaAvaliacao> UsuarioTurmaAvaliacao { get; set; }
         public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
         public ICollection<RespostaAluno> RespostaAlunos { get; set; }
     }

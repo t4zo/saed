@@ -3,13 +3,15 @@
 
 @{
     var qtdAlternativas = Model.Questao.Alternativas.Count;
-    
+
     var questoes = Context.Session.Get<List<Questao>>(SessionConstants.Questoes);
     var disciplina = Model.Questao.Descritor.Tema.Disciplina;
 
-    var questaoPendente = questoes.Last(x => x.Descritor.Tema.DisciplinaId == disciplina.Id);
-    
-    var ultimaQuestao = questaoPendente.Id == Model.Questao.Id;
+    var primeiraQuestao = questoes.First(x => x.Descritor.Tema.DisciplinaId == disciplina.Id);
+    var ultimaQuestao = questoes.Last(x => x.Descritor.Tema.DisciplinaId == disciplina.Id);
+
+    var isPrimeiraQuestao = primeiraQuestao.Id == Model.Questao.Id;
+    var isUltimaQuestao = ultimaQuestao.Id == Model.Questao.Id;
 }
 
 
@@ -75,8 +77,11 @@
             </section>
 
             <section class="uk-flex uk-flex-around uk-margin-large-top">
-                <a class="uk-button uk-button-default" asp-controller="Dashboard" asp-action="Index">Voltar</a>
-                @if (ultimaQuestao)
+                @if (isPrimeiraQuestao)
+                {
+                    <a class="uk-button uk-button-default" asp-controller="Dashboard" asp-action="Index">Voltar</a>
+                }
+                @if (isUltimaQuestao)
                 {
                     <button class="uk-button uk-button-danger btn-next" disabled>Finalizar</button>
                 }
