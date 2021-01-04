@@ -35,12 +35,12 @@ namespace SAED.Web.Controllers
 
             if (User.IsInRole(Roles.Superuser) || User.IsInRole(Roles.Administrador))
             {
-                return Redirect($"{AuthorizationConstants.Areas.Administrador}/Dashboard");
+                return Redirect($"{AuthorizationConstants.Areas.Administrador}/Dashboard".ToLower());
             }
 
             if (User.IsInRole(Roles.Aplicador))
             {
-                return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao");
+                return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao".ToLower());
             }
 
             return RedirectToAction(nameof(Index));

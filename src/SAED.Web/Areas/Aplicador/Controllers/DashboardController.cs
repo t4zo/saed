@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace SAED.Web.Areas.Aplicador.Controllers
 {
     [Area(AuthorizationConstants.Areas.Aplicador)]
-    [Route("[controller]")]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -101,7 +100,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             foreach (var respostaViewModel in dashboardAplicadorViewModel.RespostasViewModel.Respostas)
             {
-                _context.RespostaAlunos.Add(new RespostaAluno
+                await _context.RespostaAlunos.AddAsync(new RespostaAluno
                 {
                     AvaliacaoId = avaliacao.Id,
                     AlternativaId = respostaViewModel.AlternativaEscolhida.Id,
@@ -109,9 +108,9 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 });
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao");
+            return RedirectToAction(nameof(Index), "Selecao");
         }
     }
 }
