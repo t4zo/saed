@@ -18,5 +18,13 @@ namespace SAED.Core.Entities
         public int QtdAlunos { get; set; }
         public bool Extinta { get; set; }
         public ICollection<Aluno> Alunos { get; set; }
+
+        public void ClearReferenceCycle()
+        {
+            Sala = null;
+            Etapa = null;
+            Turno = null;
+            Forma = null;
+        }
     }
 }

@@ -27,7 +27,10 @@ namespace SAED.Web.Areas.Api.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
-            var allEtapas = await _context.AvaliacaoDisciplinasEtapas
+            var escola = await _context.Escolas.AsNoTracking().Include(x => x.Salas).ThenInclude(x => x.Turmas).ThenInclude(x => x.Etapa).FirstOrDefaultAsync(x => x.Id == escolaId);
+            var etapasEscola = escola.Salas.SelectMany(x => x.Turmas.Select(y => y.Etapa)).Distinct().ToList();
+            
+            var allAvaliacaoDisciplinasEtapas = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
                 .Include(x => x.Etapa)
                 .ThenInclude(x => x.Turmas)
@@ -36,12 +39,24 @@ namespace SAED.Web.Areas.Api.Controllers
                 .Select(x => x.Etapa)
                 .ToListAsync();
 
-            var etapas = allEtapas.Distinct().ToList();
+            var avaliacaoDisciplinasEtapas = allAvaliacaoDisciplinasEtapas.Distinct().ToList();
 
-            foreach (var etapa in etapas)
+            var etapas = new List<Etapa>();
+            foreach (var avaliacaoDisciplinaEtapa in avaliacaoDisciplinasEtapas)
             {
-                etapa.ClearReferenceCycle();
+                avaliacaoDisciplinaEtapa.ClearReferenceCycle();
+
+                foreach (var etapaEscola in etapasEscola)
+                {
+                    etapaEscola.ClearReferenceCycle();
+
+                    if (avaliacaoDisciplinaEtapa.Id == etapaEscola.Id)
+                    {
+                        etapas.Add(etapaEscola);
+                    }
+                }
             }
+
 
             return Ok(JsonSerializer.Serialize(etapas));
         }

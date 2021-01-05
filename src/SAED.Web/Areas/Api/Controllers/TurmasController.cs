@@ -25,18 +25,18 @@ namespace SAED.Web.Areas.Api.Controllers
         {
             var turmas = await _context.Turmas
                 .AsNoTracking()
-                .Where(x => x.EtapaId == etapaId)
+                .Include(x => x.Sala)
+                .Where(x => x.Sala.EscolaId == escolaId && x.EtapaId == etapaId)
                 .ToListAsync();
-
-            //var turmas = await _context.Turmas
-            //    .AsNoTracking()
-            //    .Include(x => x.Sala)
-            //    .Where(x => x.Sala.EscolaId == escolaId && x.EtapaId == etapaId)
-            //    .ToListAsync();
 
             if (turmas is null)
             {
                 return BadRequest();
+            }
+
+            foreach (var turma in turmas)
+            {
+                turma.ClearReferenceCycle();
             }
 
             return Ok(JsonSerializer.Serialize(turmas));
