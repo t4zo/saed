@@ -52,7 +52,7 @@ namespace SAED.Api.Authorization
             }
 
             var userRoleNames = await _userManager.GetRolesAsync(user);
-            var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name));
+            var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name)).ToList();
 
             foreach (var role in userRoles)
             {
