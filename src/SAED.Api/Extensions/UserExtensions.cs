@@ -41,32 +41,12 @@ namespace SAED.Api.Extensions
                             await SeedRoleClaims(roleManager, role);
                         }
                     }
-
-                    await AddUsuarioTurmaAvaliacao(userManager, applicationUser, context);
-
+                    
                     await context.SaveChangesAsync();
                 }
             }
 
             return app;
-        }
-
-        private static async Task AddUsuarioTurmaAvaliacao(UserManager<ApplicationUser> userManager, ApplicationUser user, ApplicationDbContext context)
-        {
-            if (await userManager.IsInRoleAsync(user, Roles.Aplicador))
-            {
-                var avaliacoes = await context.Avaliacoes.Where(a => a.Status == StatusAvaliacao.EmAndamento).ToListAsync();
-
-                foreach (var avaliacao in avaliacoes)
-                {
-                    context.Add(new UsuarioTurmaAvaliacao
-                    {
-                        ApplicationUserId = user.Id,
-                        AvaliacaoId = avaliacao.Id,
-                        TurmaId = 1
-                    });
-                }
-            }
         }
 
         private static async Task SeedUserClaims(UserManager<ApplicationUser> userManager, ApplicationUser user, string roleName)
