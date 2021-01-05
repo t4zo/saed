@@ -13,7 +13,7 @@ namespace SAED.Web
             CreateMap<Questao, RespostasViewModel>().ReverseMap();
             CreateMap<Questao, RespostaViewModel>()
                 .ForMember(
-                    respostaViewModel => respostaViewModel.QuestaoId, 
+                    respostaViewModel => respostaViewModel.QuestaoId,
                     questao => questao.MapFrom(src => src.Id))
                 .ReverseMap();
         }

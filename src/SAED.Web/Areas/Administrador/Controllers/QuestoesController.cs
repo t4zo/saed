@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +8,9 @@ using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
@@ -218,7 +218,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 return NotFound();
             }
-            
+
             if (!ModelState.IsValid)
             {
                 ViewData["DescritorId"] = new SelectList(_context.Descritores, "Id", "Nome", questaoViewModel.DescritorId);
@@ -287,7 +287,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var questao = await _context.Questoes
                 .Include(x => x.Avaliacoes)
                 .FirstOrDefaultAsync(x => x.Id == questaoViewModel.Id);
-            
+
             var avaliacaoQuestao = await _context.Questoes
                 .Include(x => x.Avaliacoes)
                 .Where(x => x.Id == questao.Id)

@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +14,7 @@ using SAED.Web.Authorization;
 using SAED.Web.Extensions;
 using SAED.Web.Options;
 using SAED.Web.Services;
+using System;
 
 namespace SAED.Web
 {

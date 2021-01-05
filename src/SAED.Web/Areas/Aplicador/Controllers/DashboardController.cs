@@ -4,10 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
-using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Areas.Aplicador.ViewModels;
 using SAED.Web.Extensions;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,7 +56,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             return View(dashboardAplicadorViewModel);
         }
-        
+
         [Authorize(AuthorizationConstants.Permissions.DashboardAplicador.View)]
         [HttpPost]
         public async Task<IActionResult> Index(string _)

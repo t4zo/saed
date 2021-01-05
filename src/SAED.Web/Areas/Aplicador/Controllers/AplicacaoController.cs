@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
-using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Areas.Aplicador.ViewModels;
 using SAED.Web.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,12 +14,10 @@ namespace SAED.Web.Areas.Aplicador.Controllers
     [Route("[controller]")]
     public class AplicacaoController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public AplicacaoController(ApplicationDbContext context, IMapper mapper)
+        public AplicacaoController(IMapper mapper)
         {
-            _context = context;
             _mapper = mapper;
         }
 
@@ -35,13 +31,13 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             var aluno = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno).Aluno;
 
             HttpContext.Session.Remove(SessionConstants.QuestoesPendentesDisciplina);
-            
+
             var respostaQuestaoViewModel = _mapper.Map<RespostaViewModel>(questao);
             respostaQuestaoViewModel.Populate(avaliacao.Id, aluno.Id, questao);
 
             return View(respostaQuestaoViewModel);
         }
-        
+
         [HttpGet("{questaoId}")]
         public IActionResult Proximo(int questaoId)
         {
@@ -73,7 +69,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             resposta.AlternativaEscolhida = questao.Alternativas.First(x => x.Id == respostaViewModel.AlternativaEscolhidaId);
 
             var questoesPendentesDisciplina = HttpContext.Session.Get<List<Questao>>(SessionConstants.QuestoesPendentesDisciplina);
-            
+
             if (questoesPendentesDisciplina is null)
             {
                 questoesPendentesDisciplina = questoes.Where(x => x.Id != questao.Id && x.Descritor.Tema.DisciplinaId == disciplina.Id).ToList();
@@ -92,7 +88,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 {
                     AvaliacaoId = respostaViewModel.AvaliacaoId,
                     AlunoId = respostaViewModel.AlunoId,
-                    Respostas = new List<RespostaViewModel> { resposta }
+                    Respostas = new List<RespostaViewModel> {resposta}
                 };
             }
             else
@@ -102,7 +98,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 {
                     respostas.Respostas.Remove(oldResposta);
                 }
-                
+
                 respostas.Respostas.Add(resposta);
             }
 
@@ -123,7 +119,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             {
                 return RedirectToAction(nameof(Index), "Dashboard");
             }
-            
+
             return RedirectToAction(nameof(Proximo), new {questaoId = questoesPendentesDisciplina.First().Id});
         }
     }

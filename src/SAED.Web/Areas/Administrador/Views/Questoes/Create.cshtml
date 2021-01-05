@@ -9,9 +9,13 @@
     <link href="~/libs/quill/quill.snow.min.css" rel="stylesheet">
 
     <style>
-        #enunciadoEditor { height: 170px; }
+        #enunciadoEditor {
+            height: 170px;
+        }
 
-        .alternativas .ql-container { height: 45px; }
+        .alternativas .ql-container {
+            height: 45px;
+        }
 
         .checkbox-habilitada {
             -ms-transform: scale(1.5); /* IE 9 */
@@ -30,13 +34,13 @@
             <span class="uk-card-title uk-text-uppercase uk-text-center">Adicionar Questão</span>
             <span class="uk-margin-small-left uk-margin-small-right">|</span>
             <span class="uk-text-center">
-                <input class="uk-checkbox checkbox-habilitada" type="checkbox" asp-for="Habilitada" onclick="changeQuestaoHabilitada()"/>
+                <input class="uk-checkbox checkbox-habilitada" type="checkbox" asp-for="Habilitada" onclick="changeQuestaoHabilitada()" />
                 <label asp-for="Habilitada" class="uk-form-label"></label>
             </span>
         </div>
         <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="submitForm()"></button>
     </div>
-    <hr class="uk-list-divider"/>
+    <hr class="uk-list-divider" />
     <form asp-action="Create" class="form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <section class="uk-grid-row-small" uk-grid>
@@ -65,12 +69,12 @@
             </div>
             <div class="uk-width-1-3@s">
                 <label asp-for="Item" class="uk-form-label"></label>
-                <input asp-for="Item" class="uk-input"/>
+                <input asp-for="Item" class="uk-input" />
                 <span asp-validation-for="Item" class="uk-text-danger"></span>
             </div>
             <div class="uk-width-1-3@s">
                 <label asp-for="Descricao" class="uk-form-label">Descrição</label>
-                <input asp-for="Descricao" class="uk-input"/>
+                <input asp-for="Descricao" class="uk-input" />
                 <span asp-validation-for="Descricao" class="uk-text-danger"></span>
             </div>
             <div class="uk-width-1-1 uk-margin-top">
@@ -78,8 +82,8 @@
                 <!-- Create the editor container -->
                 <div id="enunciadoEditor"></div>
             </div>
-            <input type="checkbox" asp-for="Habilitada" class="uk-hidden checkbox-habilitada-hidden"/>
-            <input type="hidden" asp-for="Enunciado"/>
+            <input type="checkbox" asp-for="Habilitada" class="uk-hidden checkbox-habilitada-hidden" />
+            <input type="hidden" asp-for="Enunciado" />
         </section>
         <section class="uk-margin-large-top uk-margin-bottom alternativas">
             <h3 class="uk-text-center">Alternativas</h3>
@@ -92,7 +96,7 @@
                             <label>Correta <input class="uk-checkbox" type="checkbox" asp-for="Alternativas[i].Correta" onchange="selectCheckboxAsRadio(@i)"></label>
                         </div>
                         <div id="alternativa@(i)Editor"></div>
-                        <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input"/>
+                        <input type="hidden" asp-for="Alternativas[i].Descricao" class="uk-input" />
                     </div>
                 }
             </div>
@@ -121,7 +125,7 @@
                 disciplinaField.addEventListener("change",
                     () => {
                         filterNestedFields(`@ApiConstants.BaseUrl/temas?disciplinaId=${disciplinaField.value}`, "#Temas");
-                        
+
                         temaField.selectedIndex = 0;
                         temaField.disabled = true;
 

@@ -7,7 +7,7 @@
     <div class="uk-width-expand uk-visible@s">
         <form class="uk-search uk-search-navbar uk-width-expand" style="border: 1px solid grey;">
             <span uk-search-icon></span>
-            <input class="uk-search-input dataTable-custom-input" type="search" placeholder="Pesquisar"/>
+            <input class="uk-search-input dataTable-custom-input" type="search" placeholder="Pesquisar" />
         </form>
     </div>
     @if (User.HasClaim(x => x.Value == $"Permissions.{Model.Controller}.Create"))
@@ -24,6 +24,6 @@
 <div class="uk-width-expand uk-hidden@s uk-margin-small-bottom">
     <form class="uk-search uk-search-navbar uk-width-expand" style="border: 1px solid grey;">
         <span uk-search-icon></span>
-        <input class="uk-search-input dataTable-custom-input" type="search" placeholder="Pesquisar"/>
+        <input class="uk-search-input dataTable-custom-input" type="search" placeholder="Pesquisar" />
     </form>
 </div>

@@ -10,128 +10,128 @@
 }
 
 <body>
-    <main class="uk-height-viewport uk-flex uk-flex-1 uk-flex-center uk-flex-middle">
-        <div class="uk-card uk-card-default uk-card-body">
-            <h2 class="uk-card-title uk-text-center">Selecionar Aluno</h2>
+<main class="uk-height-viewport uk-flex uk-flex-1 uk-flex-center uk-flex-middle">
+    <div class="uk-card uk-card-default uk-card-body">
+        <h2 class="uk-card-title uk-text-center">Selecionar Aluno</h2>
 
-            <hr class="uk-list-divider" />
+        <hr class="uk-list-divider" />
 
-            <form asp-controller="Selecao" method="post">
-                <p class="uk-text-lead uk-text-small">Olá @User.Identity?.Name, por favor, selecione uma escola!</p>
-                <div class="uk-grid uk-grid-row-small" uk-grid>
-                    <div class="uk-width-1-1">
-                        <label class="uk-form-label">Escola</label>
-                        <select asp-for="EscolaId" class="uk-select" asp-items="ViewBag.EscolaId">
-                            <option value="">---------</option>
-                        </select>
-                    </div>
-                    <div class="uk-width-1-1">
-                        <label class="uk-form-label">Etapa</label>
-                        <select asp-for="EtapaId" class="uk-select" disabled>
-                            <option value="">---------</option>
-                        </select>
-                    </div>
-                    <div class="uk-width-1-1">
-                        <label class="uk-form-label">Turma</label>
-                        <select asp-for="TurmaId" class="uk-select" disabled>
-                            <option value="">---------</option>
-                        </select>
-                    </div>
-                    <div class="uk-width-1-1">
-                        <label class="uk-form-label">Aluno</label>
-                        <select asp-for="AlunoId" class="uk-select" disabled>
-                            <option value="">---------</option>
-                        </select>
-                    </div>
+        <form asp-controller="Selecao" method="post">
+            <p class="uk-text-lead uk-text-small">Olá @User.Identity?.Name, por favor, selecione uma escola!</p>
+            <div class="uk-grid uk-grid-row-small" uk-grid>
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label">Escola</label>
+                    <select asp-for="EscolaId" class="uk-select" asp-items="ViewBag.EscolaId">
+                        <option value="">---------</option>
+                    </select>
                 </div>
-                <div class="uk-flex uk-flex-center uk-margin-top">
-                    <a class="uk-button uk-button-default" onclick="document.querySelector('.logout-form').submit();">Sair</a>
-                    <button class="uk-button uk-button-primary uk-flex-1 btn-confirm" disabled>Entrar</button>
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label">Etapa</label>
+                    <select asp-for="EtapaId" class="uk-select" disabled>
+                        <option value="">---------</option>
+                    </select>
                 </div>
-            </form>
-            <form class="logout-form"
-                  asp-area="Identity"
-                  asp-page="/Account/Logout"
-                  asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""}) ">
-            </form>
-        </div>
-    </main>
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label">Turma</label>
+                    <select asp-for="TurmaId" class="uk-select" disabled>
+                        <option value="">---------</option>
+                    </select>
+                </div>
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label">Aluno</label>
+                    <select asp-for="AlunoId" class="uk-select" disabled>
+                        <option value="">---------</option>
+                    </select>
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-center uk-margin-top">
+                <a class="uk-button uk-button-default" onclick="document.querySelector('.logout-form').submit();">Sair</a>
+                <button class="uk-button uk-button-primary uk-flex-1 btn-confirm" disabled>Entrar</button>
+            </div>
+        </form>
+        <form class="logout-form"
+              asp-area="Identity"
+              asp-page="/Account/Logout"
+              asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""}) ">
+        </form>
+    </div>
+</main>
 
-    @section Scripts {
-        <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded",
-                () => {
+@section Scripts {
+    <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded",
+            () => {
 
-                    addInputEventListeners();
-                    validateConfirmButton();
+                addInputEventListeners();
+                validateConfirmButton();
 
-                    function addInputEventListeners() {
-                        const escolaField = document.querySelector("#EscolaId");
-                        const etapaField = document.querySelector("#EtapaId");
-                        const turmaField = document.querySelector("#TurmaId");
-                        const alunoField = document.querySelector("#AlunoId");
+                function addInputEventListeners() {
+                    const escolaField = document.querySelector("#EscolaId");
+                    const etapaField = document.querySelector("#EtapaId");
+                    const turmaField = document.querySelector("#TurmaId");
+                    const alunoField = document.querySelector("#AlunoId");
 
-                        escolaField.addEventListener("change",
-                            () => {
-                                filterNestedFields(`@ApiConstants.BaseUrl/etapas?escolaId=${escolaField.value}`, "#EtapaId");
+                    escolaField.addEventListener("change",
+                        () => {
+                            filterNestedFields(`@ApiConstants.BaseUrl/etapas?escolaId=${escolaField.value}`, "#EtapaId");
 
-                                etapaField.selectedIndex = 0;
-                                etapaField.disabled = true;
+                            etapaField.selectedIndex = 0;
+                            etapaField.disabled = true;
 
-                                turmaField.selectedIndex = 0;
-                                turmaField.disabled = true;
+                            turmaField.selectedIndex = 0;
+                            turmaField.disabled = true;
 
-                                alunoField.selectedIndex = 0;
-                                alunoField.disabled = true;
+                            alunoField.selectedIndex = 0;
+                            alunoField.disabled = true;
 
-                                alunoField.dispatchEvent(new Event('change'));
+                            alunoField.dispatchEvent(new Event('change'));
+                        }
+                    );
+
+                    etapaField.addEventListener("change",
+                        () => {
+                            filterNestedFields(`@ApiConstants.BaseUrl/turmas?escolaId=${escolaField.value}&etapaId=${etapaField.value}`, "#TurmaId");
+
+                            turmaField.selectedIndex = 0;
+                            turmaField.disabled = true;
+
+                            alunoField.selectedIndex = 0;
+                            alunoField.disabled = true;
+
+                            alunoField.dispatchEvent(new Event('change'));
+                        }
+                    );
+
+                    turmaField.addEventListener("change",
+                        () => {
+                            filterNestedFields(`@ApiConstants.BaseUrl/alunos?turmaId=${turmaField.value}`, "#AlunoId");
+
+                            alunoField.selectedIndex = 0;
+                            alunoField.disabled = true;
+
+                            alunoField.dispatchEvent(new Event('change'));
+                        }
+                    );
+                }
+
+                function validateConfirmButton() {
+                    const btn = document.querySelector(".btn-confirm");
+                    const alunoField = document.querySelector("#AlunoId");
+
+                    alunoField.addEventListener('change',
+                        () => {
+                            console.log(alunoField.options.selectedIndex);
+                            if (alunoField.options.selectedIndex === 0) {
+                                btn.setAttribute('disabled', 'true');
+                            } else {
+                                btn.removeAttribute('disabled');
                             }
-                        );
-
-                        etapaField.addEventListener("change",
-                            () => {
-                                filterNestedFields(`@ApiConstants.BaseUrl/turmas?escolaId=${escolaField.value}&etapaId=${etapaField.value}`, "#TurmaId");
-
-                                turmaField.selectedIndex = 0;
-                                turmaField.disabled = true;
-
-                                alunoField.selectedIndex = 0;
-                                alunoField.disabled = true;
-
-                                alunoField.dispatchEvent(new Event('change'));
-                            }
-                        );
-
-                        turmaField.addEventListener("change",
-                            () => {
-                                filterNestedFields(`@ApiConstants.BaseUrl/alunos?turmaId=${turmaField.value}`, "#AlunoId");
-
-                                alunoField.selectedIndex = 0;
-                                alunoField.disabled = true;
-
-                                alunoField.dispatchEvent(new Event('change'));
-                            }
-                        );
-                    }
-
-                    function validateConfirmButton() {
-                        const btn = document.querySelector(".btn-confirm");
-                        const alunoField = document.querySelector("#AlunoId");
-
-                        alunoField.addEventListener('change',
-                            () => {
-                                console.log(alunoField.options.selectedIndex);
-                                if (alunoField.options.selectedIndex === 0) {
-                                    btn.setAttribute('disabled', 'true');
-                                } else {
-                                    btn.removeAttribute('disabled');
-                                }
-                            }
-                        );
-                    }
-                });
-        </script>
-    }
+                        }
+                    );
+                }
+            });
+    </script>
+}
 
 </body>

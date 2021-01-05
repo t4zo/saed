@@ -1,5 +1,4 @@
 ﻿using SAED.Core.Entities;
-using SAED.Web.Areas.Administrador.ViewModels;
 using System.Collections.Generic;
 
 namespace SAED.Web.Areas.Aplicador.ViewModels
@@ -14,7 +13,7 @@ namespace SAED.Web.Areas.Aplicador.ViewModels
         public Turma Turma { get; set; }
         public int AlunoId { get; set; }
         public Aluno Aluno { get; set; }
-        
+
         public IList<Questao> Questoes { get; set; }
         public RespostasViewModel RespostasViewModel { get; set; }
     }

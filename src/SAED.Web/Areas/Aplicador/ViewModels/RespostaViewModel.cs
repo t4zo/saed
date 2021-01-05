@@ -1,5 +1,4 @@
 ﻿using SAED.Core.Entities;
-using System.Collections.Generic;
 
 namespace SAED.Web.Areas.Aplicador.ViewModels
 {

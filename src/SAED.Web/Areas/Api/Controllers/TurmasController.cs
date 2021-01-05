@@ -33,7 +33,7 @@ namespace SAED.Web.Areas.Api.Controllers
             //    .Include(x => x.Sala)
             //    .Where(x => x.Sala.EscolaId == escolaId && x.EtapaId == etapaId)
             //    .ToListAsync();
-            
+
             if (turmas is null)
             {
                 return BadRequest();

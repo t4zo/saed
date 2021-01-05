@@ -37,10 +37,10 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 .ToListAsync();
 
             var etapas = allEtapas.Distinct().ToList();
-            
+
             HttpContext.Session.Clear();
             HttpContext.Session.Set(SessionConstants.Avaliacao, avaliacao);
-            
+
             ViewData["EscolaId"] = new SelectList(_context.Escolas, "Id", "Nome");
             ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
             return View();

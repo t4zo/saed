@@ -1,5 +1,4 @@
-﻿@using SAED.Web.Extensions
-@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
+﻿@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
 
 @{
     var disciplinas = Model.Questoes.Select(x => x.Descritor.Tema.Disciplina).Distinct().ToList();

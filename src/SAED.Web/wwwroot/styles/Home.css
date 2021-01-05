@@ -1,6 +1,10 @@
-﻿body { margin: 0; }
+﻿body {
+    margin: 0;
+}
 
-body .aside { max-width: 60vw; }
+body .aside {
+    max-width: 60vw;
+}
 
 body .aside--image {
     max-height: 100vh;

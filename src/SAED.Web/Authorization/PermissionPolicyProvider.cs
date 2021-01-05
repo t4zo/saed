@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using System;
+using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization

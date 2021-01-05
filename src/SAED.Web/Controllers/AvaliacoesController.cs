@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SAED.Core.Constants;
-using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
+using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Controllers

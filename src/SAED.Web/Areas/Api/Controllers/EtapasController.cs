@@ -5,7 +5,6 @@ using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;

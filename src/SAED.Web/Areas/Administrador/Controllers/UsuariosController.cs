@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +8,9 @@ using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Services;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Areas.Administrador.Controllers

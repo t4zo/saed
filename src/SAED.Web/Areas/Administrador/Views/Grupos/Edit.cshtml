@@ -10,20 +10,20 @@
         <span class="uk-card-title uk-text-uppercase uk-text-center">Editar Grupo</span>
         <button class="uk-icon-button uk-button-primary" uk-icon="check" onclick="sendForm()"></button>
     </div>
-    <hr class="uk-list-divider"/>
+    <hr class="uk-list-divider" />
     <form class="smart-select" method="post">
         <div class="uk-width-1-2">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <label asp-for="Nome" class="uk-form-label"></label>
-            <input asp-for="Nome" class="uk-input"/>
+            <input asp-for="Nome" class="uk-input" />
             <span asp-validation-for="Nome" class="uk-text-danger"></span>
         </div>
-        <hr class="uk-list-divider"/>
+        <hr class="uk-list-divider" />
         <div id="smartSelect" class="uk-grid uk-grid-column-small" uk-grid>
             <div class="uk-width-2-5@s">
                 <div class="uk-flex uk-flex-between uk-flex-middle" style="min-height: 40px">
                     <h5 class="uk-width-2-5 uk-margin-remove uk-text-small">Permissões Disponíveis</h5>
-                    <input :searchAvailableField="searchAvailableField" @@input="searchAvailable" class="uk-input uk-width-1-2" placeholder="Pesquisar"/>
+                    <input :searchAvailableField="searchAvailableField" @@input="searchAvailable" class="uk-input uk-width-1-2" placeholder="Pesquisar" />
                 </div>
                 <select multiple size="10" v-model="availableSelected" class="uk-select uk-width-1-1">
                     <option v-on:dblclick="add" v-if="!searchAvailableField" v-for="permissao in available" :key="permissao">
@@ -51,7 +51,7 @@
             <div class="uk-width-2-5@s">
                 <div class="uk-flex uk-flex-between uk-flex-middle" style="min-height: 40px">
                     <h5 class="uk-width-2-5 uk-margin-remove uk-text-small">Permissões Escolhidas</h5>
-                    <input :searchChosen="searchChosen" @@input="searchChosen" class="uk-input uk-width-1-2" placeholder="Pesquisar"/>
+                    <input :searchChosen="searchChosen" @@input="searchChosen" class="uk-input uk-width-1-2" placeholder="Pesquisar" />
                 </div>
                 <select multiple size="10" v-model="chosenSelected" class="uk-select uk-width-1-1 chosenSelected" asp-for="PermissoesEscolhidas">
                     <option v-on:dblclick="remove" v-if="!searchChosenField" v-for="permissao in chosen" :key="permissao">

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +6,9 @@ using Microsoft.Extensions.Options;
 using SAED.Core.Extensions;
 using SAED.Infrastructure.Identity;
 using SAED.Web.Options;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Extensions
