@@ -18,16 +18,30 @@ namespace SAED.Web.Areas.Administrador.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? escolaId, int? etapaId)
         {
-            var alunos = _context.Alunos
+            var alunos = await _context.Alunos
                 .Include(a => a.Turma)
                 .ThenInclude(x => x.Etapa)
                 .Include(x => x.Turma)
                 .ThenInclude(x => x.Sala)
-                .ThenInclude(x => x.Escola);
+                .ThenInclude(x => x.Escola)
+                .ToListAsync();
 
-            return View(await alunos.ToListAsync());
+            if (escolaId.HasValue)
+            {
+                alunos = alunos.Where(x => x.Turma.Sala.EscolaId == escolaId).ToList();
+            }
+
+            if (etapaId.HasValue)
+            {
+                alunos = alunos.Where(x => x.Turma.EtapaId == etapaId).ToList();
+            }
+
+            ViewBag.Escolas = new SelectList(_context.Escolas.OrderBy(x => x.Nome), "Id", "Nome", escolaId);
+            ViewBag.Etapas = new SelectList(_context.Etapas.OrderBy(x => x.Nome), "Id", "Nome", etapaId);
+
+            return View(alunos);
         }
 
         public IActionResult Create()
