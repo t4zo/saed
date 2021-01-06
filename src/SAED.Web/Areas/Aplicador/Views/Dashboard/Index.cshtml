@@ -1,7 +1,11 @@
-﻿@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
+﻿@using SAED.Web.Areas.Aplicador.ViewModels
+@model SAED.Web.Areas.Aplicador.ViewModels.DashboardAplicadorViewModel
 
 @{
     var disciplinas = Model.Questoes.Select(x => x.Descritor.Tema.Disciplina).Distinct().ToList();
+    IEnumerable<Questao> questoesDisciplina;
+    IEnumerable<RespostaViewModel> respostasViewModel;
+    RespostaViewModel respostaViewModel;
     var stateHasError = false;
 }
 
@@ -73,17 +77,23 @@
                     {
                         <h4 class="uk-text-center">@disciplina.Nome</h4>
                         <dl class="uk-description-list">
-                            @foreach (var questao in Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id))
+                            @{ questoesDisciplina = @Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id);}
+                            @foreach (var questaoDisciplina in questoesDisciplina)
                             {
                                 <dt class="uk-grid-small" uk-grid>
-                                    <div class="uk-width-expand" uk-leader>@questao.Item</div>
-                                    @if (Model.RespostasViewModel?.Respostas?.FirstOrDefault(x => x.QuestaoId == questao.Id)?.AlternativaEscolhida is null)
+                                    <div class="uk-width-expand" uk-leader>@questaoDisciplina.Item</div>
+                                    @{ respostasViewModel = Model.RespostasViewModel?.Respostas; }
+                                    @{ respostaViewModel = respostasViewModel.FirstOrDefault(x => x.QuestaoId == questaoDisciplina.Id); }
+                                    @if (respostaViewModel?.AlternativaEscolhida is null)
                                     {
+                                        {
+                                            stateHasError = true;
+                                        }
                                         <div>-</div>
                                     }
                                     else
                                     {
-                                        <div>@Model.RespostasViewModel.Respostas.FirstOrDefault(x => x.QuestaoId == questao.Id).AlternativaEscolhida.Descricao</div>
+                                        <div>@respostaViewModel.AlternativaEscolhida.Descricao</div>
                                     }
                                 </dt>
                                 <input asp-for="EscolaId" class="uk-input" type="hidden" />
@@ -95,24 +105,26 @@
 
             <div class="uk-flex uk-flex-around uk-margin-large-top">
                 <a class="uk-button uk-button-default" asp-controller="Selecao" asp-action="Index">Voltar</a>
-                <button class="uk-button uk-button-primary btn-confirm">Confirmar</button>
+                <a class="uk-button uk-button-primary btn-confirm" onclick="validateConfirmButton()">Confirmar</a>
             </div>
         </form>
     </div>
 </main>
 
-@*@section Scripts
+@section Scripts
     {
-        <script>
-            validateConfirmButton();
+    <script>
+            const form = document.querySelector('form');
 
             function validateConfirmButton() {
-                const btn = document.querySelector(".btn-confirm");
-                const select = document.querySelectorAll('.uk-select#AlunoId');
-                select.addEventListener('change',
-                    () => {
-                        btn.removeAttribute('disabled');
-                    });
+                if (@stateHasError.ToString().ToLower()) {
+                    const response = confirm("Existe questão sem resposta, deseja continuar?");
+                    if (response) {
+                        form.submit();
+                    }
+                } else {
+                    form.submit();
+                }
             }
-        </script>
-    }*@
+    </script>
+}
