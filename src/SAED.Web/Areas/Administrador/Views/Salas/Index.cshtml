@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SAED.Core.Entities.Sala>
+
+@{
+    ViewData["Title"] = "Salas";
+}
+
+<form id="form-filter" class="uk-card uk-card-default uk-margin-bottom" style="padding: 20px 0;" method="get" action="">
+    <div class="uk-grid uk-margin-left" uk-grid>
+        <section class="uk-width-1-3@s uk-margin-remove-first-child">
+            <label class="uk-form-label">Escolas</label>
+            <select class="uk-select" id="escolaId" name="escolaId" asp-items="ViewBag.Escolas">
+                <option disabled selected value=""> -- Selecione a Escola -- </option>
+            </select>
+        </section>
+    </div>
+</form>
+
+<main class="uk-card uk-card-default uk-card-body">
+    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Salas", Controller = "Salas", Action = "Salas" });}
+    <div class="uk-overflow-auto">
+        <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Escola)</th>
+                    <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                    <th>@Html.DisplayNameFor(model => model.Capacidade)</th>
+                    <th>@Html.DisplayNameFor(model => model.Area)</th>
+                    <th class="uk-text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Escola.Nome)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Capacidade)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Area)</td>
+                        <td class="uk-flex uk-flex-center">
+                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        document.querySelector("#escolaId").addEventListener("change",
+            () => {
+                const form = document.querySelector('#form-filter');
+                form.submit();
+            });
+    </script>
+    <script src="~/scripts/removeItem.js"></script>
+}

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
-using SAED.Infrastructure.Data;
 using SAED.Web.Areas.Aplicador.ViewModels;
 using SAED.Web.Extensions;
 using System.Collections.Generic;

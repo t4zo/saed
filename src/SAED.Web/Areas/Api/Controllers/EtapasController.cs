@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Api.Controllers
 
             var escola = await _context.Escolas.AsNoTracking().Include(x => x.Salas).ThenInclude(x => x.Turmas).ThenInclude(x => x.Etapa).FirstOrDefaultAsync(x => x.Id == escolaId);
             var etapasEscola = escola.Salas.SelectMany(x => x.Turmas.Select(y => y.Etapa)).Distinct().ToList();
-            
+
             var allAvaliacaoDisciplinasEtapas = await _context.AvaliacaoDisciplinasEtapas
                 .AsNoTracking()
                 .Include(x => x.Etapa)

@@ -20,8 +20,8 @@ namespace SAED.Web.Extensions
 
             var avaliacoes = new List<Avaliacao>
             {
-                new() {Id = 1, Codigo = "2020", Status = StatusAvaliacao.EmAndamento},
-                new() {Id = 2, Codigo = "2021", Status = StatusAvaliacao.ARealizar}
+                new() {Id = 1, Codigo = "2021.1", Status = StatusAvaliacao.EmAndamento},
+                new() {Id = 2, Codigo = "2021.2", Status = StatusAvaliacao.ARealizar}
             };
 
             new EntitySeed<Avaliacao>(context, databaseProvider).Load(avaliacoes, "Avaliacoes");
@@ -265,8 +265,8 @@ namespace SAED.Web.Extensions
 
             var alunos = new List<Aluno>
             {
-                new() { Id = 1, Nome = "Maria Luz", Nascimento = new DateTime(day: 10, month: 08, year: 2002), TurmaId = 1 },
-                new() { Id = 2, Nome = "João carlos", Nascimento = new DateTime(day: 09, month: 09, year: 1999), TurmaId = 1 }
+                new() {Id = 1, Nome = "Maria Luz", Nascimento = new DateTime(day: 10, month: 08, year: 2002), TurmaId = 1},
+                new() {Id = 2, Nome = "João carlos", Nascimento = new DateTime(day: 09, month: 09, year: 1999), TurmaId = 1}
             };
 
             new EntitySeed<Aluno>(context, databaseProvider).Load(alunos, "Alunos");

@@ -20,8 +20,8 @@ namespace SAED.Api.Extensions
 
             var avaliacoes = new List<Avaliacao>
             {
-                new Avaliacao {Id = 1, Codigo = "2020", Status = StatusAvaliacao.EmAndamento},
-                new Avaliacao {Id = 2, Codigo = "2021", Status = StatusAvaliacao.ARealizar}
+                new Avaliacao {Id = 1, Codigo = "2021.1", Status = StatusAvaliacao.EmAndamento},
+                new Avaliacao {Id = 2, Codigo = "2021.2", Status = StatusAvaliacao.ARealizar}
             };
 
             new EntitySeed<Avaliacao>(context, databaseProvider).Load(avaliacoes, "Avaliacoes");

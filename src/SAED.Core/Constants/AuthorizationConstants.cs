@@ -133,6 +133,14 @@
                 public const string Delete = "Permissions.Escolas.Delete";
             }
 
+            public static class Salas
+            {
+                public const string View = "Permissions.Salas.View";
+                public const string Create = "Permissions.Salas.Create";
+                public const string Update = "Permissions.Salas.Update";
+                public const string Delete = "Permissions.Salas.Delete";
+            }
+
             public static class Disciplinas
             {
                 public const string View = "Permissions.Disciplinas.View";

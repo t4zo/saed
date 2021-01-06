@@ -77,7 +77,7 @@
                     {
                         <h4 class="uk-text-center">@disciplina.Nome</h4>
                         <dl class="uk-description-list">
-                            @{ questoesDisciplina = @Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id);}
+                            @{ questoesDisciplina = Model.Questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id); }
                             @foreach (var questaoDisciplina in questoesDisciplina)
                             {
                                 <dt class="uk-grid-small" uk-grid>
@@ -112,19 +112,19 @@
 </main>
 
 @section Scripts
-    {
+{
     <script>
-            const form = document.querySelector('form');
+        const form = document.querySelector('form');
 
-            function validateConfirmButton() {
-                if (@stateHasError.ToString().ToLower()) {
-                    const response = confirm("Existe questão sem resposta, deseja continuar?");
-                    if (response) {
-                        form.submit();
-                    }
-                } else {
+        function validateConfirmButton() {
+            if (@stateHasError.ToString().ToLower()) {
+                const response = confirm("Existe questão sem resposta, deseja continuar?");
+                if (response) {
                     form.submit();
                 }
+            } else {
+                form.submit();
             }
+        }
     </script>
 }
