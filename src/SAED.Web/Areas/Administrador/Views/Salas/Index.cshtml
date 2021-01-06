@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SAED.Core.Entities.Sala>
+﻿@model IEnumerable<Sala>
 
 @{
     ViewData["Title"] = "Salas";
@@ -16,32 +16,32 @@
 </form>
 
 <main class="uk-card uk-card-default uk-card-body">
-    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Salas", Controller = "Salas", Action = "Salas" });}
+    @{await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader {Header = "Salas", Controller = "Salas", Action = "Salas"});}
     <div class="uk-overflow-auto">
         <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
             <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Escola)</th>
-                    <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                    <th>@Html.DisplayNameFor(model => model.Capacidade)</th>
-                    <th>@Html.DisplayNameFor(model => model.Area)</th>
-                    <th class="uk-text-center">Ações</th>
-                </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Escola)</th>
+                <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Capacidade)</th>
+                <th>@Html.DisplayNameFor(model => model.Area)</th>
+                <th class="uk-text-center">Ações</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Escola.Nome)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Capacidade)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Area)</td>
-                        <td class="uk-flex uk-flex-center">
-                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Escola.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Capacidade)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Area)</td>
+                    <td class="uk-flex uk-flex-center">
+                        <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                        <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

@@ -7,40 +7,40 @@
 <main class="uk-card uk-card-default uk-card-body">
     <div class="uk-flex uk-flex-between uk-flex-bottom">
         <a class="uk-icon-button uk-button-default" asp-action="Index" uk-icon="arrow-left"></a>
-        <span class="uk-card-title uk-text-uppercase uk-text-center">Remover Escola</span>
+        <span class="uk-card-title uk-text-uppercase uk-text-center">Remover Turma</span>
         <button class="uk-icon-button uk-button-danger" uk-icon="check" onclick="document.querySelector('.form').submit();"></button>
     </div>
     <hr class="uk-list-divider" />
     <form class="uk-grid-row-small form" uk-grid asp-action="Delete">
         <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="uk-width-1-3">
-                <label asp-for="Sala.Nome" class="uk-form-label"></label>
-                <input asp-for="Sala.Nome" class="uk-input" asp-items="ViewBag.SalaId" readonly />
-            </div>
-            <div class="uk-width-1-3">
-                <label asp-for="Etapa.Nome" class="uk-form-label"></label>
-                <input asp-for="Etapa.Nome" class="uk-input" asp-items="ViewBag.EtapaId" readonly />
-            </div>
-            <div class="uk-width-1-3">
-                <label asp-for="Turno.Nome" class="uk-form-label"></label>
-                <input asp-for="Turno.Nome" class="uk-input" asp-items="ViewBag.TurnoId" readonly />
-            </div>
-            <div class="uk-width-1-3">
-                <label asp-for="Forma.Nome" class="uk-form-label"></label>
-                <input asp-for="Forma.Nome" class="uk-input" asp-items="ViewBag.FormaId" readonly />
-            </div>
-            <div class="uk-width-1-3">
-                <label asp-for="Nome" class="uk-form-label"></label>
-                <input asp-for="Nome" class="uk-input" readonly/>
-            </div>
-            <div class="uk-width-1-3">
-                <label asp-for="QtdAlunos" class="uk-form-label"></label>
-                <input asp-for="QtdAlunos" class="uk-input" readonly/>
-            </div>
-            <div class="uk-width-1-3">
-                <label class="uk-form-label"></label>
-                <input class="uk-checkbox" asp-for="Extinta" readonly/> @Html.DisplayNameFor(model => model.Extinta)
-            </div>
+        <input type="hidden" asp-for="Id" />
+        <div class="uk-width-1-3">
+            <label asp-for="Sala.Nome" class="uk-form-label"></label>
+            <input asp-for="Sala.Nome" class="uk-input" asp-items="ViewBag.SalaId" readonly />
+        </div>
+        <div class="uk-width-1-3">
+            <label asp-for="Etapa.Nome" class="uk-form-label"></label>
+            <input asp-for="Etapa.Nome" class="uk-input" asp-items="ViewBag.EtapaId" readonly />
+        </div>
+        <div class="uk-width-1-3">
+            <label asp-for="Turno.Nome" class="uk-form-label"></label>
+            <input asp-for="Turno.Nome" class="uk-input" asp-items="ViewBag.TurnoId" readonly />
+        </div>
+        <div class="uk-width-1-3">
+            <label asp-for="Forma.Nome" class="uk-form-label"></label>
+            <input asp-for="Forma.Nome" class="uk-input" asp-items="ViewBag.FormaId" readonly />
+        </div>
+        <div class="uk-width-1-3">
+            <label asp-for="Nome" class="uk-form-label"></label>
+            <input asp-for="Nome" class="uk-input" readonly />
+        </div>
+        <div class="uk-width-1-3">
+            <label asp-for="QtdAlunos" class="uk-form-label"></label>
+            <input asp-for="QtdAlunos" class="uk-input" readonly />
+        </div>
+        <div class="uk-width-1-3">
+            <input class="uk-checkbox" asp-for="Extinta" readonly />
+            <label class="uk-form-label" asp-for="Extinta"></label>
+        </div>
     </form>
 </main>

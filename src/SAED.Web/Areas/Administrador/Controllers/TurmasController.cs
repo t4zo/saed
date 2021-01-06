@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.Core.Interfaces;
+using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Area("Administrador")]
+    [Area(AuthorizationConstants.Areas.Administrador)]
     public class TurmasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,7 +21,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var turmas = _context.Turmas.Include(t => t.Etapa).Include(t => t.Forma).Include(t => t.Sala).Include(t => t.Turno);
+            var turmas = _context.Turmas
+                .AsNoTracking()
+                .Include(t => t.Etapa)
+                .Include(t => t.Forma)
+                .Include(t => t.Sala)
+                .Include(t => t.Turno);
+
             return View(await turmas.ToListAsync());
         }
 
@@ -31,6 +37,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             ViewData["FormaId"] = new SelectList(_context.Formas, "Id", "Nome");
             ViewData["SalaId"] = new SelectList(_context.Salas, "Id", "Nome");
             ViewData["TurnoId"] = new SelectList(_context.Turnos, "Id", "Nome");
+
             return View();
         }
 
@@ -42,7 +49,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 _context.Add(turma);
                 await _context.SaveChangesAsync();
-                
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -64,7 +71,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
-            ViewBag.EscolaId = new SelectList(_context.Escolas.OrderBy(x => x.Id), "Id", "Nome", salasEscola.Select(x => x.EscolaId).First());
+            ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome", salasEscola.Select(x => x.EscolaId).First());
 
             ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome", turma.EtapaId);
             ViewData["FormaId"] = new SelectList(_context.Formas, "Id", "Nome", turma.FormaId);
@@ -96,10 +103,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
+                    throw;
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -130,7 +135,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
             return View(turma);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

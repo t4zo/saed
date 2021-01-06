@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAED.Core.Interfaces;
+using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Area("Administrador")]
+    [Area(AuthorizationConstants.Areas.Administrador)]
     public class SalasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +22,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Index(int? escolaId)
         {
             var salas = await _context.Salas.Include(s => s.Escola).ToListAsync();
-            
+
             if (escolaId.HasValue)
             {
                 salas = salas.Where(x => x.EscolaId == escolaId).ToList();
@@ -47,7 +47,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 _context.Add(sala);
                 await _context.SaveChangesAsync();
-                
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -92,10 +92,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
+                    throw;
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -119,7 +117,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
             return View(sala);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

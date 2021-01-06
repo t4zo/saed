@@ -188,6 +188,13 @@
                 </li>
             }
 
+            @if (User.HasClaim(x => x.Value == Permissions.Alunos.View))
+            {
+                <li>
+                    <a asp-area="@Areas.Administrador" asp-controller="Alunos" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Alunos</a>
+                </li>
+            }
+
             @if (User.HasClaim(x => x.Value == Permissions.Distritos.View) || User.HasClaim(x => x.Value == Permissions.Escolas.View) || User.HasClaim(x => x.Value == Permissions.Avaliacoes.View))
             {
                 <li class="uk-nav-divider"></li>

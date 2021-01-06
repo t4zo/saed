@@ -41,5 +41,27 @@ namespace SAED.Web.Areas.Api.Controllers
 
             return Ok(JsonSerializer.Serialize(turmas));
         }
+
+        [Authorize(Permissions.Salas.View)]
+        [HttpGet("{salaId}")]
+        public async Task<ActionResult<IEnumerable<Turma>>> Get(int salaId)
+        {
+            var turmas = await _context.Turmas
+                .AsNoTracking()
+                .Where(x => x.SalaId == salaId)
+                .ToListAsync();
+
+            if (turmas is null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var turma in turmas)
+            {
+                turma.ClearReferenceCycle();
+            }
+
+            return Ok(JsonSerializer.Serialize(turmas));
+        }
     }
 }
