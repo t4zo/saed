@@ -49,9 +49,9 @@ jobs:
             dotnet build -c Release
             dotnet publish -c Release --no-build
             cd ${{ secrets.DOCROOT }}/
-            # dotnet-ef database drop --no-build -f -s SAED.Web -p SAED.Infrastructure
-            # dotnet-ef migrations add Initial --no-build -s SAED.Web -p SAED.Infrastructure
-            # dotnet-ef database update -s SAED.Web -p SAED.Infrastructure
+            dotnet-ef database drop --no-build -f -s SAED.Web -p SAED.Infrastructure
+            dotnet-ef migrations add Initial --no-build -s SAED.Web -p SAED.Infrastructure
+            dotnet-ef database update -s SAED.Web -p SAED.Infrastructure
             sudo systemctl start saed
 
       # - name: Invoke deployment hook
