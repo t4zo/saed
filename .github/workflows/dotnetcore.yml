@@ -29,17 +29,35 @@ jobs:
       - name: Test SAED.Api
         run: dotnet test --configuration Release ./src/SAED.Api/SAED.Api.csproj
 
-      - name: Invoke deployment hook
-        uses: distributhor/workflow-webhook@v1.0.5
-        env:
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
-          webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-      #     webhook_auth: ${{ secrets.WEBHOOK_AUTH }}
+      - name: Deploy to droplet using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          # key: ${{ secrets.PRIVATE_KEY }}
+          debug: true
+          script: |
+            logname
+            sudo systemctl stop saed
+            cd ${{ secrets.DOCROOT }}
+            rm -rf SAED.Infrastructure/Migrations
+            git reset --hard HEAD
+            git pull
+            rm -rf SAED.Infrastructure/Migrations
+            cd ${{ secrets.DOCROOT }}/SAED.Web/
+            dotnet build -c Release
+            dotnet publish -c Release --no-build
+            cd ${{ secrets.DOCROOT }}/
+            # dotnet-ef database drop --no-build -f -s SAED.Web -p SAED.Infrastructure
+            # dotnet-ef migrations add Initial --no-build -s SAED.Web -p SAED.Infrastructure
+            # dotnet-ef database update -s SAED.Web -p SAED.Infrastructure
+            sudo systemctl start saed
 
-      # - name: Webhook Action
-      #   uses: joelwmale/webhook-action@2.0.2
-      #   with:
-      #     url: ${{ secrets.WEBHOOK_URL }}
-      #     headers: '{"repository": "tacio/saed"}'
-      #     body: '{"event": "deployment", "repository": "tacio/saed"}'
+      # - name: Invoke deployment hook
+      #   uses: distributhor/workflow-webhook@v1.0.5
+      #   env:
+      #     webhook_url: ${{ secrets.WEBHOOK_URL }}
+      #     webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+      #     webhook_auth: ${{ secrets.WEBHOOK_AUTH }}
       
