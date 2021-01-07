@@ -12,35 +12,45 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.100
+
       - name: Restore SAED.Web
         run: dotnet restore ./src/SAED.Web/SAED.Web.csproj
+
       - name: Build SAED.Web
         run: dotnet build --configuration Release --no-restore ./src/SAED.Web/SAED.Web.csproj
+
       - name: Test SAED.Web
         run: dotnet test --configuration Release ./src/SAED.Web/SAED.Web.csproj
+
       - name: Restore SAED.Api
         run: dotnet restore ./src/SAED.Api/SAED.Api.csproj
+
       - name: Build SAED.Api
         run: dotnet build --configuration Release --no-restore ./src/SAED.Api/SAED.Api.csproj
+
       - name: Test SAED.Api
         run: dotnet test --configuration Release ./src/SAED.Api/SAED.Api.csproj
 
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v2
+      
       - name: Deploy to droplet using SSH
         uses: appleboy/ssh-action@master
-        # env:
-        #   Provider: "DigitalOcean"
-        #   Database: "Postgres"
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           # key: ${{ secrets.PRIVATE_KEY }}
           debug: true
-          # envs: "'Provider=DigitalOcean','Database=Postgres'"
           script: |
             logname
             export Provider=DigitalOcean
