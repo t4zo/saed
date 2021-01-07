@@ -31,14 +31,20 @@ jobs:
 
       - name: Deploy to droplet using SSH
         uses: appleboy/ssh-action@master
+        # env:
+        #   Provider: "DigitalOcean"
+        #   Database: "Postgres"
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           # key: ${{ secrets.PRIVATE_KEY }}
           debug: true
+          # envs: "'Provider=DigitalOcean','Database=Postgres'"
           script: |
             logname
+            export Provider=DigitalOcean
+            export Database=Postgres
             sudo systemctl stop saed
             cd ${{ secrets.DOCROOT }}
             rm -rf SAED.Infrastructure/Migrations
