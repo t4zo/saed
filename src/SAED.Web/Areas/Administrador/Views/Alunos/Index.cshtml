@@ -22,32 +22,32 @@
 </form>
 
 <main class="uk-card uk-card-default uk-card-body">
-    @{ await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Alunos", Controller = "Alunos", Action = "Alunos" }); }
+    @{ await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader {Header = "Alunos", Controller = "Alunos", Action = "Alunos"}); }
     <div class="uk-overflow-auto">
         <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
             <thead>
-                <tr>
-                    <th>Escola</th>
-                    <th>Etapa - Turma</th>
-                    <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                    <th>@Html.DisplayNameFor(model => model.Nascimento)</th>
-                    <th class="uk-text-center">Ações</th>
-                </tr>
+            <tr>
+                <th>Escola</th>
+                <th>Etapa - Turma</th>
+                <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Nascimento)</th>
+                <th class="uk-text-center">Ações</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Turma.Sala.Escola.Nome</td>
-                        <td>@item.Turma.Etapa.Nome - @item.Turma.Nome</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td>@item.Nascimento.ToShortDateString()</td>
-                        <td class="uk-flex uk-flex-center">
-                            <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
-                            <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Turma.Sala.Escola.Nome</td>
+                    <td>@item.Turma.Etapa.Nome - @item.Turma.Nome</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@item.Nascimento.ToShortDateString()</td>
+                    <td class="uk-flex uk-flex-center">
+                        <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
+                        <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

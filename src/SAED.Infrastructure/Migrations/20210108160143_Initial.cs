@@ -646,35 +646,6 @@ namespace SAED.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsuarioTurmaAvaliacao",
-                columns: table => new
-                {
-                    ApplicationUserId = table.Column<int>(type: "int", nullable: false),
-                    TurmaId = table.Column<int>(type: "int", nullable: false),
-                    AvaliacaoId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsuarioTurmaAvaliacao", x => new { x.ApplicationUserId, x.TurmaId, x.AvaliacaoId });
-                    table.ForeignKey(
-                        name: "FK_UsuarioTurmaAvaliacao_Avaliacoes_AvaliacaoId",
-                        column: x => x.AvaliacaoId,
-                        principalTable: "Avaliacoes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UsuarioTurmaAvaliacao_Turmas_TurmaId",
-                        column: x => x.TurmaId,
-                        principalTable: "Turmas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RespostaAlunos",
                 columns: table => new
                 {
@@ -806,8 +777,7 @@ namespace SAED.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_RespostaAlunos_AlternativaId",
                 table: "RespostaAlunos",
-                column: "AlternativaId",
-                unique: true);
+                column: "AlternativaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RespostaAlunos_AlunoId",
@@ -848,16 +818,6 @@ namespace SAED.Infrastructure.Migrations
                 name: "IX_Turmas_TurnoId",
                 table: "Turmas",
                 column: "TurnoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsuarioTurmaAvaliacao_AvaliacaoId",
-                table: "UsuarioTurmaAvaliacao",
-                column: "AvaliacaoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsuarioTurmaAvaliacao_TurmaId",
-                table: "UsuarioTurmaAvaliacao",
-                column: "TurmaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -885,9 +845,6 @@ namespace SAED.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "RespostaAlunos");
-
-            migrationBuilder.DropTable(
-                name: "UsuarioTurmaAvaliacao");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

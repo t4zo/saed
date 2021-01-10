@@ -188,6 +188,14 @@
                 public const string Update = "Permissions.Alternativas.Update";
                 public const string Delete = "Permissions.Alternativas.Delete";
             }
+
+            public static class Relatorios
+            {
+                public const string View = "Permissions.Relatorios.View";
+                public const string Create = "Permissions.Relatorios.Create";
+                public const string Update = "Permissions.Relatorios.Update";
+                public const string Delete = "Permissions.Relatorios.Delete";
+            }
         }
     }
 }

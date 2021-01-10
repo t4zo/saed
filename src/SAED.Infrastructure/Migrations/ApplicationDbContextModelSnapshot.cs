@@ -17,7 +17,7 @@ namespace SAED.Infrastructure.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("AvaliacaoQuestao", b =>
                 {
@@ -686,8 +686,7 @@ namespace SAED.Infrastructure.Migrations
 
                     b.HasKey("AvaliacaoId", "AlunoId", "AlternativaId");
 
-                    b.HasIndex("AlternativaId")
-                        .IsUnique();
+                    b.HasIndex("AlternativaId");
 
                     b.HasIndex("AlunoId");
 
@@ -888,38 +887,6 @@ namespace SAED.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Turnos");
-                });
-
-            modelBuilder.Entity("SAED.Core.Entities.UsuarioTurmaAvaliacao", b =>
-                {
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TurmaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AvaliacaoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ApplicationUserId", "TurmaId", "AvaliacaoId");
-
-                    b.HasIndex("AvaliacaoId");
-
-                    b.HasIndex("TurmaId");
-
-                    b.ToTable("UsuarioTurmaAvaliacao");
                 });
 
             modelBuilder.Entity("SAED.Infrastructure.Identity.ApplicationRole", b =>
@@ -1221,8 +1188,8 @@ namespace SAED.Infrastructure.Migrations
             modelBuilder.Entity("SAED.Core.Entities.RespostaAluno", b =>
                 {
                     b.HasOne("SAED.Core.Entities.Alternativa", "Alternativa")
-                        .WithOne("RespostaAluno")
-                        .HasForeignKey("SAED.Core.Entities.RespostaAluno", "AlternativaId")
+                        .WithMany("RespostaAlunos")
+                        .HasForeignKey("AlternativaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1313,28 +1280,9 @@ namespace SAED.Infrastructure.Migrations
                     b.Navigation("Turno");
                 });
 
-            modelBuilder.Entity("SAED.Core.Entities.UsuarioTurmaAvaliacao", b =>
-                {
-                    b.HasOne("SAED.Core.Entities.Avaliacao", "Avaliacao")
-                        .WithMany("UsuarioTurmaAvaliacao")
-                        .HasForeignKey("AvaliacaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SAED.Core.Entities.Turma", "Turma")
-                        .WithMany("UsuarioTurmaAvaliacao")
-                        .HasForeignKey("TurmaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Avaliacao");
-
-                    b.Navigation("Turma");
-                });
-
             modelBuilder.Entity("SAED.Core.Entities.Alternativa", b =>
                 {
-                    b.Navigation("RespostaAluno");
+                    b.Navigation("RespostaAlunos");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Aluno", b =>
@@ -1347,8 +1295,6 @@ namespace SAED.Infrastructure.Migrations
                     b.Navigation("AvaliacaoDisciplinasEtapas");
 
                     b.Navigation("RespostaAlunos");
-
-                    b.Navigation("UsuarioTurmaAvaliacao");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Curso", b =>
@@ -1415,8 +1361,6 @@ namespace SAED.Infrastructure.Migrations
             modelBuilder.Entity("SAED.Core.Entities.Turma", b =>
                 {
                     b.Navigation("Alunos");
-
-                    b.Navigation("UsuarioTurmaAvaliacao");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Turno", b =>

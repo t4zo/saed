@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {
-    [Area("Administrador")]
+    [Area(AuthorizationConstants.Areas.Administrador)]
     public class AlunosController : Controller
     {
         private readonly ApplicationDbContext _context;

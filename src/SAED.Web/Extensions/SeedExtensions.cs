@@ -250,15 +250,18 @@ namespace SAED.Web.Extensions
             {
                 new() {Id = 1, EscolaId = 1, Nome = "SALA 01", Capacidade = 10},
                 new() {Id = 2, EscolaId = 1, Nome = "SALA 02", Capacidade = 20},
-                new() {Id = 3, EscolaId = 2, Nome = "SALA 01", Capacidade = 30}
+                new() {Id = 3, EscolaId = 1, Nome = "SALA 03", Capacidade = 10},
+                new() {Id = 4, EscolaId = 2, Nome = "SALA 01", Capacidade = 30}
             };
 
             new EntitySeed<Sala>(context, databaseProvider).Load(salas, "Salas");
 
             var turmas = new List<Turma>
             {
-                new() {Id = 1, SalaId = 1, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "A", QtdAlunos = 15, Extinta = false},
-                new() {Id = 2, SalaId = 2, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "B", QtdAlunos = 20, Extinta = false}
+                new() {Id = 1, SalaId = 1, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "A1", QtdAlunos = 15, Extinta = false},
+                new() {Id = 2, SalaId = 2, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "B", QtdAlunos = 20, Extinta = false},
+                new() {Id = 3, SalaId = 3, EtapaId = 10, TurnoId = 1, FormaId = 1, Nome = "C", QtdAlunos = 20, Extinta = false},
+                new() {Id = 4, SalaId = 4, EtapaId = 12, TurnoId = 1, FormaId = 1, Nome = "A2", QtdAlunos = 20, Extinta = false}
             };
 
             new EntitySeed<Turma>(context, databaseProvider).Load(turmas, "Turmas");
@@ -328,6 +331,7 @@ namespace SAED.Web.Extensions
                 new() {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 10},
                 new() {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11},
                 new() {AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11},
+                new() {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 12},
                 new() {AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11}
             };
 

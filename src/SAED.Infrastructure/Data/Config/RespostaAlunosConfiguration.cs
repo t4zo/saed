@@ -19,8 +19,8 @@ namespace SAED.Infrastructure.Data.Config
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(respostaAluno => respostaAluno.Alternativa)
-                .WithOne(aluno => aluno.RespostaAluno)
-                .HasForeignKey<RespostaAluno>(respostaAluno => respostaAluno.AlternativaId)
+                .WithMany(aluno => aluno.RespostaAlunos)
+                .HasForeignKey(respostaAluno => respostaAluno.AlternativaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasKey(respostaAluno => new

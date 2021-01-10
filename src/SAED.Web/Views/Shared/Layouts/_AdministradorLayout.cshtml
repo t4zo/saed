@@ -238,6 +238,16 @@
                 <li class="uk-nav-divider"></li>
             }
 
+            @if (User.HasClaim(x => x.Value == Permissions.Relatorios.View))
+            {
+                <li class="uk-nav-header">
+                    <a asp-area="@Areas.Administrador" asp-controller="Relatorios" asp-action="Index"><span class="uk-margin-small-right" uk-icon="table"></span> Relatórios</a>
+                </li>
+
+                <li class="uk-nav-divider"></li>
+            }
+
+
             <li class="uk-parent">
                 <a href="#">Parent</a>
                 <ul class="uk-nav-sub">
