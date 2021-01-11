@@ -6,7 +6,7 @@
 
 <main class="uk-card uk-card-default uk-padding-small">
     <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">Consolidado do Município</h2>
-    <section class="uk-flex">
+    <section class="uk-flex uk-margin-small-left">
         <dl class="uk-description-list uk-description-list-divider uk-margin-top uk-margin-small-right">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
@@ -21,20 +21,20 @@
     </section>
     <table id="table_id" class="uk-table uk-table-hover uk-text-center uk-table-striped">
         <thead>
-        <tr>
-            @foreach (var disciplina in Model.ResultadoMunicipioViewModel.Select(x => x.Disciplina).Distinct())
-            {
-                <th class="uk-text-center">@disciplina.Nome</th>
-            }
-        </tr>
+            <tr>
+                @foreach (var disciplina in Model.ResultadoMunicipioViewModel.Select(x => x.Disciplina).Distinct())
+                {
+                    <th class="uk-text-center">@disciplina.Nome</th>
+                }
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            @foreach (var resultado in Model.ResultadoMunicipioViewModel)
-            {
-                <td>@resultado.TaxaAcerto%</td>
-            }
-        </tr>
+            <tr>
+                @foreach (var resultado in Model.ResultadoMunicipioViewModel)
+                {
+                    <td>@resultado.TaxaAcerto%</td>
+                }
+            </tr>
         </tbody>
     </table>
 </main>
