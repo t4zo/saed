@@ -1,11 +1,11 @@
-﻿@model R102ViewModel
+﻿@model R101ViewModel
 
 @{
-    ViewData["Title"] = "101 - Consolidado por Distrito";
+    ViewData["Title"] = "101 - Consolidado por Etapa";
 }
 
 <main class="uk-card uk-card-default uk-padding-small">
-    <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">Consolidado por Distrito</h2>
+    <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">Consolidado por Etapa</h2>
     <section class="uk-flex">
         <dl class="uk-description-list uk-description-list-divider uk-margin-top uk-margin-small-right">
             <dt>Total de Questões</dt>
@@ -22,7 +22,7 @@
     <table id="table_id" class="uk-table uk-table-hover uk-text-center uk-table-striped">
         <thead>
         <tr>
-            <th class="uk-text-center">Distrito</th>
+            <th class="uk-text-center">Etapa</th>
             <th class="uk-text-center">Alunos</th>
             @foreach (var disciplina in Model.DisciplinasViewModel.Select(x => x.Disciplina).Distinct())
             {
@@ -31,17 +31,17 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var distritoViewModel in Model.DistritosViewModel.Distinct())
+        @foreach (var etapaViewModel in Model.EtapasViewModel.Distinct())
         {
             <tr>
-                <td>@distritoViewModel.Distrito.Nome</td>
-                <td>@distritoViewModel.QtdAlunos</td>
+                <td>@etapaViewModel.Etapa.Nome</td>
+                <td>@etapaViewModel.QtdAlunos</td>
 
-                @foreach (var resultado in Model.ResultadoDistritosViewModel)
+                @foreach (var resultado in Model.ResultadoEtapasViewModel)
                 {
-                    if (distritoViewModel.Distrito.Id == resultado.DistritoViewModel.Distrito.Id &&
-                        resultado.DisciplinaViewModel.Disciplina.Id == resultado.DistritoViewModel.DisciplinaId &&
-                        resultado.DistritoViewModel.Distrito.Id == resultado.DisciplinaViewModel.DistritoId)
+                    if (etapaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id &&
+                        resultado.DisciplinaViewModel.Disciplina.Id == resultado.EtapaViewModel.DisciplinaId &&
+                        resultado.EtapaViewModel.Etapa.Id == resultado.DisciplinaViewModel.EtapaId)
                     {
                         <td>@resultado.TaxaAcerto%</td>
                     }

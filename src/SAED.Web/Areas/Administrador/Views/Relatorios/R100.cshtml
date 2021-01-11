@@ -1,0 +1,40 @@
+﻿@model R100ViewModel
+
+@{
+    ViewData["Title"] = "100 - Consolidado do Município";
+}
+
+<main class="uk-card uk-card-default uk-padding-small">
+    <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">Consolidado por Etapa</h2>
+    <section class="uk-flex">
+        <dl class="uk-description-list uk-description-list-divider uk-margin-top uk-margin-small-right">
+            <dt>Total de Questões</dt>
+            <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
+        </dl>
+        @foreach (var resultado in Model.ResultadoMunicipioViewModel)
+        {
+            <dl class="uk-description-list uk-margin-small-right uk-margin-small-left">
+                <dt>@resultado.Disciplina.Nome</dt>
+                <dd class="uk-text-capitalize uk-text-center">@resultado.QtdQuestoesDisciplina</dd>
+            </dl>
+        }
+    </section>
+    <table id="table_id" class="uk-table uk-table-hover uk-text-center uk-table-striped">
+        <thead>
+            <tr>
+                @foreach (var disciplina in Model.ResultadoMunicipioViewModel.Select(x => x.Disciplina).Distinct())
+                {
+                    <th class="uk-text-center">@disciplina.Nome</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var resultado in Model.ResultadoMunicipioViewModel)
+                {
+                    <td>@resultado.TaxaAcerto%</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</main>

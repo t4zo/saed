@@ -12,9 +12,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 {
     public partial class RelatoriosController
     {
-        //[HttpGet("[area]/[controller]/r102")]
-        //public async Task<IActionResult> R102ConsolidadoporDistrito()
-        public async Task<IActionResult> R102()
+        public async Task<IActionResult> R101()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
@@ -27,32 +25,30 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .ThenInclude(x => x.Disciplina)
                 .Include(x => x.Aluno)
                 .ThenInclude(x => x.Turma)
-                .ThenInclude(x => x.Sala)
-                .ThenInclude(x => x.Escola)
-                .ThenInclude(x => x.Distrito)
+                .ThenInclude(x => x.Etapa)  
                 .Where(x => x.AvaliacaoId == avaliacao.Id)
                 .ToListAsync();
 
             var disciplinas = respostas.Select(x => x.Alternativa.Questao.Descritor.Tema.Disciplina).Distinct().ToList();
-            var distritos = respostas.Select(x => x.Aluno.Turma.Sala.Escola.Distrito).Distinct().ToList();
+            var etapas = respostas.Select(x => x.Aluno.Turma.Etapa).Distinct().ToList();
 
             var qtdTotalQuestoes = respostas
                 .Select(x => x.Alternativa.Questao)
                 .Distinct()
                 .Count();
 
-            var r102ViewModel = new R102ViewModel
+            var r101ViewModel = new R101ViewModel
             {
                 QtdTotalQuestoes = qtdTotalQuestoes
             };
 
-            var distritosViewModel = new List<DistritoViewModel>();
+            var etapasViewModel = new List<EtapaViewModel>();
             var disciplinasViewModel = new List<DisciplinaViewModel>();
-            foreach (var distrito in distritos)
+            foreach (var etapa in etapas)
             {
                 foreach (var disciplina in disciplinas)
                 {
-                    var qtdAlunos = respostas.Select(x => x.Aluno).Where(x => x.Turma.Sala.Escola.DistritoId == distrito.Id).Distinct().Count();
+                    var qtdAlunos = respostas.Select(x => x.Aluno).Where(x => x.Turma.EtapaId == etapa.Id).Distinct().Count();
 
                     var qtdQuestoesDisciplina = respostas
                         .Select(x => x.Alternativa.Questao)
@@ -65,38 +61,38 @@ namespace SAED.Web.Areas.Administrador.Controllers
                         .Select(x => x.Alternativa)
                         .Count(x => x.Correta);
 
-                    var distritoViewModel = new DistritoViewModel
+                    var etapaViewModel = new EtapaViewModel
                     {
-                        Distrito = distrito,
+                        Etapa = etapa,
                         DisciplinaId = disciplina.Id,
                         QtdAlunos = qtdAlunos
                     };
-                    distritosViewModel.Add(distritoViewModel);
+                    etapasViewModel.Add(etapaViewModel);
 
                     var disciplinaViewModel = new DisciplinaViewModel
                     {
                         Disciplina = disciplina,
-                        DistritoId = distrito.Id,
+                        EtapaId = etapa.Id,
                         QtdQuestoesDisciplina = qtdQuestoesDisciplina,
                         QtdRespostasCorretas = qtdRespostasCorretas
                     };
                     disciplinasViewModel.Add(disciplinaViewModel);
 
-                    r102ViewModel.ResultadoDistritosViewModel.Add(new ResultadoDistritoViewModel
+                    r101ViewModel.ResultadoEtapasViewModel.Add(new ResultadoEtapaViewModel()
                     {
-                        DistritoViewModel = distritoViewModel,
+                        EtapaViewModel = etapaViewModel,
                         DisciplinaViewModel = disciplinaViewModel,
                         QtdRespostasCorretas = disciplinaViewModel.QtdRespostasCorretas,
                         QtdQuestoes = disciplinaViewModel.QtdQuestoesDisciplina,
-                        QtdAlunos = distritoViewModel.QtdAlunos
+                        QtdAlunos = etapaViewModel.QtdAlunos
                     });
                 }
             }
 
-            r102ViewModel.DistritosViewModel = distritosViewModel;
-            r102ViewModel.DisciplinasViewModel = disciplinasViewModel;
+            r101ViewModel.EtapasViewModel = etapasViewModel;
+            r101ViewModel.DisciplinasViewModel = disciplinasViewModel;
 
-            return View(r102ViewModel);
+            return View(r101ViewModel);
         }
     }
 }

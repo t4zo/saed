@@ -3,30 +3,30 @@ using System;
 
 namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 {
-    public class DistritoViewModel : IEquatable<DistritoViewModel>
+    public class EtapaViewModel : IEquatable<EtapaViewModel>
     {
-        public Distrito Distrito { get; set; }
+        public Etapa Etapa { get; set; }
         public int DisciplinaId { get; set; }
         public int QtdAlunos { get; set; }
 
-        public bool Equals(DistritoViewModel other)
+        public bool Equals(EtapaViewModel other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Distrito, other.Distrito);
+            return Equals(Etapa, other.Etapa);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((DistritoViewModel) obj);
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((EtapaViewModel) obj);
         }
 
         public override int GetHashCode()
         {
-            return Distrito != null ? Distrito.GetHashCode() : 0;
+            return (Etapa != null ? Etapa.GetHashCode() : 0);
         }
     }
 }
