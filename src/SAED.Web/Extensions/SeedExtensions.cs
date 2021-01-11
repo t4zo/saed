@@ -258,10 +258,10 @@ namespace SAED.Web.Extensions
 
             var turmas = new List<Turma>
             {
-                new() {Id = 1, SalaId = 1, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "A1", QtdAlunos = 15, Extinta = false},
-                new() {Id = 2, SalaId = 2, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "B", QtdAlunos = 20, Extinta = false},
-                new() {Id = 3, SalaId = 3, EtapaId = 10, TurnoId = 1, FormaId = 1, Nome = "C", QtdAlunos = 20, Extinta = false},
-                new() {Id = 4, SalaId = 4, EtapaId = 12, TurnoId = 1, FormaId = 1, Nome = "A2", QtdAlunos = 20, Extinta = false}
+                new() {Id = 1, SalaId = 1, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "A1", Extinta = false},
+                new() {Id = 2, SalaId = 2, EtapaId = 11, TurnoId = 1, FormaId = 1, Nome = "B", Extinta = false},
+                new() {Id = 3, SalaId = 3, EtapaId = 10, TurnoId = 1, FormaId = 1, Nome = "C", Extinta = false},
+                new() {Id = 4, SalaId = 4, EtapaId = 12, TurnoId = 1, FormaId = 1, Nome = "A2", Extinta = false}
             };
 
             new EntitySeed<Turma>(context, databaseProvider).Load(turmas, "Turmas");

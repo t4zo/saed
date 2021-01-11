@@ -4,7 +4,6 @@ using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Web.Areas.Administrador.ViewModels.Relatorios;
 using SAED.Web.Extensions;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,7 +39,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 QtdTotalQuestoes = qtdTotalQuestoes
             };
-            
+
             foreach (var disciplina in disciplinas)
             {
                 var qtdAlunos = respostas.Select(x => x.Aluno).Distinct().Count();
@@ -56,7 +55,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     .Select(x => x.Alternativa)
                     .Count(x => x.Correta);
 
-                r100ViewModel.ResultadoMunicipioViewModel.Add(new ResultadoMunicipioViewModel()
+                r100ViewModel.ResultadoMunicipioViewModel.Add(new ResultadoMunicipioViewModel
                 {
                     Disciplina = disciplina,
                     QtdQuestoesDisciplina = qtdQuestoesDisciplina,
@@ -64,7 +63,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     QtdQuestoes = qtdQuestoesDisciplina,
                     QtdAlunos = qtdAlunos
                 });
-
             }
 
             return View(r100ViewModel);

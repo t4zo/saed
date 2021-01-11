@@ -48,6 +48,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
         public IActionResult Create()
         {
+            ViewData["EscolaId"] = new SelectList(_context.Escolas, "Id", "Nome");
             ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome");
             ViewData["FormaId"] = new SelectList(_context.Formas, "Id", "Nome");
             ViewData["SalaId"] = new SelectList(_context.Salas, "Id", "Nome");
@@ -60,6 +61,19 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Turma turma)
         {
+            if (turma.SalaId == 0)
+            {
+                ModelState.AddModelError("", "Escola e/ou Sala inválido(s)");
+
+                ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome");
+
+                ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome", turma.EtapaId);
+                ViewData["FormaId"] = new SelectList(_context.Formas, "Id", "Nome", turma.FormaId);
+                ViewData["TurnoId"] = new SelectList(_context.Turnos, "Id", "Nome", turma.TurnoId);
+
+                return View(turma);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(turma);
@@ -105,6 +119,19 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return NotFound();
             }
 
+            if (turma.SalaId == 0)
+            {
+                ModelState.AddModelError("", "Escola e/ou Sala inválido(s)");
+                    
+                ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome");
+
+                ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome", turma.EtapaId);
+                ViewData["FormaId"] = new SelectList(_context.Formas, "Id", "Nome", turma.FormaId);
+                ViewData["TurnoId"] = new SelectList(_context.Turnos, "Id", "Nome", turma.TurnoId);
+
+                return View(turma);
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -121,8 +148,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
                     throw;
                 }
-
-                return RedirectToAction(nameof(Index));
             }
 
             ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome", turma.EtapaId);

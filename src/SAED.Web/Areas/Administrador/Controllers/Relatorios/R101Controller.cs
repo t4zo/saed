@@ -25,7 +25,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .ThenInclude(x => x.Disciplina)
                 .Include(x => x.Aluno)
                 .ThenInclude(x => x.Turma)
-                .ThenInclude(x => x.Etapa)  
+                .ThenInclude(x => x.Etapa)
                 .Where(x => x.AvaliacaoId == avaliacao.Id)
                 .ToListAsync();
 
@@ -78,7 +78,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     };
                     disciplinasViewModel.Add(disciplinaViewModel);
 
-                    r101ViewModel.ResultadoEtapasViewModel.Add(new ResultadoEtapaViewModel()
+                    r101ViewModel.ResultadoEtapasViewModel.Add(new ResultadoEtapaViewModel
                     {
                         EtapaViewModel = etapaViewModel,
                         DisciplinaViewModel = disciplinaViewModel,

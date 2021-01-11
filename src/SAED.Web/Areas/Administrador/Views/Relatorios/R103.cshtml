@@ -1,0 +1,58 @@
+﻿@model R103ViewModel
+
+@{
+    ViewData["Title"] = "103 - Consolidado por Distrito/Etapa";
+}
+
+<main class="uk-card uk-card-default uk-padding-small">
+    <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">Consolidado por Distrito > Etapa</h2>
+    <section class="uk-flex">
+        <dl class="uk-description-list uk-description-list-divider uk-margin-top uk-margin-small-right">
+            <dt>Total de Questões</dt>
+            <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
+        </dl>
+        @foreach (var disciplina in Model.DisciplinasViewModel)
+        {
+            <dl class="uk-description-list uk-margin-small-right uk-margin-small-left">
+                <dt>@disciplina.Disciplina.Nome</dt>
+                <dd class="uk-text-capitalize uk-text-center">@disciplina.QtdQuestoesDisciplina</dd>
+            </dl>
+        }
+    </section>
+    @foreach (var distrito in Model.DistritosEtapasViewModel.Select(x => x.Distrito).Distinct())
+    {
+        <h5>@distrito.Nome</h5>
+        <table id="table_id" class="uk-table uk-table-hover uk-text-center uk-table-striped">
+            <thead>
+            <tr>
+                <th class="uk-text-center">Etapa</th>
+                <th class="uk-text-center">Alunos</th>
+                @foreach (var disciplina in Model.DisciplinasViewModel.Select(x => x.Disciplina).Distinct())
+                {
+                    <th class="uk-text-center">@disciplina.Nome</th>
+                }
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var distritoEtapaViewModel in Model.DistritosEtapasViewModel.Distinct())
+            {
+                <tr>
+                    <td>@distritoEtapaViewModel.Etapa.Nome</td>
+                    <td>@distritoEtapaViewModel.QtdAlunos</td>
+
+                    @foreach (var resultado in Model.ResultadoDistritosEtapasViewModel)
+                    {
+                        if (distritoEtapaViewModel.Distrito.Id == resultado.DistritoEtapaViewModel.Distrito.Id &&
+                            distritoEtapaViewModel.Etapa.Id == resultado.DistritoEtapaViewModel.Etapa.Id &&
+                            resultado.DisciplinaViewModel.Disciplina.Id == resultado.DistritoEtapaViewModel.DisciplinaId &&
+                            resultado.DistritoEtapaViewModel.Distrito.Id == resultado.DisciplinaViewModel.DistritoId)
+                            {
+                                <td>@resultado.TaxaAcerto%</td>
+                            }
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</main>

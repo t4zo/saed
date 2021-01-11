@@ -55,6 +55,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Aluno aluno)
         {
+            if (aluno.TurmaId == 0)
+            {
+                ModelState.AddModelError("", "Escola e/ou Sala e/ou Turma inválido(s)");
+
+                ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(aluno);
@@ -108,6 +115,15 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (id != aluno.Id)
             {
                 return NotFound();
+            }
+
+            if (aluno.TurmaId == 0)
+            {
+                ModelState.AddModelError("", "Escola e/ou Sala e/ou Turma inválido(s)");
+
+                ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome");
+                
+                return View(aluno);
             }
 
             if (ModelState.IsValid)

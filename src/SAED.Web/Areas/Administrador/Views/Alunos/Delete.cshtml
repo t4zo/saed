@@ -12,18 +12,17 @@
     </div>
     <hr class="uk-list-divider" />
     <form class="uk-grid-row-small form" uk-grid asp-action="Delete">
-        <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
         <input type="hidden" asp-for="Id" />
         <div class="uk-width-1-3">
-            <label asp-for="Turma.Sala.Escola.Nome" class="uk-form-label"></label>
+            <label asp-for="Turma.Sala.Escola.Nome" class="uk-form-label">Escola</label>
             <input asp-for="Turma.Sala.Escola.Nome" class="uk-input" asp-items="ViewBag.EscolaId" readonly />
         </div>
         <div class="uk-width-1-3">
-            <label asp-for="Turma.Sala.Nome" class="uk-form-label"></label>
+            <label asp-for="Turma.Sala.Nome" class="uk-form-label">Sala</label>
             <input asp-for="Turma.Sala.Nome" class="uk-input" asp-items="ViewBag.SalaId" readonly />
         </div>
         <div class="uk-width-1-3">
-            <label asp-for="Turma.Nome" class="uk-form-label"></label>
+            <label asp-for="Turma.Nome" class="uk-form-label">Turma</label>
             <input asp-for="Turma.Nome" class="uk-input" asp-items="ViewBag.TurmaId" readonly />
         </div>
         <div class="uk-width-1-3">

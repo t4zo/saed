@@ -13,10 +13,7 @@ namespace SAED.Infrastructure.Data.Config
             builder.Property(x => x.Nome)
                 .HasMaxLength(32)
                 .IsRequired();
-
-            builder.Property(x => x.QtdAlunos)
-                .IsRequired();
-
+            
             builder.HasOne(turma => turma.Sala)
                 .WithMany(sala => sala.Turmas)
                 .HasForeignKey(turma => turma.SalaId)

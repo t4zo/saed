@@ -15,7 +15,6 @@ namespace SAED.Core.Entities
         public int FormaId { get; set; }
         public Forma Forma { get; set; }
         public string Nome { get; set; }
-        public int QtdAlunos { get; set; }
         public bool Extinta { get; set; }
         public ICollection<Aluno> Alunos { get; set; }
 

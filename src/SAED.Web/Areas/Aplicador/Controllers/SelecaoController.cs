@@ -85,8 +85,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                     SalaId = x.SalaId,
                     TurnoId = x.TurnoId,
                     Turno = x.Turno,
-                    Extinta = x.Extinta,
-                    QtdAlunos = x.QtdAlunos
+                    Extinta = x.Extinta
                 })
                 .FirstOrDefaultAsync();
 

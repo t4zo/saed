@@ -32,7 +32,6 @@
                 <th>@Html.DisplayNameFor(model => model.Etapa)</th>
                 <th>@Html.DisplayNameFor(model => model.Turno)</th>
                 <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                <th>@Html.DisplayNameFor(model => model.QtdAlunos)</th>
                 <th class="uk-text-center">Ações</th>
             </tr>
             </thead>
@@ -45,7 +44,6 @@
                     <td>@Html.DisplayFor(modelItem => item.Etapa.Nome)</td>
                     <td>@Html.DisplayFor(modelItem => item.Turno.Nome)</td>
                     <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                    <td>@Html.DisplayFor(modelItem => item.QtdAlunos)</td>
                     <td class="uk-flex uk-flex-center">
                         <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
                         <a uk-icon="trash" title="Remover" asp-action="Delete" asp-route-id="@item.Id"></a>

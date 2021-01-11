@@ -1329,7 +1329,6 @@ namespace SAED.Api.Extensions
                     TurnoId = 1,
                     FormaId = 1,
                     Nome = "A",
-                    QtdAlunos = 15,
                     Extinta = false
                 }
             };

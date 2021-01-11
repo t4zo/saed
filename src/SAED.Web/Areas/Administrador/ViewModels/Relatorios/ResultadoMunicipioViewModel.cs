@@ -14,7 +14,6 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
         public int QtdAlunos { get; set; }
         public double TaxaAcerto => (double) QtdRespostasCorretas / (QtdQuestoes * QtdAlunos) * 100;
 
-        
 
         public bool Equals(ResultadoMunicipioViewModel other)
         {
