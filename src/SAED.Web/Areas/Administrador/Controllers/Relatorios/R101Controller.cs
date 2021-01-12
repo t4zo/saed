@@ -57,6 +57,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                         .Count();
 
                     var qtdRespostasCorretas = respostas
+                        .Where(x => x.Aluno.Turma.EtapaId == etapa.Id)
                         .Where(x => x.Alternativa.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
                         .Select(x => x.Alternativa)
                         .Count(x => x.Correta);

@@ -2,18 +2,18 @@
 
 namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 {
-    public class R103ViewModel
+    public class R102ViewModel
     {
-        public R103ViewModel()
+        public R102ViewModel()
         {
-            DistritosEtapasViewModel = new List<DistritoEtapaViewModel>();
+            DistritosViewModel = new List<DistritoViewModel>();
             DisciplinasViewModel = new List<DisciplinaViewModel>();
-            ResultadoDistritosEtapasViewModel = new List<ResultadoDistritoEtapaViewModel>();
+            ResultadoDistritosViewModel = new List<ResultadoDistritoViewModel>();
         }
 
         public int QtdTotalQuestoes { get; set; }
-        public IList<DistritoEtapaViewModel> DistritosEtapasViewModel { get; set; }
+        public IList<DistritoViewModel> DistritosViewModel { get; set; }
         public IList<DisciplinaViewModel> DisciplinasViewModel { get; set; }
-        public IList<ResultadoDistritoEtapaViewModel> ResultadoDistritosEtapasViewModel { get; set; }
+        public IList<ResultadoDistritoViewModel> ResultadoDistritosViewModel { get; set; }
     }
 }

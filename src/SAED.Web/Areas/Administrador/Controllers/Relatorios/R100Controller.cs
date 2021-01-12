@@ -51,8 +51,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     .Count();
 
                 var qtdRespostasCorretas = respostas
-                    .Where(x => x.Alternativa.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
                     .Select(x => x.Alternativa)
+                    .Where(x => x.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
                     .Count(x => x.Correta);
 
                 r100ViewModel.ResultadoMunicipioViewModel.Add(new ResultadoMunicipioViewModel

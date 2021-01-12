@@ -7,7 +7,9 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
     {
         public Disciplina Disciplina { get; set; }
         public int DistritoId { get; set; }
+        public int EscolaId { get; set; }
         public int EtapaId { get; set; }
+        public int AlunoId { get; set; }
         public int QtdQuestoesDisciplina { get; set; }
         public int QtdRespostasCorretas { get; set; }
 
