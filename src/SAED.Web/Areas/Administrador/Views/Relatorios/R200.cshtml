@@ -1,7 +1,7 @@
-﻿@model R100ViewModel
+﻿@model R200ViewModel
 
 @{
-    ViewData["Title"] = "100 - Consolidado do Município";
+    ViewData["Title"] = "200 - Consolidado do Município";
 }
 
 <main class="uk-card uk-card-default uk-padding-small">
@@ -14,8 +14,8 @@
         @foreach (var resultado in Model.ResultadoMunicipioViewModel)
         {
             <dl class="uk-description-list uk-margin-small-right uk-margin-small-left">
-                <dt>@resultado.Disciplina.Nome</dt>
-                <dd class="uk-text-capitalize uk-text-center">@resultado.QtdQuestoesDisciplina</dd>
+                <dt>@resultado.Tema.Nome</dt>
+                <dd class="uk-text-capitalize uk-text-center">@resultado.QtdQuestoesTema</dd>
             </dl>
         }
     </section>
@@ -30,7 +30,7 @@
             @foreach (var resultado in Model.ResultadoMunicipioViewModel)
             {
                 <tr>
-                    <td>@resultado.Disciplina.Nome</td>
+                    <td>@resultado.Tema.Nome</td>
                     <td>@resultado.TaxaAcerto%</td>
                 </tr>
             }
