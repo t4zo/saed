@@ -1,0 +1,62 @@
+﻿@model R205ViewModel
+
+@{
+    ViewData["Title"] = "205 - Consolidado por Escola > Etapa";
+}
+
+<main class="uk-card uk-card-default uk-padding-small">
+    <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">
+        <span>Consolidado por Escola > Etapa</span>
+        <a href="" onclick="window.print()" uk-icon="icon: print"></a>
+    </h2>
+    <section class="uk-flex uk-flex-center">
+        <dl class="uk-column-1-@(Model.TemasViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
+            <dt>Total de Questões</dt>
+            <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
+            @foreach (var temaViewModel in Model.TemasViewModel)
+            {
+                <dt>@temaViewModel.Tema.Nome</dt>
+                <dd class="uk-text-capitalize uk-text-center">@temaViewModel.QtdQuestoes</dd>
+            }
+        </dl>
+    </section>
+@foreach (var escola in Model.EscolasEtapasViewModel.Select(x => x.Escola).Distinct())
+{
+    <div class="uk-flex uk-flex-between uk-flex-middle">
+        <h3 class="uk-heading-line">@escola.Nome</h3>
+        <div class="uk-text-meta uk-text-right uk-margin-small-right">Taxa de corte: @ApplicationConstants.TaxaCorte%</div>
+    </div>
+    <table id="dataTable" class="uk-table uk-table-hover uk-text-center uk-table-striped">
+        <thead>
+        <tr>
+            <th class="uk-text-center">Etapa</th>
+            <th class="uk-text-center">Alunos</th>
+            <th class="uk-text-center">Taxa de Acerto</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var escolaEtapaViewModel in Model.EscolasEtapasViewModel)
+        {
+            <tr>
+                <td>@escolaEtapaViewModel.Etapa.Nome</td>
+                <td>@escolaEtapaViewModel.Tema.Nome</td>
+
+                @foreach (var resultado in Model.ResultadoEscolasEtapasViewModel)
+                {
+                    if (escolaEtapaViewModel.Escola.Id == resultado.EscolaEtapaViewModel.Escola.Id &&
+                        escolaEtapaViewModel.Tema.Disciplina.Id == resultado.EscolaEtapaViewModel.Tema.Disciplina.Id &&
+                        resultado.TemaViewModel.Tema.Id == resultado.EscolaEtapaViewModel.Tema.Id &&
+                        resultado.TemaViewModel.Escola.Id == resultado.EscolaEtapaViewModel.Escola.Id)
+                    {
+                        <td class="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                            <span>@resultado.TaxaAcertoTema%</span>
+                            <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                        </td>
+                    }
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+</main>

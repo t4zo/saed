@@ -1,12 +1,12 @@
-﻿@model R201ViewModel
+﻿@model R204ViewModel
 
 @{
-    ViewData["Title"] = "201 - Consolidado por Etapa";
+    ViewData["Title"] = "204 - Consolidado por Escola";
 }
 
 <main class="uk-card uk-card-default uk-padding-small">
     <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">
-        <span>Consolidado por Etapa</span>
+        <span>Consolidado por Escola</span>
         <a href="" onclick="window.print()" uk-icon="icon: print"></a>
     </h2>
     <section class="uk-flex uk-flex-center">
@@ -24,24 +24,24 @@
     <table id="dataTable" class="uk-table uk-table-hover uk-text-center uk-table-striped">
         <thead>
             <tr>
-                <th class="uk-text-center">Etapa</th>
+                <th class="uk-text-center">Escola</th>
                 <th class="uk-text-center">Tema</th>
                 <th class="uk-text-center">Taxa de Acerto</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var etapaViewModel in Model.EtapasViewModel)
+            @foreach (var distritoViewModel in Model.EscolasViewModel)
             {
             <tr>
-                <td>@etapaViewModel.Etapa.Nome</td>
-                <td>@etapaViewModel.Tema.Nome</td>
+                <td>@distritoViewModel.Escola.Nome</td>
+                <td>@distritoViewModel.Tema.Nome</td>
 
-                @foreach (var resultado in Model.ResultadoEtapasViewModel)
+                @foreach (var resultado in Model.ResultadoEscolasViewModel)
                 {
-                    if (etapaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id &&
-                        etapaViewModel.Tema.Disciplina.Id == resultado.EtapaViewModel.Tema.Disciplina.Id &&
-                        resultado.TemaViewModel.Tema.Id == resultado.EtapaViewModel.Tema.Id &&
-                        resultado.TemaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id)
+                    if (distritoViewModel.Escola.Id == resultado.EscolaViewModel.Escola.Id &&
+                        distritoViewModel.Tema.Disciplina.Id == resultado.EscolaViewModel.Tema.Disciplina.Id &&
+                        resultado.TemaViewModel.Tema.Id == resultado.EscolaViewModel.Tema.Id &&
+                        resultado.TemaViewModel.Escola.Id == resultado.EscolaViewModel.Escola.Id)
                         {
                             <td class="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
                                 <span>@resultado.TaxaAcertoTema%</span>

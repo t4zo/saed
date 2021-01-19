@@ -58,7 +58,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     {
                         foreach (var disciplina in disciplinas)
                         {
-                            var qtdQuestoesDisciplina = respostas
+                            var qtdQuestoes = respostas
                                 .Where(x => x.Aluno.Turma.EtapaId == etapa.Id)
                                 .Where(x => x.Alternativa.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
                                 .Select(x => x.Alternativa.Questao)
@@ -86,7 +86,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                                 Escola = escola,
                                 Etapa = etapa,
                                 Aluno = aluno,
-                                QtdQuestoesDisciplina = qtdQuestoesDisciplina,
+                                QtdQuestoes = qtdQuestoes,
                                 QtdRespostasCorretas = qtdRespostasCorretas
                             };
                             disciplinasViewModel.Add(disciplinaViewModel);
@@ -94,9 +94,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                             r106ViewModel.ResultadoAlunosViewModel.Add(new ResultadoAlunoViewModel
                             {
                                 AlunoViewModel = alunoViewModel,
-                                DisciplinaViewModel = disciplinaViewModel,
-                                QtdRespostasCorretas = disciplinaViewModel.QtdRespostasCorretas,
-                                QtdQuestoes = disciplinaViewModel.QtdQuestoesDisciplina,
+                                DisciplinaViewModel = disciplinaViewModel
                             });
                         }
                     }

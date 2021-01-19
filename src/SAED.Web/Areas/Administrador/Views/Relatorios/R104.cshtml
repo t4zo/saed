@@ -16,7 +16,7 @@
             @foreach (var disciplinaViewModel in Model.DisciplinasViewModel)
             {
                 <dt>@disciplinaViewModel.Disciplina.Nome</dt>
-                <dd class="uk-text-capitalize uk-text-center">@disciplinaViewModel.QtdQuestoesDisciplina</dd>
+                <dd class="uk-text-capitalize uk-text-center">@disciplinaViewModel.QtdQuestoes</dd>
             }
         </dl>
     </section>
@@ -45,9 +45,9 @@
                             resultado.DisciplinaViewModel.Disciplina.Id == resultado.EscolaViewModel.Disciplina.Id &&
                             resultado.DisciplinaViewModel.Escola.Id == resultado.EscolaViewModel.Escola.Id)
                         {
-                            <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                <span>@resultado.TaxaAcerto%</span>
-                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                            <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                <span>@resultado.TaxaAcertoDisciplina%</span>
+                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                             </td>
                         }
                     }

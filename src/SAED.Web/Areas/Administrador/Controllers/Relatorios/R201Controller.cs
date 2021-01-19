@@ -21,7 +21,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Include(x => x.Alternativa)
                 .ThenInclude(x => x.Questao)
                 .ThenInclude(x => x.Descritor)
-                .ThenInclude(x => x.Tema)      
+                .ThenInclude(x => x.Tema)
                 .ThenInclude(x => x.Disciplina)
                 .Include(x => x.Aluno)
                 .ThenInclude(x => x.Turma)
@@ -50,7 +50,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 {
                     var qtdAlunos = respostas.Select(x => x.Aluno).Where(x => x.Turma.EtapaId == etapa.Id).Distinct().Count();
 
-                    var qtdQuestoesTema = respostas
+                    var qtdQuestoes = respostas
                         .Select(x => x.Alternativa.Questao)
                         .Where(x => x.Descritor.TemaId == tema.Id)
                         .Distinct()
@@ -74,7 +74,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     {
                         Tema = tema,
                         Etapa = etapa,
-                        QtdQuestoesTema = qtdQuestoesTema,
+                        QtdQuestoes = qtdQuestoes,
                         QtdRespostasCorretas = qtdRespostasCorretas
                     };
                     temasViewModel.Add(temaViewModel);

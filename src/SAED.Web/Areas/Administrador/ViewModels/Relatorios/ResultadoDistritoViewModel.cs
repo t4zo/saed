@@ -4,9 +4,8 @@
     {
         public DistritoViewModel DistritoViewModel { get; set; }
         public DisciplinaViewModel DisciplinaViewModel { get; set; }
-        public int QtdRespostasCorretas { get; set; }
-        public int QtdQuestoes { get; set; }
-        public int QtdAlunos { get; set; }
-        public double TaxaAcerto => (double) QtdRespostasCorretas / (QtdQuestoes * QtdAlunos) * 100;
+        public TemaViewModel TemaViewModel { get; set; }
+        public double TaxaAcertoDisciplina => (double) DisciplinaViewModel.QtdRespostasCorretas / (DisciplinaViewModel.QtdQuestoes * DistritoViewModel.QtdAlunos) * 100;
+        public double TaxaAcertoTema => (double) TemaViewModel.QtdRespostasCorretas / (TemaViewModel.QtdQuestoes * DistritoViewModel.QtdAlunos) * 100;
     }
 }

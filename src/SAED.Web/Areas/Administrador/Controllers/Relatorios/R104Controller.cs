@@ -54,7 +54,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 {
                     var qtdAlunos = respostas.Select(x => x.Aluno).Where(x => x.Turma.Sala.EscolaId == escola.Id).Distinct().Count();
 
-                    var qtdQuestoesDisciplina = respostas
+                    var qtdQuestoes = respostas
                         .Select(x => x.Alternativa.Questao)
                         .Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id)
                         .Distinct()
@@ -77,7 +77,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     {
                         Disciplina = disciplina,
                         Escola = escola,
-                        QtdQuestoesDisciplina = qtdQuestoesDisciplina,
+                        QtdQuestoes = qtdQuestoes,
                         QtdRespostasCorretas = qtdRespostasCorretas
                     };
                     disciplinasViewModel.Add(disciplinaViewModel);
@@ -85,10 +85,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     r104ViewModel.ResultadoEscolasViewModel.Add(new ResultadoEscolaViewModel
                     {
                         EscolaViewModel = escolaViewModel,
-                        DisciplinaViewModel = disciplinaViewModel,
-                        QtdRespostasCorretas = disciplinaViewModel.QtdRespostasCorretas,
-                        QtdQuestoes = disciplinaViewModel.QtdQuestoesDisciplina,
-                        QtdAlunos = escolaViewModel.QtdAlunos
+                        DisciplinaViewModel = disciplinaViewModel
                     });
                 }
             }

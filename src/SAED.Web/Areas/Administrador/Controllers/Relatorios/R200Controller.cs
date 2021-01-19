@@ -45,7 +45,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 var qtdAlunos = respostas.Select(x => x.Aluno).Distinct().Count();
 
-                var qtdQuestoesTema = respostas
+                var qtdQuestoes = respostas
                     .Select(x => x.Alternativa.Questao)
                     .Where(x => x.Descritor.TemaId == tema.Id)
                     .Distinct()
@@ -59,9 +59,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 r200ViewModel.ResultadoMunicipioViewModel.Add(new ResultadoMunicipioViewModel
                 {
                     Tema = tema,
-                    QtdQuestoesTema = qtdQuestoesTema,
+                    QtdQuestoesTema = qtdQuestoes,
                     QtdRespostasCorretas = qtdRespostasCorretas,
-                    QtdQuestoes = qtdQuestoesTema,
+                    QtdQuestoes = qtdQuestoes,
                     QtdAlunos = qtdAlunos
                 });
             }

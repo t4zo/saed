@@ -16,7 +16,7 @@
             @foreach (var disciplinaViewModel in Model.DisciplinasViewModel.Distinct())
             {
                 <dt>@disciplinaViewModel.Disciplina.Nome</dt>
-                <dd class="uk-text-capitalize uk-text-center">@disciplinaViewModel.QtdQuestoesDisciplina</dd>
+                <dd class="uk-text-capitalize uk-text-center">@disciplinaViewModel.QtdQuestoes</dd>
             }
         </dl>
     </section>
@@ -53,9 +53,9 @@
                                 resultado.AlunoViewModel.Disciplina.Id == resultado.DisciplinaViewModel.Disciplina.Id &&
                                 resultado.AlunoViewModel.Aluno.Id == resultado.DisciplinaViewModel.Aluno.Id)
                             {
-                                <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                    <span>@resultado.TaxaAcerto%</span>
-                                    <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                                <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                    <span>@resultado.TaxaAcertoDisciplina%</span>
+                                    <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                                 </td>
                             }
                         }

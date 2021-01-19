@@ -12,7 +12,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 {
     public partial class RelatoriosController
     {
-        public async Task<IActionResult> R105()
+        public async Task<IActionResult> R205()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
@@ -29,11 +29,11 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Include(x => x.Aluno)
                 .ThenInclude(x => x.Turma)
                 .ThenInclude(x => x.Sala)
-                .ThenInclude(x => x.Escola)
+                .ThenInclude(x => x.Escola)    
                 .Where(x => x.AvaliacaoId == avaliacao.Id)
                 .ToListAsync();
 
-            var disciplinas = respostas.Select(x => x.Alternativa.Questao.Descritor.Tema.Disciplina).Distinct().ToList();
+            var temas = respostas.Select(x => x.Alternativa.Questao.Descritor.Tema).Distinct().ToList();
             var escolas = respostas.Select(x => x.Aluno.Turma.Sala.Escola).Distinct().ToList();
             var etapas = respostas.Select(x => x.Aluno.Turma.Etapa).Distinct().ToList();
 
@@ -42,31 +42,31 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Distinct()
                 .Count();
 
-            var r105ViewModel = new R105ViewModel
+            var r205ViewModel = new R205ViewModel
             {
                 QtdTotalQuestoes = qtdTotalQuestoes
             };
 
             var escolasEtapasViewModel = new List<EscolaEtapaViewModel>();
-            var disciplinasViewModel = new List<DisciplinaViewModel>();
+            var temasViewModel = new List<TemaViewModel>();
             foreach (var escola in escolas)
             {
                 foreach (var etapa in etapas)
                 {
-                    foreach (var disciplina in disciplinas)
+                    foreach (var tema in temas)
                     {
                         var qtdAlunos = respostas.Select(x => x.Aluno).Where(x => x.Turma.Sala.EscolaId == escola.Id).Distinct().Count();
 
                         var qtdQuestoes = respostas
                             .Where(x => x.Aluno.Turma.EtapaId == etapa.Id)
-                            .Where(x => x.Alternativa.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
+                            .Where(x => x.Alternativa.Questao.Descritor.TemaId == tema.Id)
                             .Select(x => x.Alternativa.Questao)
                             .Distinct()
                             .Count();
 
                         var qtdRespostasCorretas = respostas
                             .Where(x => x.Aluno.Turma.EtapaId == etapa.Id)
-                            .Where(x => x.Alternativa.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
+                            .Where(x => x.Alternativa.Questao.Descritor.TemaId == tema.Id)
                             .Select(x => x.Alternativa)
                             .Count(x => x.Correta);
 
@@ -74,33 +74,33 @@ namespace SAED.Web.Areas.Administrador.Controllers
                         {
                             Escola = escola,
                             Etapa = etapa,
-                            Disciplina = disciplina,
+                            Tema = tema,
                             QtdAlunos = qtdAlunos
                         };
                         escolasEtapasViewModel.Add(escolaEtapaViewModel);
 
-                        var disciplinaViewModel = new DisciplinaViewModel
+                        var temaViewModel = new TemaViewModel
                         {
-                            Disciplina = disciplina,
+                            Tema = tema,
                             Escola = escola,
                             QtdQuestoes = qtdQuestoes,
                             QtdRespostasCorretas = qtdRespostasCorretas
                         };
-                        disciplinasViewModel.Add(disciplinaViewModel);
+                        temasViewModel.Add(temaViewModel);
 
-                        r105ViewModel.ResultadoEscolasEtapasViewModel.Add(new ResultadoEscolaEtapaViewModel
+                        r205ViewModel.ResultadoEscolasEtapasViewModel.Add(new ResultadoEscolaEtapaViewModel
                         {
                             EscolaEtapaViewModel = escolaEtapaViewModel,
-                            DisciplinaViewModel = disciplinaViewModel
+                            TemaViewModel = temaViewModel
                         });
                     }
                 }
             }
 
-            r105ViewModel.EscolasEtapasViewModel = escolasEtapasViewModel;
-            r105ViewModel.DisciplinasViewModel = disciplinasViewModel;
+            r205ViewModel.EscolasEtapasViewModel = escolasEtapasViewModel;
+            r205ViewModel.TemasViewModel = temasViewModel;
 
-            return View(r105ViewModel);
+            return View(r205ViewModel);
         }
     }
 }

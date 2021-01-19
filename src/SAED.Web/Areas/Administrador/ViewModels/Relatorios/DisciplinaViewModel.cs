@@ -10,7 +10,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
         public Escola Escola { get; set; }
         public Etapa Etapa { get; set; }
         public Aluno Aluno { get; set; }
-        public int QtdQuestoesDisciplina { get; set; }
+        public int QtdQuestoes { get; set; }
         public int QtdRespostasCorretas { get; set; }
 
         public bool Equals(DisciplinaViewModel other)

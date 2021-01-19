@@ -54,15 +54,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 {
                     var qtdAlunos = respostas.Select(x => x.Aluno).Where(x => x.Turma.Sala.Escola.DistritoId == distrito.Id).Distinct().Count();
 
-                    var qtdQuestoesDisciplina = respostas
+                    var qtdQuestoes = respostas
                         .Select(x => x.Alternativa.Questao)
                         .Where(x => x.Descritor.Tema.DisciplinaId == disciplina.Id)
                         .Distinct()
                         .Count();
 
                     var qtdRespostasCorretas = respostas
+                        .Where(x => x.Aluno.Turma.Sala.Escola.DistritoId == distrito.Id)
+                        .Where(x => x.Alternativa.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
                         .Select(x => x.Alternativa)
-                        .Where(x => x.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
                         .Count(x => x.Correta);
 
                     var distritoViewModel = new DistritoViewModel
@@ -77,7 +78,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     {
                         Disciplina = disciplina,
                         Distrito = distrito,
-                        QtdQuestoesDisciplina = qtdQuestoesDisciplina,
+                        QtdQuestoes = qtdQuestoes,
                         QtdRespostasCorretas = qtdRespostasCorretas
                     };
                     disciplinasViewModel.Add(disciplinaViewModel);
@@ -85,10 +86,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     r102ViewModel.ResultadoDistritosViewModel.Add(new ResultadoDistritoViewModel
                     {
                         DistritoViewModel = distritoViewModel,
-                        DisciplinaViewModel = disciplinaViewModel,
-                        QtdRespostasCorretas = disciplinaViewModel.QtdRespostasCorretas,
-                        QtdQuestoes = disciplinaViewModel.QtdQuestoesDisciplina,
-                        QtdAlunos = distritoViewModel.QtdAlunos
+                        DisciplinaViewModel = disciplinaViewModel
                     });
                 }
             }

@@ -13,11 +13,10 @@
         <dl class="uk-column-1-@(Model.DisciplinasViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
-
             @foreach (var disciplinaViewModel in Model.DisciplinasViewModel)
             {
                 <dt>@disciplinaViewModel.Disciplina.Nome</dt>
-                <dd class="uk-text-capitalize uk-text-center">@disciplinaViewModel.QtdQuestoesDisciplina</dd>
+                <dd class="uk-text-capitalize uk-text-center">@disciplinaViewModel.QtdQuestoes</dd>
             }
         </dl>
     </section>
@@ -52,9 +51,9 @@
                                 resultado.DisciplinaViewModel.Disciplina.Id == resultado.DistritoEtapaViewModel.Disciplina.Id &&
                                 resultado.DistritoEtapaViewModel.Distrito.Id == resultado.DisciplinaViewModel.Distrito.Id)
                             {
-                                <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                    <span>@resultado.TaxaAcerto%</span>
-                                    <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                                <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                    <span>@resultado.TaxaAcertoDisciplina%</span>
+                                    <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                                 </td>
                             }
                         }
