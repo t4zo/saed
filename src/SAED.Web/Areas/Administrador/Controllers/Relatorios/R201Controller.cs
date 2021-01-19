@@ -22,6 +22,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .ThenInclude(x => x.Questao)
                 .ThenInclude(x => x.Descritor)
                 .ThenInclude(x => x.Tema)      
+                .ThenInclude(x => x.Disciplina)
                 .Include(x => x.Aluno)
                 .ThenInclude(x => x.Turma)
                 .ThenInclude(x => x.Etapa)
@@ -72,7 +73,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     var temaViewModel = new TemaViewModel
                     {
                         Tema = tema,
-                        EtapaId = etapa.Id,
+                        Etapa = etapa,
                         QtdQuestoesTema = qtdQuestoesTema,
                         QtdRespostasCorretas = qtdRespostasCorretas
                     };
@@ -81,10 +82,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     r201ViewModel.ResultadoEtapasViewModel.Add(new ResultadoEtapaViewModel
                     {
                         EtapaViewModel = etapaViewModel,
-                        TemaViewModel = temaViewModel,
-                        QtdRespostasCorretas = temaViewModel.QtdRespostasCorretas,
-                        QtdQuestoes = temaViewModel.QtdQuestoesTema,
-                        QtdAlunos = etapaViewModel.QtdAlunos
+                        TemaViewModel = temaViewModel
                     });
                 }
             }

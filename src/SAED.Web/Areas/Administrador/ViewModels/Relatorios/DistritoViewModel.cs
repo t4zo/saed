@@ -6,7 +6,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
     public class DistritoViewModel : IEquatable<DistritoViewModel>
     {
         public Distrito Distrito { get; set; }
-        public int DisciplinaId { get; set; }
+        public Disciplina Disciplina { get; set; }
         public int QtdAlunos { get; set; }
 
         public bool Equals(DistritoViewModel other)
@@ -20,13 +20,13 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != this.GetType()) return false;
             return Equals((DistritoViewModel) obj);
         }
 
         public override int GetHashCode()
         {
-            return Distrito != null ? Distrito.GetHashCode() : 0;
+            return (Distrito != null ? Distrito.GetHashCode() : 0);
         }
     }
 }

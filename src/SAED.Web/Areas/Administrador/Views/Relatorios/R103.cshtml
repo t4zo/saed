@@ -49,8 +49,8 @@
                         {
                             if (distritoEtapaViewModel.Distrito.Id == resultado.DistritoEtapaViewModel.Distrito.Id &&
                                 distritoEtapaViewModel.Etapa.Id == resultado.DistritoEtapaViewModel.Etapa.Id &&
-                                resultado.DisciplinaViewModel.Disciplina.Id == resultado.DistritoEtapaViewModel.DisciplinaId &&
-                                resultado.DistritoEtapaViewModel.Distrito.Id == resultado.DisciplinaViewModel.DistritoId)
+                                resultado.DisciplinaViewModel.Disciplina.Id == resultado.DistritoEtapaViewModel.Disciplina.Id &&
+                                resultado.DistritoEtapaViewModel.Distrito.Id == resultado.DisciplinaViewModel.Distrito.Id)
                             {
                                 <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
                                     <span>@resultado.TaxaAcerto%</span>

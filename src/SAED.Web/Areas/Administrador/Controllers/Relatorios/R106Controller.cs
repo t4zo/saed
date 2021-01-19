@@ -76,16 +76,16 @@ namespace SAED.Web.Areas.Administrador.Controllers
                                 Escola = escola,
                                 Etapa = etapa,
                                 Aluno = aluno,
-                                DisciplinaId = disciplina.Id
+                                Disciplina = disciplina
                             };
                             alunosViewModel.Add(alunoViewModel);
 
                             var disciplinaViewModel = new DisciplinaViewModel
                             {
                                 Disciplina = disciplina,
-                                EscolaId = escola.Id,
-                                EtapaId = etapa.Id,
-                                AlunoId = aluno.Id,
+                                Escola = escola,
+                                Etapa = etapa,
+                                Aluno = aluno,
                                 QtdQuestoesDisciplina = qtdQuestoesDisciplina,
                                 QtdRespostasCorretas = qtdRespostasCorretas
                             };

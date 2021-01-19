@@ -65,7 +65,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     var etapaViewModel = new EtapaViewModel
                     {
                         Etapa = etapa,
-                        DisciplinaId = disciplina.Id,
+                        Disciplina = disciplina,
                         QtdAlunos = qtdAlunos
                     };
                     etapasViewModel.Add(etapaViewModel);
@@ -73,7 +73,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     var disciplinaViewModel = new DisciplinaViewModel
                     {
                         Disciplina = disciplina,
-                        EtapaId = etapa.Id,
+                        Etapa = etapa,
                         QtdQuestoesDisciplina = qtdQuestoesDisciplina,
                         QtdRespostasCorretas = qtdRespostasCorretas
                     };
@@ -82,10 +82,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     r101ViewModel.ResultadoEtapasViewModel.Add(new ResultadoEtapaViewModel
                     {
                         EtapaViewModel = etapaViewModel,
-                        DisciplinaViewModel = disciplinaViewModel,
-                        QtdRespostasCorretas = disciplinaViewModel.QtdRespostasCorretas,
-                        QtdQuestoes = disciplinaViewModel.QtdQuestoesDisciplina,
-                        QtdAlunos = etapaViewModel.QtdAlunos
+                        DisciplinaViewModel = disciplinaViewModel
                     });
                 }
             }

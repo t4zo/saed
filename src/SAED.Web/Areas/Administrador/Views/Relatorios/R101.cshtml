@@ -42,8 +42,8 @@
                     @foreach (var resultado in Model.ResultadoEtapasViewModel)
                     {
                         if (etapaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id &&
-                            resultado.DisciplinaViewModel.Disciplina.Id == resultado.EtapaViewModel.DisciplinaId &&
-                            resultado.EtapaViewModel.Etapa.Id == resultado.DisciplinaViewModel.EtapaId)
+                            resultado.DisciplinaViewModel.Disciplina.Id == resultado.EtapaViewModel.Disciplina.Id &&
+                            resultado.EtapaViewModel.Etapa.Id == resultado.DisciplinaViewModel.Etapa.Id)
                         {
                             <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
                                 <span>@resultado.TaxaAcerto%</span>

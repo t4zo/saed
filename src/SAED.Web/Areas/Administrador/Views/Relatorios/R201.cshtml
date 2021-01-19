@@ -32,22 +32,24 @@
         <tbody>
             @foreach (var etapaViewModel in Model.EtapasViewModel)
             {
-                <tr>
-                    <td>@etapaViewModel.Etapa.Nome</td>
-                    <td>@etapaViewModel.Tema.Nome</td>
+            <tr>
+                <td>@etapaViewModel.Etapa.Nome</td>
+                <td>@etapaViewModel.Tema.Nome</td>
 
-                    @foreach (var resultado in Model.ResultadoEtapasViewModel)
-                    {
-                        if (etapaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id &&
-                            resultado.TemaViewModel.EtapaId == resultado.EtapaViewModel.Etapa.Id)
+                @foreach (var resultado in Model.ResultadoEtapasViewModel)
+                {
+                    if (etapaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id &&
+                        etapaViewModel.Tema.Disciplina.Id == resultado.EtapaViewModel.Tema.Disciplina.Id &&
+                        resultado.TemaViewModel.Tema.Id == resultado.EtapaViewModel.Tema.Id &&
+                        resultado.TemaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id)
                         {
                             <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
                                 <span>@resultado.TaxaAcerto%</span>
                                 <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                             </td>
                         }
-                    }
-                </tr>
+                }
+            </tr>
             }
         </tbody>
     </table>

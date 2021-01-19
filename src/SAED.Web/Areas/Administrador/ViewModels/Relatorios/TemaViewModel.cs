@@ -6,9 +6,9 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
     public class TemaViewModel : IEquatable<TemaViewModel>
     {
         public Tema Tema { get; set; }
-        public int DistritoId { get; set; }
-        public int EscolaId { get; set; }
-        public int EtapaId { get; set; }
+        public Distrito Distrito { get; set; }
+        public Escola Escola { get; set; }
+        public Etapa Etapa { get; set; }
         public int QtdQuestoesTema { get; set; }
         public int QtdRespostasCorretas { get; set; }
 

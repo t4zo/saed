@@ -48,8 +48,8 @@
                         {
                             if (escolaEtapaViewModel.Escola.Id == resultado.EscolaEtapaViewModel.Escola.Id &&
                                 escolaEtapaViewModel.Etapa.Id == resultado.EscolaEtapaViewModel.Etapa.Id &&
-                                resultado.DisciplinaViewModel.Disciplina.Id == resultado.EscolaEtapaViewModel.DisciplinaId &&
-                                resultado.EscolaEtapaViewModel.Escola.Id == resultado.DisciplinaViewModel.EscolaId)
+                                resultado.DisciplinaViewModel.Disciplina.Id == resultado.EscolaEtapaViewModel.Disciplina.Id &&
+                                resultado.DisciplinaViewModel.Escola.Id == resultado.EscolaEtapaViewModel.Escola.Id)
                             {
                                 <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
                                     <span>@resultado.TaxaAcerto%</span>

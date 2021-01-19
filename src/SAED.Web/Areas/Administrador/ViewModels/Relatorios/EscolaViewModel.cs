@@ -6,7 +6,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
     public class EscolaViewModel : IEquatable<EscolaViewModel>
     {
         public Escola Escola { get; set; }
-        public int DisciplinaId { get; set; }
+        public Disciplina Disciplina { get; set; }
         public int QtdAlunos { get; set; }
 
         public bool Equals(EscolaViewModel other)
