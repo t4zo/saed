@@ -45,9 +45,9 @@
                             resultado.DisciplinaViewModel.Disciplina.Id == resultado.EtapaViewModel.Disciplina.Id &&
                             resultado.EtapaViewModel.Etapa.Id == resultado.DisciplinaViewModel.Etapa.Id)
                         {
-                            <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                <span>@resultado.TaxaAcerto%</span>
-                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                            <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                <span>@resultado.TaxaAcertoDisciplina%</span>
+                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                             </td>
                         }
                     }

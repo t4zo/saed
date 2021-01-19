@@ -50,7 +50,7 @@ namespace SAED.Web
                     configureOptions.Password.RequiredLength = 6;
                     configureOptions.Password.RequiredUniqueChars = 1;
 
-                    configureOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    configureOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(2);
                     configureOptions.Lockout.MaxFailedAccessAttempts = 10;
                     configureOptions.Lockout.AllowedForNewUsers = false;
 

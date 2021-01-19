@@ -43,9 +43,9 @@
                         resultado.TemaViewModel.Tema.Id == resultado.EtapaViewModel.Tema.Id &&
                         resultado.TemaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id)
                         {
-                            <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                <span>@resultado.TaxaAcerto%</span>
-                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                            <td class="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                <span>@resultado.TaxaAcertoTema%</span>
+                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                             </td>
                         }
                 }
