@@ -3,22 +3,20 @@ using System;
 
 namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 {
-    public class EtapaViewModel : IEquatable<EtapaViewModel>
+    public class TemaViewModel : IEquatable<TemaViewModel>
     {
-        public Etapa Etapa { get; set; }
-        public Disciplina Disciplina { get; set; }
-        public int DisciplinaId { get; set; }
         public Tema Tema { get; set; }
-        public int TemaId { get; set; }
-        public Descritor Descritor { get; set; }
-        public int DescritorId { get; set; }
-        public int QtdAlunos { get; set; }
+        public int DistritoId { get; set; }
+        public int EscolaId { get; set; }
+        public int EtapaId { get; set; }
+        public int QtdQuestoesTema { get; set; }
+        public int QtdRespostasCorretas { get; set; }
 
-        public bool Equals(EtapaViewModel other)
+        public bool Equals(TemaViewModel other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(Etapa, other.Etapa);
+            return Equals(Tema, other.Tema);
         }
 
         public override bool Equals(object obj)
@@ -26,12 +24,12 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((EtapaViewModel) obj);
+            return Equals((TemaViewModel) obj);
         }
 
         public override int GetHashCode()
         {
-            return Etapa != null ? Etapa.GetHashCode() : 0;
+            return Tema != null ? Tema.GetHashCode() : 0;
         }
     }
 }

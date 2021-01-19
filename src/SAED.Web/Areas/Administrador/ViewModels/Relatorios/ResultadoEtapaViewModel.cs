@@ -4,6 +4,8 @@
     {
         public EtapaViewModel EtapaViewModel { get; set; }
         public DisciplinaViewModel DisciplinaViewModel { get; set; }
+        public TemaViewModel TemaViewModel { get; set; }
+        //public DescritorViewModel DescritorViewModel { get; set; }
         public int QtdRespostasCorretas { get; set; }
         public int QtdQuestoes { get; set; }
         public int QtdAlunos { get; set; }

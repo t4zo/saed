@@ -5,21 +5,23 @@
 }
 
 <main class="uk-card uk-card-default uk-padding-small">
-    <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">Consolidado por Escola</h2>
-    <section class="uk-flex">
-        <dl class="uk-description-list uk-description-list-divider uk-margin-top uk-margin-small-right">
+    <h2 class="uk-card-header uk-border-rounded uk-text-center uk-margin-bottom">
+        <span>Consolidado por Escola</span>
+        <a href="" onclick="window.print()" uk-icon="icon: print"></a>
+    </h2>
+    <section class="uk-flex uk-flex-center">
+        <dl class="uk-column-1-@(Model.DisciplinasViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
+            @foreach (var disciplinaViewModel in Model.DisciplinasViewModel)
+            {
+                <dt>@disciplinaViewModel.Disciplina.Nome</dt>
+                <dd class="uk-text-capitalize uk-text-center">@disciplinaViewModel.QtdQuestoesDisciplina</dd>
+            }
         </dl>
-        @foreach (var disciplina in Model.DisciplinasViewModel)
-        {
-            <dl class="uk-description-list uk-margin-small-right uk-margin-small-left">
-                <dt>@disciplina.Disciplina.Nome</dt>
-                <dd class="uk-text-capitalize uk-text-center">@disciplina.QtdQuestoesDisciplina</dd>
-            </dl>
-        }
     </section>
-    <table id="table_id" class="uk-table uk-table-hover uk-text-center uk-table-striped">
+    <div class="uk-text-meta uk-text-right uk-margin-small-right">Taxa de corte: @ApplicationConstants.TaxaCorte%</div>
+    <table id="dataTable" class="uk-table uk-table-hover uk-text-center uk-table-striped">
         <thead>
             <tr>
                 <th class="uk-text-center">Escola</th>
@@ -43,7 +45,10 @@
                             resultado.DisciplinaViewModel.Disciplina.Id == resultado.EscolaViewModel.DisciplinaId &&
                             resultado.EscolaViewModel.Escola.Id == resultado.DisciplinaViewModel.EscolaId)
                         {
-                            <td>@resultado.TaxaAcerto%</td>
+                            <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                <span>@resultado.TaxaAcerto%</span>
+                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                            </td>
                         }
                     }
                 </tr>
