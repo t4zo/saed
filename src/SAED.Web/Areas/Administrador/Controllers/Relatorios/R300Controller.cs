@@ -11,7 +11,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
 {
     public partial class RelatoriosController
     {
-        public async Task<IActionResult> R100()
+        public async Task<IActionResult> R300()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 
@@ -28,36 +28,36 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Where(x => x.AvaliacaoId == avaliacao.Id)
                 .ToListAsync();
 
-            var disciplinas = respostas.Select(x => x.Alternativa.Questao.Descritor.Tema.Disciplina).Distinct().ToList();
+            var descritores = respostas.Select(x => x.Alternativa.Questao.Descritor).Distinct().ToList();
 
             var qtdTotalQuestoes = respostas
                 .Select(x => x.Alternativa.Questao)
                 .Distinct()
                 .Count();
 
-            var r100ViewModel = new R100ViewModel
+            var r300ViewModel = new R300ViewModel
             {
                 QtdTotalQuestoes = qtdTotalQuestoes
             };
 
-            foreach (var disciplina in disciplinas)
+            foreach (var descritor in descritores)
             {
                 var qtdAlunos = respostas.Select(x => x.Aluno).Distinct().Count();
 
                 var qtdQuestoes = respostas
-                    .Where(x => x.Alternativa.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
+                    .Where(x => x.Alternativa.Questao.DescritorId == descritor.Id)
                     .Select(x => x.Alternativa.Questao)
                     .Distinct()
                     .Count();
 
                 var qtdRespostasCorretas = respostas
                     .Select(x => x.Alternativa)
-                    .Where(x => x.Questao.Descritor.Tema.DisciplinaId == disciplina.Id)
+                    .Where(x => x.Questao.DescritorId == descritor.Id)
                     .Count(x => x.Correta);
 
-                r100ViewModel.ResultadoMunicipioViewModel.Add(new ResultadoMunicipioViewModel
+                r300ViewModel.ResultadoMunicipioViewModel.Add(new ResultadoMunicipioViewModel
                 {
-                    Disciplina = disciplina,
+                    Descritor = descritor,
                     QtdQuestoesDisciplina = qtdQuestoes,
                     QtdRespostasCorretas = qtdRespostasCorretas,
                     QtdQuestoes = qtdQuestoes,
@@ -65,7 +65,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 });
             }
 
-            return View(r100ViewModel);
+            return View(r300ViewModel);
         }
     }
 }

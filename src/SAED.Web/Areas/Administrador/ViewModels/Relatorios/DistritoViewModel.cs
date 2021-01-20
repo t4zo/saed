@@ -8,6 +8,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
         public Distrito Distrito { get; set; }
         public Disciplina Disciplina { get; set; }
         public Tema Tema { get; set; }
+        public Descritor Descritor { get; set; }
         public int QtdAlunos { get; set; }
 
         public bool Equals(DistritoViewModel other)

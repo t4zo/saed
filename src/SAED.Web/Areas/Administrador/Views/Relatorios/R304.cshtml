@@ -1,7 +1,7 @@
-﻿@model R204ViewModel
+﻿@model R304ViewModel
 
 @{
-    ViewData["Title"] = "204 - Consolidado por Escola";
+    ViewData["Title"] = "304 - Consolidado por Escola";
 }
 
 <main class="uk-card uk-card-default uk-padding-small">
@@ -10,13 +10,13 @@
         <a href="" onclick="window.print()" uk-icon="icon: print"></a>
     </h2>
     <section class="uk-flex uk-flex-center">
-        <dl class="uk-column-1-@(Model.TemasViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
+        <dl class="uk-column-1-@(Model.DescritoresViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
-            @foreach (var temaViewModel in Model.TemasViewModel)
+            @foreach (var descritoresViewModel in Model.DescritoresViewModel)
             {
-                <dt>@temaViewModel.Tema.Nome</dt>
-                <dd class="uk-text-capitalize uk-text-center">@temaViewModel.QtdQuestoes</dd>
+                <dt>@descritoresViewModel.Descritor.Nome</dt>
+                <dd class="uk-text-capitalize uk-text-center">@descritoresViewModel.QtdQuestoes</dd>
             }
         </dl>
     </section>
@@ -25,7 +25,7 @@
         <thead>
             <tr>
                 <th class="uk-text-center">Escola</th>
-                <th class="uk-text-center">Tema</th>
+                <th class="uk-text-center">Descritor</th>
                 <th class="uk-text-center">Taxa de Acerto</th>
             </tr>
         </thead>
@@ -34,18 +34,18 @@
             {
             <tr>
                 <td>@escolaViewModel.Escola.Nome</td>
-                <td>@escolaViewModel.Tema.Nome</td>
+                <td>@escolaViewModel.Descritor.Nome</td>
 
                 @foreach (var resultado in Model.ResultadoEscolasViewModel)
                 {
                     if (escolaViewModel.Escola.Id == resultado.EscolaViewModel.Escola.Id &&
-                        escolaViewModel.Tema.Disciplina.Id == resultado.EscolaViewModel.Tema.Disciplina.Id &&
-                        resultado.TemaViewModel.Tema.Id == resultado.EscolaViewModel.Tema.Id &&
-                        resultado.TemaViewModel.Escola.Id == resultado.EscolaViewModel.Escola.Id)
+                        escolaViewModel.Descritor.Tema.Disciplina.Id == resultado.EscolaViewModel.Descritor.Tema.Disciplina.Id &&
+                        resultado.DescritorViewModel.Descritor.Id == resultado.EscolaViewModel.Descritor.Id &&
+                        resultado.DescritorViewModel.Escola.Id == resultado.EscolaViewModel.Escola.Id)
                         {
-                            <td class="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                <span>@resultado.TaxaAcertoTema%</span>
-                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                            <td class="@(resultado.TaxaAcertoDescritor >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                <span>@resultado.TaxaAcertoDescritor%</span>
+                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDescritor >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                             </td>
                         }
                 }

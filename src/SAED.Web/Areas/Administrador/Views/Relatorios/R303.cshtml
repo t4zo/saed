@@ -1,4 +1,4 @@
-﻿@model R203ViewModel
+﻿@model R303ViewModel
 
 @{
     ViewData["Title"] = "203 - Consolidado por Distrito > Etapa";
@@ -10,12 +10,12 @@
         <a href="" onclick="window.print()" uk-icon="icon: print"></a>
     </h2>
     <section class="uk-flex uk-flex-center">
-        <dl class="uk-column-1-@(Model.TemasViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
+        <dl class="uk-column-1-@(Model.DescritoresViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
-            @foreach (var temaViewModel in Model.TemasViewModel)
+            @foreach (var temaViewModel in Model.DescritoresViewModel)
             {
-                <dt>@temaViewModel.Tema.Nome</dt>
+                <dt>@temaViewModel.Descritor.Nome</dt>
                 <dd class="uk-text-capitalize uk-text-center">@temaViewModel.QtdQuestoes</dd>
             }
         </dl>
@@ -30,7 +30,7 @@
         <thead>
         <tr>
             <th class="uk-text-center">Etapa</th>
-            <th class="uk-text-center">Tema</th>
+            <th class="uk-text-center">Descritor</th>
             <th class="uk-text-center">Taxa de Acerto</th>
         </tr>
         </thead>
@@ -39,18 +39,18 @@
         {
             <tr>
                 <td>@distritoEtapaViewModel.Etapa.Nome</td>
-                <td>@distritoEtapaViewModel.Tema.Nome</td>
+                <td>@distritoEtapaViewModel.Descritor.Nome</td>
 
                 @foreach (var resultado in Model.ResultadoDistritosEtapasViewModel)
                 {
                     if (distritoEtapaViewModel.Distrito.Id == resultado.DistritoEtapaViewModel.Distrito.Id &&
-                        distritoEtapaViewModel.Tema.Disciplina.Id == resultado.DistritoEtapaViewModel.Tema.Disciplina.Id &&
-                        resultado.TemaViewModel.Tema.Id == resultado.DistritoEtapaViewModel.Tema.Id &&
-                        resultado.TemaViewModel.Distrito.Id == resultado.DistritoEtapaViewModel.Distrito.Id)
+                        distritoEtapaViewModel.Descritor.Tema.Disciplina.Id == resultado.DistritoEtapaViewModel.Descritor.Tema.Disciplina.Id &&
+                        resultado.DescritorViewModel.Descritor.Id == resultado.DistritoEtapaViewModel.Descritor.Id &&
+                        resultado.DescritorViewModel.Distrito.Id == resultado.DistritoEtapaViewModel.Distrito.Id)
                     {
-                        <td class="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                            <span>@resultado.TaxaAcertoTema%</span>
-                            <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoTema >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                        <td class="@(resultado.TaxaAcertoDescritor >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                            <span>@resultado.TaxaAcertoDescritor%</span>
+                            <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDescritor >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
                         </td>
                     }
                 }
