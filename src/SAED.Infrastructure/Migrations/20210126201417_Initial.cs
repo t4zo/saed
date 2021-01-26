@@ -531,7 +531,6 @@ namespace SAED.Infrastructure.Migrations
                     TurnoId = table.Column<int>(type: "int", nullable: false),
                     FormaId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    QtdAlunos = table.Column<int>(type: "int", nullable: false),
                     Extinta = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
