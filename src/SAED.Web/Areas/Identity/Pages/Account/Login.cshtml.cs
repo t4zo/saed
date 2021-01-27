@@ -30,7 +30,8 @@ namespace SAED.Web.Areas.Identity.Pages.Account
             _context = context;
         }
 
-        [BindProperty] public InputModel Input { get; set; }
+        [BindProperty] 
+        public InputModel Input { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -70,8 +71,7 @@ namespace SAED.Web.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            var result =
-                await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, false);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
@@ -90,13 +90,14 @@ namespace SAED.Web.Areas.Identity.Pages.Account
                 return RedirectToPage("./Lockout");
             }
 
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, "Login Inválido");
             return Page();
         }
 
         public class InputModel
         {
-            [Required] [EmailAddress] public string Email { get; set; }
+            [Required]
+            public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]

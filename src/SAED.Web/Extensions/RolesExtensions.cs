@@ -66,6 +66,13 @@ namespace SAED.Web.Extensions
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.DashboardAplicador.View));
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Aplicacao.View));
+            }
+
+            if (role.Name.Equals(Roles.Aplicador))
+            {
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.DashboardAplicador.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Aplicacao.View));
             }
         }
     }

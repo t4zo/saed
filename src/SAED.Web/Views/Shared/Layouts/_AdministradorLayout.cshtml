@@ -1,11 +1,12 @@
 ﻿@using static SAED.Core.Constants.AuthorizationConstants
 @using SAED.Web.Extensions
 @using Microsoft.AspNetCore.Http
+@using SAED.Core.Constants
 @using SAED.Core.Entities
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    var avaliacao = HttpContextAccessor.HttpContext?.Session.Get<Avaliacao>(nameof(Avaliacao).ToLower());
+    var avaliacao = HttpContextAccessor.HttpContext?.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
 }
 
 <!DOCTYPE html>
@@ -308,7 +309,7 @@
         <div class="uk-flex uk-flex-center uk-flex-middle uk-padding-small">
             <span>Desenvolvido com</span>
             <span class="uk-margin-small-left uk-margin-small-right" uk-icon="heart"></span>
-            <span>por EVOLVE</span>
+            <span>pela EVOLVE</span>
         </div>
     </footer>
 </div>

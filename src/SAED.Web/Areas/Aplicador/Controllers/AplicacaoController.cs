@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
@@ -20,6 +21,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Aplicacao.View)]
         [HttpGet("{disciplinaId}/{verificacao}")]
         public IActionResult Index(int disciplinaId, string verificacao)
         {
@@ -37,6 +39,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             return View(respostaQuestaoViewModel);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Aplicacao.View)]
         [HttpGet("{questaoId}")]
         public IActionResult Proximo(int questaoId)
         {
@@ -51,6 +54,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             return View(nameof(Index), respostaQuestaoViewModel);
         }
 
+        [Authorize(AuthorizationConstants.Permissions.Aplicacao.Create)]
         [HttpPost]
         public IActionResult Proximo(RespostaViewModel respostaViewModel)
         {

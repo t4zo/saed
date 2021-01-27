@@ -13,6 +13,7 @@
             public const string Administrador = "Administrador";
 
             public const string Aplicador = "Aplicador";
+            public const string Aluno = "Aluno";
         }
 
         public static class Areas
@@ -59,6 +60,14 @@
                 public const string Create = "Permissions.DashboardAplicador.Create";
                 public const string Update = "Permissions.DashboardAplicador.Update";
                 public const string Delete = "Permissions.DashboardAplicador.Delete";
+            }
+
+            public static class Aplicacao
+            {
+                public const string View = "Permissions.Aplicacao.View";
+                public const string Create = "Permissions.Aplicacao.Create";
+                public const string Update = "Permissions.Aplicacao.Update";
+                public const string Delete = "Permissions.Aplicacao.Delete";
             }
 
             public static class Avaliacoes

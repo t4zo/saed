@@ -627,6 +627,7 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TurmaId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),

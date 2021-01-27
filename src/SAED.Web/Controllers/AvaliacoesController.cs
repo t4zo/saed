@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
+using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
 using System.Threading.Tasks;
@@ -40,6 +42,13 @@ namespace SAED.Web.Controllers
             if (User.IsInRole(Roles.Aplicador))
             {
                 return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao".ToLower());
+            }
+
+            if (User.IsInRole(Roles.Aluno))
+            {
+                var cpf = User.Identity?.Name;
+                var aluno = await _context.Alunos.AsNoTracking().FirstOrDefaultAsync(x => x.Cpf == cpf);
+                return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao/{aluno.Id}".ToLower());
             }
 
             return RedirectToAction(nameof(Index));

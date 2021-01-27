@@ -43,8 +43,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(Permissions.Usuarios.Create)]
         public IActionResult Create()
         {
-            ViewBag.AllRoles = _context.Roles.Select(x => x.Name).ToList();
-            ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>().ToList();
+            ViewBag.AllRoles = _context.Roles.Select(x => x.Name).OrderBy(role => role).ToList();
+            ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>().OrderBy(permission => permission).ToList();
 
             return View();
         }
@@ -100,11 +100,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
             var roles = _context.Roles
                 .Where(role => userRoles.Select(userRole => userRole.RoleId).Contains(role.Id))
                 .Select(x => x.Name)
+                .OrderBy(role => role)
                 .ToList();
 
             ViewBag.AllRoles = _context.Roles
                 .Where(role => !roles.Contains(role.Name))
                 .Select(role => role.Name)
+                .OrderBy(role => role)
                 .ToList();
 
             var userPermissions = _context.UserClaims
@@ -113,10 +115,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
 
             var permissions = typeof(Permissions).GetAllPublicConstantValues<string>()
                 .Where(permission => userPermissions.Contains(permission))
+                .OrderBy(permission => permission)
                 .ToList();
 
             ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
                 .Where(permission => !permissions.Contains(permission))
+                .OrderBy(permission => permission)
                 .ToList();
 
             return View(new UsuarioViewModel

@@ -38,7 +38,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [Authorize(Permissions.Grupos.Create)]
         public IActionResult Create()
         {
-            ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>();
+            ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>().OrderBy(permission => permission);
 
             return View();
         }
@@ -82,7 +82,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .ToListAsync();
 
             ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
-                .Where(permission => !roleClaims.Contains(permission)).ToList();
+                .Where(permission => !roleClaims.Contains(permission)).OrderBy(permission => permission).ToList();
 
             return View(new GrupoViewModel {Nome = role.Name, PermissoesEscolhidas = roleClaims});
         }

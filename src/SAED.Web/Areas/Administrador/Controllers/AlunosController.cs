@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
+using SAED.Infrastructure.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,10 +15,12 @@ namespace SAED.Web.Areas.Administrador.Controllers
     public class AlunosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public UserManager<ApplicationUser> _userManager { get; set; }
 
-        public AlunosController(ApplicationDbContext context)
+        public AlunosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index(int? escolaId, int? etapaId)
@@ -62,17 +66,51 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome");
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Add(aluno);
-                await _context.SaveChangesAsync();
+            var turma = await _context.Turmas
+                .AsNoTracking()
+                .Include(x => x.Sala)
+                .ThenInclude(x => x.Escola)
+                .FirstOrDefaultAsync(x => x.Id == aluno.TurmaId);
 
-                return RedirectToAction(nameof(Index));
+            if (!ModelState.IsValid)
+            {
+                ViewData["Erro"] = true;
+                if (ModelState.ContainsKey("Nascimento"))
+                {
+                    ModelState.AddModelError("", "Data de Nascimento Inválida");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Algum campo está inválido");
+                }
+
+                ViewData["EscolaId"] = new SelectList(_context.Escolas.OrderBy(x => x.Nome), "Id", "Nome", turma.Sala.EscolaId);
+                ViewData["SalaId"] = new SelectList(_context.Salas.Where(x => x.EscolaId == turma.Sala.EscolaId).OrderBy(x => x.Nome), "Id", "Nome", turma.SalaId);
+                ViewData["TurmaId"] = new SelectList(_context.Turmas.Where(x => x.SalaId == turma.SalaId), "Id", "Nome", turma.Id);
+
+                return View(aluno);
             }
 
-            ViewData["TurmaId"] = new SelectList(_context.Turmas, "Id", "Nome", aluno.TurmaId);
+            var user = new ApplicationUser { UserName = aluno.Cpf, Email = aluno.Cpf };
+            var result = await _userManager.CreateAsync(user, aluno.Cpf);
 
-            return View(aluno);
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Email e/ou Senha Inválida(s)/Existente");
+
+                ViewData["Erro"] = true;
+                ViewData["EscolaId"] = new SelectList(_context.Escolas.OrderBy(x => x.Nome), "Id", "Nome", turma.Sala.EscolaId);
+                ViewData["SalaId"] = new SelectList(_context.Salas.Where(x => x.EscolaId == turma.Sala.EscolaId).OrderBy(x => x.Nome), "Id", "Nome", turma.SalaId);
+                ViewData["TurmaId"] = new SelectList(_context.Turmas.Where(x => x.SalaId == turma.SalaId), "Id", "Nome", turma.Id);
+                return View(aluno);
+            }
+
+            await _userManager.AddToRoleAsync(user, AuthorizationConstants.Roles.Aluno);
+
+            _context.Add(aluno);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -121,34 +159,81 @@ namespace SAED.Web.Areas.Administrador.Controllers
             {
                 ModelState.AddModelError("", "Escola e/ou Sala e/ou Turma inválido(s)");
 
+                ViewData["Erro"] = true;
                 ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome");
-                
+
                 return View(aluno);
             }
 
-            if (ModelState.IsValid)
+            var turma = await _context.Turmas
+                .AsNoTracking()
+                .Include(x => x.Sala)
+                .ThenInclude(x => x.Escola)
+                .FirstOrDefaultAsync(x => x.Id == aluno.TurmaId);
+
+            if (!ModelState.IsValid)
             {
-                try
+                ViewData["Erro"] = true;
+                if (ModelState.ContainsKey("Nascimento"))
                 {
-                    _context.Update(aluno);
-                    await _context.SaveChangesAsync();
+                    ModelState.AddModelError("", "Data de Nascimento Inválida");
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!_context.Alunos.Any(e => e.Id == id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
+                    ModelState.AddModelError("", "Algum campo está inválido");
                 }
 
-                return RedirectToAction(nameof(Index));
+                ViewData["EscolaId"] = new SelectList(_context.Escolas.OrderBy(x => x.Nome), "Id", "Nome", turma.Sala.EscolaId);
+                ViewData["SalaId"] = new SelectList(_context.Salas.Where(x => x.EscolaId == turma.Sala.EscolaId).OrderBy(x => x.Nome), "Id", "Nome", turma.SalaId);
+                ViewData["TurmaId"] = new SelectList(_context.Turmas.Where(x => x.SalaId == turma.SalaId), "Id", "Nome", turma.Id);
+
+                return View(aluno);
             }
 
-            ViewData["TurmaId"] = new SelectList(_context.Turmas, "Id", "Nome", aluno.TurmaId);
+            try
+            {
+                var alunoOriginal = await _context.Alunos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == aluno.Id);
 
-            return View(aluno);
+                _context.Update(aluno);
+                await _context.SaveChangesAsync();
+
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == alunoOriginal.Cpf);
+
+                if (aluno.Cpf.Length > 0)
+                {
+                    await _userManager.SetEmailAsync(user, aluno.Cpf);
+                    await _userManager.SetUserNameAsync(user, aluno.Cpf);
+                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, aluno.Cpf);
+                }
+                
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", "Email e/ou Senha Inválida(s)/Existente");
+
+                    ViewData["Erro"] = true;
+                    ViewData["EscolaId"] = new SelectList(_context.Escolas.OrderBy(x => x.Nome), "Id", "Nome", turma.Sala.EscolaId);
+                    ViewData["SalaId"] = new SelectList(_context.Salas.Where(x => x.EscolaId == turma.Sala.EscolaId).OrderBy(x => x.Nome), "Id", "Nome", turma.SalaId);
+                    ViewData["TurmaId"] = new SelectList(_context.Turmas.Where(x => x.SalaId == turma.SalaId), "Id", "Nome", turma.Id);
+                    return View(aluno);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Alunos.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -177,6 +262,9 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var aluno = await _context.Alunos.FindAsync(id);
             _context.Alunos.Remove(aluno);
+
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == aluno.Cpf);
+            await _userManager.DeleteAsync(user);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

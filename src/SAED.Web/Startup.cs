@@ -43,8 +43,8 @@ namespace SAED.Web
 
             services.AddDefaultIdentity<ApplicationUser>(configureOptions =>
                 {
-                    configureOptions.Password.RequireDigit = true;
-                    configureOptions.Password.RequireLowercase = true;
+                    configureOptions.Password.RequireDigit = false;
+                    configureOptions.Password.RequireLowercase = false;
                     configureOptions.Password.RequireNonAlphanumeric = false;
                     configureOptions.Password.RequireUppercase = false;
                     configureOptions.Password.RequiredLength = 6;
@@ -54,9 +54,8 @@ namespace SAED.Web
                     configureOptions.Lockout.MaxFailedAccessAttempts = 10;
                     configureOptions.Lockout.AllowedForNewUsers = false;
 
-                    configureOptions.User.AllowedUserNameCharacters =
-                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                    configureOptions.User.RequireUniqueEmail = true;
+                    configureOptions.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    configureOptions.User.RequireUniqueEmail = false;
                 })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
