@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 
         public override int GetHashCode()
         {
-            return Tema != null ? Tema.GetHashCode() : 0;
+            return Tema is not null ? Tema.GetHashCode() : 0;
         }
     }
 }

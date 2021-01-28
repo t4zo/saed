@@ -44,6 +44,7 @@ namespace SAED.Infrastructure.Data
         public DbSet<Turma> Turmas { get; set; }
         public DbSet<Sala> Salas { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
+        public DbSet<Cpf> Cpfs { get; set; }
         public DbSet<Turno> Turnos { get; set; }
         public DbSet<RespostaAluno> RespostaAlunos { get; set; }
 

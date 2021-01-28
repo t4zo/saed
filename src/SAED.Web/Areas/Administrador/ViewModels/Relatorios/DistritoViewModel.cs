@@ -28,7 +28,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 
         public override int GetHashCode()
         {
-            return (Distrito != null ? Distrito.GetHashCode() : 0);
+            return (Distrito is not null ? Distrito.GetHashCode() : 0);
         }
     }
 }

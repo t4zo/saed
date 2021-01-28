@@ -1,11 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
-    public class Cpf
+    public class Cpf : IEntity
     {
-        [Key]
+        public int Id { get; set; }
         public string Codigo { get; set; }
 
         public Cpf()
@@ -25,7 +24,8 @@ namespace SAED.Core.Entities
                 return result;
             }
 
-            throw new ArgumentException("CPF Inválido");
+            return null;
+            //throw new ArgumentException("CPF Inválido");
         }
 
         public static bool TryParse(string codigo, out Cpf cpf)
@@ -34,6 +34,8 @@ namespace SAED.Core.Entities
             cpf = new Cpf(codigo);
             return true;
         }
+
+        public string Normalize() => Codigo.Replace(".", string.Empty).Replace("-", string.Empty);
 
         public override string ToString() => Codigo;
 

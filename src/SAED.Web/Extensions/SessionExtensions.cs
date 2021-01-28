@@ -13,7 +13,7 @@ namespace SAED.Web.Extensions
         public static T Get<T>(this ISession session, string key)
         {
             var value = session.GetString(key);
-            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+            return value is null ? default : JsonSerializer.Deserialize<T>(value);
         }
     }
 }

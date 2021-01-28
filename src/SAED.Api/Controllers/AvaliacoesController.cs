@@ -71,7 +71,7 @@ namespace SAED.Api.Controllers
         {
             var avaliacao = await _context.Avaliacoes.FindAsync(id);
 
-            if (avaliacao == null)
+            if (avaliacao is null)
             {
                 return NotFound();
             }

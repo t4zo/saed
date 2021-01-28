@@ -6,6 +6,7 @@ using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
         public async Task<IActionResult> Index(int? escolaId, int? etapaId)
         {
             var alunos = await _context.Alunos
+                .AsNoTracking()
+                .Include(a => a.Cpf)
                 .Include(a => a.Turma)
                 .ThenInclude(x => x.Etapa)
                 .Include(x => x.Turma)
@@ -91,8 +94,8 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(aluno);
             }
 
-            var user = new ApplicationUser { UserName = aluno.Cpf, Email = aluno.Cpf };
-            var result = await _userManager.CreateAsync(user, aluno.Cpf);
+            var user = new ApplicationUser { UserName = aluno.Cpf.Normalize(), Email = aluno.Cpf.Normalize() };
+            var result = await _userManager.CreateAsync(user, aluno.Cpf.Normalize());
 
             if (!result.Succeeded)
             {
@@ -117,6 +120,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         {
             var aluno = await _context.Alunos
                 .AsNoTracking()
+                .Include(a => a.Cpf)
                 .Include(a => a.Turma)
                 .ThenInclude(x => x.Etapa)
                 .Include(x => x.Turma)
@@ -190,25 +194,37 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(aluno);
             }
 
+            if (Cpf.Parse(aluno.Cpf.Codigo) is null)
+            {
+                ModelState.AddModelError("", "CPF Inválido");
+
+                ViewData["Erro"] = true;
+                ViewData["EscolaId"] = new SelectList(_context.Escolas.OrderBy(x => x.Nome), "Id", "Nome", turma.Sala.EscolaId);
+                ViewData["SalaId"] = new SelectList(_context.Salas.Where(x => x.EscolaId == turma.Sala.EscolaId).OrderBy(x => x.Nome), "Id", "Nome", turma.SalaId);
+                ViewData["TurmaId"] = new SelectList(_context.Turmas.Where(x => x.SalaId == turma.SalaId), "Id", "Nome", turma.Id);
+                return View(aluno);
+            }
+
             try
             {
-                var alunoOriginal = await _context.Alunos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == aluno.Id);
+                var alunoOriginal = await _context.Alunos
+                    .AsNoTracking()
+                    .Include(x => x.Cpf)
+                    .FirstOrDefaultAsync(x => x.Id == aluno.Id);
+
+                aluno.Cpf.Id = alunoOriginal.Cpf.Id;
 
                 _context.Update(aluno);
                 await _context.SaveChangesAsync();
 
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == alunoOriginal.Cpf);
 
-                if (aluno.Cpf.Length > 0)
-                {
-                    await _userManager.SetEmailAsync(user, aluno.Cpf);
-                    await _userManager.SetUserNameAsync(user, aluno.Cpf);
-                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, aluno.Cpf);
-                }
-                
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == alunoOriginal.Cpf.Normalize());
+
+                await _userManager.SetEmailAsync(user, aluno.Cpf.Normalize());
+                await _userManager.SetUserNameAsync(user, aluno.Cpf.Normalize());
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, aluno.Cpf.Normalize());
 
                 var result = await _userManager.UpdateAsync(user);
-
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", "Email e/ou Senha Inválida(s)/Existente");
@@ -219,8 +235,6 @@ namespace SAED.Web.Areas.Administrador.Controllers
                     ViewData["TurmaId"] = new SelectList(_context.Turmas.Where(x => x.SalaId == turma.SalaId), "Id", "Nome", turma.Id);
                     return View(aluno);
                 }
-
-                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -233,13 +247,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
             }
 
             return RedirectToAction(nameof(Index));
-
         }
 
         public async Task<IActionResult> Delete(int id)
         {
             var aluno = await _context.Alunos
                 .AsNoTracking()
+                .Include(a => a.Cpf)
                 .Include(a => a.Turma)
                 .ThenInclude(x => x.Etapa)
                 .Include(x => x.Turma)
@@ -260,10 +274,13 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var aluno = await _context.Alunos.FindAsync(id);
+            var aluno = await _context.Alunos
+                .Include(x => x.Cpf)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             _context.Alunos.Remove(aluno);
 
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == aluno.Cpf);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == aluno.Cpf.Codigo);
             await _userManager.DeleteAsync(user);
 
             await _context.SaveChangesAsync();

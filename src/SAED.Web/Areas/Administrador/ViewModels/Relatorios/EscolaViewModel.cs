@@ -28,7 +28,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 
         public override int GetHashCode()
         {
-            return Escola != null ? Escola.GetHashCode() : 0;
+            return Escola is not null ? Escola.GetHashCode() : 0;
         }
     }
 }

@@ -14,13 +14,13 @@
         </section>
         <section class="uk-width-1-2@s">
             <label class="uk-form-label">Temas</label>
-            <select class="uk-select" id="temaId" name="temaId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Temas" disabled="@(ViewBag.Temas == null)">
+            <select class="uk-select" id="temaId" name="temaId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Temas" disabled="@(ViewBag.Temas is null)">
                 <option disabled selected value=""> -- Selecione o Tema -- </option>
             </select>
         </section>
         <section class="uk-width-1-2@s">
             <label class="uk-form-label">Descritores</label>
-            <select class="uk-select" id="descritorId" name="descritorId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Descritores" disabled="@(ViewBag.Descritores == null)">
+            <select class="uk-select" id="descritorId" name="descritorId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Descritores" disabled="@(ViewBag.Descritores is null)">
                 <option disabled selected value=""> -- Selecione o Descritor -- </option>
             </select>
         </section>

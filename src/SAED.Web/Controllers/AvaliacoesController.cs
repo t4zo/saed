@@ -6,6 +6,7 @@ using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
+using System.Linq;
 using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
@@ -47,8 +48,13 @@ namespace SAED.Web.Controllers
             if (User.IsInRole(Roles.Aluno))
             {
                 var cpf = User.Identity?.Name;
-                var aluno = await _context.Alunos.AsNoTracking().FirstOrDefaultAsync(x => x.Cpf == cpf);
-                return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao/{aluno.Id}".ToLower());
+                var alunos = await _context.Alunos
+                    .AsNoTracking()
+                    .Include(x => x.Cpf)
+                    .ToListAsync();
+                    
+                var aluno = alunos.FirstOrDefault(x => x.Cpf.Normalize() == cpf);
+                return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao/{aluno?.Id}".ToLower());
             }
 
             return RedirectToAction(nameof(Index));

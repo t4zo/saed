@@ -14,7 +14,7 @@
         </section>
         <section class="uk-width-1-3@s">
             <label class="uk-form-label">Temas</label>
-            <select class="uk-select" id="temaId" name="temaId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Temas" disabled="@(ViewBag.Temas == null)">
+            <select class="uk-select" id="temaId" name="temaId" onchange="document.querySelector('#form-filter').submit()" asp-items="ViewBag.Temas" disabled="@(ViewBag.Temas is null)">
                 <option disabled selected value=""> -- Selecione o Tema -- </option>
             </select>
         </section>

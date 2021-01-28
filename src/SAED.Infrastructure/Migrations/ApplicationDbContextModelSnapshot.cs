@@ -254,8 +254,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Cpf")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CpfId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -281,6 +281,8 @@ namespace SAED.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CpfId");
 
                     b.HasIndex("TurmaId");
 
@@ -348,6 +350,33 @@ namespace SAED.Infrastructure.Migrations
                     b.HasIndex("EtapaId");
 
                     b.ToTable("AvaliacaoDisciplinasEtapas");
+                });
+
+            modelBuilder.Entity("SAED.Core.Entities.Cpf", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Codigo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cpfs");
                 });
 
             modelBuilder.Entity("SAED.Core.Entities.Curso", b =>
@@ -1091,11 +1120,17 @@ namespace SAED.Infrastructure.Migrations
 
             modelBuilder.Entity("SAED.Core.Entities.Aluno", b =>
                 {
+                    b.HasOne("SAED.Core.Entities.Cpf", "Cpf")
+                        .WithMany()
+                        .HasForeignKey("CpfId");
+
                     b.HasOne("SAED.Core.Entities.Turma", "Turma")
                         .WithMany("Alunos")
                         .HasForeignKey("TurmaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cpf");
 
                     b.Navigation("Turma");
                 });

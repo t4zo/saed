@@ -30,7 +30,7 @@ namespace SAED.Web.Areas.Identity.Pages.Account
 
             _logger.LogInformation("User logged out.");
 
-            if (returnUrl != null)
+            if (returnUrl is not null)
             {
                 return LocalRedirect(returnUrl);
             }

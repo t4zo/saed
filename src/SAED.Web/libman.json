@@ -130,6 +130,14 @@
         "dist/nomodule/index.js.map",
         "dist/umd/simple-datatables.js"
       ]
+    },
+    {
+      "library": "vanilla-masker@1.2.0",
+      "destination": "wwwroot/libs/vanilla-masker/",
+      "files": [
+        "build/vanilla-masker.min.js",
+        "lib/vanilla-masker.js"
+      ]
     }
   ]
 }

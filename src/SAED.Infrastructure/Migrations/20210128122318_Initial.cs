@@ -76,6 +76,23 @@ namespace SAED.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cpfs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cpfs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cursos",
                 columns: table => new
                 {
@@ -627,7 +644,7 @@ namespace SAED.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TurmaId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CpfId = table.Column<int>(type: "int", nullable: true),
                     Nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -637,6 +654,12 @@ namespace SAED.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Alunos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Alunos_Cpfs_CpfId",
+                        column: x => x.CpfId,
+                        principalTable: "Cpfs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Alunos_Turmas_TurmaId",
                         column: x => x.TurmaId,
@@ -684,6 +707,11 @@ namespace SAED.Infrastructure.Migrations
                 name: "IX_Alternativas_QuestaoId",
                 table: "Alternativas",
                 column: "QuestaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Alunos_CpfId",
+                table: "Alunos",
+                column: "CpfId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Alunos_TurmaId",
@@ -863,6 +891,9 @@ namespace SAED.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Questoes");
+
+            migrationBuilder.DropTable(
+                name: "Cpfs");
 
             migrationBuilder.DropTable(
                 name: "Turmas");

@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 
         public override int GetHashCode()
         {
-            return Descritor != null ? Descritor.GetHashCode() : 0;
+            return Descritor is not null ? Descritor.GetHashCode() : 0;
         }
     }
 }

@@ -30,7 +30,7 @@
                     <th>Escola</th>
                     <th>Etapa - Turma</th>
                     <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                    <th>@Html.DisplayNameFor(model => model.Cpf)</th>
+                    <th>CPF</th>
                     <th>@Html.DisplayNameFor(model => model.Nascimento)</th>
                     <th class="uk-text-center">Ações</th>
                 </tr>
@@ -42,7 +42,7 @@
                     <td>@item.Turma.Sala.Escola.Nome</td>
                     <td>@item.Turma.Etapa.Nome - @item.Turma.Nome</td>
                     <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Cpf)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Cpf.Codigo)</td>
                     <td>@item.Nascimento.ToShortDateString()</td>
                     <td class="uk-flex uk-flex-center">
                         <a class="uk-margin-right" uk-icon="pencil" title="Editar" asp-action="Edit" asp-route-id="@item.Id"></a>
@@ -62,11 +62,14 @@
                 const form = document.querySelector('#form-filter');
                 form.submit();
             });
+
         document.querySelector("#etapaId").addEventListener("change",
             () => {
                 const form = document.querySelector('#form-filter');
                 form.submit();
             });
+
+        VMasker(document.querySelector("#Cpf")).maskPattern("999.999.999-99");
     </script>
     <script src="~/scripts/removeItem.js"></script>
 }

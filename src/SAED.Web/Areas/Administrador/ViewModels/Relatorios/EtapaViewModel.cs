@@ -28,7 +28,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 
         public override int GetHashCode()
         {
-            return Etapa != null ? Etapa.GetHashCode() : 0;
+            return Etapa is not null ? Etapa.GetHashCode() : 0;
         }
     }
 }

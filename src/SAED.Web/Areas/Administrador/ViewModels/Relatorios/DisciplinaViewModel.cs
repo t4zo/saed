@@ -30,7 +30,7 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 
         public override int GetHashCode()
         {
-            return Disciplina != null ? Disciplina.GetHashCode() : 0;
+            return Disciplina is not null ? Disciplina.GetHashCode() : 0;
         }
     }
 }

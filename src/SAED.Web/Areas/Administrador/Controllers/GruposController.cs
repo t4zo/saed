@@ -103,7 +103,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 await _roleManager.RemoveClaimAsync(role, claim);
             }
 
-            if (viewModel.PermissoesEscolhidas != null)
+            if (viewModel.PermissoesEscolhidas is not null)
             {
                 foreach (var permissaoEscolhida in viewModel.PermissoesEscolhidas)
                 {

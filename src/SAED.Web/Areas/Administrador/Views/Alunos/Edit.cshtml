@@ -38,8 +38,8 @@
                 <span asp-validation-for="Nome" class="uk-text-danger"></span>
             </div>
             <div class="uk-width-1-3">
-                <label asp-for="Cpf" class="uk-form-label">CPF</label>
-                <input asp-for="Cpf" class="uk-input" />
+                <label asp-for="Cpf.Codigo" class="uk-form-label">CPF</label>
+                <input asp-for="Cpf.Codigo" class="uk-input" />
                 <span asp-validation-for="Cpf" class="uk-text-danger"></span>
             </div>
             <div class="uk-width-1-3">
@@ -52,6 +52,7 @@
 
 @section Scripts {
     <script type="text/javascript" src="~/scripts/filterNestedFields.js"></script>
+    <script type="text/javascript" src="~/libs/vanilla-masker/build/vanilla-masker.min.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded",
@@ -80,5 +81,7 @@
                     });
 
             });
+
+        VMasker(document.querySelector("#Cpf_Codigo")).maskPattern("999.999.999-99");
     </script>
 }
