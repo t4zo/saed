@@ -108,7 +108,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("/avaliacoes");
+            return Redirect("/avaliacoes");
         }
     }
 }

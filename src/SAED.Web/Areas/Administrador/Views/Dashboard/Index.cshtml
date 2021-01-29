@@ -1,8 +1,67 @@
-﻿@{
+﻿@model DashboardViewModel
+
+@{
     ViewData["Title"] = "Página Inicial";
 }
 
-<div class="text-center">
+<section class="uk-child-width-1-2@s uk-child-width-1-4@m uk-text-center" uk-grid>
+    <article>
+        <a class="uk-link-reset" asp-controller="Escolas">
+            <div class="uk-card uk-card-default uk-card-header uk-flex uk-flex-between uk-flex-middle">
+                <h1 class="uk-margin-remove">@Model.QtdEscolas</h1>
+                <p class="uk-margin-remove uk-text-large">Escola@(Model.QtdEscolas > 1 ? "s" : "")</p>
+                <div></div>
+            </div>
+        </a>
+    </article>
+    @*<article>
+        <a class="uk-link-reset" asp-controller="Etapas">
+            <div class="uk-card uk-card-default uk-card-header uk-flex uk-flex-between uk-flex-middle">
+                <h1 class="uk-margin-remove">@Model.QtdEtapas</h1>
+                <p class="uk-margin-remove uk-text-large">Etapa@(Model.QtdEtapas > 1 ? "s" : "")</p>
+                <div></div>
+            </div>
+        </a>
+    </article>*@
+    <article>
+        <a class="uk-link-reset" asp-controller="Alunos">
+            <div class="uk-card uk-card-default uk-card-header uk-flex uk-flex-between uk-flex-middle">
+                <h1 class="uk-margin-remove">@Model.QtdAlunos</h1>
+                <p class="uk-margin-remove uk-text-large">Aluno@(Model.QtdAlunos > 1 ? "s" : "")</p>
+                <div></div>
+            </div>
+        </a>
+    </article>
+    <article>
+        <a class="uk-link-reset" asp-controller="Temas">
+            <div class="uk-card uk-card-default uk-card-header uk-flex uk-flex-between uk-flex-middle">
+                <h1 class="uk-margin-remove">@Model.QtdTemas</h1>
+                <p class="uk-margin-remove uk-text-large">Tema@(Model.QtdTemas > 1 ? "s" : "")</p>
+                <div></div>
+            </div>
+        </a>
+    </article>
+    <article>
+        <a class="uk-link-reset" asp-controller="Descritores">
+            <div class="uk-card uk-card-default uk-card-header uk-flex uk-flex-between uk-flex-middle">
+                <h1 class="uk-margin-remove">@Model.QtdDescritores</h1>
+                <p class="uk-margin-remove uk-text-large">Descritor@(Model.QtdDescritores > 1 ? "es" : "")</p>
+                <div></div>
+            </div>
+        </a>
+    </article>
+    <article>
+        <a class="uk-link-reset" asp-controller="Questoes">
+            <div class="uk-card uk-card-default uk-card-header uk-flex uk-flex-between uk-flex-middle">
+                <h1 class="uk-margin-remove">@Model.QtdTotalQuestoes</h1>
+                <p class="uk-margin-remove uk-text-large">Quest@(Model.QtdEscolas > 1 ? "ões" : "ão")</p>
+                <div></div>
+            </div>
+        </a>
+    </article>
+</section>
+
+<div class="uk-margin-top">
     <h1 class="display-4">Bem Vindo!</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
