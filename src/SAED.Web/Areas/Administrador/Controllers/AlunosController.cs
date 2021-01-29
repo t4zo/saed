@@ -75,6 +75,17 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .ThenInclude(x => x.Escola)
                 .FirstOrDefaultAsync(x => x.Id == aluno.TurmaId);
 
+            if (!Cpf.IsValid(aluno.Cpf.Codigo))
+            {
+                ModelState.AddModelError("", "CPF Inválido");
+
+                ViewData["Erro"] = true;
+                ViewData["EscolaId"] = new SelectList(_context.Escolas.OrderBy(x => x.Nome), "Id", "Nome", turma.Sala.EscolaId);
+                ViewData["SalaId"] = new SelectList(_context.Salas.Where(x => x.EscolaId == turma.Sala.EscolaId).OrderBy(x => x.Nome), "Id", "Nome", turma.SalaId);
+                ViewData["TurmaId"] = new SelectList(_context.Turmas.Where(x => x.SalaId == turma.SalaId), "Id", "Nome", turma.Id);
+                return View(aluno);
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewData["Erro"] = true;
