@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
-using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Web.Extensions;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
@@ -22,9 +22,33 @@ namespace SAED.Web.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewBag.Avaliacoes = new SelectList(_context.Avaliacoes, "Id", "Codigo");
+            var avaliacoes = await _context.Avaliacoes.AsNoTracking().ToListAsync();
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == int.Parse(userId));
+
+            var respostas = await _context.RespostaAlunos
+                .AsNoTracking()
+                .Include(x => x.Avaliacao)
+                .Include(x => x.Aluno)
+                .ThenInclude(x => x.Cpf)
+                .ToListAsync();
+
+            var containsResposta = respostas.Where(x => x.Aluno.Cpf.Normalize() == user.Email).ToList();
+            if (containsResposta.Count != 0)
+            {
+                var avaliacoesAluno = containsResposta.Select(x => x.Avaliacao).Distinct().ToList();
+                foreach (var avaliacaoAluno in avaliacoesAluno)
+                {
+                    avaliacaoAluno.RespostaAlunos = null;
+                }
+
+                avaliacoes = avaliacoes.Except(avaliacoesAluno).ToList();
+            }
+
+            ViewBag.Avaliacoes = new SelectList(avaliacoes, "Id", "Codigo");
             return View();
         }
 
@@ -52,7 +76,7 @@ namespace SAED.Web.Controllers
                     .AsNoTracking()
                     .Include(x => x.Cpf)
                     .ToListAsync();
-                    
+
                 var aluno = alunos.FirstOrDefault(x => x.Cpf.Normalize() == cpf);
                 return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao/{aluno?.Id}".ToLower());
             }

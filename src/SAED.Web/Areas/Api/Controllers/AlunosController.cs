@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
+using SAED.Web.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -23,15 +25,28 @@ namespace SAED.Web.Areas.Api.Controllers
         [Authorize(Permissions.Selecao.View)]
         public async Task<ActionResult<IEnumerable<Aluno>>> Get(int turmaId)
         {
-            var alunos = await _context.Alunos
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
+
+            var alunosRespondidos = await _context.RespostaAlunos
+                .AsNoTracking()
+                .Include(x => x.Aluno)
+                //.ThenInclude(x => x.Turma)
+                .Where(x => x.Aluno.TurmaId == turmaId && x.AvaliacaoId == avaliacao.Id)
+                .Select(x => x.Aluno)
+                .Distinct()
+                .ToListAsync();
+
+            if (alunosRespondidos is null)
+            {
+                return NotFound();
+            }
+
+            var todosAlunos = await _context.Alunos
                 .AsNoTracking()
                 .Where(x => x.TurmaId == turmaId)
                 .ToListAsync();
 
-            if (alunos is null)
-            {
-                return NotFound();
-            }
+            var alunos = todosAlunos.Except(alunosRespondidos).ToList();
 
             return Ok(JsonSerializer.Serialize(alunos));
         }
