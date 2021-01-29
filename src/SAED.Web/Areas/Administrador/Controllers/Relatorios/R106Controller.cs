@@ -101,7 +101,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 }
             }
 
-            r106ViewModel.AlunosViewModel = alunosViewModel;
+            r106ViewModel.AlunosViewModel = alunosViewModel.OrderBy(x => x.Aluno.Nome).ToList();
             r106ViewModel.DisciplinasViewModel = disciplinasViewModel;
 
             return View(r106ViewModel);

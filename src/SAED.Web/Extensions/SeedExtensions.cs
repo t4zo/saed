@@ -268,8 +268,8 @@ namespace SAED.Web.Extensions
 
             var alunos = new List<Aluno>
             {
-                new() {Id = 1, Nome = "Maria Luz", Cpf = "19237140070", Nascimento = new DateTime(day: 10, month: 08, year: 2002), TurmaId = 1},
-                new() {Id = 2, Nome = "João carlos", Cpf = "66135474090", Nascimento = new DateTime(day: 09, month: 09, year: 1999), TurmaId = 1}
+                new() {Id = 1, Nome = "Maria Luz", Cpf = "192.371.400-70", Nascimento = new DateTime(day: 10, month: 08, year: 2002), TurmaId = 1},
+                new() {Id = 2, Nome = "João carlos", Cpf = "661.354.740-90", Nascimento = new DateTime(day: 09, month: 09, year: 1999), TurmaId = 1}
             };
 
             new EntitySeed<Aluno>(context, databaseProvider).Load(alunos, "Alunos");

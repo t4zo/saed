@@ -49,8 +49,7 @@ namespace SAED.Web.Extensions
                     await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, permission));
                 }
             }
-
-            if (role.Name.Equals(Roles.Administrador))
+            else if (role.Name.Equals(Roles.Administrador))
             {
                 foreach (var permission in permissions)
                 {
@@ -60,19 +59,20 @@ namespace SAED.Web.Extensions
                     }
                 }
             }
-
-            if (role.Name.Equals(Roles.Aplicador))
+            else if (role.Name.Equals(Roles.Aplicador))
             {
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View));
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.DashboardAplicador.View));
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View));
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Aplicacao.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Aplicacao.Create));
             }
-
-            if (role.Name.Equals(Roles.Aplicador))
+            else if (role.Name.Equals(Roles.Aluno))
             {
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.DashboardAplicador.View));
                 await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Aplicacao.View));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Aplicacao.Create));
+                await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View));
             }
         }
     }
