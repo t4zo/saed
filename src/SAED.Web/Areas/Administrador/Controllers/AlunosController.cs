@@ -194,7 +194,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(aluno);
             }
 
-            if (Cpf.Parse(aluno.Cpf.Codigo) is null)
+            if (!Cpf.IsValid(aluno.Cpf.Codigo))
             {
                 ModelState.AddModelError("", "CPF Inválido");
 
