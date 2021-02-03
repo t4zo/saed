@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using SAED.Core.Interfaces;
+﻿using SAED.Core.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace SAED.Core.Entities
 {
     public class Questao : IEntity, IEquatable<Questao>
     {
-        public int Id { get; set; }
         public int DescritorId { get; set; }
         public Descritor Descritor { get; set; }
         public int EtapaId { get; set; }
@@ -17,6 +16,14 @@ namespace SAED.Core.Entities
         public bool Habilitada { get; set; }
         public IList<Avaliacao> Avaliacoes { get; set; }
         public IList<Alternativa> Alternativas { get; set; }
+        public int Id { get; set; }
+
+        public bool Equals(Questao other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id == other.Id;
+        }
 
 
         public void ClearReferenceCycle()
@@ -25,19 +32,12 @@ namespace SAED.Core.Entities
             Descritor.Tema.Descritores = null;
             Descritor.Tema.Disciplina.Temas = null;
         }
-        
-        public bool Equals(Questao other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id;
-        }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Questao) obj);
         }
 

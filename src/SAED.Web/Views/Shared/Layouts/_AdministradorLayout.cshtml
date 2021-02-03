@@ -1,8 +1,8 @@
 ﻿@using static SAED.Core.Constants.AuthorizationConstants
 @using SAED.Web.Extensions
 @using Microsoft.AspNetCore.Http
-@using SAED.Core.Constants
 @using SAED.Core.Entities
+@using SAED.Core.Constants
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -44,15 +44,15 @@
     <style>
         * {
             box-sizing: border-box;
+            font-family: 'Maven Pro', 'Noto Sans', 'Poppins', 'Roboto', 'Lato', 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            font-family: 'Maven Pro', 'Noto Sans', 'Poppins', 'Roboto', 'Lato', 'Montserrat', sans-serif
         }
 
         .grid {
             background-color: #ebedef;
             display: grid;
-            grid-template: auto minmax(calc(100vh - 162px), 1fr) auto / 1fr 4fr;
+            grid-template: auto minmax(calc(100vh - 162px), 1fr) auto/1fr 4fr;
             grid-template-areas: "aside header header" "aside content content" "aside footer footer";
         }
 
@@ -64,26 +64,18 @@
             top: 0;
         }
 
-        .header {
-            grid-area: header;
-        }
+        .header { grid-area: header; }
 
-        .content {
-            grid-area: content;
-        }
+        .content { grid-area: content; }
 
-        .footer {
-            grid-area: footer;
-        }
+        .footer { grid-area: footer; }
 
-        .logout-form > a:hover {
-            text-decoration: none;
-        }
+        .logout-form > a:hover { text-decoration: none; }
 
         @@media only screen and (max-width: 960px) {
             .grid {
                 display: grid;
-                grid-template: auto minmax(calc(100vh - 162px), 1fr) auto / 1fr;
+                grid-template: auto minmax(calc(100vh - 162px), 1fr) auto/1fr;
                 grid-template-areas: "header header" "content content" "footer footer";
             }
         }
@@ -91,7 +83,7 @@
         @@media print {
             .grid {
                 display: grid;
-                grid-template: auto minmax(calc(100vh - 162px), 1fr) auto / 1fr;
+                grid-template: auto minmax(calc(100vh - 162px), 1fr) auto/1fr;
                 grid-template-areas: "header header" "content content" "footer footer";
             }
         }

@@ -8,14 +8,14 @@ namespace SAED.Web.Authorization
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
     {
+        private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
+
         public PermissionPolicyProvider(IOptions<AuthorizationOptions> options)
         {
             // Só pode haver um provedor de políticas no ASP.NET Core.
             // Apenas lidamos com políticas relacionadas a permissões, para o resto, usaremos o provedor padrão.
             _fallbackPolicyProvider = new DefaultAuthorizationPolicyProvider(options);
         }
-
-        private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
 
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {

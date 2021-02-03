@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
 using SAED.Core.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SAED.Infrastructure.Data.Seed
 {

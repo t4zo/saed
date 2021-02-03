@@ -1,5 +1,3 @@
-using System;
-using System.Reflection;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using Hellang.Middleware.ProblemDetails;
@@ -20,17 +18,19 @@ using SAED.Core.Interfaces;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.i18n;
 using SAED.Infrastructure.Identity;
+using System;
+using System.Reflection;
 
 namespace SAED.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {

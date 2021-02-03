@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using SAED.Core.Interfaces;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SAED.Core.Entities;
-using SAED.Core.Interfaces;
 
 namespace SAED.Infrastructure.Data.Seed
 {
@@ -14,13 +13,13 @@ namespace SAED.Infrastructure.Data.Seed
     {
         protected readonly ApplicationDbContext _context;
 
+        protected string _ressourceName { get; set; }
+
         protected EntitySeedJson(ApplicationDbContext context, string ressourceName)
         {
             _context = context;
             _ressourceName = ressourceName;
         }
-
-        protected string _ressourceName { get; set; }
 
         public virtual async Task LoadAsync()
         {

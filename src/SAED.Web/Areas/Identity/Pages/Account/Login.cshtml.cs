@@ -21,6 +21,16 @@ namespace SAED.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        [BindProperty]
+        public InputModel Input { get; set; }
+
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        public string ReturnUrl { get; set; }
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
             ILogger<LoginModel> logger, ApplicationDbContext context)
         {
@@ -29,15 +39,6 @@ namespace SAED.Web.Areas.Identity.Pages.Account
             _logger = logger;
             _context = context;
         }
-
-        [BindProperty] 
-        public InputModel Input { get; set; }
-
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        public string ReturnUrl { get; set; }
-
-        [TempData] public string ErrorMessage { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
@@ -103,7 +104,8 @@ namespace SAED.Web.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")] public bool RememberMe { get; set; }
+            [Display(Name = "Remember me?")]
+            public bool RememberMe { get; set; }
         }
     }
 }

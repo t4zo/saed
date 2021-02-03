@@ -21,16 +21,16 @@
     <link href="~/libs/uikit/dist/css/uikit.min.css" rel="stylesheet" />
     <script defer src="~/libs/uikit/dist/js/uikit.min.js"></script>
     <script defer src="~/libs/uikit/dist/js/uikit-icons.js"></script>
-    
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;700&family=Noto+Sans:wght@400;700&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         * {
             box-sizing: border-box;
+            font-family: 'Montserrat', 'Roboto', 'Poppins', 'Noto Sans', 'Lato', sans-serif;
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', 'Roboto', 'Poppins', 'Noto Sans', 'Lato', sans-serif
         }
 
         .grid {
@@ -44,11 +44,11 @@
             height: 100vh;
         }
 
-            .aside img {
-                height: 100vh;
-                object-fit: cover;
-                width: 100%;
-            }
+        .aside img {
+            height: 100vh;
+            object-fit: cover;
+            width: 100%;
+        }
 
         .content {
             grid-area: content;
@@ -62,9 +62,7 @@
             justify-content: center;
         }
 
-            .footer span {
-                padding-bottom: 20px;
-            }
+        .footer span { padding-bottom: 20px; }
 
         @@media only screen and (max-width: 960px) {
             .grid {
@@ -76,44 +74,46 @@
     </style>
 </head>
 <body class="grid">
-    <aside class="uk-visible@m aside">
-        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="animation: scale; autoplay: true; autoplay-interval: 5000">
-            <ul class="uk-slideshow-items" uk-height-viewport="min-height: 100%">
-                <li>
-                    <img src="https://images.pexels.com/photos/5608541/pexels-photo-5608541.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1920&w=2879" alt="" uk-cover>
-                </li>
-                <li>
-                    <img src="https://images.pexels.com/photos/3558597/pexels-photo-3558597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1280&w=1656" alt="" uk-cover>
-                </li>
-                <li>
-                    <img src="https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="" uk-cover>
-                </li>
-            </ul>
-        </div>
-    </aside>
+<aside class="uk-visible@m aside">
+    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="animation: scale; autoplay: true; autoplay-interval: 5000">
+        <ul class="uk-slideshow-items" uk-height-viewport="min-height: 100%">
+            <li>
+                <img src="https://images.pexels.com/photos/5608541/pexels-photo-5608541.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1920&w=2879" alt="" uk-cover>
+            </li>
+            <li>
+                <img src="https://images.pexels.com/photos/3558597/pexels-photo-3558597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1280&w=1656" alt="" uk-cover>
+            </li>
+            <li>
+                <img src="https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="" uk-cover>
+            </li>
+        </ul>
+    </div>
+</aside>
 
-    <main class="content">
-        <h1 class="uk-heading-line uk-text-center uk-margin-xlarge-top uk-margin-large-bottom"><span>SAED</span></h1>
-        <form asp-route-returnUrl="~/avaliacoes" class="uk-margin-large-left uk-margin-large-right" method="post">
-            <div asp-validation-summary="All" class="uk-text-danger"></div>
-            <div class="uk-margin">
-                <div class="uk-inline uk-display-block">
-                    <a class="uk-form-icon" uk-icon="user"></a>
-                    <input asp-for="Input.Email" class="uk-input" placeholder="Email" />
-                </div>
-            </div>
+<main class="content">
+    <h1 class="uk-heading-line uk-text-center uk-margin-xlarge-top uk-margin-large-bottom">
+        <span>SAED</span>
+    </h1>
+    <form asp-route-returnUrl="~/avaliacoes" class="uk-margin-large-left uk-margin-large-right" method="post">
+        <div asp-validation-summary="All" class="uk-text-danger"></div>
+        <div class="uk-margin">
             <div class="uk-inline uk-display-block">
-                <div class="uk-margin">
-                    <a class="uk-form-icon uk-form-icon-flip" uk-icon="lock"></a>
-                    <input asp-for="Input.Password" class="uk-input" placeholder="Senha" />
-                </div>
+                <a class="uk-form-icon" uk-icon="user"></a>
+                <input asp-for="Input.Email" class="uk-input" placeholder="Email" />
             </div>
-            <button type="submit" class="uk-button uk-button-primary uk-align-center uk-margin-large-top">Entrar</button>
-        </form>
-    </main>
+        </div>
+        <div class="uk-inline uk-display-block">
+            <div class="uk-margin">
+                <a class="uk-form-icon uk-form-icon-flip" uk-icon="lock"></a>
+                <input asp-for="Input.Password" class="uk-input" placeholder="Senha" />
+            </div>
+        </div>
+        <button type="submit" class="uk-button uk-button-primary uk-align-center uk-margin-large-top">Entrar</button>
+    </form>
+</main>
 
-    <footer class="footer">
-        <span>Desenvolvido por EVOLVE</span>
-    </footer>
+<footer class="footer">
+    <span>Desenvolvido por EVOLVE</span>
+</footer>
 </body>
 </html>

@@ -5,18 +5,18 @@ namespace SAED.Core.Entities
 {
     public class Cpf : IEntity
     {
-        public int Id { get; set; }
         public string Codigo { get; set; }
 
         public Cpf()
         {
-
         }
 
         public Cpf(string codigo)
         {
             Codigo = codigo;
         }
+
+        public int Id { get; set; }
 
         public static Cpf Parse(string codigo)
         {
@@ -30,8 +30,8 @@ namespace SAED.Core.Entities
 
         public static bool IsValid(string cpf)
         {
-            var multiplicador1 = new[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            var multiplicador2 = new[] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            var multiplicador1 = new[] {10, 9, 8, 7, 6, 5, 4, 3, 2};
+            var multiplicador2 = new[] {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
 
             var cpfNormalized = cpf.Trim().Replace(".", "").Replace("-", "");
             if (cpfNormalized.Length != 11) return false;
@@ -86,14 +86,14 @@ namespace SAED.Core.Entities
             {
                 return true;
             }
-            
+
             return false;
         }
 
         public static bool TryParse(string codigo, out Cpf cpf)
         {
-            var multiplicador1 = new [] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            var multiplicador2 = new [] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            var multiplicador1 = new[] {10, 9, 8, 7, 6, 5, 4, 3, 2};
+            var multiplicador2 = new[] {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
 
             cpf = new Cpf(codigo);
 
@@ -156,10 +156,19 @@ namespace SAED.Core.Entities
             return false;
         }
 
-        public string Normalize() => Codigo.Replace(".", string.Empty).Replace("-", string.Empty);
+        public string Normalize()
+        {
+            return Codigo.Replace(".", string.Empty).Replace("-", string.Empty);
+        }
 
-        public override string ToString() => Codigo;
+        public override string ToString()
+        {
+            return Codigo;
+        }
 
-        public static implicit operator Cpf(string codigo) => Parse(codigo);
+        public static implicit operator Cpf(string codigo)
+        {
+            return Parse(codigo);
+        }
     }
 }

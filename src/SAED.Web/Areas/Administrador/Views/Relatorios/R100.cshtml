@@ -10,7 +10,7 @@
         <a href="" onclick="window.print()" uk-icon="icon: print"></a>
     </h2>
     <section class="uk-flex uk-flex-center">
-        <dl class="uk-column-1-@(Model.ResultadoMunicipioViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
+        <dl class="uk-column-1-@(Model.ResultadoMunicipioViewModel.Count + 1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
             @foreach (var resultado in Model.ResultadoMunicipioViewModel)

@@ -22,13 +22,13 @@ namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((DistritoViewModel) obj);
         }
 
         public override int GetHashCode()
         {
-            return (Distrito is not null ? Distrito.GetHashCode() : 0);
+            return Distrito is not null ? Distrito.GetHashCode() : 0;
         }
     }
 }

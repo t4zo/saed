@@ -122,7 +122,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             if (turma.SalaId == 0)
             {
                 ModelState.AddModelError("", "Escola e/ou Sala inválido(s)");
-                    
+
                 ViewBag.EscolaId = new SelectList(_context.Escolas, "Id", "Nome");
 
                 ViewData["EtapaId"] = new SelectList(_context.Etapas, "Id", "Nome", turma.EtapaId);

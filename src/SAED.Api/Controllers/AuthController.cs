@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +7,7 @@ using SAED.Api.Entities.Responses;
 using SAED.Api.Interfaces;
 using SAED.Core.Constants;
 using SAED.Infrastructure.Identity;
+using System.Threading.Tasks;
 
 namespace SAED.Api.Controllers
 {

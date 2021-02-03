@@ -10,7 +10,7 @@
         <a href="" onclick="window.print()" uk-icon="icon: print"></a>
     </h2>
     <section class="uk-flex uk-flex-center">
-        <dl class="uk-column-1-@(Model.DisciplinasViewModel.Distinct().Count()+1) uk-column-divider uk-description-list uk-text-center">
+        <dl class="uk-column-1-@(Model.DisciplinasViewModel.Distinct().Count() + 1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
             @foreach (var disciplinaViewModel in Model.DisciplinasViewModel.Distinct())
@@ -31,36 +31,36 @@
         @*<h3>@escola.Nome - @etapa.Nome</h3>*@
         <table id="dataTable" class="uk-table uk-table-hover uk-text-center uk-table-striped">
             <thead>
-                <tr>
-                    <th class="uk-text-center">Etapa</th>
-                    <th class="uk-text-center">Aluno</th>
-                    @foreach (var disciplina in Model.DisciplinasViewModel.Select(x => x.Disciplina).Distinct())
-                    {
-                        <th class="uk-text-center">@disciplina.Nome</th>
-                    }
-                </tr>
+            <tr>
+                <th class="uk-text-center">Etapa</th>
+                <th class="uk-text-center">Aluno</th>
+                @foreach (var disciplina in Model.DisciplinasViewModel.Select(x => x.Disciplina).Distinct())
+                {
+                    <th class="uk-text-center">@disciplina.Nome</th>
+                }
+            </tr>
             </thead>
             <tbody>
-                @foreach (var escolaEtapaAlunoViewModel in Model.AlunosViewModel.Distinct())
-                {
-                    <tr>
-                        <td>@escolaEtapaAlunoViewModel.Aluno.Turma.Etapa.Nome</td>
-                        <td>@escolaEtapaAlunoViewModel.Aluno.Nome</td>
+            @foreach (var escolaEtapaAlunoViewModel in Model.AlunosViewModel.Distinct())
+            {
+                <tr>
+                    <td>@escolaEtapaAlunoViewModel.Aluno.Turma.Etapa.Nome</td>
+                    <td>@escolaEtapaAlunoViewModel.Aluno.Nome</td>
 
-                        @foreach (var resultado in Model.ResultadoAlunosViewModel)
+                    @foreach (var resultado in Model.ResultadoAlunosViewModel)
+                    {
+                        if (escolaEtapaAlunoViewModel.Aluno.Id == resultado.AlunoViewModel.Aluno.Id &&
+                            resultado.AlunoViewModel.Disciplina.Id == resultado.DisciplinaViewModel.Disciplina.Id &&
+                            resultado.AlunoViewModel.Aluno.Id == resultado.DisciplinaViewModel.Aluno.Id)
                         {
-                            if (escolaEtapaAlunoViewModel.Aluno.Id == resultado.AlunoViewModel.Aluno.Id &&
-                                resultado.AlunoViewModel.Disciplina.Id == resultado.DisciplinaViewModel.Disciplina.Id &&
-                                resultado.AlunoViewModel.Aluno.Id == resultado.DisciplinaViewModel.Aluno.Id)
-                            {
-                                <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                    <span>@resultado.TaxaAcertoDisciplina%</span>
-                                    <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
-                                </td>
-                            }
+                            <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                                <span>@resultado.TaxaAcertoDisciplina%</span>
+                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                            </td>
                         }
-                    </tr>
-                }
+                    }
+                </tr>
+            }
             </tbody>
         </table>
         @*}*@

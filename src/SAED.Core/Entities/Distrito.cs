@@ -1,16 +1,16 @@
-﻿using System;
+﻿using SAED.Core.Interfaces;
+using System;
 using System.Collections.Generic;
-using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
     public class Distrito : IEntity, IEquatable<Distrito>
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public Zona Zona { get; set; }
         public int Distancia { get; set; }
         public ICollection<Escola> Escolas { get; set; }
+        public int Id { get; set; }
 
         public bool Equals(Distrito other)
         {
@@ -23,7 +23,7 @@ namespace SAED.Core.Entities
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Distrito) obj);
         }
 

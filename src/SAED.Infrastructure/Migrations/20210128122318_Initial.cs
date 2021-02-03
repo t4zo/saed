@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace SAED.Infrastructure.Migrations
 {
@@ -8,928 +8,901 @@ namespace SAED.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
+                "AspNetRoles",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    Name = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AspNetRoles", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
+                "AspNetUsers",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LastLogin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    LastLogin = table.Column<DateTime>("datetime2", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UserName = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>("bit", nullable: false),
+                    PasswordHash = table.Column<string>("nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>("nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>("nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>("nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>("bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>("bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>("datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>("bit", nullable: false),
+                    AccessFailedCount = table.Column<int>("int", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AspNetUsers", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Avaliacoes",
-                columns: table => new
+                "Avaliacoes",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Codigo = table.Column<string>("nvarchar(max)", nullable: false),
+                    Status = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Avaliacoes", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Avaliacoes", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Cpfs",
-                columns: table => new
+                "Cpfs",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Codigo = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cpfs", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Cpfs", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Cursos",
-                columns: table => new
+                "Cursos",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Sigla = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nome = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: false),
+                    Sigla = table.Column<string>("nvarchar(8)", maxLength: 8, nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cursos", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Cursos", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Disciplinas",
-                columns: table => new
+                "Disciplinas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Sigla = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nome = table.Column<string>("nvarchar(128)", maxLength: 128, nullable: false),
+                    Sigla = table.Column<string>("nvarchar(8)", maxLength: 8, nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Disciplinas", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Disciplinas", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Distritos",
-                columns: table => new
+                "Distritos",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    Zona = table.Column<int>(type: "int", nullable: false),
-                    Distancia = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nome = table.Column<string>("nvarchar(32)", maxLength: 32, nullable: false),
+                    Zona = table.Column<int>("int", nullable: false),
+                    Distancia = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Distritos", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Distritos", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Formas",
-                columns: table => new
+                "Formas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nome = table.Column<string>("nvarchar(16)", maxLength: 16, nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Formas", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Formas", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Turnos",
-                columns: table => new
+                "Turnos",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nome = table.Column<string>("nvarchar(32)", maxLength: 32, nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Turnos", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Turnos", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
+                "AspNetRoleClaims",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    RoleId = table.Column<int>("int", nullable: false),
+                    ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
+                        "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        x => x.RoleId,
+                        "AspNetRoles",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
+                "AspNetUserClaims",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UserId = table.Column<int>("int", nullable: false),
+                    ClaimType = table.Column<string>("nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
+                "AspNetUserLogins",
+                table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    LoginProvider = table.Column<string>("nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>("nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>("nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new {x.LoginProvider, x.ProviderKey});
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
+                "AspNetUserRoles",
+                table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UserId = table.Column<int>("int", nullable: false),
+                    RoleId = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new {x.UserId, x.RoleId});
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
+                        "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        x => x.RoleId,
+                        "AspNetRoles",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
+                "AspNetUserTokens",
+                table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UserId = table.Column<int>("int", nullable: false),
+                    LoginProvider = table.Column<string>("nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>("nvarchar(128)", maxLength: 128, nullable: false),
+                    Value = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new {x.UserId, x.LoginProvider, x.Name});
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Segmentos",
-                columns: table => new
+                "Segmentos",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Sigla = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    CursoId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nome = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: false),
+                    Sigla = table.Column<string>("nvarchar(10)", maxLength: 10, nullable: false),
+                    CursoId = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Segmentos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Segmentos_Cursos_CursoId",
-                        column: x => x.CursoId,
-                        principalTable: "Cursos",
-                        principalColumn: "Id",
+                        "FK_Segmentos_Cursos_CursoId",
+                        x => x.CursoId,
+                        "Cursos",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Temas",
-                columns: table => new
+                "Temas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DisciplinaId = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DisciplinaId = table.Column<int>("int", nullable: false),
+                    Nome = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Temas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Temas_Disciplinas_DisciplinaId",
-                        column: x => x.DisciplinaId,
-                        principalTable: "Disciplinas",
-                        principalColumn: "Id",
+                        "FK_Temas_Disciplinas_DisciplinaId",
+                        x => x.DisciplinaId,
+                        "Disciplinas",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Escolas",
-                columns: table => new
+                "Escolas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Inep = table.Column<int>(type: "int", nullable: true),
-                    MatrizId = table.Column<int>(type: "int", nullable: true),
-                    Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    DistritoId = table.Column<int>(type: "int", nullable: false),
-                    Bairro = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    Rua = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Numero = table.Column<int>(type: "int", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Telefone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Inep = table.Column<int>("int", nullable: true),
+                    MatrizId = table.Column<int>("int", nullable: true),
+                    Nome = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: false),
+                    DistritoId = table.Column<int>("int", nullable: false),
+                    Bairro = table.Column<string>("nvarchar(128)", maxLength: 128, nullable: true),
+                    Rua = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: true),
+                    Numero = table.Column<int>("int", nullable: true),
+                    Email = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: false),
+                    Telefone = table.Column<string>("nvarchar(11)", maxLength: 11, nullable: true),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Escolas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Escolas_Distritos_DistritoId",
-                        column: x => x.DistritoId,
-                        principalTable: "Distritos",
-                        principalColumn: "Id",
+                        "FK_Escolas_Distritos_DistritoId",
+                        x => x.DistritoId,
+                        "Distritos",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Escolas_Escolas_MatrizId",
-                        column: x => x.MatrizId,
-                        principalTable: "Escolas",
-                        principalColumn: "Id",
+                        "FK_Escolas_Escolas_MatrizId",
+                        x => x.MatrizId,
+                        "Escolas",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Etapas",
-                columns: table => new
+                "Etapas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    SegmentoId = table.Column<int>(type: "int", nullable: false),
-                    Normativa = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Nome = table.Column<string>("nvarchar(64)", maxLength: 64, nullable: false),
+                    SegmentoId = table.Column<int>("int", nullable: false),
+                    Normativa = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Etapas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Etapas_Segmentos_SegmentoId",
-                        column: x => x.SegmentoId,
-                        principalTable: "Segmentos",
-                        principalColumn: "Id",
+                        "FK_Etapas_Segmentos_SegmentoId",
+                        x => x.SegmentoId,
+                        "Segmentos",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Descritores",
-                columns: table => new
+                "Descritores",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TemaId = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TemaId = table.Column<int>("int", nullable: false),
+                    Nome = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Descritores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Descritores_Temas_TemaId",
-                        column: x => x.TemaId,
-                        principalTable: "Temas",
-                        principalColumn: "Id",
+                        "FK_Descritores_Temas_TemaId",
+                        x => x.TemaId,
+                        "Temas",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Salas",
-                columns: table => new
+                "Salas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EscolaId = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Capacidade = table.Column<int>(type: "int", nullable: false),
-                    Area = table.Column<double>(type: "float", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EscolaId = table.Column<int>("int", nullable: false),
+                    Nome = table.Column<string>("nvarchar(max)", nullable: false),
+                    Capacidade = table.Column<int>("int", nullable: false),
+                    Area = table.Column<double>("float", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Salas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Salas_Escolas_EscolaId",
-                        column: x => x.EscolaId,
-                        principalTable: "Escolas",
-                        principalColumn: "Id",
+                        "FK_Salas_Escolas_EscolaId",
+                        x => x.EscolaId,
+                        "Escolas",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AvaliacaoDisciplinasEtapas",
-                columns: table => new
+                "AvaliacaoDisciplinasEtapas",
+                table => new
                 {
-                    AvaliacaoId = table.Column<int>(type: "int", nullable: false),
-                    DisciplinaId = table.Column<int>(type: "int", nullable: false),
-                    EtapaId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AvaliacaoId = table.Column<int>("int", nullable: false),
+                    DisciplinaId = table.Column<int>("int", nullable: false),
+                    EtapaId = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AvaliacaoDisciplinasEtapas", x => new { x.DisciplinaId, x.AvaliacaoId, x.EtapaId });
+                    table.PrimaryKey("PK_AvaliacaoDisciplinasEtapas", x => new {x.DisciplinaId, x.AvaliacaoId, x.EtapaId});
                     table.ForeignKey(
-                        name: "FK_AvaliacaoDisciplinasEtapas_Avaliacoes_AvaliacaoId",
-                        column: x => x.AvaliacaoId,
-                        principalTable: "Avaliacoes",
-                        principalColumn: "Id",
+                        "FK_AvaliacaoDisciplinasEtapas_Avaliacoes_AvaliacaoId",
+                        x => x.AvaliacaoId,
+                        "Avaliacoes",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AvaliacaoDisciplinasEtapas_Disciplinas_DisciplinaId",
-                        column: x => x.DisciplinaId,
-                        principalTable: "Disciplinas",
-                        principalColumn: "Id",
+                        "FK_AvaliacaoDisciplinasEtapas_Disciplinas_DisciplinaId",
+                        x => x.DisciplinaId,
+                        "Disciplinas",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AvaliacaoDisciplinasEtapas_Etapas_EtapaId",
-                        column: x => x.EtapaId,
-                        principalTable: "Etapas",
-                        principalColumn: "Id",
+                        "FK_AvaliacaoDisciplinasEtapas_Etapas_EtapaId",
+                        x => x.EtapaId,
+                        "Etapas",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Questoes",
-                columns: table => new
+                "Questoes",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DescritorId = table.Column<int>(type: "int", nullable: false),
-                    EtapaId = table.Column<int>(type: "int", nullable: false),
-                    Item = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Enunciado = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Habilitada = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DescritorId = table.Column<int>("int", nullable: false),
+                    EtapaId = table.Column<int>("int", nullable: false),
+                    Item = table.Column<string>("nvarchar(8)", maxLength: 8, nullable: false),
+                    Descricao = table.Column<string>("nvarchar(max)", nullable: true),
+                    Enunciado = table.Column<string>("nvarchar(max)", nullable: false),
+                    Habilitada = table.Column<bool>("bit", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questoes_Descritores_DescritorId",
-                        column: x => x.DescritorId,
-                        principalTable: "Descritores",
-                        principalColumn: "Id",
+                        "FK_Questoes_Descritores_DescritorId",
+                        x => x.DescritorId,
+                        "Descritores",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Questoes_Etapas_EtapaId",
-                        column: x => x.EtapaId,
-                        principalTable: "Etapas",
-                        principalColumn: "Id",
+                        "FK_Questoes_Etapas_EtapaId",
+                        x => x.EtapaId,
+                        "Etapas",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Turmas",
-                columns: table => new
+                "Turmas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SalaId = table.Column<int>(type: "int", nullable: false),
-                    EtapaId = table.Column<int>(type: "int", nullable: false),
-                    TurnoId = table.Column<int>(type: "int", nullable: false),
-                    FormaId = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    Extinta = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    SalaId = table.Column<int>("int", nullable: false),
+                    EtapaId = table.Column<int>("int", nullable: false),
+                    TurnoId = table.Column<int>("int", nullable: false),
+                    FormaId = table.Column<int>("int", nullable: false),
+                    Nome = table.Column<string>("nvarchar(32)", maxLength: 32, nullable: false),
+                    Extinta = table.Column<bool>("bit", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Turmas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Turmas_Etapas_EtapaId",
-                        column: x => x.EtapaId,
-                        principalTable: "Etapas",
-                        principalColumn: "Id",
+                        "FK_Turmas_Etapas_EtapaId",
+                        x => x.EtapaId,
+                        "Etapas",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Turmas_Formas_FormaId",
-                        column: x => x.FormaId,
-                        principalTable: "Formas",
-                        principalColumn: "Id",
+                        "FK_Turmas_Formas_FormaId",
+                        x => x.FormaId,
+                        "Formas",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Turmas_Salas_SalaId",
-                        column: x => x.SalaId,
-                        principalTable: "Salas",
-                        principalColumn: "Id",
+                        "FK_Turmas_Salas_SalaId",
+                        x => x.SalaId,
+                        "Salas",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Turmas_Turnos_TurnoId",
-                        column: x => x.TurnoId,
-                        principalTable: "Turnos",
-                        principalColumn: "Id",
+                        "FK_Turmas_Turnos_TurnoId",
+                        x => x.TurnoId,
+                        "Turnos",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Alternativas",
-                columns: table => new
+                "Alternativas",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Correta = table.Column<bool>(type: "bit", nullable: false),
-                    QuestaoId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Descricao = table.Column<string>("nvarchar(max)", nullable: false),
+                    Correta = table.Column<bool>("bit", nullable: false),
+                    QuestaoId = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Alternativas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Alternativas_Questoes_QuestaoId",
-                        column: x => x.QuestaoId,
-                        principalTable: "Questoes",
-                        principalColumn: "Id",
+                        "FK_Alternativas_Questoes_QuestaoId",
+                        x => x.QuestaoId,
+                        "Questoes",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AvaliacaoQuestao",
-                columns: table => new
+                "AvaliacaoQuestao",
+                table => new
                 {
-                    AvaliacoesId = table.Column<int>(type: "int", nullable: false),
-                    QuestoesId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AvaliacoesId = table.Column<int>("int", nullable: false),
+                    QuestoesId = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AvaliacaoQuestao", x => new { x.AvaliacoesId, x.QuestoesId });
+                    table.PrimaryKey("PK_AvaliacaoQuestao", x => new {x.AvaliacoesId, x.QuestoesId});
                     table.ForeignKey(
-                        name: "FK_AvaliacaoQuestao_Avaliacoes_AvaliacoesId",
-                        column: x => x.AvaliacoesId,
-                        principalTable: "Avaliacoes",
-                        principalColumn: "Id",
+                        "FK_AvaliacaoQuestao_Avaliacoes_AvaliacoesId",
+                        x => x.AvaliacoesId,
+                        "Avaliacoes",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AvaliacaoQuestao_Questoes_QuestoesId",
-                        column: x => x.QuestoesId,
-                        principalTable: "Questoes",
-                        principalColumn: "Id",
+                        "FK_AvaliacaoQuestao_Questoes_QuestoesId",
+                        x => x.QuestoesId,
+                        "Questoes",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Alunos",
-                columns: table => new
+                "Alunos",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TurmaId = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    CpfId = table.Column<int>(type: "int", nullable: true),
-                    Nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TurmaId = table.Column<int>("int", nullable: false),
+                    Nome = table.Column<string>("nvarchar(256)", maxLength: 256, nullable: false),
+                    CpfId = table.Column<int>("int", nullable: true),
+                    Nascimento = table.Column<DateTime>("datetime2", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Alunos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Alunos_Cpfs_CpfId",
-                        column: x => x.CpfId,
-                        principalTable: "Cpfs",
-                        principalColumn: "Id",
+                        "FK_Alunos_Cpfs_CpfId",
+                        x => x.CpfId,
+                        "Cpfs",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Alunos_Turmas_TurmaId",
-                        column: x => x.TurmaId,
-                        principalTable: "Turmas",
-                        principalColumn: "Id",
+                        "FK_Alunos_Turmas_TurmaId",
+                        x => x.TurmaId,
+                        "Turmas",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RespostaAlunos",
-                columns: table => new
+                "RespostaAlunos",
+                table => new
                 {
-                    AvaliacaoId = table.Column<int>(type: "int", nullable: false),
-                    AlunoId = table.Column<int>(type: "int", nullable: false),
-                    AlternativaId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AvaliacaoId = table.Column<int>("int", nullable: false),
+                    AlunoId = table.Column<int>("int", nullable: false),
+                    AlternativaId = table.Column<int>("int", nullable: false),
+                    CreatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>("datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>("nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>("datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RespostaAlunos", x => new { x.AvaliacaoId, x.AlunoId, x.AlternativaId });
+                    table.PrimaryKey("PK_RespostaAlunos", x => new {x.AvaliacaoId, x.AlunoId, x.AlternativaId});
                     table.ForeignKey(
-                        name: "FK_RespostaAlunos_Alternativas_AlternativaId",
-                        column: x => x.AlternativaId,
-                        principalTable: "Alternativas",
-                        principalColumn: "Id",
+                        "FK_RespostaAlunos_Alternativas_AlternativaId",
+                        x => x.AlternativaId,
+                        "Alternativas",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RespostaAlunos_Alunos_AlunoId",
-                        column: x => x.AlunoId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
+                        "FK_RespostaAlunos_Alunos_AlunoId",
+                        x => x.AlunoId,
+                        "Alunos",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RespostaAlunos_Avaliacoes_AvaliacaoId",
-                        column: x => x.AvaliacaoId,
-                        principalTable: "Avaliacoes",
-                        principalColumn: "Id",
+                        "FK_RespostaAlunos_Avaliacoes_AvaliacaoId",
+                        x => x.AvaliacaoId,
+                        "Avaliacoes",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alternativas_QuestaoId",
-                table: "Alternativas",
-                column: "QuestaoId");
+                "IX_Alternativas_QuestaoId",
+                "Alternativas",
+                "QuestaoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alunos_CpfId",
-                table: "Alunos",
-                column: "CpfId");
+                "IX_Alunos_CpfId",
+                "Alunos",
+                "CpfId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alunos_TurmaId",
-                table: "Alunos",
-                column: "TurmaId");
+                "IX_Alunos_TurmaId",
+                "Alunos",
+                "TurmaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
+                "IX_AspNetRoleClaims_RoleId",
+                "AspNetRoleClaims",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
+                "RoleNameIndex",
+                "AspNetRoles",
+                "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId");
+                "IX_AspNetUserClaims_UserId",
+                "AspNetUserClaims",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId");
+                "IX_AspNetUserLogins_UserId",
+                "AspNetUserLogins",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                table: "AspNetUserRoles",
-                column: "RoleId");
+                "IX_AspNetUserRoles_RoleId",
+                "AspNetUserRoles",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
+                "EmailIndex",
+                "AspNetUsers",
+                "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
+                "UserNameIndex",
+                "AspNetUsers",
+                "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoDisciplinasEtapas_AvaliacaoId",
-                table: "AvaliacaoDisciplinasEtapas",
-                column: "AvaliacaoId");
+                "IX_AvaliacaoDisciplinasEtapas_AvaliacaoId",
+                "AvaliacaoDisciplinasEtapas",
+                "AvaliacaoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoDisciplinasEtapas_EtapaId",
-                table: "AvaliacaoDisciplinasEtapas",
-                column: "EtapaId");
+                "IX_AvaliacaoDisciplinasEtapas_EtapaId",
+                "AvaliacaoDisciplinasEtapas",
+                "EtapaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoQuestao_QuestoesId",
-                table: "AvaliacaoQuestao",
-                column: "QuestoesId");
+                "IX_AvaliacaoQuestao_QuestoesId",
+                "AvaliacaoQuestao",
+                "QuestoesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Descritores_TemaId",
-                table: "Descritores",
-                column: "TemaId");
+                "IX_Descritores_TemaId",
+                "Descritores",
+                "TemaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Escolas_DistritoId",
-                table: "Escolas",
-                column: "DistritoId");
+                "IX_Escolas_DistritoId",
+                "Escolas",
+                "DistritoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Escolas_MatrizId",
-                table: "Escolas",
-                column: "MatrizId");
+                "IX_Escolas_MatrizId",
+                "Escolas",
+                "MatrizId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Etapas_SegmentoId",
-                table: "Etapas",
-                column: "SegmentoId");
+                "IX_Etapas_SegmentoId",
+                "Etapas",
+                "SegmentoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questoes_DescritorId",
-                table: "Questoes",
-                column: "DescritorId");
+                "IX_Questoes_DescritorId",
+                "Questoes",
+                "DescritorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questoes_EtapaId",
-                table: "Questoes",
-                column: "EtapaId");
+                "IX_Questoes_EtapaId",
+                "Questoes",
+                "EtapaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RespostaAlunos_AlternativaId",
-                table: "RespostaAlunos",
-                column: "AlternativaId");
+                "IX_RespostaAlunos_AlternativaId",
+                "RespostaAlunos",
+                "AlternativaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RespostaAlunos_AlunoId",
-                table: "RespostaAlunos",
-                column: "AlunoId");
+                "IX_RespostaAlunos_AlunoId",
+                "RespostaAlunos",
+                "AlunoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Salas_EscolaId",
-                table: "Salas",
-                column: "EscolaId");
+                "IX_Salas_EscolaId",
+                "Salas",
+                "EscolaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Segmentos_CursoId",
-                table: "Segmentos",
-                column: "CursoId");
+                "IX_Segmentos_CursoId",
+                "Segmentos",
+                "CursoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Temas_DisciplinaId",
-                table: "Temas",
-                column: "DisciplinaId");
+                "IX_Temas_DisciplinaId",
+                "Temas",
+                "DisciplinaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Turmas_EtapaId",
-                table: "Turmas",
-                column: "EtapaId");
+                "IX_Turmas_EtapaId",
+                "Turmas",
+                "EtapaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Turmas_FormaId",
-                table: "Turmas",
-                column: "FormaId");
+                "IX_Turmas_FormaId",
+                "Turmas",
+                "FormaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Turmas_SalaId",
-                table: "Turmas",
-                column: "SalaId");
+                "IX_Turmas_SalaId",
+                "Turmas",
+                "SalaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Turmas_TurnoId",
-                table: "Turmas",
-                column: "TurnoId");
+                "IX_Turmas_TurnoId",
+                "Turmas",
+                "TurnoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+                "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+                "AspNetUserClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+                "AspNetUserLogins");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+                "AspNetUserRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+                "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AvaliacaoDisciplinasEtapas");
+                "AvaliacaoDisciplinasEtapas");
 
             migrationBuilder.DropTable(
-                name: "AvaliacaoQuestao");
+                "AvaliacaoQuestao");
 
             migrationBuilder.DropTable(
-                name: "RespostaAlunos");
+                "RespostaAlunos");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Alternativas");
+                "Alternativas");
 
             migrationBuilder.DropTable(
-                name: "Alunos");
+                "Alunos");
 
             migrationBuilder.DropTable(
-                name: "Avaliacoes");
+                "Avaliacoes");
 
             migrationBuilder.DropTable(
-                name: "Questoes");
+                "Questoes");
 
             migrationBuilder.DropTable(
-                name: "Cpfs");
+                "Cpfs");
 
             migrationBuilder.DropTable(
-                name: "Turmas");
+                "Turmas");
 
             migrationBuilder.DropTable(
-                name: "Descritores");
+                "Descritores");
 
             migrationBuilder.DropTable(
-                name: "Etapas");
+                "Etapas");
 
             migrationBuilder.DropTable(
-                name: "Formas");
+                "Formas");
 
             migrationBuilder.DropTable(
-                name: "Salas");
+                "Salas");
 
             migrationBuilder.DropTable(
-                name: "Turnos");
+                "Turnos");
 
             migrationBuilder.DropTable(
-                name: "Temas");
+                "Temas");
 
             migrationBuilder.DropTable(
-                name: "Segmentos");
+                "Segmentos");
 
             migrationBuilder.DropTable(
-                name: "Escolas");
+                "Escolas");
 
             migrationBuilder.DropTable(
-                name: "Disciplinas");
+                "Disciplinas");
 
             migrationBuilder.DropTable(
-                name: "Cursos");
+                "Cursos");
 
             migrationBuilder.DropTable(
-                name: "Distritos");
+                "Distritos");
         }
     }
 }

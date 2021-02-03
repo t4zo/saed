@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +6,12 @@ using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Core.Interfaces;
 using SAED.Infrastructure.Identity;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Security.Claims;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SAED.Infrastructure.Data
 {
@@ -20,13 +20,6 @@ namespace SAED.Infrastructure.Data
         private readonly IConfiguration _configuration;
         private readonly string _databaseProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(options)
-        {
-            _configuration = configuration;
-            _httpContextAccessor = httpContextAccessor;
-            _databaseProvider = configuration[DatabaseConstants.Database];
-        }
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
         public DbSet<Curso> Cursos { get; set; }
@@ -47,6 +40,13 @@ namespace SAED.Infrastructure.Data
         public DbSet<Cpf> Cpfs { get; set; }
         public DbSet<Turno> Turnos { get; set; }
         public DbSet<RespostaAluno> RespostaAlunos { get; set; }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(options)
+        {
+            _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
+            _databaseProvider = configuration[DatabaseConstants.Database];
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,18 +1,18 @@
-﻿using System;
+﻿using SAED.Core.Interfaces;
+using System;
 using System.Collections.Generic;
-using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
     public class Aluno : IEntity, IEquatable<Aluno>
     {
-        public int Id { get; set; }
         public int TurmaId { get; set; }
         public Turma Turma { get; set; }
         public string Nome { get; set; }
         public Cpf Cpf { get; set; }
         public DateTime Nascimento { get; set; }
         public ICollection<RespostaAluno> RespostaAlunos { get; set; }
+        public int Id { get; set; }
 
         public bool Equals(Aluno other)
         {
@@ -25,7 +25,7 @@ namespace SAED.Core.Entities
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Aluno) obj);
         }
 

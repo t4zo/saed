@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Data.Seed;
+using System;
+using System.Collections.Generic;
 
 namespace SAED.Api.Extensions
 {
@@ -20,31 +20,31 @@ namespace SAED.Api.Extensions
 
             var avaliacoes = new List<Avaliacao>
             {
-                new Avaliacao {Id = 1, Codigo = "2021.1", Status = StatusAvaliacao.EmAndamento},
-                new Avaliacao {Id = 2, Codigo = "2021.2", Status = StatusAvaliacao.ARealizar}
+                new() {Id = 1, Codigo = "2021.1", Status = StatusAvaliacao.EmAndamento},
+                new() {Id = 2, Codigo = "2021.2", Status = StatusAvaliacao.ARealizar}
             };
 
             new EntitySeed<Avaliacao>(context, databaseProvider).Load(avaliacoes, "Avaliacoes");
 
             var distritos = new List<Distrito>
             {
-                new Distrito {Id = 1, Nome = "Sede", Zona = Zona.Urbana, Distancia = 0},
-                new Distrito {Id = 2, Nome = "Abóbora", Zona = Zona.Rural, Distancia = 110},
-                new Distrito {Id = 3, Nome = "Itamotinga", Zona = Zona.Rural, Distancia = 75},
-                new Distrito {Id = 4, Nome = "Juremal", Zona = Zona.Rural, Distancia = 50},
-                new Distrito {Id = 5, Nome = "Carnaíba", Zona = Zona.Rural, Distancia = 25},
-                new Distrito {Id = 6, Nome = "Maniçoba", Zona = Zona.Rural, Distancia = 40},
-                new Distrito {Id = 7, Nome = "Pinhões", Zona = Zona.Rural, Distancia = 75},
-                new Distrito {Id = 8, Nome = "Junco", Zona = Zona.Rural, Distancia = 35},
-                new Distrito {Id = 9, Nome = "Massaroca", Zona = Zona.Rural, Distancia = 70},
-                new Distrito {Id = 10, Nome = "Mandacaru", Zona = Zona.Rural, Distancia = 10}
+                new() {Id = 1, Nome = "Sede", Zona = Zona.Urbana, Distancia = 0},
+                new() {Id = 2, Nome = "Abóbora", Zona = Zona.Rural, Distancia = 110},
+                new() {Id = 3, Nome = "Itamotinga", Zona = Zona.Rural, Distancia = 75},
+                new() {Id = 4, Nome = "Juremal", Zona = Zona.Rural, Distancia = 50},
+                new() {Id = 5, Nome = "Carnaíba", Zona = Zona.Rural, Distancia = 25},
+                new() {Id = 6, Nome = "Maniçoba", Zona = Zona.Rural, Distancia = 40},
+                new() {Id = 7, Nome = "Pinhões", Zona = Zona.Rural, Distancia = 75},
+                new() {Id = 8, Nome = "Junco", Zona = Zona.Rural, Distancia = 35},
+                new() {Id = 9, Nome = "Massaroca", Zona = Zona.Rural, Distancia = 70},
+                new() {Id = 10, Nome = "Mandacaru", Zona = Zona.Rural, Distancia = 10}
             };
 
             new EntitySeed<Distrito>(context, databaseProvider).Load(distritos, "Distritos");
 
             var escolas = new List<Escola>
             {
-                new Escola
+                new()
                 {
                     Id = 1,
                     Inep = 29024935,
@@ -53,7 +53,7 @@ namespace SAED.Api.Extensions
                     Email = "DOISDEJULHOJUAZEIRO@HOTMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 2,
                     Inep = 29024994,
@@ -62,7 +62,7 @@ namespace SAED.Api.Extensions
                     Email = "QUINZEDEJULHO2014@OUTLOOK.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 3,
                     Inep = 29026130,
@@ -71,7 +71,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLA25.DEJULHO@OUTLOOK.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 4,
                     Inep = 29026601,
@@ -80,7 +80,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 5,
                     Inep = 29026148,
@@ -89,7 +89,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 6,
                     Inep = 29025699,
@@ -98,7 +98,7 @@ namespace SAED.Api.Extensions
                     Email = "EMMSBONFIM@HOTMAIL.COM",
                     DistritoId = 2
                 },
-                new Escola
+                new()
                 {
                     Id = 7,
                     Inep = 29341256,
@@ -107,7 +107,7 @@ namespace SAED.Api.Extensions
                     Email = "ANALIABARBOSA.EDU@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 8,
                     Inep = 29026482,
@@ -116,7 +116,7 @@ namespace SAED.Api.Extensions
                     Email = "VALDETEMSF@HOTMAIL.COM",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 9,
                     Inep = 29429536,
@@ -125,7 +125,7 @@ namespace SAED.Api.Extensions
                     Email = "CEAJC1@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 10,
                     Inep = 29026156,
@@ -134,7 +134,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLA_BOMJESUSBARAUNA@HOTMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 11,
                     Inep = 29025907,
@@ -143,7 +143,7 @@ namespace SAED.Api.Extensions
                     Email = "BOMJESUS_NH01@HOTMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 12,
                     Inep = 29469120,
@@ -152,7 +152,7 @@ namespace SAED.Api.Extensions
                     Email = "MAZZARELLOROCHA@OUTLOOK.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 13,
                     Inep = 29362415,
@@ -161,7 +161,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLACAICJUA@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 14,
                     Inep = 29024650,
@@ -170,7 +170,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLA_CAXANGA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 15,
                     Inep = 29025346,
@@ -179,7 +179,7 @@ namespace SAED.Api.Extensions
                     Email = "EMPMANDACARU@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 16,
                     Inep = 29024668,
@@ -188,7 +188,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLACSU.JUA@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 17,
                     Inep = 29025974,
@@ -197,7 +197,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 18,
                     Inep = 29026164,
@@ -206,7 +206,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 19,
                     Inep = 29026890,
@@ -215,7 +215,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLA_RAIMUNDOCUNHALEITE@HOTMAIL.COM",
                     DistritoId = 6
                 },
-                new Escola
+                new()
                 {
                     Id = 20,
                     Inep = 29378893,
@@ -224,7 +224,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLADJR@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 21,
                     Inep = 29026024,
@@ -233,7 +233,7 @@ namespace SAED.Api.Extensions
                     Email = "AMILTONGOMES2016@HOTMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 22,
                     Inep = 29025478,
@@ -242,7 +242,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLADRJOSEDEARAUJO@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 23,
                     Inep = 29026911,
@@ -251,7 +251,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLADURVALBARBOSA@GMAL.COM",
                     DistritoId = 6
                 },
-                new Escola
+                new()
                 {
                     Id = 24,
                     Inep = 29025664,
@@ -260,7 +260,7 @@ namespace SAED.Api.Extensions
                     Email = "EMMSBONFIM@HOTMAIL.COM",
                     DistritoId = 2
                 },
-                new Escola
+                new()
                 {
                     Id = 25,
                     Inep = 29461375,
@@ -269,7 +269,7 @@ namespace SAED.Api.Extensions
                     Email = "CLEIABARRETO02@OUTLOOK.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 26,
                     Inep = 29025842,
@@ -278,7 +278,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 3
                 },
-                new Escola
+                new()
                 {
                     Id = 27,
                     Inep = 29402140,
@@ -287,7 +287,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 28,
                     Inep = 29401220,
@@ -296,7 +296,7 @@ namespace SAED.Api.Extensions
                     Email = "ROSANGELA.ALMEIDA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 29,
                     Inep = 29402120,
@@ -305,7 +305,7 @@ namespace SAED.Api.Extensions
                     Email = "CENTROANNAHILDA@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 30,
                     Inep = 29461340,
@@ -314,7 +314,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 31,
                     Inep = 29429790,
@@ -323,7 +323,7 @@ namespace SAED.Api.Extensions
                     Email = "EMAILPRIMAVEAARCENIOJOSE@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 32,
                     Inep = 29464064,
@@ -332,7 +332,7 @@ namespace SAED.Api.Extensions
                     Email = "JANE.SILVABARBOSA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 33,
                     Inep = 29470820,
@@ -341,7 +341,7 @@ namespace SAED.Api.Extensions
                     Email = "EMEI.DIRETORIA@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 34,
                     Inep = 29026423,
@@ -350,7 +350,7 @@ namespace SAED.Api.Extensions
                     Email = "SANTANABOL14@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 35,
                     Inep = 29402170,
@@ -359,7 +359,7 @@ namespace SAED.Api.Extensions
                     Email = "SUENI-SANTOS@YAHOO.COM.BR",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 36,
                     Inep = 29932777,
@@ -368,7 +368,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 37,
                     Inep = 29402190,
@@ -377,7 +377,7 @@ namespace SAED.Api.Extensions
                     Email = "JAMMYS.GUERRA@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 38,
                     Inep = 29461189,
@@ -386,7 +386,7 @@ namespace SAED.Api.Extensions
                     Email = "ROSALILAS_BISPO@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 39,
                     Inep = 29402100,
@@ -395,7 +395,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 40,
                     Inep = 29026628,
@@ -404,7 +404,7 @@ namespace SAED.Api.Extensions
                     Email = "SOLANGETIASOL@HOTMAIL.COM",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 41,
                     Inep = 29402210,
@@ -413,7 +413,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 42,
                     Inep = 29461367,
@@ -422,7 +422,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 43,
                     Inep = 29467152,
@@ -431,7 +431,7 @@ namespace SAED.Api.Extensions
                     Email = "EMEILUANADASILVA@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 44,
                     Inep = 29461219,
@@ -440,7 +440,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 45,
                     Inep = 29461227,
@@ -449,7 +449,7 @@ namespace SAED.Api.Extensions
                     Email = "VALDATDB12@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 46,
                     Inep = 29469635,
@@ -458,7 +458,7 @@ namespace SAED.Api.Extensions
                     Email = "TULIOROZARORIZ@GMAIL.COM",
                     DistritoId = 7
                 },
-                new Escola
+                new()
                 {
                     Id = 47,
                     Inep = 29461243,
@@ -467,7 +467,7 @@ namespace SAED.Api.Extensions
                     Email = "EMEIMARIAHELENA@HOTMAIL.COM.BR",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 48,
                     Inep = 29461235,
@@ -476,7 +476,7 @@ namespace SAED.Api.Extensions
                     Email = "CLAUDIANA.PROF@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 49,
                     Inep = 29461170,
@@ -485,7 +485,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 50,
                     Inep = 29025338,
@@ -494,7 +494,7 @@ namespace SAED.Api.Extensions
                     Email = "TRPAQUINO@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 51,
                     Inep = 29402160,
@@ -503,7 +503,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 52,
                     Inep = 29461197,
@@ -512,7 +512,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 53,
                     Inep = 29402150,
@@ -521,7 +521,7 @@ namespace SAED.Api.Extensions
                     Email = "EMEINAILDE@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 54,
                     Inep = 29025788,
@@ -530,7 +530,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLA_NSGROTAS@HOTMAIL.COM",
                     DistritoId = 3
                 },
-                new Escola
+                new()
                 {
                     Id = 55,
                     Inep = 29445256,
@@ -539,7 +539,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 56,
                     Inep = 29026792,
@@ -548,7 +548,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 57,
                     Inep = 29469252,
@@ -557,7 +557,7 @@ namespace SAED.Api.Extensions
                     Email = "JOSEFACRISTINAT@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 58,
                     Inep = 29470811,
@@ -566,7 +566,7 @@ namespace SAED.Api.Extensions
                     Email = "MARI_LUCA@MSN.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 59,
                     Inep = 29461251,
@@ -575,7 +575,7 @@ namespace SAED.Api.Extensions
                     Email = "EMAILPRIMAVERAARCENIOJOSE@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 60,
                     Inep = 29402110,
@@ -584,7 +584,7 @@ namespace SAED.Api.Extensions
                     Email = "EMEIHELOISAHELENA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 61,
                     Inep = 29026261,
@@ -593,7 +593,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 62,
                     Inep = 29027098,
@@ -602,7 +602,7 @@ namespace SAED.Api.Extensions
                     Email = "ALINEDEFATIMA92@GMAIL.COM",
                     DistritoId = 8
                 },
-                new Escola
+                new()
                 {
                     Id = 63,
                     Inep = 29469112,
@@ -611,7 +611,7 @@ namespace SAED.Api.Extensions
                     Email = "ANACCN2007@YAHOO.COM.BR",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 64,
                     Inep = 29450004,
@@ -620,7 +620,7 @@ namespace SAED.Api.Extensions
                     Email = "LINDY_CPC@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 65,
                     Inep = 29401610,
@@ -629,7 +629,7 @@ namespace SAED.Api.Extensions
                     Email = "EDUCANDARIOJOAO23@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 66,
                     Inep = 29341744,
@@ -638,7 +638,7 @@ namespace SAED.Api.Extensions
                     Email = "ALINEDEFATIMA92@GMAIL.COM",
                     DistritoId = 8
                 },
-                new Escola
+                new()
                 {
                     Id = 67,
                     Inep = 29026113,
@@ -647,7 +647,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAMUNICIPALELISEUSANTOS@HOTMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 68,
                     Inep = 29026199,
@@ -656,7 +656,7 @@ namespace SAED.Api.Extensions
                     Email = "EURIDICERIBEIROVIANA.QUIPA@HOTMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 69,
                     Inep = 29026202,
@@ -665,7 +665,7 @@ namespace SAED.Api.Extensions
                     Email = "KLERISSON@YAHOO.COM.BR",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 70,
                     Inep = 29025524,
@@ -674,7 +674,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAPROMENOR@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 71,
                     Inep = 29025753,
@@ -683,7 +683,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAGRACIOSAXAVIER@GMAIL.COM",
                     DistritoId = 3
                 },
-                new Escola
+                new()
                 {
                     Id = 72,
                     Inep = 29025575,
@@ -692,7 +692,7 @@ namespace SAED.Api.Extensions
                     Email = "PATRICIACARLA01@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 73,
                     Inep = 29025583,
@@ -701,7 +701,7 @@ namespace SAED.Api.Extensions
                     Email = "AMILTONGOMES2016@HOTMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 74,
                     Inep = 29026741,
@@ -710,7 +710,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 75,
                     Inep = 29025222,
@@ -719,7 +719,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 76,
                     Inep = 29025168,
@@ -728,7 +728,7 @@ namespace SAED.Api.Extensions
                     Email = "JOCA.DIRETORIA@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 77,
                     Inep = 29026636,
@@ -737,7 +737,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 78,
                     Inep = 29025370,
@@ -746,7 +746,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAJOSEPADILHA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 79,
                     Inep = 29025176,
@@ -755,7 +755,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAJUDITELCOSTA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 80,
                     Inep = 29026644,
@@ -764,7 +764,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 81,
                     Inep = 29025923,
@@ -773,7 +773,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 82,
                     Inep = 29025184,
@@ -782,7 +782,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLALUDGERO@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 83,
                     Inep = 29025206,
@@ -791,7 +791,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 84,
                     Inep = 29025672,
@@ -800,7 +800,7 @@ namespace SAED.Api.Extensions
                     Email = "EMMSBONFIM@HOTMAIL.COM",
                     DistritoId = 2
                 },
-                new Escola
+                new()
                 {
                     Id = 85,
                     Inep = 29026440,
@@ -809,7 +809,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 86,
                     Inep = 29026296,
@@ -818,7 +818,7 @@ namespace SAED.Api.Extensions
                     Email = "JAQUELLINEASSESSORIA27@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 87,
                     Inep = 29341710,
@@ -827,7 +827,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 88,
                     Inep = 29026776,
@@ -836,7 +836,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 89,
                     Inep = 29026652,
@@ -845,7 +845,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 90,
                     Inep = 29026660,
@@ -854,7 +854,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 91,
                     Inep = 29025230,
@@ -863,7 +863,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAMARIANORODRIGUES@YAHOO.COM.BR",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 92,
                     Inep = 29026679,
@@ -872,7 +872,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 93,
                     Inep = 29026105,
@@ -881,7 +881,7 @@ namespace SAED.Api.Extensions
                     Email = "NOSSASENHORASAOFRANCISCO@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 94,
                     Inep = 29025311,
@@ -890,7 +890,7 @@ namespace SAED.Api.Extensions
                     Email = "ENSGSEDUC@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 95,
                     Inep = 29025958,
@@ -899,7 +899,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLARAINHA@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 96,
                     Inep = 29025869,
@@ -908,7 +908,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLA_OSORIOTELES@HOTMAIL.COM",
                     DistritoId = 3
                 },
-                new Escola
+                new()
                 {
                     Id = 97,
                     Inep = 29461359,
@@ -917,7 +917,7 @@ namespace SAED.Api.Extensions
                     Email = "JAELTON.OLIVEIRA@HOTMAIL.COM",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 98,
                     Inep = 29024587,
@@ -926,7 +926,7 @@ namespace SAED.Api.Extensions
                     Email = "PAULOVI_2511@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 99,
                     Inep = 29025834,
@@ -935,7 +935,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAGRACIOSAXAVIER@GMAIL.COM",
                     DistritoId = 3
                 },
-                new Escola
+                new()
                 {
                     Id = 100,
                     Inep = 29026431,
@@ -944,7 +944,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 101,
                     Inep = 29025362,
@@ -953,7 +953,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 102,
                     Inep = 29401600,
@@ -962,7 +962,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 103,
                     Inep = 29026873,
@@ -971,7 +971,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAAFC@GMAIL.COM",
                     DistritoId = 6
                 },
-                new Escola
+                new()
                 {
                     Id = 104,
                     Inep = 29026989,
@@ -980,7 +980,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 7
                 },
-                new Escola
+                new()
                 {
                     Id = 105,
                     Inep = 29026695,
@@ -989,7 +989,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 106,
                     Inep = 29024692,
@@ -998,7 +998,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 107,
                     Inep = 29024900,
@@ -1007,7 +1007,7 @@ namespace SAED.Api.Extensions
                     Email = "E.CRENILDESBRANDAO@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 108,
                     Inep = 29025036,
@@ -1016,7 +1016,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLADINORAH@MSN.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 109,
                     Inep = 29026709,
@@ -1025,7 +1025,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 110,
                     Inep = 29024838,
@@ -1034,7 +1034,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAGUIOMARLUSTOSA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 111,
                     Inep = 29024960,
@@ -1043,7 +1043,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAHAYDEE@GMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 112,
                     Inep = 29341809,
@@ -1052,7 +1052,7 @@ namespace SAED.Api.Extensions
                     Email = "COLEGIOIRACYNUNES@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 113,
                     Inep = 29024978,
@@ -1061,7 +1061,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 114,
                     Inep = 29024943,
@@ -1070,7 +1070,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLAMARIALOURDESDUARTE@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 115,
                     Inep = 29024986,
@@ -1079,7 +1079,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 116,
                     Inep = 29362504,
@@ -1088,7 +1088,7 @@ namespace SAED.Api.Extensions
                     Email = "WILZAMIRANDA@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 117,
                     Inep = 29025770,
@@ -1097,7 +1097,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLA_MATILDECOSTA@HOTMAIL.COM",
                     DistritoId = 3
                 },
-                new Escola
+                new()
                 {
                     Id = 118,
                     Inep = 29026725,
@@ -1106,7 +1106,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 5
                 },
-                new Escola
+                new()
                 {
                     Id = 119,
                     Inep = 29025397,
@@ -1115,7 +1115,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLATEREZINHA.ETFO@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 120,
                     Inep = 29415160,
@@ -1124,7 +1124,7 @@ namespace SAED.Api.Extensions
                     Email = "ESCOLACARLOSCOSTA_2012@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 121,
                     Inep = 29405106,
@@ -1133,7 +1133,7 @@ namespace SAED.Api.Extensions
                     Email = "MUNICIPALJOSEPEREIRA@BOL.COM.BR",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 122,
                     Inep = 29024714,
@@ -1142,7 +1142,7 @@ namespace SAED.Api.Extensions
                     Email = "LUCYSOARES1@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 123,
                     Inep = 29027055,
@@ -1151,7 +1151,7 @@ namespace SAED.Api.Extensions
                     Email = "ALINEDEFATIMA92@GMAIL.COM",
                     DistritoId = 8
                 },
-                new Escola
+                new()
                 {
                     Id = 124,
                     Inep = 29424445,
@@ -1160,7 +1160,7 @@ namespace SAED.Api.Extensions
                     Email = "RAIMUNDOMEDRADOPRIMO@HOTMAIL.COM",
                     DistritoId = 1
                 },
-                new Escola
+                new()
                 {
                     Id = 125,
                     Inep = 29341779,
@@ -1169,7 +1169,7 @@ namespace SAED.Api.Extensions
                     Email = "RURALMASSAROCA@HOTMAIL.COM",
                     DistritoId = 7
                 },
-                new Escola
+                new()
                 {
                     Id = 126,
                     Inep = 29026350,
@@ -1178,7 +1178,7 @@ namespace SAED.Api.Extensions
                     Email = "NOSSASENHORASAOFRANCISCO@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 127,
                     Inep = 29025982,
@@ -1187,7 +1187,7 @@ namespace SAED.Api.Extensions
                     Email = "NH2SAOFRANCISCO@GMAIL.COM",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 128,
                     Inep = 29026377,
@@ -1196,7 +1196,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 129,
                     Inep = 29025931,
@@ -1205,7 +1205,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 130,
                     Inep = 29026288,
@@ -1214,7 +1214,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 131,
                     Inep = 29026300,
@@ -1223,7 +1223,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 132,
                     Inep = 29025010,
@@ -1232,7 +1232,7 @@ namespace SAED.Api.Extensions
                     Email = "",
                     DistritoId = 4
                 },
-                new Escola
+                new()
                 {
                     Id = 133,
                     Inep = 29026520,
@@ -1247,81 +1247,81 @@ namespace SAED.Api.Extensions
 
             var cursos = new List<Curso>
             {
-                new Curso {Id = 1, Nome = "Educação Infantil", Sigla = "EI"},
-                new Curso {Id = 2, Nome = "Ensino Fundamental", Sigla = "EF"},
-                new Curso {Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA"}
+                new() {Id = 1, Nome = "Educação Infantil", Sigla = "EI"},
+                new() {Id = 2, Nome = "Ensino Fundamental", Sigla = "EF"},
+                new() {Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA"}
             };
 
             new EntitySeed<Curso>(context, databaseProvider).Load(cursos, "Cursos");
 
             var segmentos = new List<Segmento>
             {
-                new Segmento {Id = 1, CursoId = 1, Nome = "Creche", Sigla = "CR"},
-                new Segmento {Id = 2, CursoId = 1, Nome = "Pré-Escola", Sigla = "PE"},
-                new Segmento {Id = 3, CursoId = 2, Nome = "Ensino Fundamental I", Sigla = "EF I"},
-                new Segmento {Id = 4, CursoId = 2, Nome = "Ensino Fundamental II", Sigla = "EF II"},
-                new Segmento {Id = 5, CursoId = 3, Nome = "Educação de Jovens e Adultos I", Sigla = "EJA I"},
-                new Segmento {Id = 6, CursoId = 3, Nome = "Educação de Jovens e Adultos II", Sigla = "EJA II"},
-                new Segmento {Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF"}
+                new() {Id = 1, CursoId = 1, Nome = "Creche", Sigla = "CR"},
+                new() {Id = 2, CursoId = 1, Nome = "Pré-Escola", Sigla = "PE"},
+                new() {Id = 3, CursoId = 2, Nome = "Ensino Fundamental I", Sigla = "EF I"},
+                new() {Id = 4, CursoId = 2, Nome = "Ensino Fundamental II", Sigla = "EF II"},
+                new() {Id = 5, CursoId = 3, Nome = "Educação de Jovens e Adultos I", Sigla = "EJA I"},
+                new() {Id = 6, CursoId = 3, Nome = "Educação de Jovens e Adultos II", Sigla = "EJA II"},
+                new() {Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF"}
             };
 
             new EntitySeed<Segmento>(context, databaseProvider).Load(segmentos, "Segmentos");
 
             var etapas = new List<Etapa>
             {
-                new Etapa {Id = 1, SegmentoId = 1, Nome = "Berçário", Normativa = 1},
-                new Etapa {Id = 2, SegmentoId = 1, Nome = "Infantil I", Normativa = 1},
-                new Etapa {Id = 3, SegmentoId = 1, Nome = "Infantil II", Normativa = 1},
-                new Etapa {Id = 4, SegmentoId = 1, Nome = "Infantil III", Normativa = 1},
-                new Etapa {Id = 5, SegmentoId = 2, Nome = "Infantil IV", Normativa = 1},
-                new Etapa {Id = 6, SegmentoId = 2, Nome = "Infantil V", Normativa = 1},
-                new Etapa {Id = 7, SegmentoId = 3, Nome = "1º Ano", Normativa = 1},
-                new Etapa {Id = 8, SegmentoId = 3, Nome = "2º Ano", Normativa = 1},
-                new Etapa {Id = 9, SegmentoId = 3, Nome = "3º Ano", Normativa = 1},
-                new Etapa {Id = 10, SegmentoId = 3, Nome = "4º Ano", Normativa = 1},
-                new Etapa {Id = 11, SegmentoId = 3, Nome = "5º Ano", Normativa = 1},
-                new Etapa {Id = 12, SegmentoId = 4, Nome = "6º Ano", Normativa = 1},
-                new Etapa {Id = 13, SegmentoId = 4, Nome = "7º Ano", Normativa = 1},
-                new Etapa {Id = 14, SegmentoId = 4, Nome = "8º Ano", Normativa = 1},
-                new Etapa {Id = 15, SegmentoId = 4, Nome = "9º Ano", Normativa = 1},
-                new Etapa {Id = 16, SegmentoId = 5, Nome = "Etapa I", Normativa = 1},
-                new Etapa {Id = 17, SegmentoId = 5, Nome = "Etapa II", Normativa = 1},
-                new Etapa {Id = 18, SegmentoId = 5, Nome = "Etapa III", Normativa = 1},
-                new Etapa {Id = 19, SegmentoId = 6, Nome = "Etapa IV", Normativa = 1},
-                new Etapa {Id = 20, SegmentoId = 6, Nome = "Etapa V", Normativa = 1},
-                new Etapa {Id = 21, SegmentoId = 7, Nome = "Se Liga", Normativa = 1},
-                new Etapa {Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1}
+                new() {Id = 1, SegmentoId = 1, Nome = "Berçário", Normativa = 1},
+                new() {Id = 2, SegmentoId = 1, Nome = "Infantil I", Normativa = 1},
+                new() {Id = 3, SegmentoId = 1, Nome = "Infantil II", Normativa = 1},
+                new() {Id = 4, SegmentoId = 1, Nome = "Infantil III", Normativa = 1},
+                new() {Id = 5, SegmentoId = 2, Nome = "Infantil IV", Normativa = 1},
+                new() {Id = 6, SegmentoId = 2, Nome = "Infantil V", Normativa = 1},
+                new() {Id = 7, SegmentoId = 3, Nome = "1º Ano", Normativa = 1},
+                new() {Id = 8, SegmentoId = 3, Nome = "2º Ano", Normativa = 1},
+                new() {Id = 9, SegmentoId = 3, Nome = "3º Ano", Normativa = 1},
+                new() {Id = 10, SegmentoId = 3, Nome = "4º Ano", Normativa = 1},
+                new() {Id = 11, SegmentoId = 3, Nome = "5º Ano", Normativa = 1},
+                new() {Id = 12, SegmentoId = 4, Nome = "6º Ano", Normativa = 1},
+                new() {Id = 13, SegmentoId = 4, Nome = "7º Ano", Normativa = 1},
+                new() {Id = 14, SegmentoId = 4, Nome = "8º Ano", Normativa = 1},
+                new() {Id = 15, SegmentoId = 4, Nome = "9º Ano", Normativa = 1},
+                new() {Id = 16, SegmentoId = 5, Nome = "Etapa I", Normativa = 1},
+                new() {Id = 17, SegmentoId = 5, Nome = "Etapa II", Normativa = 1},
+                new() {Id = 18, SegmentoId = 5, Nome = "Etapa III", Normativa = 1},
+                new() {Id = 19, SegmentoId = 6, Nome = "Etapa IV", Normativa = 1},
+                new() {Id = 20, SegmentoId = 6, Nome = "Etapa V", Normativa = 1},
+                new() {Id = 21, SegmentoId = 7, Nome = "Se Liga", Normativa = 1},
+                new() {Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1}
             };
 
             new EntitySeed<Etapa>(context, databaseProvider).Load(etapas, "Etapas");
 
             var turnos = new List<Turno>
             {
-                new Turno {Id = 1, Nome = "Manhã"},
-                new Turno {Id = 2, Nome = "Tarde"},
-                new Turno {Id = 3, Nome = "Noite"},
-                new Turno {Id = 4, Nome = "Integral"},
-                new Turno {Id = 5, Nome = "Não Informado"}
+                new() {Id = 1, Nome = "Manhã"},
+                new() {Id = 2, Nome = "Tarde"},
+                new() {Id = 3, Nome = "Noite"},
+                new() {Id = 4, Nome = "Integral"},
+                new() {Id = 5, Nome = "Não Informado"}
             };
 
             new EntitySeed<Turno>(context, databaseProvider).Load(turnos, "Turnos");
 
-            var formas = new List<Forma> {new Forma {Id = 1, Nome = "Seriada"}, new Forma {Id = 2, Nome = "Multi"}};
+            var formas = new List<Forma> {new() {Id = 1, Nome = "Seriada"}, new() {Id = 2, Nome = "Multi"}};
 
             new EntitySeed<Forma>(context, databaseProvider).Load(formas, "Formas");
 
             var salas = new List<Sala>
             {
-                new Sala {Id = 1, EscolaId = 1, Nome = "SALA 01", Capacidade = 10},
-                new Sala {Id = 2, EscolaId = 1, Nome = "SALA 02", Capacidade = 20},
-                new Sala {Id = 3, EscolaId = 1, Nome = "SALA 01", Capacidade = 30}
+                new() {Id = 1, EscolaId = 1, Nome = "SALA 01", Capacidade = 10},
+                new() {Id = 2, EscolaId = 1, Nome = "SALA 02", Capacidade = 20},
+                new() {Id = 3, EscolaId = 1, Nome = "SALA 01", Capacidade = 30}
             };
 
             new EntitySeed<Sala>(context, databaseProvider).Load(salas, "Salas");
 
             var turmas = new List<Turma>
             {
-                new Turma
+                new()
                 {
                     Id = 1,
                     SalaId = 1,
@@ -1337,14 +1337,14 @@ namespace SAED.Api.Extensions
 
             var alunos = new List<Aluno>
             {
-                new Aluno
+                new()
                 {
                     Id = 1,
                     Nome = "Maria Luz",
                     Nascimento = new DateTime(day: 10, month: 08, year: 2002),
                     TurmaId = 1
                 },
-                new Aluno
+                new()
                 {
                     Id = 2,
                     Nome = "João carlos",
@@ -1357,62 +1357,62 @@ namespace SAED.Api.Extensions
 
             var disciplinas = new List<Disciplina>
             {
-                new Disciplina {Id = 1, Nome = "Português", Sigla = "Port"},
-                new Disciplina {Id = 2, Nome = "Matemática", Sigla = "Mat"},
-                new Disciplina {Id = 3, Nome = "Ciências", Sigla = "Cie"}
+                new() {Id = 1, Nome = "Português", Sigla = "Port"},
+                new() {Id = 2, Nome = "Matemática", Sigla = "Mat"},
+                new() {Id = 3, Nome = "Ciências", Sigla = "Cie"}
             };
 
             new EntitySeed<Disciplina>(context, databaseProvider).Load(disciplinas, "Disciplinas");
 
             var temas = new List<Tema>
             {
-                new Tema {Id = 1, DisciplinaId = 1, Nome = "Tema 01 - Disciplina Port"},
-                new Tema {Id = 2, DisciplinaId = 1, Nome = "Tema 02 - Disciplina Port"},
-                new Tema {Id = 3, DisciplinaId = 1, Nome = "Tema 03 - Disciplina Port"},
-                new Tema {Id = 4, DisciplinaId = 1, Nome = "Tema 04 - Disciplina Port"},
-                new Tema {Id = 5, DisciplinaId = 1, Nome = "Tema 05 - Disciplina Port"},
-                new Tema {Id = 6, DisciplinaId = 2, Nome = "Tema 01 - Disciplina Mat"},
-                new Tema {Id = 7, DisciplinaId = 2, Nome = "Tema 02 - Disciplina Mat"},
-                new Tema {Id = 8, DisciplinaId = 2, Nome = "Tema 03 - Disciplina Mat"},
-                new Tema {Id = 9, DisciplinaId = 2, Nome = "Tema 04 - Disciplina Mat"},
-                new Tema {Id = 10, DisciplinaId = 2, Nome = "Tema 05 - Disciplina Mat"},
-                new Tema {Id = 11, DisciplinaId = 3, Nome = "Tema 01 - Disciplina Cie"},
-                new Tema {Id = 12, DisciplinaId = 3, Nome = "Tema 02 - Disciplina Cie"},
-                new Tema {Id = 13, DisciplinaId = 3, Nome = "Tema 03 - Disciplina Cie"},
-                new Tema {Id = 14, DisciplinaId = 3, Nome = "Tema 04 - Disciplina Cie"},
-                new Tema {Id = 15, DisciplinaId = 3, Nome = "Tema 05 - Disciplina Cie"}
+                new() {Id = 1, DisciplinaId = 1, Nome = "Tema 01 - Disciplina Port"},
+                new() {Id = 2, DisciplinaId = 1, Nome = "Tema 02 - Disciplina Port"},
+                new() {Id = 3, DisciplinaId = 1, Nome = "Tema 03 - Disciplina Port"},
+                new() {Id = 4, DisciplinaId = 1, Nome = "Tema 04 - Disciplina Port"},
+                new() {Id = 5, DisciplinaId = 1, Nome = "Tema 05 - Disciplina Port"},
+                new() {Id = 6, DisciplinaId = 2, Nome = "Tema 01 - Disciplina Mat"},
+                new() {Id = 7, DisciplinaId = 2, Nome = "Tema 02 - Disciplina Mat"},
+                new() {Id = 8, DisciplinaId = 2, Nome = "Tema 03 - Disciplina Mat"},
+                new() {Id = 9, DisciplinaId = 2, Nome = "Tema 04 - Disciplina Mat"},
+                new() {Id = 10, DisciplinaId = 2, Nome = "Tema 05 - Disciplina Mat"},
+                new() {Id = 11, DisciplinaId = 3, Nome = "Tema 01 - Disciplina Cie"},
+                new() {Id = 12, DisciplinaId = 3, Nome = "Tema 02 - Disciplina Cie"},
+                new() {Id = 13, DisciplinaId = 3, Nome = "Tema 03 - Disciplina Cie"},
+                new() {Id = 14, DisciplinaId = 3, Nome = "Tema 04 - Disciplina Cie"},
+                new() {Id = 15, DisciplinaId = 3, Nome = "Tema 05 - Disciplina Cie"}
             };
 
             new EntitySeed<Tema>(context, databaseProvider).Load(temas, "Temas");
 
             var descritores = new List<Descritor>
             {
-                new Descritor {Id = 1, TemaId = 1, Nome = "Descritor 01 - Tema 1"},
-                new Descritor {Id = 2, TemaId = 1, Nome = "Descritor 02 - Tema 1"},
-                new Descritor {Id = 3, TemaId = 1, Nome = "Descritor 03 - Tema 1"},
-                new Descritor {Id = 4, TemaId = 1, Nome = "Descritor 04 - Tema 1"},
-                new Descritor {Id = 5, TemaId = 1, Nome = "Descritor 05 - Tema 1"},
-                new Descritor {Id = 6, TemaId = 2, Nome = "Descritor 01 - Tema 2"},
-                new Descritor {Id = 7, TemaId = 2, Nome = "Descritor 02 - Tema 2"},
-                new Descritor {Id = 8, TemaId = 2, Nome = "Descritor 03 - Tema 2"},
-                new Descritor {Id = 9, TemaId = 2, Nome = "Descritor 04 - Tema 2"},
-                new Descritor {Id = 10, TemaId = 2, Nome = "Descritor 05 - Tema 2"},
-                new Descritor {Id = 11, TemaId = 3, Nome = "Descritor 01 - Tema 3"},
-                new Descritor {Id = 12, TemaId = 3, Nome = "Descritor 02 - Tema 3"},
-                new Descritor {Id = 13, TemaId = 3, Nome = "Descritor 03 - Tema 3"},
-                new Descritor {Id = 14, TemaId = 3, Nome = "Descritor 04 - Tema 3"},
-                new Descritor {Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3"},
-                new Descritor {Id = 16, TemaId = 6, Nome = "Descritor 05 - Tema 3"}
+                new() {Id = 1, TemaId = 1, Nome = "Descritor 01 - Tema 1"},
+                new() {Id = 2, TemaId = 1, Nome = "Descritor 02 - Tema 1"},
+                new() {Id = 3, TemaId = 1, Nome = "Descritor 03 - Tema 1"},
+                new() {Id = 4, TemaId = 1, Nome = "Descritor 04 - Tema 1"},
+                new() {Id = 5, TemaId = 1, Nome = "Descritor 05 - Tema 1"},
+                new() {Id = 6, TemaId = 2, Nome = "Descritor 01 - Tema 2"},
+                new() {Id = 7, TemaId = 2, Nome = "Descritor 02 - Tema 2"},
+                new() {Id = 8, TemaId = 2, Nome = "Descritor 03 - Tema 2"},
+                new() {Id = 9, TemaId = 2, Nome = "Descritor 04 - Tema 2"},
+                new() {Id = 10, TemaId = 2, Nome = "Descritor 05 - Tema 2"},
+                new() {Id = 11, TemaId = 3, Nome = "Descritor 01 - Tema 3"},
+                new() {Id = 12, TemaId = 3, Nome = "Descritor 02 - Tema 3"},
+                new() {Id = 13, TemaId = 3, Nome = "Descritor 03 - Tema 3"},
+                new() {Id = 14, TemaId = 3, Nome = "Descritor 04 - Tema 3"},
+                new() {Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3"},
+                new() {Id = 16, TemaId = 6, Nome = "Descritor 05 - Tema 3"}
             };
 
             new EntitySeed<Descritor>(context, databaseProvider).Load(descritores, "Descritores");
 
             var avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
             {
-                new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 10},
-                new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11},
-                new AvaliacaoDisciplinaEtapa {AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11},
-                new AvaliacaoDisciplinaEtapa {AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11}
+                new() {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 10},
+                new() {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11},
+                new() {AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11},
+                new() {AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11}
             };
 
             new EntitySeed<AvaliacaoDisciplinaEtapa>(context, databaseProvider).Load(avaliacaoDisciplinaEtapas,

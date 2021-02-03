@@ -1,16 +1,16 @@
-﻿using System;
+﻿using SAED.Core.Interfaces;
+using System;
 using System.Collections.Generic;
-using SAED.Core.Interfaces;
 
 namespace SAED.Core.Entities
 {
     public class Tema : IEntity, IEquatable<Tema>
     {
-        public int Id { get; set; }
         public int DisciplinaId { get; set; }
         public Disciplina Disciplina { get; set; }
         public string Nome { get; set; }
         public ICollection<Descritor> Descritores { get; set; }
+        public int Id { get; set; }
 
 
         public bool Equals(Tema other)
@@ -24,7 +24,7 @@ namespace SAED.Core.Entities
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Tema) obj);
         }
 

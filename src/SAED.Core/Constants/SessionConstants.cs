@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SAED.Core.Constants
+﻿namespace SAED.Core.Constants
 {
     public static class SessionConstants
     {
@@ -8,7 +6,7 @@ namespace SAED.Core.Constants
         public const string Questoes = "Questoes";
         public const string Avaliacao = "Avaliacao";
         public const string Role = "Role";
-        
+
         public const string QuestoesPendentesDisciplina = "QuestoesPendentesDisciplina";
         public const string RespostasAluno = "RespostasAluno";
     }

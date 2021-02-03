@@ -6,7 +6,6 @@ using SAED.Core.Constants;
 using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -105,7 +104,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(aluno);
             }
 
-            var user = new ApplicationUser { UserName = aluno.Cpf.Normalize(), Email = aluno.Cpf.Normalize() };
+            var user = new ApplicationUser {UserName = aluno.Cpf.Normalize(), Email = aluno.Cpf.Normalize()};
             var result = await _userManager.CreateAsync(user, aluno.Cpf.Normalize());
 
             if (!result.Succeeded)

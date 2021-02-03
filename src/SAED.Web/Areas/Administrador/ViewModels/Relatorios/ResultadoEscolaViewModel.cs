@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
+﻿namespace SAED.Web.Areas.Administrador.ViewModels.Relatorios
 {
     public class ResultadoEscolaViewModel
     {

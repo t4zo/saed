@@ -1,7 +1,7 @@
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using SAED.Core.Constants;
+using System;
 
 namespace SAED.Api
 {

@@ -10,7 +10,7 @@
         <a href="" onclick="window.print()" uk-icon="icon: print"></a>
     </h2>
     <section class="uk-flex uk-flex-center">
-        <dl class="uk-column-1-@(Model.ResultadoMunicipioViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
+        <dl class="uk-column-1-@(Model.ResultadoMunicipioViewModel.Count + 1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
             @foreach (var resultado in Model.ResultadoMunicipioViewModel)
@@ -26,22 +26,22 @@
     </div>
     <table id="dataTable" class="uk-table uk-table-hover uk-text-center uk-table-striped">
         <thead>
-            <tr>
-                <th class="uk-text-center">Tema</th>
-                <th class="uk-text-center">Taxa de Acerto</th>
-            </tr>
+        <tr>
+            <th class="uk-text-center">Tema</th>
+            <th class="uk-text-center">Taxa de Acerto</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var resultado in Model.ResultadoMunicipioViewModel)
-            {
-                <tr>
-                    <td>@resultado.Tema.Nome</td>
-                    <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger") uk-flex uk-flex-center">
-                        <span>@resultado.TaxaAcerto%</span>
-                        <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
-                    </td>
-                </tr>
-            }
+        @foreach (var resultado in Model.ResultadoMunicipioViewModel)
+        {
+            <tr>
+                <td>@resultado.Tema.Nome</td>
+                <td class="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger") uk-flex uk-flex-center">
+                    <span>@resultado.TaxaAcerto%</span>
+                    <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcerto >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </main>

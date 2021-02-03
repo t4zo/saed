@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using SAED.Core.Interfaces;
+﻿using SAED.Core.Interfaces;
+using System.Collections.Generic;
 
 namespace SAED.Core.Entities
 {
     public class Turma : IEntity
     {
-        public int Id { get; set; }
         public int SalaId { get; set; }
         public Sala Sala { get; set; }
         public int EtapaId { get; set; }
@@ -17,6 +16,7 @@ namespace SAED.Core.Entities
         public string Nome { get; set; }
         public bool Extinta { get; set; }
         public ICollection<Aluno> Alunos { get; set; }
+        public int Id { get; set; }
 
         public void ClearReferenceCycle()
         {

@@ -10,7 +10,7 @@
         <a href="" onclick="window.print()" uk-icon="icon: print"></a>
     </h2>
     <section class="uk-flex uk-flex-center">
-        <dl class="uk-column-1-@(Model.DisciplinasViewModel.Count+1) uk-column-divider uk-description-list uk-text-center">
+        <dl class="uk-column-1-@(Model.DisciplinasViewModel.Count + 1) uk-column-divider uk-description-list uk-text-center">
             <dt>Total de Questões</dt>
             <dd class="uk-text-center">@Model.QtdTotalQuestoes</dd>
             @foreach (var disciplinaViewModel in Model.DisciplinasViewModel)
@@ -23,36 +23,36 @@
     <div class="uk-text-meta uk-text-right uk-margin-small-right">Taxa de corte: @ApplicationConstants.TaxaCorte%</div>
     <table id="dataTable" class="uk-table uk-table-hover uk-text-center uk-table-striped">
         <thead>
-            <tr>
-                <th class="uk-text-center">Etapa</th>
-                <th class="uk-text-center">Alunos</th>
-                @foreach (var disciplina in Model.DisciplinasViewModel.Select(x => x.Disciplina).Distinct())
-                {
-                    <th class="uk-text-center">@disciplina.Nome</th>
-                }
-            </tr>
+        <tr>
+            <th class="uk-text-center">Etapa</th>
+            <th class="uk-text-center">Alunos</th>
+            @foreach (var disciplina in Model.DisciplinasViewModel.Select(x => x.Disciplina).Distinct())
+            {
+                <th class="uk-text-center">@disciplina.Nome</th>
+            }
+        </tr>
         </thead>
         <tbody>
-            @foreach (var etapaViewModel in Model.EtapasViewModel.Distinct())
-            {
-                <tr>
-                    <td>@etapaViewModel.Etapa.Nome</td>
-                    <td>@etapaViewModel.QtdAlunos</td>
+        @foreach (var etapaViewModel in Model.EtapasViewModel.Distinct())
+        {
+            <tr>
+                <td>@etapaViewModel.Etapa.Nome</td>
+                <td>@etapaViewModel.QtdAlunos</td>
 
-                    @foreach (var resultado in Model.ResultadoEtapasViewModel)
+                @foreach (var resultado in Model.ResultadoEtapasViewModel)
+                {
+                    if (etapaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id &&
+                        resultado.DisciplinaViewModel.Disciplina.Id == resultado.EtapaViewModel.Disciplina.Id &&
+                        resultado.EtapaViewModel.Etapa.Id == resultado.DisciplinaViewModel.Etapa.Id)
                     {
-                        if (etapaViewModel.Etapa.Id == resultado.EtapaViewModel.Etapa.Id &&
-                            resultado.DisciplinaViewModel.Disciplina.Id == resultado.EtapaViewModel.Disciplina.Id &&
-                            resultado.EtapaViewModel.Etapa.Id == resultado.DisciplinaViewModel.Etapa.Id)
-                        {
-                            <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
-                                <span>@resultado.TaxaAcertoDisciplina%</span>
-                                <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
-                            </td>
-                        }
+                        <td class="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "uk-text-success" : "uk-text-danger")">
+                            <span>@resultado.TaxaAcertoDisciplina%</span>
+                            <span class="uk-margin-small-left" uk-icon="@(resultado.TaxaAcertoDisciplina >= ApplicationConstants.TaxaCorte ? "check" : "close")"></span>
+                        </td>
                     }
-                </tr>
-            }
+                }
+            </tr>
+        }
         </tbody>
     </table>
 </main>

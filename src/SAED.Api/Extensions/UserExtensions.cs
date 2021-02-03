@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SAED.Api.Options;
-using SAED.Core.Entities;
 using SAED.Infrastructure.Data;
 using SAED.Infrastructure.Identity;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Api.Extensions
@@ -41,7 +39,7 @@ namespace SAED.Api.Extensions
                             await SeedRoleClaims(roleManager, role);
                         }
                     }
-                    
+
                     await context.SaveChangesAsync();
                 }
             }
@@ -55,19 +53,19 @@ namespace SAED.Api.Extensions
             {
                 await userManager.AddClaimsAsync(user, new List<Claim>
                 {
-                    new Claim(CustomClaimTypes.Permission, Permissions.Dashboard.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Create),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Update),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.Delete),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Create),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Update),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.Delete)
+                    new(CustomClaimTypes.Permission, Permissions.Dashboard.View),
+                    new(CustomClaimTypes.Permission, Permissions.Avaliacoes.View),
+                    new(CustomClaimTypes.Permission, Permissions.Avaliacoes.Create),
+                    new(CustomClaimTypes.Permission, Permissions.Avaliacoes.Update),
+                    new(CustomClaimTypes.Permission, Permissions.Avaliacoes.Delete),
+                    new(CustomClaimTypes.Permission, Permissions.Escolas.View),
+                    new(CustomClaimTypes.Permission, Permissions.Escolas.Create),
+                    new(CustomClaimTypes.Permission, Permissions.Escolas.Update),
+                    new(CustomClaimTypes.Permission, Permissions.Escolas.Delete),
+                    new(CustomClaimTypes.Permission, Permissions.Disciplinas.View),
+                    new(CustomClaimTypes.Permission, Permissions.Disciplinas.Create),
+                    new(CustomClaimTypes.Permission, Permissions.Disciplinas.Update),
+                    new(CustomClaimTypes.Permission, Permissions.Disciplinas.Delete)
                 });
             }
 
@@ -75,11 +73,11 @@ namespace SAED.Api.Extensions
             {
                 await userManager.AddClaimsAsync(user, new List<Claim>
                 {
-                    new Claim(CustomClaimTypes.Permission, Permissions.Avaliacoes.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Escolas.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Disciplinas.View),
-                    new Claim(CustomClaimTypes.Permission, Permissions.Selecao.View)
+                    new(CustomClaimTypes.Permission, Permissions.Avaliacoes.View),
+                    new(CustomClaimTypes.Permission, Permissions.Escolas.View),
+                    new(CustomClaimTypes.Permission, Permissions.Escolas.View),
+                    new(CustomClaimTypes.Permission, Permissions.Disciplinas.View),
+                    new(CustomClaimTypes.Permission, Permissions.Selecao.View)
                 });
             }
         }

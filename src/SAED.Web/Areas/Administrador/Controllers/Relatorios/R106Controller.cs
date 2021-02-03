@@ -29,7 +29,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 .Include(x => x.Aluno)
                 .ThenInclude(x => x.Turma)
                 .ThenInclude(x => x.Sala)
-                .ThenInclude(x => x.Escola)    
+                .ThenInclude(x => x.Escola)
                 .Where(x => x.AvaliacaoId == avaliacao.Id)
                 .ToListAsync();
 
