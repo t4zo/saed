@@ -30,8 +30,8 @@ namespace SAED.Core.Entities
 
         public static bool IsValid(string cpf)
         {
-            var multiplicador1 = new[] {10, 9, 8, 7, 6, 5, 4, 3, 2};
-            var multiplicador2 = new[] {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
+            var multiplicador1 = new[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            var multiplicador2 = new[] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
             var cpfNormalized = cpf.Trim().Replace(".", "").Replace("-", "");
             if (cpfNormalized.Length != 11) return false;
@@ -92,8 +92,8 @@ namespace SAED.Core.Entities
 
         public static bool TryParse(string codigo, out Cpf cpf)
         {
-            var multiplicador1 = new[] {10, 9, 8, 7, 6, 5, 4, 3, 2};
-            var multiplicador2 = new[] {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
+            var multiplicador1 = new[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            var multiplicador2 = new[] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
             cpf = new Cpf(codigo);
 

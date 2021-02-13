@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
 using SAED.Infrastructure.Data;
+using SAED.Infrastructure.Extensions;
 using SAED.Web.Extensions;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;
 
@@ -26,8 +26,8 @@ namespace SAED.Web.Controllers
         {
             var avaliacoes = await _context.Avaliacoes.AsNoTracking().ToListAsync();
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == int.Parse(userId));
+            var userId = User.GetUserId();
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
             var respostas = await _context.RespostaAlunos
                 .AsNoTracking()
@@ -71,13 +71,14 @@ namespace SAED.Web.Controllers
 
             if (User.IsInRole(Roles.Aluno))
             {
-                var cpf = User.Identity?.Name;
                 var alunos = await _context.Alunos
                     .AsNoTracking()
                     .Include(x => x.Cpf)
                     .ToListAsync();
 
-                var aluno = alunos.FirstOrDefault(x => x.Cpf.Normalize() == cpf);
+                var cpfAluno = User.Identity?.Name;
+
+                var aluno = alunos.FirstOrDefault(x => x.Cpf.Normalize() == cpfAluno);
                 return Redirect($"{AuthorizationConstants.Areas.Aplicador}/Selecao/{aluno?.Id}".ToLower());
             }
 

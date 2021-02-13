@@ -219,7 +219,7 @@ namespace SAED.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new {x.LoginProvider, x.ProviderKey});
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
                         "FK_AspNetUserLogins_AspNetUsers_UserId",
                         x => x.UserId,
@@ -241,7 +241,7 @@ namespace SAED.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new {x.UserId, x.RoleId});
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
                         "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         x => x.RoleId,
@@ -271,7 +271,7 @@ namespace SAED.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new {x.UserId, x.LoginProvider, x.Name});
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
                         "FK_AspNetUserTokens_AspNetUsers_UserId",
                         x => x.UserId,
@@ -455,7 +455,7 @@ namespace SAED.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AvaliacaoDisciplinasEtapas", x => new {x.DisciplinaId, x.AvaliacaoId, x.EtapaId});
+                    table.PrimaryKey("PK_AvaliacaoDisciplinasEtapas", x => new { x.DisciplinaId, x.AvaliacaoId, x.EtapaId });
                     table.ForeignKey(
                         "FK_AvaliacaoDisciplinasEtapas_Avaliacoes_AvaliacaoId",
                         x => x.AvaliacaoId,
@@ -594,7 +594,7 @@ namespace SAED.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AvaliacaoQuestao", x => new {x.AvaliacoesId, x.QuestoesId});
+                    table.PrimaryKey("PK_AvaliacaoQuestao", x => new { x.AvaliacoesId, x.QuestoesId });
                     table.ForeignKey(
                         "FK_AvaliacaoQuestao_Avaliacoes_AvaliacoesId",
                         x => x.AvaliacoesId,
@@ -655,7 +655,7 @@ namespace SAED.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RespostaAlunos", x => new {x.AvaliacaoId, x.AlunoId, x.AlternativaId});
+                    table.PrimaryKey("PK_RespostaAlunos", x => new { x.AvaliacaoId, x.AlunoId, x.AlternativaId });
                     table.ForeignKey(
                         "FK_RespostaAlunos_Alternativas_AlternativaId",
                         x => x.AlternativaId,

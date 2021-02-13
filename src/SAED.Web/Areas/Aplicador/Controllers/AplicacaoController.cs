@@ -27,9 +27,10 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
             var questoes = HttpContext.Session.Get<List<Questao>>(SessionConstants.Questoes);
+            var aluno = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno).Aluno;
+
             var questoesDisciplina = questoes.Where(x => x.Descritor.Tema.DisciplinaId == disciplinaId);
             var questao = questoesDisciplina.First();
-            var aluno = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno).Aluno;
 
             HttpContext.Session.Remove(SessionConstants.QuestoesPendentesDisciplina);
 
@@ -64,10 +65,11 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             }
 
             var questoes = HttpContext.Session.Get<List<Questao>>(SessionConstants.Questoes);
+            var respostas = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
+
             var questao = questoes.First(x => x.Id == respostaViewModel.QuestaoId);
             var disciplina = questao.Descritor.Tema.Disciplina;
 
-            var respostas = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
             var resposta = _mapper.Map<RespostaViewModel>(questao);
             resposta.AlternativaEscolhida = questao.Alternativas.First(x => x.Id == respostaViewModel.AlternativaEscolhidaId);
 
@@ -91,7 +93,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 {
                     AvaliacaoId = respostaViewModel.AvaliacaoId,
                     AlunoId = respostaViewModel.AlunoId,
-                    Respostas = new List<RespostaViewModel> {resposta}
+                    Respostas = new List<RespostaViewModel> { resposta }
                 };
             }
             else
@@ -123,7 +125,7 @@ namespace SAED.Web.Areas.Aplicador.Controllers
                 return RedirectToAction(nameof(Index), "Dashboard");
             }
 
-            return RedirectToAction(nameof(Proximo), new {questaoId = questoesPendentesDisciplina.First().Id});
+            return RedirectToAction(nameof(Proximo), new { questaoId = questoesPendentesDisciplina.First().Id });
         }
     }
 }

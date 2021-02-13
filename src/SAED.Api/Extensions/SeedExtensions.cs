@@ -20,24 +20,24 @@ namespace SAED.Api.Extensions
 
             var avaliacoes = new List<Avaliacao>
             {
-                new() {Id = 1, Codigo = "2021.1", Status = StatusAvaliacao.EmAndamento},
-                new() {Id = 2, Codigo = "2021.2", Status = StatusAvaliacao.ARealizar}
+                new() { Id = 1, Codigo = "2021.1", Status = StatusAvaliacao.EmAndamento },
+                new() { Id = 2, Codigo = "2021.2", Status = StatusAvaliacao.ARealizar }
             };
 
             new EntitySeed<Avaliacao>(context, databaseProvider).Load(avaliacoes, "Avaliacoes");
 
             var distritos = new List<Distrito>
             {
-                new() {Id = 1, Nome = "Sede", Zona = Zona.Urbana, Distancia = 0},
-                new() {Id = 2, Nome = "Abóbora", Zona = Zona.Rural, Distancia = 110},
-                new() {Id = 3, Nome = "Itamotinga", Zona = Zona.Rural, Distancia = 75},
-                new() {Id = 4, Nome = "Juremal", Zona = Zona.Rural, Distancia = 50},
-                new() {Id = 5, Nome = "Carnaíba", Zona = Zona.Rural, Distancia = 25},
-                new() {Id = 6, Nome = "Maniçoba", Zona = Zona.Rural, Distancia = 40},
-                new() {Id = 7, Nome = "Pinhões", Zona = Zona.Rural, Distancia = 75},
-                new() {Id = 8, Nome = "Junco", Zona = Zona.Rural, Distancia = 35},
-                new() {Id = 9, Nome = "Massaroca", Zona = Zona.Rural, Distancia = 70},
-                new() {Id = 10, Nome = "Mandacaru", Zona = Zona.Rural, Distancia = 10}
+                new() { Id = 1, Nome = "Sede", Zona = Zona.Urbana, Distancia = 0 },
+                new() { Id = 2, Nome = "Abóbora", Zona = Zona.Rural, Distancia = 110 },
+                new() { Id = 3, Nome = "Itamotinga", Zona = Zona.Rural, Distancia = 75 },
+                new() { Id = 4, Nome = "Juremal", Zona = Zona.Rural, Distancia = 50 },
+                new() { Id = 5, Nome = "Carnaíba", Zona = Zona.Rural, Distancia = 25 },
+                new() { Id = 6, Nome = "Maniçoba", Zona = Zona.Rural, Distancia = 40 },
+                new() { Id = 7, Nome = "Pinhões", Zona = Zona.Rural, Distancia = 75 },
+                new() { Id = 8, Nome = "Junco", Zona = Zona.Rural, Distancia = 35 },
+                new() { Id = 9, Nome = "Massaroca", Zona = Zona.Rural, Distancia = 70 },
+                new() { Id = 10, Nome = "Mandacaru", Zona = Zona.Rural, Distancia = 10 }
             };
 
             new EntitySeed<Distrito>(context, databaseProvider).Load(distritos, "Distritos");
@@ -1247,74 +1247,74 @@ namespace SAED.Api.Extensions
 
             var cursos = new List<Curso>
             {
-                new() {Id = 1, Nome = "Educação Infantil", Sigla = "EI"},
-                new() {Id = 2, Nome = "Ensino Fundamental", Sigla = "EF"},
-                new() {Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA"}
+                new() { Id = 1, Nome = "Educação Infantil", Sigla = "EI" },
+                new() { Id = 2, Nome = "Ensino Fundamental", Sigla = "EF" },
+                new() { Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA" }
             };
 
             new EntitySeed<Curso>(context, databaseProvider).Load(cursos, "Cursos");
 
             var segmentos = new List<Segmento>
             {
-                new() {Id = 1, CursoId = 1, Nome = "Creche", Sigla = "CR"},
-                new() {Id = 2, CursoId = 1, Nome = "Pré-Escola", Sigla = "PE"},
-                new() {Id = 3, CursoId = 2, Nome = "Ensino Fundamental I", Sigla = "EF I"},
-                new() {Id = 4, CursoId = 2, Nome = "Ensino Fundamental II", Sigla = "EF II"},
-                new() {Id = 5, CursoId = 3, Nome = "Educação de Jovens e Adultos I", Sigla = "EJA I"},
-                new() {Id = 6, CursoId = 3, Nome = "Educação de Jovens e Adultos II", Sigla = "EJA II"},
-                new() {Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF"}
+                new() { Id = 1, CursoId = 1, Nome = "Creche", Sigla = "CR" },
+                new() { Id = 2, CursoId = 1, Nome = "Pré-Escola", Sigla = "PE" },
+                new() { Id = 3, CursoId = 2, Nome = "Ensino Fundamental I", Sigla = "EF I" },
+                new() { Id = 4, CursoId = 2, Nome = "Ensino Fundamental II", Sigla = "EF II" },
+                new() { Id = 5, CursoId = 3, Nome = "Educação de Jovens e Adultos I", Sigla = "EJA I" },
+                new() { Id = 6, CursoId = 3, Nome = "Educação de Jovens e Adultos II", Sigla = "EJA II" },
+                new() { Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF" }
             };
 
             new EntitySeed<Segmento>(context, databaseProvider).Load(segmentos, "Segmentos");
 
             var etapas = new List<Etapa>
             {
-                new() {Id = 1, SegmentoId = 1, Nome = "Berçário", Normativa = 1},
-                new() {Id = 2, SegmentoId = 1, Nome = "Infantil I", Normativa = 1},
-                new() {Id = 3, SegmentoId = 1, Nome = "Infantil II", Normativa = 1},
-                new() {Id = 4, SegmentoId = 1, Nome = "Infantil III", Normativa = 1},
-                new() {Id = 5, SegmentoId = 2, Nome = "Infantil IV", Normativa = 1},
-                new() {Id = 6, SegmentoId = 2, Nome = "Infantil V", Normativa = 1},
-                new() {Id = 7, SegmentoId = 3, Nome = "1º Ano", Normativa = 1},
-                new() {Id = 8, SegmentoId = 3, Nome = "2º Ano", Normativa = 1},
-                new() {Id = 9, SegmentoId = 3, Nome = "3º Ano", Normativa = 1},
-                new() {Id = 10, SegmentoId = 3, Nome = "4º Ano", Normativa = 1},
-                new() {Id = 11, SegmentoId = 3, Nome = "5º Ano", Normativa = 1},
-                new() {Id = 12, SegmentoId = 4, Nome = "6º Ano", Normativa = 1},
-                new() {Id = 13, SegmentoId = 4, Nome = "7º Ano", Normativa = 1},
-                new() {Id = 14, SegmentoId = 4, Nome = "8º Ano", Normativa = 1},
-                new() {Id = 15, SegmentoId = 4, Nome = "9º Ano", Normativa = 1},
-                new() {Id = 16, SegmentoId = 5, Nome = "Etapa I", Normativa = 1},
-                new() {Id = 17, SegmentoId = 5, Nome = "Etapa II", Normativa = 1},
-                new() {Id = 18, SegmentoId = 5, Nome = "Etapa III", Normativa = 1},
-                new() {Id = 19, SegmentoId = 6, Nome = "Etapa IV", Normativa = 1},
-                new() {Id = 20, SegmentoId = 6, Nome = "Etapa V", Normativa = 1},
-                new() {Id = 21, SegmentoId = 7, Nome = "Se Liga", Normativa = 1},
-                new() {Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1}
+                new() { Id = 1, SegmentoId = 1, Nome = "Berçário", Normativa = 1 },
+                new() { Id = 2, SegmentoId = 1, Nome = "Infantil I", Normativa = 1 },
+                new() { Id = 3, SegmentoId = 1, Nome = "Infantil II", Normativa = 1 },
+                new() { Id = 4, SegmentoId = 1, Nome = "Infantil III", Normativa = 1 },
+                new() { Id = 5, SegmentoId = 2, Nome = "Infantil IV", Normativa = 1 },
+                new() { Id = 6, SegmentoId = 2, Nome = "Infantil V", Normativa = 1 },
+                new() { Id = 7, SegmentoId = 3, Nome = "1º Ano", Normativa = 1 },
+                new() { Id = 8, SegmentoId = 3, Nome = "2º Ano", Normativa = 1 },
+                new() { Id = 9, SegmentoId = 3, Nome = "3º Ano", Normativa = 1 },
+                new() { Id = 10, SegmentoId = 3, Nome = "4º Ano", Normativa = 1 },
+                new() { Id = 11, SegmentoId = 3, Nome = "5º Ano", Normativa = 1 },
+                new() { Id = 12, SegmentoId = 4, Nome = "6º Ano", Normativa = 1 },
+                new() { Id = 13, SegmentoId = 4, Nome = "7º Ano", Normativa = 1 },
+                new() { Id = 14, SegmentoId = 4, Nome = "8º Ano", Normativa = 1 },
+                new() { Id = 15, SegmentoId = 4, Nome = "9º Ano", Normativa = 1 },
+                new() { Id = 16, SegmentoId = 5, Nome = "Etapa I", Normativa = 1 },
+                new() { Id = 17, SegmentoId = 5, Nome = "Etapa II", Normativa = 1 },
+                new() { Id = 18, SegmentoId = 5, Nome = "Etapa III", Normativa = 1 },
+                new() { Id = 19, SegmentoId = 6, Nome = "Etapa IV", Normativa = 1 },
+                new() { Id = 20, SegmentoId = 6, Nome = "Etapa V", Normativa = 1 },
+                new() { Id = 21, SegmentoId = 7, Nome = "Se Liga", Normativa = 1 },
+                new() { Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1 }
             };
 
             new EntitySeed<Etapa>(context, databaseProvider).Load(etapas, "Etapas");
 
             var turnos = new List<Turno>
             {
-                new() {Id = 1, Nome = "Manhã"},
-                new() {Id = 2, Nome = "Tarde"},
-                new() {Id = 3, Nome = "Noite"},
-                new() {Id = 4, Nome = "Integral"},
-                new() {Id = 5, Nome = "Não Informado"}
+                new() { Id = 1, Nome = "Manhã" },
+                new() { Id = 2, Nome = "Tarde" },
+                new() { Id = 3, Nome = "Noite" },
+                new() { Id = 4, Nome = "Integral" },
+                new() { Id = 5, Nome = "Não Informado" }
             };
 
             new EntitySeed<Turno>(context, databaseProvider).Load(turnos, "Turnos");
 
-            var formas = new List<Forma> {new() {Id = 1, Nome = "Seriada"}, new() {Id = 2, Nome = "Multi"}};
+            var formas = new List<Forma> { new() { Id = 1, Nome = "Seriada" }, new() { Id = 2, Nome = "Multi" } };
 
             new EntitySeed<Forma>(context, databaseProvider).Load(formas, "Formas");
 
             var salas = new List<Sala>
             {
-                new() {Id = 1, EscolaId = 1, Nome = "SALA 01", Capacidade = 10},
-                new() {Id = 2, EscolaId = 1, Nome = "SALA 02", Capacidade = 20},
-                new() {Id = 3, EscolaId = 1, Nome = "SALA 01", Capacidade = 30}
+                new() { Id = 1, EscolaId = 1, Nome = "SALA 01", Capacidade = 10 },
+                new() { Id = 2, EscolaId = 1, Nome = "SALA 02", Capacidade = 20 },
+                new() { Id = 3, EscolaId = 1, Nome = "SALA 01", Capacidade = 30 }
             };
 
             new EntitySeed<Sala>(context, databaseProvider).Load(salas, "Salas");
@@ -1357,62 +1357,62 @@ namespace SAED.Api.Extensions
 
             var disciplinas = new List<Disciplina>
             {
-                new() {Id = 1, Nome = "Português", Sigla = "Port"},
-                new() {Id = 2, Nome = "Matemática", Sigla = "Mat"},
-                new() {Id = 3, Nome = "Ciências", Sigla = "Cie"}
+                new() { Id = 1, Nome = "Português", Sigla = "Port" },
+                new() { Id = 2, Nome = "Matemática", Sigla = "Mat" },
+                new() { Id = 3, Nome = "Ciências", Sigla = "Cie" }
             };
 
             new EntitySeed<Disciplina>(context, databaseProvider).Load(disciplinas, "Disciplinas");
 
             var temas = new List<Tema>
             {
-                new() {Id = 1, DisciplinaId = 1, Nome = "Tema 01 - Disciplina Port"},
-                new() {Id = 2, DisciplinaId = 1, Nome = "Tema 02 - Disciplina Port"},
-                new() {Id = 3, DisciplinaId = 1, Nome = "Tema 03 - Disciplina Port"},
-                new() {Id = 4, DisciplinaId = 1, Nome = "Tema 04 - Disciplina Port"},
-                new() {Id = 5, DisciplinaId = 1, Nome = "Tema 05 - Disciplina Port"},
-                new() {Id = 6, DisciplinaId = 2, Nome = "Tema 01 - Disciplina Mat"},
-                new() {Id = 7, DisciplinaId = 2, Nome = "Tema 02 - Disciplina Mat"},
-                new() {Id = 8, DisciplinaId = 2, Nome = "Tema 03 - Disciplina Mat"},
-                new() {Id = 9, DisciplinaId = 2, Nome = "Tema 04 - Disciplina Mat"},
-                new() {Id = 10, DisciplinaId = 2, Nome = "Tema 05 - Disciplina Mat"},
-                new() {Id = 11, DisciplinaId = 3, Nome = "Tema 01 - Disciplina Cie"},
-                new() {Id = 12, DisciplinaId = 3, Nome = "Tema 02 - Disciplina Cie"},
-                new() {Id = 13, DisciplinaId = 3, Nome = "Tema 03 - Disciplina Cie"},
-                new() {Id = 14, DisciplinaId = 3, Nome = "Tema 04 - Disciplina Cie"},
-                new() {Id = 15, DisciplinaId = 3, Nome = "Tema 05 - Disciplina Cie"}
+                new() { Id = 1, DisciplinaId = 1, Nome = "Tema 01 - Disciplina Port" },
+                new() { Id = 2, DisciplinaId = 1, Nome = "Tema 02 - Disciplina Port" },
+                new() { Id = 3, DisciplinaId = 1, Nome = "Tema 03 - Disciplina Port" },
+                new() { Id = 4, DisciplinaId = 1, Nome = "Tema 04 - Disciplina Port" },
+                new() { Id = 5, DisciplinaId = 1, Nome = "Tema 05 - Disciplina Port" },
+                new() { Id = 6, DisciplinaId = 2, Nome = "Tema 01 - Disciplina Mat" },
+                new() { Id = 7, DisciplinaId = 2, Nome = "Tema 02 - Disciplina Mat" },
+                new() { Id = 8, DisciplinaId = 2, Nome = "Tema 03 - Disciplina Mat" },
+                new() { Id = 9, DisciplinaId = 2, Nome = "Tema 04 - Disciplina Mat" },
+                new() { Id = 10, DisciplinaId = 2, Nome = "Tema 05 - Disciplina Mat" },
+                new() { Id = 11, DisciplinaId = 3, Nome = "Tema 01 - Disciplina Cie" },
+                new() { Id = 12, DisciplinaId = 3, Nome = "Tema 02 - Disciplina Cie" },
+                new() { Id = 13, DisciplinaId = 3, Nome = "Tema 03 - Disciplina Cie" },
+                new() { Id = 14, DisciplinaId = 3, Nome = "Tema 04 - Disciplina Cie" },
+                new() { Id = 15, DisciplinaId = 3, Nome = "Tema 05 - Disciplina Cie" }
             };
 
             new EntitySeed<Tema>(context, databaseProvider).Load(temas, "Temas");
 
             var descritores = new List<Descritor>
             {
-                new() {Id = 1, TemaId = 1, Nome = "Descritor 01 - Tema 1"},
-                new() {Id = 2, TemaId = 1, Nome = "Descritor 02 - Tema 1"},
-                new() {Id = 3, TemaId = 1, Nome = "Descritor 03 - Tema 1"},
-                new() {Id = 4, TemaId = 1, Nome = "Descritor 04 - Tema 1"},
-                new() {Id = 5, TemaId = 1, Nome = "Descritor 05 - Tema 1"},
-                new() {Id = 6, TemaId = 2, Nome = "Descritor 01 - Tema 2"},
-                new() {Id = 7, TemaId = 2, Nome = "Descritor 02 - Tema 2"},
-                new() {Id = 8, TemaId = 2, Nome = "Descritor 03 - Tema 2"},
-                new() {Id = 9, TemaId = 2, Nome = "Descritor 04 - Tema 2"},
-                new() {Id = 10, TemaId = 2, Nome = "Descritor 05 - Tema 2"},
-                new() {Id = 11, TemaId = 3, Nome = "Descritor 01 - Tema 3"},
-                new() {Id = 12, TemaId = 3, Nome = "Descritor 02 - Tema 3"},
-                new() {Id = 13, TemaId = 3, Nome = "Descritor 03 - Tema 3"},
-                new() {Id = 14, TemaId = 3, Nome = "Descritor 04 - Tema 3"},
-                new() {Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3"},
-                new() {Id = 16, TemaId = 6, Nome = "Descritor 05 - Tema 3"}
+                new() { Id = 1, TemaId = 1, Nome = "Descritor 01 - Tema 1" },
+                new() { Id = 2, TemaId = 1, Nome = "Descritor 02 - Tema 1" },
+                new() { Id = 3, TemaId = 1, Nome = "Descritor 03 - Tema 1" },
+                new() { Id = 4, TemaId = 1, Nome = "Descritor 04 - Tema 1" },
+                new() { Id = 5, TemaId = 1, Nome = "Descritor 05 - Tema 1" },
+                new() { Id = 6, TemaId = 2, Nome = "Descritor 01 - Tema 2" },
+                new() { Id = 7, TemaId = 2, Nome = "Descritor 02 - Tema 2" },
+                new() { Id = 8, TemaId = 2, Nome = "Descritor 03 - Tema 2" },
+                new() { Id = 9, TemaId = 2, Nome = "Descritor 04 - Tema 2" },
+                new() { Id = 10, TemaId = 2, Nome = "Descritor 05 - Tema 2" },
+                new() { Id = 11, TemaId = 3, Nome = "Descritor 01 - Tema 3" },
+                new() { Id = 12, TemaId = 3, Nome = "Descritor 02 - Tema 3" },
+                new() { Id = 13, TemaId = 3, Nome = "Descritor 03 - Tema 3" },
+                new() { Id = 14, TemaId = 3, Nome = "Descritor 04 - Tema 3" },
+                new() { Id = 15, TemaId = 3, Nome = "Descritor 05 - Tema 3" },
+                new() { Id = 16, TemaId = 6, Nome = "Descritor 05 - Tema 3" }
             };
 
             new EntitySeed<Descritor>(context, databaseProvider).Load(descritores, "Descritores");
 
             var avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
             {
-                new() {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 10},
-                new() {AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11},
-                new() {AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11},
-                new() {AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11}
+                new() { AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 10 },
+                new() { AvaliacaoId = 1, DisciplinaId = 1, EtapaId = 11 },
+                new() { AvaliacaoId = 1, DisciplinaId = 2, EtapaId = 11 },
+                new() { AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11 }
             };
 
             new EntitySeed<AvaliacaoDisciplinaEtapa>(context, databaseProvider).Load(avaliacaoDisciplinaEtapas,

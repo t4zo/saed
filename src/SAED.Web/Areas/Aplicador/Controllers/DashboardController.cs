@@ -25,7 +25,6 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         public async Task<IActionResult> Index()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
-
             var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);
             var respostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
 
@@ -62,7 +61,6 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         public async Task<IActionResult> Index(string _)
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
-
             var dashboardAplicadorViewModel = HttpContext.Session.Get<DashboardAplicadorViewModel>(SessionConstants.Aluno);
             var respostasViewModel = HttpContext.Session.Get<RespostasViewModel>(SessionConstants.RespostasAluno);
 

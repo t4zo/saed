@@ -27,7 +27,7 @@ namespace SAED.Api.Extensions
             {
                 foreach (var user in appOptions.Users)
                 {
-                    var applicationUser = new ApplicationUser {Email = user.Email, UserName = user.UserName};
+                    var applicationUser = new ApplicationUser { Email = user.Email, UserName = user.UserName };
                     var result = await userManager.CreateAsync(applicationUser, user.Password);
 
                     if (result.Succeeded)

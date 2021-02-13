@@ -6,7 +6,7 @@ namespace SAED.Infrastructure.i18n
     {
         public override IdentityError DefaultError()
         {
-            return new() {Code = nameof(DefaultError), Description = "Um erro desconhecido ocorreu."};
+            return new() { Code = nameof(DefaultError), Description = "Um erro desconhecido ocorreu." };
         }
 
         public override IdentityError ConcurrencyFailure()
@@ -20,12 +20,12 @@ namespace SAED.Infrastructure.i18n
 
         public override IdentityError PasswordMismatch()
         {
-            return new() {Code = nameof(PasswordMismatch), Description = "Senha incorreta."};
+            return new() { Code = nameof(PasswordMismatch), Description = "Senha incorreta." };
         }
 
         public override IdentityError InvalidToken()
         {
-            return new() {Code = nameof(InvalidToken), Description = "Token inválido."};
+            return new() { Code = nameof(InvalidToken), Description = "Token inválido." };
         }
 
         public override IdentityError LoginAlreadyAssociated()
@@ -47,7 +47,7 @@ namespace SAED.Infrastructure.i18n
 
         public override IdentityError InvalidEmail(string email)
         {
-            return new() {Code = nameof(InvalidEmail), Description = $"Email '{email}' é inválido."};
+            return new() { Code = nameof(InvalidEmail), Description = $"Email '{email}' é inválido." };
         }
 
         public override IdentityError DuplicateUserName(string userName)

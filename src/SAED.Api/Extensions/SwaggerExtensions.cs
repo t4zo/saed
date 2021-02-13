@@ -13,7 +13,7 @@ namespace SAED.Api.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
-                    new OpenApiInfo {Version = "v1", Title = "SAED API", Description = "Endpoints to v1 SAED API"});
+                    new OpenApiInfo { Version = "v1", Title = "SAED API", Description = "Endpoints to v1 SAED API" });
 
                 c.AddSecurityDefinition("Bearer",
                     new OpenApiSecurityScheme

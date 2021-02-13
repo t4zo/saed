@@ -46,7 +46,7 @@ namespace SAED.Api.Controllers
             await _context.AddAsync(avaliacao);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Get), new {id = avaliacao.Id}, avaliacao);
+            return CreatedAtAction(nameof(Get), new { id = avaliacao.Id }, avaliacao);
         }
 
         [Authorize(AuthorizationConstants.Permissions.Avaliacoes.Update)]

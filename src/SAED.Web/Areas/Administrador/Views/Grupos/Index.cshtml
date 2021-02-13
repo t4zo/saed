@@ -4,7 +4,7 @@
 }
 
 <main class="uk-card uk-card-default uk-card-body">
-    @{ await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader {Header = "Grupos", Controller = "Grupos", Action = "Create"}); }
+    @{ await Html.RenderPartialAsync("Partials/Table/_Header", new TableHeader { Header = "Grupos", Controller = "Grupos", Action = "Create" }); }
     <div class="uk-overflow-auto">
         <table id="dataTable" class="uk-table uk-table-hover uk-table-middle uk-table-striped">
             <thead>

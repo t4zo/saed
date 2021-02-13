@@ -47,7 +47,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(GrupoViewModel viewModel)
         {
-            var result = await _roleManager.CreateAsync(new ApplicationRole {Name = viewModel.Nome});
+            var result = await _roleManager.CreateAsync(new ApplicationRole { Name = viewModel.Nome });
             if (!result.Succeeded)
             {
                 return RedirectToAction(nameof(Create));
@@ -84,7 +84,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
             ViewBag.AllPermissions = typeof(Permissions).GetAllPublicConstantValues<string>()
                 .Where(permission => !roleClaims.Contains(permission)).OrderBy(permission => permission).ToList();
 
-            return View(new GrupoViewModel {Nome = role.Name, PermissoesEscolhidas = roleClaims});
+            return View(new GrupoViewModel { Nome = role.Name, PermissoesEscolhidas = roleClaims });
         }
 
         [Authorize(Permissions.Grupos.Update)]

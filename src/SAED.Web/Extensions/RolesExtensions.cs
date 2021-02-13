@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -15,7 +14,7 @@ namespace SAED.Web.Extensions
 {
     public static class RolesExtensions
     {
-        public static async Task<IApplicationBuilder> CreateRolesAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
+        public static async Task<IServiceProvider> CreateRolesAsync(this IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             var appOptions = serviceProvider.GetRequiredService<IOptionsSnapshot<AppOptions>>().Value;
@@ -26,7 +25,7 @@ namespace SAED.Web.Extensions
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                     {
-                        var newRole = new ApplicationRole {Name = role, NormalizedName = role.ToUpper()};
+                        var newRole = new ApplicationRole { Name = role, NormalizedName = role.ToUpper() };
                         await roleManager.CreateAsync(newRole);
                     }
 
@@ -34,7 +33,7 @@ namespace SAED.Web.Extensions
                 }
             }
 
-            return app;
+            return serviceProvider;
         }
 
         private static async Task SeedRoleClaims(RoleManager<ApplicationRole> roleManager, string roleName)

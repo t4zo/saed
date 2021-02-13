@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -16,7 +15,7 @@ namespace SAED.Web.Extensions
 {
     public static class UsersExtensions
     {
-        public static async Task<IApplicationBuilder> CreateUsersAsync(this IApplicationBuilder app, IServiceProvider serviceProvider)
+        public static async Task<IServiceProvider> CreateUsersAsync(this IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -26,7 +25,7 @@ namespace SAED.Web.Extensions
             {
                 foreach (var user in appOptions.Users)
                 {
-                    var applicationUser = new ApplicationUser {Email = user.Email, UserName = user.UserName};
+                    var applicationUser = new ApplicationUser { Email = user.Email, UserName = user.UserName };
                     var result = await userManager.CreateAsync(applicationUser, user.Password);
 
                     if (result.Succeeded)
@@ -42,7 +41,7 @@ namespace SAED.Web.Extensions
                 }
             }
 
-            return app;
+            return serviceProvider;
         }
 
         private static async Task SeedUserClaims(UserManager<ApplicationUser> userManager, ApplicationUser user, string roleName)

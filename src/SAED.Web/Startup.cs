@@ -98,7 +98,7 @@ namespace SAED.Web
             services.AddRazorPages();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -112,16 +112,14 @@ namespace SAED.Web
                 app.UseHsts();
             }
 
-            app.CreateRolesAsync(serviceProvider).GetAwaiter().GetResult();
-            app.CreateUsersAsync(serviceProvider).GetAwaiter().GetResult();
-            app.SeedDatabase(serviceProvider);
+            app.SeedDatabaseAsync().GetAwaiter().GetResult();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            string[] supportedCultures = {"pt-BR"};
+            string[] supportedCultures = { "pt-BR" };
             var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)

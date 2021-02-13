@@ -26,7 +26,7 @@ namespace SAED.Api.Extensions
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                     {
-                        var newRole = new ApplicationRole {Name = role, NormalizedName = role.ToUpper()};
+                        var newRole = new ApplicationRole { Name = role, NormalizedName = role.ToUpper() };
                         await roleManager.CreateAsync(newRole);
                     }
 

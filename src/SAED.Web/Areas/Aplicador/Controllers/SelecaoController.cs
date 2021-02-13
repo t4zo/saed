@@ -23,41 +23,6 @@ namespace SAED.Web.Areas.Aplicador.Controllers
         }
 
         [Authorize(AuthorizationConstants.Permissions.Selecao.View)]
-        [HttpGet("[area]/[controller]/{alunoId}")]
-        public async Task<IActionResult> Index(int? alunoId)
-        {
-            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
-
-            var allEtapas = await _context.AvaliacaoDisciplinasEtapas
-                .AsNoTracking()
-                .Include(x => x.Etapa)
-                .ThenInclude(x => x.Turmas)
-                .ThenInclude(x => x.Sala)
-                .Where(x => x.AvaliacaoId == avaliacao.Id)
-                .Select(x => x.Etapa)
-                .ToListAsync();
-
-            var etapas = allEtapas.Distinct().ToList();
-
-            HttpContext.Session.Clear();
-            HttpContext.Session.Set(SessionConstants.Avaliacao, avaliacao);
-
-            var aluno = await _context.Alunos
-                .AsNoTracking()
-                .Include(x => x.Turma)
-                .ThenInclude(x => x.Sala)
-                .ThenInclude(x => x.Escola)
-                .Include(x => x.Turma)
-                .ThenInclude(x => x.Etapa)
-                .FirstOrDefaultAsync(x => x.Id == alunoId);
-
-            ViewData["AlunoPreenchido"] = true;
-            ViewData["Aluno"] = aluno;
-
-            return View();
-        }
-
-        [Authorize(AuthorizationConstants.Permissions.Selecao.View)]
         public async Task<IActionResult> Index()
         {
             var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
@@ -79,6 +44,30 @@ namespace SAED.Web.Areas.Aplicador.Controllers
             ViewData["AlunoPreenchido"] = false;
             ViewData["EscolaId"] = new SelectList(_context.Escolas, "Id", "Nome");
             ViewData["EtapaId"] = new SelectList(etapas, "Id", "Nome");
+            return View();
+        }
+
+        [Authorize(AuthorizationConstants.Permissions.Selecao.View)]
+        [HttpGet("[area]/[controller]/{alunoId}")]
+        public async Task<IActionResult> Index(int? alunoId)
+        {
+            var avaliacao = HttpContext.Session.Get<Avaliacao>(SessionConstants.Avaliacao);
+
+            HttpContext.Session.Clear();
+            HttpContext.Session.Set(SessionConstants.Avaliacao, avaliacao);
+
+            var aluno = await _context.Alunos
+                .AsNoTracking()
+                .Include(x => x.Turma)
+                .ThenInclude(x => x.Sala)
+                .ThenInclude(x => x.Escola)
+                .Include(x => x.Turma)
+                .ThenInclude(x => x.Etapa)
+                .FirstOrDefaultAsync(x => x.Id == alunoId);
+
+            ViewData["AlunoPreenchido"] = true;
+            ViewData["Aluno"] = aluno;
+
             return View();
         }
 

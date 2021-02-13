@@ -104,7 +104,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return View(aluno);
             }
 
-            var user = new ApplicationUser {UserName = aluno.Cpf.Normalize(), Email = aluno.Cpf.Normalize()};
+            var user = new ApplicationUser { UserName = aluno.Cpf.Normalize(), Email = aluno.Cpf.Normalize() };
             var result = await _userManager.CreateAsync(user, aluno.Cpf.Normalize());
 
             if (!result.Succeeded)

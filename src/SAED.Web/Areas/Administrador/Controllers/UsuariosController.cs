@@ -61,7 +61,7 @@ namespace SAED.Web.Areas.Administrador.Controllers
                 return RedirectToAction(nameof(Create));
             }
 
-            var user = new ApplicationUser {UserName = viewModel.Usuario.UserName, Email = viewModel.Usuario.Email};
+            var user = new ApplicationUser { UserName = viewModel.Usuario.UserName, Email = viewModel.Usuario.Email };
             var result = await _userManager.CreateAsync(user, viewModel.Password);
 
             if (!result.Succeeded)
