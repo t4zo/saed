@@ -89,6 +89,7 @@ namespace SAED.Web
 
             services.AddWebOptimizer(pipeline =>
             {
+                // Error with de default method invocation CompileScssFiles(), created the extension method (TryGetRelativeScssFiles) to get all scss files location on desired folder
                 pipeline.TryGetRelativeScssFiles(out var realtiveScssFiles,_env.WebRootPath, "styles");
                 pipeline.CompileScssFiles(null, realtiveScssFiles.ToArray());
                 
