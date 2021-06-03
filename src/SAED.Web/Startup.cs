@@ -15,16 +15,19 @@ using SAED.Web.Extensions;
 using SAED.Web.Options;
 using SAED.Web.Services;
 using System;
+using System.Linq;
 
 namespace SAED.Web
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            _env = env;
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -37,7 +40,7 @@ namespace SAED.Web
             services.AddScoped<UserService>();
 
             //services.Configure<AppOptions>(Configuration.GetSection(nameof(AppOptions)));
-            services.AddOptions<AppOptions>().Bind(Configuration.GetSection(nameof(AppOptions)));
+            services.AddOptions<AppOptions>().Bind(_configuration.GetSection(nameof(AppOptions)));
 
             services.AddDbContext<ApplicationDbContext>();
 
@@ -84,6 +87,18 @@ namespace SAED.Web
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             });
 
+            services.AddWebOptimizer(pipeline =>
+            {
+                pipeline.TryGetRelativeScssFiles(out var realtiveScssFiles,_env.WebRootPath, "styles");
+                pipeline.CompileScssFiles(null, realtiveScssFiles.ToArray());
+                
+                if (!_env.IsDevelopment())
+                {
+                    pipeline.MinifyCssFiles();
+                    pipeline.MinifyJsFiles();
+                }
+            });
+            
             services.AddRouting(options => options.LowercaseUrls = true);
 
             // services.AddResponseCaching();
@@ -97,6 +112,8 @@ namespace SAED.Web
 
             services.AddRazorPages();
         }
+
+        
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -125,6 +142,9 @@ namespace SAED.Web
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 
+
+            app.UseWebOptimizer();
+            
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
