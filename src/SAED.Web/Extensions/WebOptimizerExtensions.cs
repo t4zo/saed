@@ -15,7 +15,7 @@ namespace SAED.Web.Extensions
             {
                 allFolderFiles = Directory.GetFiles(Path.Join(webRootPath, stylesFolderRootLocation)).ToList();
             }
-            catch (DirectoryNotFoundException e)
+            catch (DirectoryNotFoundException)
             {
                 allFolderFiles = Directory.GetFiles(Path.Join(webRootPath, "src", "SAED.Web", "wwwroot", stylesFolderRootLocation)).ToList();
             }
