@@ -26,24 +26,24 @@ namespace SAED.Web.Extensions
 
             var avaliacoes = new List<Avaliacao>
             {
-                new() { Id = 1, Codigo = "2021.1", Status = StatusAvaliacao.EmAndamento },
-                new() { Id = 2, Codigo = "2021.2", Status = StatusAvaliacao.ARealizar }
+                new (1, "2021.1", StatusAvaliacao.EmAndamento),
+                new(2, "2021.2", StatusAvaliacao.ARealizar)
             };
 
             new EntitySeed<Avaliacao>(context, databaseProvider).Load(avaliacoes, "Avaliacoes");
 
             var distritos = new List<Distrito>
             {
-                new() { Id = 1, Nome = "Sede", Zona = Zona.Urbana, Distancia = 0 },
-                new() { Id = 2, Nome = "Abóbora", Zona = Zona.Rural, Distancia = 110 },
-                new() { Id = 3, Nome = "Itamotinga", Zona = Zona.Rural, Distancia = 75 },
-                new() { Id = 4, Nome = "Juremal", Zona = Zona.Rural, Distancia = 50 },
-                new() { Id = 5, Nome = "Carnaíba", Zona = Zona.Rural, Distancia = 25 },
-                new() { Id = 6, Nome = "Maniçoba", Zona = Zona.Rural, Distancia = 40 },
-                new() { Id = 7, Nome = "Pinhões", Zona = Zona.Rural, Distancia = 75 },
-                new() { Id = 8, Nome = "Junco", Zona = Zona.Rural, Distancia = 35 },
-                new() { Id = 9, Nome = "Massaroca", Zona = Zona.Rural, Distancia = 70 },
-                new() { Id = 10, Nome = "Mandacaru", Zona = Zona.Rural, Distancia = 10 }
+                new(1, "Sede", Zona.Urbana, 0),
+                new(2, "Abóbora", Zona.Rural, 110),
+                new(3, "Itamotinga", Zona.Rural, 75),
+                new(4, "Juremal", Zona.Rural, 50),
+                new(5, "Carnaíba", Zona.Rural, 25),
+                new(6, "Maniçoba", Zona.Rural, 40),
+                new(7, "Pinhões", Zona.Rural, 75),
+                new(8, "Junco", Zona.Rural, 35),
+                new(9, "Massaroca", Zona.Rural, 70),
+                new(10, "Mandacaru", Zona.Rural, 10)
             };
 
             new EntitySeed<Distrito>(context, databaseProvider).Load(distritos, "Distritos");

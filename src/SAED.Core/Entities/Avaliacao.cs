@@ -9,10 +9,25 @@ namespace SAED.Core.Entities
     {
         public string Codigo { get; set; } = "";
         public StatusAvaliacao Status { get; set; }
-        public ICollection<Questao> Questoes { get; set; }
-        public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; set; }
+        public ICollection<Questao> Questoes { get; }
+        public ICollection<AvaliacaoDisciplinaEtapa> AvaliacaoDisciplinasEtapas { get; }
         public ICollection<RespostaAluno> RespostaAlunos { get; set; }
         public int Id { get; set; }
+        
+        private Avaliacao()
+        {
+            Questoes = new List<Questao>();
+            AvaliacaoDisciplinasEtapas = new List<AvaliacaoDisciplinaEtapa>();
+            RespostaAlunos = new List<RespostaAluno>();
+        }
+
+        public Avaliacao(int id, string codigo, StatusAvaliacao status) : this()
+        {
+            Id = id;
+            Codigo = codigo ?? throw new ArgumentNullException(nameof(codigo));
+            Status = status;
+        }
+
 
         public bool Equals(Avaliacao other)
         {
