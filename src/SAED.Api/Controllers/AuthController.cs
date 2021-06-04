@@ -6,7 +6,7 @@ using SAED.Api.Entities.Dto;
 using SAED.Api.Entities.Responses;
 using SAED.Api.Interfaces;
 using SAED.Core.Constants;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Identity;
 using System.Threading.Tasks;
 
 namespace SAED.Api.Controllers

@@ -15,9 +15,9 @@ using SAED.Api.Interfaces;
 using SAED.Api.Options;
 using SAED.Api.Services;
 using SAED.Core.Interfaces;
-using SAED.Infrastructure.Data;
-using SAED.Infrastructure.i18n;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Data;
+using SAED.Persistence.i18n;
+using SAED.Persistence.Identity;
 using System;
 using System.Reflection;
 

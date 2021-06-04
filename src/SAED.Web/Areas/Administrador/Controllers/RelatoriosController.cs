@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAED.Core.Constants;
-using SAED.Infrastructure.Data;
+using SAED.Persistence.Data;
 
 namespace SAED.Web.Areas.Administrador.Controllers
 {

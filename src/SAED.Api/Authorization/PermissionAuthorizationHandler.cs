@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 using static SAED.Core.Constants.AuthorizationConstants;

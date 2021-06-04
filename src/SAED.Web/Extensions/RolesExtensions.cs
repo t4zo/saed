@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SAED.Core.Extensions;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Identity;
 using SAED.Web.Options;
 using System;
 using System.Security.Claims;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SAED.Api.Entities.Dto;
 using SAED.Api.Entities.Responses;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Identity;
 
 namespace SAED.Api
 {

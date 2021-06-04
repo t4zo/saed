@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SAED.Infrastructure.Data;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Data;
+using SAED.Persistence.Identity;
 using SAED.Web.Options;
 using System;
 using System.Collections.Generic;

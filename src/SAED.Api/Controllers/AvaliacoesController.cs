@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
-using SAED.Infrastructure.Data;
+using SAED.Persistence.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

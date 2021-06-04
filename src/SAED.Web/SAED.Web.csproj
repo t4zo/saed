@@ -40,7 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SAED.Core\SAED.Core.csproj" />
-    <ProjectReference Include="..\SAED.Infrastructure\SAED.Infrastructure.csproj" />
+    <ProjectReference Include="..\SAED.Persistence\SAED.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

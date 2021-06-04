@@ -57,17 +57,17 @@ jobs:
             export Database=Postgres
             sudo systemctl stop saed
             cd ${{ secrets.DOCROOT }}
-            rm -rf SAED.Infrastructure/Migrations
+            rm -rf SAED.Persistence/Migrations
             git reset --hard HEAD
             git pull
-            rm -rf SAED.Infrastructure/Migrations
+            rm -rf SAED.Persistence/Migrations
             cd ${{ secrets.DOCROOT }}/SAED.Web/
             dotnet build -c Release
             dotnet publish -c Release --no-build
             cd ${{ secrets.DOCROOT }}/
-            dotnet-ef database drop --no-build -f -s SAED.Web -p SAED.Infrastructure
-            dotnet-ef migrations add Initial -s SAED.Web -p SAED.Infrastructure
-            dotnet-ef database update -s SAED.Web -p SAED.Infrastructure
+            dotnet-ef database drop --no-build -f -s SAED.Web -p SAED.Persistence
+            dotnet-ef migrations add Initial -s SAED.Web -p SAED.Persistence
+            dotnet-ef database update -s SAED.Web -p SAED.Persistence
             sudo systemctl start saed
 
       # - name: Invoke deployment hook

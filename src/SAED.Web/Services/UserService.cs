@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

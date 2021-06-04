@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SAED.Infrastructure.Data;
+using SAED.Persistence.Data;
 using System;
 
 namespace SAED.Web.Extensions

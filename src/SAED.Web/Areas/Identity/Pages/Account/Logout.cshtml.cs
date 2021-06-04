@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Identity;
 using System.Threading.Tasks;
 
 namespace SAED.Web.Areas.Identity.Pages.Account

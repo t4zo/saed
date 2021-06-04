@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
-using SAED.Infrastructure.Data;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Data;
+using SAED.Persistence.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 

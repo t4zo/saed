@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SAED.Api.Options;
 using SAED.Core.Extensions;
-using SAED.Infrastructure.Identity;
+using SAED.Persistence.Identity;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;

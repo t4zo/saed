@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAED.Core.Constants;
 using SAED.Core.Entities;
-using SAED.Infrastructure.Data;
+using SAED.Persistence.Data;
 using SAED.Web.Areas.Administrador.ViewModels;
 using SAED.Web.Extensions;
 using System.Collections.Generic;
