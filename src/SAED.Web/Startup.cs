@@ -32,7 +32,7 @@ namespace SAED.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             services.AddHttpContextAccessor();

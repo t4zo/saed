@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.Core.Entities;
 
-namespace SAED.Persistence.Data.Config
+namespace SAED.Persistence.Data.FluentConfigurations
 {
     internal class AvaliacaoConfiguration : IEntityTypeConfiguration<Avaliacao>
     {

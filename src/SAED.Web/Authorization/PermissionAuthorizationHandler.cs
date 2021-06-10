@@ -7,7 +7,7 @@ using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization
 {
-    public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
+    public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAuthorizationRequirement>
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -18,7 +18,7 @@ namespace SAED.Web.Authorization
             _roleManager = roleManager;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionAuthorizationRequirement requirement)
         {
             var user = await _userManager.GetUserAsync(context.User);
 

@@ -6,11 +6,11 @@ using static SAED.Core.Constants.AuthorizationConstants;
 
 namespace SAED.Web.Authorization
 {
-    public class PermissionPolicyProvider : IAuthorizationPolicyProvider
+    public class PermissionAuthorizationPolicyProvider : IAuthorizationPolicyProvider
     {
         private DefaultAuthorizationPolicyProvider _fallbackPolicyProvider { get; }
 
-        public PermissionPolicyProvider(IOptions<AuthorizationOptions> options)
+        public PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
         {
             // Só pode haver um provedor de políticas no ASP.NET Core.
             // Apenas lidamos com políticas relacionadas a permissões, para o resto, usaremos o provedor padrão.
@@ -29,7 +29,7 @@ namespace SAED.Web.Authorization
             if (policyName.StartsWith(CustomClaimTypes.Permission, StringComparison.OrdinalIgnoreCase))
             {
                 var policy = new AuthorizationPolicyBuilder();
-                policy.AddRequirements(new PermissionRequirement(policyName));
+                policy.AddRequirements(new PermissionAuthorizationRequirement(policyName));
                 return Task.FromResult(policy.Build());
             }
 

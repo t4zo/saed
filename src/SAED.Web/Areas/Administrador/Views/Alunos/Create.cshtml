@@ -79,11 +79,6 @@
                         turmaField.selectedIndex = 0;
                         turmaField.disabled = true;
                     });
-
-                if ("@(ViewBag.Erro)" === "True") {
-                    salaField.removeAttribute("disabled");
-                    turmaField.removeAttribute("disabled");
-                }
             });
 
         VMasker(document.querySelector("#Cpf_Codigo")).maskPattern("999.999.999-99");

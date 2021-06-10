@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.Core.Entities;
 
-namespace SAED.Persistence.Data.Config
+namespace SAED.Persistence.Data.FluentConfigurations
 {
     public class AlunoConfiguration : IEntityTypeConfiguration<Aluno>
     {
@@ -17,6 +17,8 @@ namespace SAED.Persistence.Data.Config
             builder.Property(x => x.Nome)
                 .HasMaxLength(256)
                 .IsRequired();
+
+            builder.OwnsOne(x => x.Cpf);
 
             builder.Property(x => x.Nascimento)
                 .IsRequired();

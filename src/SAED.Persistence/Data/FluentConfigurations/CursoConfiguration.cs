@@ -2,16 +2,16 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SAED.Core.Entities;
 
-namespace SAED.Persistence.Data.Config
+namespace SAED.Persistence.Data.FluentConfigurations
 {
-    public class DisciplinaConfiguration : IEntityTypeConfiguration<Disciplina>
+    public class CursoConfiguration : IEntityTypeConfiguration<Curso>
     {
-        public void Configure(EntityTypeBuilder<Disciplina> builder)
+        public void Configure(EntityTypeBuilder<Curso> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(curso => curso.Id);
 
             builder.Property(x => x.Nome)
-                .HasMaxLength(128)
+                .HasMaxLength(256)
                 .IsRequired();
 
             builder.Property(x => x.Sigla)

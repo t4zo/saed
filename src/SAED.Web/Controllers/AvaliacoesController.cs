@@ -73,7 +73,6 @@ namespace SAED.Web.Controllers
             {
                 var alunos = await _context.Alunos
                     .AsNoTracking()
-                    .Include(x => x.Cpf)
                     .ToListAsync();
 
                 var cpfAluno = User.Identity?.Name;

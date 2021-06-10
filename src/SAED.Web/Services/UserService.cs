@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SAED.Core.Constants;
+using SAED.Core.Entities;
 using SAED.Persistence.Identity;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +16,33 @@ namespace SAED.Web.Services
         public UserService(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
+        }
+
+        public async Task<IdentityResult> CreateUserAsync(string username, string email, string cpf)
+        {
+            var user = new ApplicationUser { UserName = username, Email = email };
+            var result = await _userManager.CreateAsync(user, cpf);
+            
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, AuthorizationConstants.Roles.Aluno);
+            }
+            
+            return result;
+        }
+        
+        public async Task<IdentityResult> UpdateUserAsync(Aluno novoAluno, Aluno alunoOriginal)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == alunoOriginal.Cpf.Normalize());
+
+            await _userManager.SetEmailAsync(user, novoAluno.Cpf.Normalize());
+            await _userManager.SetUserNameAsync(user, novoAluno.Cpf.Normalize());
+            await _userManager.ChangePasswordAsync(user, alunoOriginal.Cpf.Normalize(), novoAluno.Cpf.Normalize());
+            // user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, aluno.Cpf.Normalize());
+
+            var result = await _userManager.UpdateAsync(user);
+
+            return result;
         }
 
         public async Task<IEnumerable<IdentityError>> ValidatePasswordAsync(string password)
