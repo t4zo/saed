@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using SAED.Core.Constants;
 using System;
+using System.Net;
 
 namespace SAED.Api
 {
@@ -17,7 +18,12 @@ namespace SAED.Api
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>().UseUrls("http://*:5000");
+                    webBuilder.UseKestrel(options =>
+                    {
+                        options.Listen(IPAddress.Any, 5000);
+                    });
+
+                    webBuilder.UseStartup<Startup>();
                 });
         }
     }
