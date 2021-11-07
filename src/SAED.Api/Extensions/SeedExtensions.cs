@@ -16,7 +16,6 @@ namespace SAED.Api.Extensions
         {
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var databaseProvider = configuration[DatabaseConstants.Database];
 
             var avaliacoes = new List<Avaliacao>
             {
@@ -24,7 +23,7 @@ namespace SAED.Api.Extensions
                 new(2, "2021.2", StatusAvaliacao.ARealizar)
             };
 
-            new EntitySeed<Avaliacao>(context, databaseProvider).Load(avaliacoes, "Avaliacoes");
+            new EntitySeed<Avaliacao>(context).Load(avaliacoes, "Avaliacoes");
 
             var distritos = new List<Distrito>
             {
@@ -40,7 +39,7 @@ namespace SAED.Api.Extensions
                 new(10, "Mandacaru", Zona.Rural, 10)
             };
 
-            new EntitySeed<Distrito>(context, databaseProvider).Load(distritos, "Distritos");
+            new EntitySeed<Distrito>(context).Load(distritos, "Distritos");
 
             var escolas = new List<Escola>
             {
@@ -1243,7 +1242,7 @@ namespace SAED.Api.Extensions
                 }
             };
 
-            new EntitySeed<Escola>(context, databaseProvider).Load(escolas, "Escolas");
+            new EntitySeed<Escola>(context).Load(escolas, "Escolas");
 
             var cursos = new List<Curso>
             {
@@ -1252,7 +1251,7 @@ namespace SAED.Api.Extensions
                 new() { Id = 3, Nome = "Educação de Jovens e Adultos", Sigla = "EJA" }
             };
 
-            new EntitySeed<Curso>(context, databaseProvider).Load(cursos, "Cursos");
+            new EntitySeed<Curso>(context).Load(cursos, "Cursos");
 
             var segmentos = new List<Segmento>
             {
@@ -1265,7 +1264,7 @@ namespace SAED.Api.Extensions
                 new() { Id = 7, CursoId = 2, Nome = "Correção de Fluxo", Sigla = "CF" }
             };
 
-            new EntitySeed<Segmento>(context, databaseProvider).Load(segmentos, "Segmentos");
+            new EntitySeed<Segmento>(context).Load(segmentos, "Segmentos");
 
             var etapas = new List<Etapa>
             {
@@ -1293,7 +1292,7 @@ namespace SAED.Api.Extensions
                 new() { Id = 22, SegmentoId = 7, Nome = "Acelera", Normativa = 1 }
             };
 
-            new EntitySeed<Etapa>(context, databaseProvider).Load(etapas, "Etapas");
+            new EntitySeed<Etapa>(context).Load(etapas, "Etapas");
 
             var turnos = new List<Turno>
             {
@@ -1304,11 +1303,11 @@ namespace SAED.Api.Extensions
                 new() { Id = 5, Nome = "Não Informado" }
             };
 
-            new EntitySeed<Turno>(context, databaseProvider).Load(turnos, "Turnos");
+            new EntitySeed<Turno>(context).Load(turnos, "Turnos");
 
             var formas = new List<Forma> { new() { Id = 1, Nome = "Seriada" }, new() { Id = 2, Nome = "Multi" } };
 
-            new EntitySeed<Forma>(context, databaseProvider).Load(formas, "Formas");
+            new EntitySeed<Forma>(context).Load(formas, "Formas");
 
             var salas = new List<Sala>
             {
@@ -1317,7 +1316,7 @@ namespace SAED.Api.Extensions
                 new() { Id = 3, EscolaId = 1, Nome = "SALA 01", Capacidade = 30 }
             };
 
-            new EntitySeed<Sala>(context, databaseProvider).Load(salas, "Salas");
+            new EntitySeed<Sala>(context).Load(salas, "Salas");
 
             var turmas = new List<Turma>
             {
@@ -1333,7 +1332,7 @@ namespace SAED.Api.Extensions
                 }
             };
 
-            new EntitySeed<Turma>(context, databaseProvider).Load(turmas, "Turmas");
+            new EntitySeed<Turma>(context).Load(turmas, "Turmas");
 
             var alunos = new List<Aluno>
             {
@@ -1353,7 +1352,7 @@ namespace SAED.Api.Extensions
                 }
             };
 
-            new EntitySeed<Aluno>(context, databaseProvider).Load(alunos, "Alunos");
+            new EntitySeed<Aluno>(context).Load(alunos, "Alunos");
 
             var disciplinas = new List<Disciplina>
             {
@@ -1362,7 +1361,7 @@ namespace SAED.Api.Extensions
                 new() { Id = 3, Nome = "Ciências", Sigla = "Cie" }
             };
 
-            new EntitySeed<Disciplina>(context, databaseProvider).Load(disciplinas, "Disciplinas");
+            new EntitySeed<Disciplina>(context).Load(disciplinas, "Disciplinas");
 
             var temas = new List<Tema>
             {
@@ -1383,7 +1382,7 @@ namespace SAED.Api.Extensions
                 new() { Id = 15, DisciplinaId = 3, Nome = "Tema 05 - Disciplina Cie" }
             };
 
-            new EntitySeed<Tema>(context, databaseProvider).Load(temas, "Temas");
+            new EntitySeed<Tema>(context).Load(temas, "Temas");
 
             var descritores = new List<Descritor>
             {
@@ -1405,7 +1404,7 @@ namespace SAED.Api.Extensions
                 new() { Id = 16, TemaId = 6, Nome = "Descritor 05 - Tema 3" }
             };
 
-            new EntitySeed<Descritor>(context, databaseProvider).Load(descritores, "Descritores");
+            new EntitySeed<Descritor>(context).Load(descritores, "Descritores");
 
             var avaliacaoDisciplinaEtapas = new List<AvaliacaoDisciplinaEtapa>
             {
@@ -1415,7 +1414,7 @@ namespace SAED.Api.Extensions
                 new() { AvaliacaoId = 2, DisciplinaId = 3, EtapaId = 11 }
             };
 
-            new EntitySeed<AvaliacaoDisciplinaEtapa>(context, databaseProvider).Load(avaliacaoDisciplinaEtapas,
+            new EntitySeed<AvaliacaoDisciplinaEtapa>(context).Load(avaliacaoDisciplinaEtapas,
                 "AvaliacaoDisciplinasEtapas");
 
             // var questoes = new List<Questao>
@@ -1510,7 +1509,7 @@ namespace SAED.Api.Extensions
             //     }
             // };
             //
-            // new EntitySeed<Questao>(context, databaseProvider).Load(questoes, "Questoes");
+            // new EntitySeed<Questao>(context).Load(questoes, "Questoes");
             //
             // var alternativas = new List<Alternativa>
             // {
@@ -1536,7 +1535,7 @@ namespace SAED.Api.Extensions
             //     new Alternativa {Id = 20, QuestaoId = 5, Descricao = "40", Correta = false}
             // };
             //
-            // new EntitySeed<Alternativa>(context, databaseProvider).Load(alternativas, "Alternativas");
+            // new EntitySeed<Alternativa>(context).Load(alternativas, "Alternativas");
             //
             //
             // var respostaAlunos = new List<RespostaAluno>
@@ -1547,7 +1546,7 @@ namespace SAED.Api.Extensions
             //     new RespostaAluno {AvaliacaoId = 1, AlunoId = 2, AlternativaId = 10}
             // };
             //
-            // new EntitySeed<RespostaAluno>(context, databaseProvider).Load(respostaAlunos, "RespostaAlunos");
+            // new EntitySeed<RespostaAluno>(context).Load(respostaAlunos, "RespostaAlunos");
             //
             // var avaliacaoQuestoes = new List<AvaliacaoQuestao>
             // {
@@ -1555,7 +1554,7 @@ namespace SAED.Api.Extensions
             //     new AvaliacaoQuestao {QuestaoId = 2, AvaliacaoId = 1}
             // };
             //
-            // new EntitySeed<AvaliacaoQuestao>(context, databaseProvider).Load(avaliacaoQuestoes, "AvaliacaoQuestoes");
+            // new EntitySeed<AvaliacaoQuestao>(context).Load(avaliacaoQuestoes, "AvaliacaoQuestoes");
 
             return app;
         }

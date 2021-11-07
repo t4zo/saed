@@ -18,7 +18,6 @@ namespace SAED.Persistence.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         private readonly IConfiguration _configuration;
-        private readonly string _databaseProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DbSet<Avaliacao> Avaliacoes { get; set; }
@@ -44,7 +43,6 @@ namespace SAED.Persistence.Data
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
-            _databaseProvider = configuration[DatabaseConstants.Database];
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -55,7 +53,7 @@ namespace SAED.Persistence.Data
 
             foreach (var entity in entities)
             {
-                if (_databaseProvider == DatabaseConstants.Postgres && !(entity is IManyToMany))
+                if (entity is IManyToMany)
                 {
                     entity.FindProperty("Id")?.SetIdentityStartValue(DatabaseConstants.StartIdValue);
                 }
@@ -72,15 +70,8 @@ namespace SAED.Persistence.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-
-            if (_databaseProvider == DatabaseConstants.Postgres)
-            {
-                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultPostgresConnection"));
-            }
-            else
-            {
-                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
-            }
+            
+            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
         }
 
         public override int SaveChanges()

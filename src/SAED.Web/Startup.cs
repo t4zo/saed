@@ -16,6 +16,7 @@ using SAED.Web.Options;
 using SAED.Web.Services;
 using System;
 using System.Linq;
+using System.Net;
 
 namespace SAED.Web
 {
@@ -43,6 +44,8 @@ namespace SAED.Web
             services.AddOptions<AppOptions>().Bind(_configuration.GetSection(nameof(AppOptions)));
 
             services.AddDbContext<ApplicationDbContext>();
+
+            services.AddHealthChecks();
 
             services.AddDefaultIdentity<ApplicationUser>(configureOptions =>
                 {
@@ -182,6 +185,8 @@ namespace SAED.Web
                 endpoints.MapControllerRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHealthChecks("/health");
 
                 endpoints.MapRazorPages();
             });

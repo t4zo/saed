@@ -36,44 +36,37 @@ jobs:
       - name: Test SAED.Api
         run: dotnet test --configuration Release ./src/SAED.Api/SAED.Api.csproj
 
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
+  # publish:
+  #   runs-on: ubuntu-latest
+  #   needs: build
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
       
-      - name: Deploy to droplet using SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          # key: ${{ secrets.PRIVATE_KEY }}
-          debug: true
-          script: |
-            logname
-            export Provider=DigitalOcean
-            export Database=Postgres
-            sudo systemctl stop saed
-            cd ${{ secrets.DOCROOT }}
-            rm -rf SAED.Persistence/Migrations
-            git reset --hard HEAD
-            git pull
-            rm -rf SAED.Persistence/Migrations
-            cd ${{ secrets.DOCROOT }}/SAED.Web/
-            dotnet build -c Release
-            dotnet publish -c Release --no-build
-            cd ${{ secrets.DOCROOT }}/
-            dotnet-ef database drop --no-build -f -s SAED.Web -p SAED.Persistence
-            dotnet-ef migrations add Initial -s SAED.Web -p SAED.Persistence
-            dotnet-ef database update -s SAED.Web -p SAED.Persistence
-            sudo systemctl start saed
+  #     - name: Deploy to droplet using SSH
+  #       uses: appleboy/ssh-action@master
+  #       with:
+  #         host: ${{ secrets.HOST }}
+  #         username: ${{ secrets.USERNAME }}
+  #         password: ${{ secrets.PASSWORD }}
+  #         # key: ${{ secrets.PRIVATE_KEY }}
+  #         debug: true
+  #         script: |
+  #           logname
+  #           sudo systemctl stop saed
+  #           cd ${{ secrets.DOCROOT }}
+  #           git pull
+  #           cd ${{ secrets.DOCROOT }}/SAED.Web/
+  #           dotnet build -c Release
+  #           dotnet publish -c Release --no-build
+  #           cd ${{ secrets.DOCROOT }}/
+  #           dotnet-ef database update -s SAED.Web -p SAED.Persistence
+  #           sudo systemctl start saed
 
-      # - name: Invoke deployment hook
-      #   uses: distributhor/workflow-webhook@v1.0.5
-      #   env:
-      #     webhook_url: ${{ secrets.WEBHOOK_URL }}
-      #     webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-      #     webhook_auth: ${{ secrets.WEBHOOK_AUTH }}
+  #     # - name: Invoke deployment hook
+  #     #   uses: distributhor/workflow-webhook@v1.0.5
+  #     #   env:
+  #     #     webhook_url: ${{ secrets.WEBHOOK_URL }}
+  #     #     webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+  #     #     webhook_auth: ${{ secrets.WEBHOOK_AUTH }}
       

@@ -17,15 +17,7 @@ namespace SAED.Api
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    if (Environment.GetEnvironmentVariable(ProvidersConstants.Provider) ==
-                        ProvidersConstants.DigitalOcean)
-                    {
-                        webBuilder.UseStartup<Startup>().UseUrls("http://localhost:5100");
-                    }
-                    else
-                    {
-                        webBuilder.UseStartup<Startup>();
-                    }
+                    webBuilder.UseStartup<Startup>().UseUrls("http://*:5000");
                 });
         }
     }
