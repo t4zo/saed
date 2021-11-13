@@ -1,4 +1,4 @@
-name: SACA Deployment on EC2
+name: SAED Deployment on EC2
 
 on:
   push:

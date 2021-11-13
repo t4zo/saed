@@ -1,4 +1,4 @@
-name: SACA Deployment on Droplet
+name: SAED Deployment on Droplet
 
 on:
   push:
