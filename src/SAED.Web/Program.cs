@@ -16,11 +16,6 @@ namespace SAED.Web
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseKestrel(options =>
-                    {
-                        options.Listen(IPAddress.Any, 5000);
-                    });
-
                     webBuilder.UseStartup<Startup>();
                 });
         }
