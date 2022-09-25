@@ -1,61 +1,39 @@
-name: SAED Deployment on EC2
+name: AWS
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  ci:
+  hello-world:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo Hello, world!
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.x
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   if: github.ref == 'refs/heads/main'
 
-      - name: Restore SAED.Web
-        run: dotnet restore ./src/SAED.Web/SAED.Web.csproj
+  #   steps:
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-east-1
 
-      - name: Build SAED.Web
-        run: dotnet build --configuration Release --no-restore ./src/SAED.Web/SAED.Web.csproj
-
-      - name: Test SAED.Web
-        run: dotnet test --configuration Release ./src/SAED.Web/SAED.Web.csproj
-
-      - name: Restore SAED.Api
-        run: dotnet restore ./src/SAED.Api/SAED.Api.csproj
-
-      - name: Build SAED.Api
-        run: dotnet build --configuration Release --no-restore ./src/SAED.Api/SAED.Api.csproj
-
-      - name: Test SAED.Api
-        run: dotnet test --configuration Release ./src/SAED.Api/SAED.Api.csproj
-
-  cd:
-    runs-on: ubuntu-latest
-    needs: ci
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Create CodeDeploy Deployment
-        id: deploy
-        run: |
-          aws deploy create-deployment \
-            --application-name saed \
-            --deployment-group-name saed-development \
-            --deployment-config-name CodeDeployDefault.AllAtOnce \
-            --github-location repository=${{ github.repository }},commitId=${{ github.sha }} \
-            --file-exists-behavior=OVERWRITE \
-            --auto-rollback-configuration enabled=true,events=DEPLOYMENT_FAILURE
+  #     - name: Create CodeDeploy Deployment
+  #       id: deploy
+  #       run: |
+  #         aws deploy create-deployment \
+  #           --application-name saed \
+  #           --deployment-group-name saed-development \
+  #           --deployment-config-name CodeDeployDefault.AllAtOnce \
+  #           --github-location repository=${{ github.repository }},commitId=${{ github.sha }} \
+  #           --file-exists-behavior=OVERWRITE \
+  #           --auto-rollback-configuration enabled=true,events=DEPLOYMENT_FAILURE
