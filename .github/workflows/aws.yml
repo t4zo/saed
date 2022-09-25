@@ -6,6 +6,18 @@ on:
   pull_request:
     branches: [main]
 
+# permissions:
+#   id-token: write
+#   contents: read
+
+# env:
+#   DOCKERHUB_IMAGE_URL: https://hub.docker.com/repository/docker/t4zo/saed
+#   SAED_URL: https://saed.t4zo.com/health
+#   AWS_REGION: us-east-1
+#   APPLICATION_NAME: AppECS-t4zo-saed
+#   DEPLOYMENT_GROUP_NAME: DgpECS-t4zo-saed
+#   BUCKET_NAME: saed-application
+
 jobs:
   hello-world:
     runs-on: ubuntu-latest
