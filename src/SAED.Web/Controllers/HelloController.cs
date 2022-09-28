@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace SAED.Web.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : Controller
+    public class HelloController : Controller
     {
         public IActionResult Index()
         {
