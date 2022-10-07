@@ -23,9 +23,8 @@ RUN sed -i -e 's/T.wrapper.querySelector(".dataTable-input")/document.querySelec
 
 FROM build AS publish
 WORKDIR /var/www/app/src/SAED.Web
-RUN dotnet build -c Release
-RUN dotnet publish -c Release -o /var/www/app/publish --no-build
-#RUN dotnet publish -c Release --no-build / Original
+RUN dotnet build -c Release --no-restore
+RUN dotnet publish -c Release --no-build -o /var/www/app/publish
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy-arm64v8

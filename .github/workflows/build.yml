@@ -22,10 +22,10 @@ jobs:
         run: dotnet restore ./src/SAED.Web/SAED.Web.csproj
 
       - name: Build SAED.Web
-        run: dotnet build --configuration Release --no-restore ./src/SAED.Web/SAED.Web.csproj
+        run: dotnet build -c Release --no-restore ./src/SAED.Web/SAED.Web.csproj
 
       - name: Restore SAED.Api
         run: dotnet restore ./src/SAED.Api/SAED.Api.csproj
 
       - name: Build SAED.Api
-        run: dotnet build --configuration Release --no-restore ./src/SAED.Api/SAED.Api.csproj
+        run: dotnet build -c Release --no-restore ./src/SAED.Api/SAED.Api.csproj
