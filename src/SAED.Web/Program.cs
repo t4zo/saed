@@ -12,7 +12,6 @@ namespace SAED.Web
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
             var host = CreateHostBuilder(args).Build();
 
             using var scope = host.Services.CreateScope();
@@ -20,6 +19,8 @@ namespace SAED.Web
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 #if !DEBUG
+                AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
                 context.Database.Migrate();
 #endif
             }

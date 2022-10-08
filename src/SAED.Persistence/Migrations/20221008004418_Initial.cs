@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
+#nullable disable
+
 namespace SAED.Persistence.Migrations
 {
     public partial class Initial : Migration
@@ -13,11 +15,12 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
@@ -32,12 +35,13 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    LastLogin = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastLogin = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -63,13 +67,14 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Codigo = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,13 +86,14 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Sigla = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,13 +105,14 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Sigla = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,14 +124,15 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     Zona = table.Column<int>(type: "integer", nullable: false),
                     Distancia = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,12 +144,13 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,12 +162,13 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,14 +180,15 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RoleId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -195,14 +206,15 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -224,9 +236,9 @@ namespace SAED.Persistence.Migrations
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,9 +258,9 @@ namespace SAED.Persistence.Migrations
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     RoleId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -276,9 +288,9 @@ namespace SAED.Persistence.Migrations
                     Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -296,14 +308,15 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Sigla = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     CursoId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -321,13 +334,14 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DisciplinaId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -345,6 +359,7 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Inep = table.Column<int>(type: "integer", nullable: true),
                     MatrizId = table.Column<int>(type: "integer", nullable: true),
@@ -356,9 +371,9 @@ namespace SAED.Persistence.Migrations
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Telefone = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -373,8 +388,7 @@ namespace SAED.Persistence.Migrations
                         name: "FK_Escolas_Escolas_MatrizId",
                         column: x => x.MatrizId,
                         principalTable: "Escolas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -382,14 +396,15 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     SegmentoId = table.Column<int>(type: "integer", nullable: false),
                     Normativa = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -407,13 +422,14 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TemaId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -431,15 +447,16 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EscolaId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: false),
                     Capacidade = table.Column<int>(type: "integer", nullable: false),
                     Area = table.Column<double>(type: "double precision", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -460,9 +477,9 @@ namespace SAED.Persistence.Migrations
                     DisciplinaId = table.Column<int>(type: "integer", nullable: false),
                     EtapaId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -492,6 +509,7 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DescritorId = table.Column<int>(type: "integer", nullable: false),
                     EtapaId = table.Column<int>(type: "integer", nullable: false),
@@ -500,9 +518,9 @@ namespace SAED.Persistence.Migrations
                     Enunciado = table.Column<string>(type: "text", nullable: false),
                     Habilitada = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -526,6 +544,7 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SalaId = table.Column<int>(type: "integer", nullable: false),
                     EtapaId = table.Column<int>(type: "integer", nullable: false),
@@ -534,9 +553,9 @@ namespace SAED.Persistence.Migrations
                     Nome = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     Extinta = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -572,14 +591,15 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Descricao = table.Column<string>(type: "text", nullable: false),
                     Correta = table.Column<bool>(type: "boolean", nullable: false),
                     QuestaoId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -599,9 +619,9 @@ namespace SAED.Persistence.Migrations
                     AvaliacoesId = table.Column<int>(type: "integer", nullable: false),
                     QuestoesId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -625,19 +645,20 @@ namespace SAED.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'1000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TurmaId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Cpf_Codigo = table.Column<string>(type: "text", nullable: true),
                     Cpf_CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    Cpf_CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Cpf_CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Cpf_UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    Cpf_UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    Nascimento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Cpf_UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Nascimento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -658,9 +679,9 @@ namespace SAED.Persistence.Migrations
                     AlunoId = table.Column<int>(type: "integer", nullable: false),
                     AlternativaId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

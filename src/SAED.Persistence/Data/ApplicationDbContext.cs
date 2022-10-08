@@ -62,6 +62,8 @@ namespace SAED.Persistence.Data
                 entity.AddProperty("UpdatedBy", typeof(string));
                 entity.AddProperty("CreatedDate", typeof(DateTime));
                 entity.AddProperty("UpdatedDate", typeof(DateTime));
+                
+                entity.FindProperty("Id")?.SetIdentityStartValue(1000);
             }
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
