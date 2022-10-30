@@ -11,48 +11,41 @@ on: workflow_dispatch
 #       - main
 
 jobs:
-  hello-world:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - uses: actions/checkout@v3
 
-  # build:
-  #   runs-on: ubuntu-latest
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
 
-  #   steps:
-  #     - uses: actions/checkout@v3
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
-  #     - name: Setup .NET Core
-  #       uses: actions/setup-dotnet@v1
-  #       with:
-  #         dotnet-version: 6.0.x
+      - name: Restore SAED.Web
+        run: dotnet restore ./src/SAED.Web/SAED.Web.csproj
 
-  #     - name: Cache Dependencies
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ~/.nuget/packages
-  #         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-nuget-
+      - name: Build SAED.Web
+        run: dotnet build -c Release --no-restore ./src/SAED.Web/SAED.Web.csproj
 
-  #     - name: Restore SAED.Web
-  #       run: dotnet restore ./src/SAED.Web/SAED.Web.csproj
-
-  #     - name: Build SAED.Web
-  #       run: dotnet build -c Release --no-restore ./src/SAED.Web/SAED.Web.csproj
-
-  #     - name: Cache Dependencies
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ~/.nuget/packages
-  #         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-nuget-
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
             
-  #     - name: Restore SAED.Api
-  #       run: dotnet restore ./src/SAED.Api/SAED.Api.csproj
+      - name: Restore SAED.Api
+        run: dotnet restore ./src/SAED.Api/SAED.Api.csproj
 
-  #     - name: Build SAED.Api
-  #       run: dotnet build -c Release --no-restore ./src/SAED.Api/SAED.Api.csproj
+      - name: Build SAED.Api
+        run: dotnet build -c Release --no-restore ./src/SAED.Api/SAED.Api.csproj

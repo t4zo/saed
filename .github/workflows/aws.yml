@@ -14,42 +14,35 @@ on: workflow_dispatch
 #   id-token: write
 #   contents: read
 
-# env:
-#   DOCKERHUB_IMAGE_URL: https://hub.docker.com/repository/docker/t4zo/saed
-#   SAED_URL: https://saed.t4zo.com/health
-#   AWS_REGION: us-east-1
-#   APPLICATION_NAME: AppECS-t4zo-saed
-#   DEPLOYMENT_GROUP_NAME: DgpECS-t4zo-saed
-#   BUCKET_NAME: saed-application
+env:
+  DOCKERHUB_IMAGE_URL: https://hub.docker.com/repository/docker/t4zo/saed
+  SAED_URL: https://saed.t4zo.com/health
+  AWS_REGION: us-east-1
+  APPLICATION_NAME: AppECS-t4zo-saed
+  DEPLOYMENT_GROUP_NAME: DgpECS-t4zo-saed
+  BUCKET_NAME: saed-application
 
 jobs:
-  hello-world:
+  deploy:
     runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   if: github.ref == 'refs/heads/main'
-
-  #   steps:
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-east-1
-
-  #     - name: Create CodeDeploy Deployment
-  #       id: deploy
-  #       run: |
-  #         aws deploy create-deployment \
-  #           --application-name saed \
-  #           --deployment-group-name saed-development \
-  #           --deployment-config-name CodeDeployDefault.AllAtOnce \
-  #           --github-location repository=${{ github.repository }},commitId=${{ github.sha }} \
-  #           --file-exists-behavior=OVERWRITE \
-  #           --auto-rollback-configuration enabled=true,events=DEPLOYMENT_FAILURE
+      - name: Create CodeDeploy Deployment
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name saed \
+            --deployment-group-name saed-development \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --github-location repository=${{ github.repository }},commitId=${{ github.sha }} \
+            --file-exists-behavior=OVERWRITE \
+            --auto-rollback-configuration enabled=true,events=DEPLOYMENT_FAILURE
