@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -65,7 +66,13 @@ namespace SAED.Web
                 })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            
+#if DEBUG
+            services.AddDataProtection()
+                .SetApplicationName("saed")
+                .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"/var/keys/saed"));
+#endif
+            
             services.AddSession(options =>
             {
                 options.Cookie.IsEssential = true;

@@ -1,0 +1,23 @@
+﻿body {
+    margin: 0;
+}
+
+body.aside {
+    max-width: 60vw;
+}
+
+body.aside.aside--image {
+    max-height: 100vh;
+    /*object-fit: fill;*/
+    /*background-size: contain;*/
+}
+
+body.aside.section {
+    max-height: 100vh;
+    border-left: 1px solid black;
+}
+
+body.aside.section.section--form {
+    width: 70%;
+    margin: auto;
+}
