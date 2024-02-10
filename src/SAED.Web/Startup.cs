@@ -89,19 +89,6 @@ namespace SAED.Web
 
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             });
-
-            services.AddWebOptimizer(pipeline =>
-            {
-                // Error with de default method invocation CompileScssFiles(), created the extension method (TryGetRelativeScssFiles) to get all scss files location on desired folder
-                pipeline.TryGetRelativeScssFiles(out var realtiveScssFiles,_env.WebRootPath, "styles");
-                pipeline.CompileScssFiles(null, realtiveScssFiles.ToArray());
-                
-                if (!_env.IsDevelopment())
-                {
-                    pipeline.MinifyCssFiles();
-                    pipeline.MinifyJsFiles();
-                }
-            });
             
             services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -147,9 +134,6 @@ namespace SAED.Web
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
-
-
-            app.UseWebOptimizer();
             
             //app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SAED.Persistence.Data;
 using System;
+using System.Net;
 
 namespace SAED.Web
 {
@@ -36,7 +37,16 @@ namespace SAED.Web
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder => { 
+                    webBuilder.UseKestrel(options =>
+                    {
+#if DEBUG
+                        options.Listen(IPAddress.Any, 5001);
+#endif
+                    });
+                    
+                    webBuilder.UseStartup<Startup>(); 
+                });
         }
     }
 }

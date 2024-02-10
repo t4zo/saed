@@ -18,7 +18,9 @@ namespace SAED.Api
                 {
                     webBuilder.UseKestrel(options =>
                     {
-                        options.Listen(IPAddress.Any, 5000);
+#if DEBUG
+                        options.Listen(IPAddress.Any, 5001);
+#endif
                     });
 
                     webBuilder.UseStartup<Startup>();
