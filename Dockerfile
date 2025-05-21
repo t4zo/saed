@@ -27,7 +27,7 @@ RUN dotnet build -c Release --no-restore
 RUN dotnet publish -c Release --no-build -o /var/www/app/publish
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy-arm64v8
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 LABEL maintainer="Tacio de Souza Campos"
 WORKDIR /var/www/app
 COPY --from=publish /var/www/app/publish .
